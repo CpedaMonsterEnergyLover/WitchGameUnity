@@ -30,11 +30,10 @@ public class PlayerController : MonoBehaviour
         ChangeLookDirection();
         UpdateMovementInput();
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing)
         {
             StartDash();
         }
-        Debug.Log(_isDashing);
     }
     
     private void FixedUpdate()
@@ -75,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private void StartDash()
     {
         _isDashing = true;
-        rigidBody.velocity  *= dashSpeed;
+        rigidBody.velocity *= dashSpeed;
         animator.SetBool(Dashing, true);
         CancelInvoke(nameof(StartDash));
         Invoke(nameof(StopDash), dashDuration);
