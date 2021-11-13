@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BlinkBehaviour : StateMachineBehaviour
 {
-    public const float blinkMinTime = 4;
-    public const float blinkMaxTime = 14;
+    public const float blinkMinTime = 1;
+    public const float blinkMaxTime = 10;
 
     private float blinkTimer = 0;
     private static readonly int Blink = Animator.StringToHash("blink");
