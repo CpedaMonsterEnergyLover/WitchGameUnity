@@ -10,18 +10,14 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 5;
     public float dashDuration;
     
-
     private Vector2 _movementInput;
-    private static readonly int Speed = Animator.StringToHash("speed");
     private int _lookDirection = 1;
     private float _lastClickTime;
     private bool _movementAxisInUse;
     private Vector2 _lastClickAxis;
     private bool _isDashing;
+    private static readonly int Speed = Animator.StringToHash("speed");
     private static readonly int Dashing = Animator.StringToHash("dashing");
-
-
-    
     
     
     private void Awake()
@@ -31,20 +27,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        UpdateMovementInput();
-
         ChangeLookDirection();
+        UpdateMovementInput();
         
-        Debug.Log(rigidBody.velocity);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartDash();
+        }
+        Debug.Log(_isDashing);
     }
     
     private void FixedUpdate()
     {
-        if (CheckForDoubleClick())
-        {
-            OnDoubleClick();
-        }
-        else if(!_isDashing)
+        if (!_isDashing)
         {
             AnimateMovement();
             Move(movementSpeed);
@@ -61,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float speed)
     {
-        rigidBody.velocity =  _movementInput * speed;
+        rigidBody.velocity = _movementInput * speed;
     }
     
     private void AnimateMovement()
@@ -75,46 +70,12 @@ public class PlayerController : MonoBehaviour
             Input.GetAxisRaw("Horizontal"), 
             Input.GetAxisRaw("Vertical"));
     }
-
-    private bool CheckForDoubleClick()
-    {
-        bool caught = false;
-        if (_movementInput != Vector2.zero)
-        {
-            if (!_movementAxisInUse)
-            {
-                caught = CatchDoubleClick();
-                _movementAxisInUse = true;
-                _lastClickAxis = _movementInput;
-            };
-        }
-        else
-        {
-            _movementAxisInUse = false;
-        }
-
-        return caught;
-    }
-
-    private bool CatchDoubleClick()
-    {
-        bool caught = Time.time - _lastClickTime <= doubleClickDelay
-            && _movementInput == _lastClickAxis;
-        _lastClickTime = Time.time;
-        return caught;
-    }
     
-    private void OnDoubleClick()
-    { 
-        StartDash();
-    }
 
     private void StartDash()
     {
-        
-        //TODO: убрать баг
-        if( _lastClickAxis == _movementInput) rigidBody.velocity = _lastClickAxis * dashSpeed;
         _isDashing = true;
+        rigidBody.velocity  *= dashSpeed;
         animator.SetBool(Dashing, true);
         CancelInvoke(nameof(StartDash));
         Invoke(nameof(StopDash), dashDuration);
