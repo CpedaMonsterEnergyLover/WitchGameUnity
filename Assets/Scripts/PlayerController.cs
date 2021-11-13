@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,12 +19,23 @@ public class PlayerController : MonoBehaviour
     private Vector2 _lastClickAxis;
     private bool _isDashing;
     private static readonly int Dashing = Animator.StringToHash("dashing");
+
+
     
+    
+    
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     private void Update()
     {
         UpdateMovementInput();
 
         ChangeLookDirection();
+        
+        Debug.Log(rigidBody.velocity);
     }
     
     private void FixedUpdate()
@@ -49,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float speed)
     {
-        rigidBody.MovePosition(rigidBody.position + _movementInput * speed);
+        rigidBody.velocity =  _movementInput * speed;
     }
     
     private void AnimateMovement()
@@ -99,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
     private void StartDash()
     {
+        
         //TODO: убрать баг
         if( _lastClickAxis == _movementInput) rigidBody.velocity = _lastClickAxis * dashSpeed;
         _isDashing = true;
