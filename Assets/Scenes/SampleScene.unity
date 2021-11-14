@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 195414843}
   - component: {fileID: 195414847}
   - component: {fileID: 195414848}
+  - component: {fileID: 195414849}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -177,8 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   rigidBody: {fileID: 195414847}
-  playerAnimator: {fileID: 195414843}
-  weaponAnimator: {fileID: 1536856789}
   dashSpeed: 3
   dashDuration: 0.3
 --- !u!212 &195414845
@@ -281,9 +280,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f830d9220ad6eeb49aef18123edec110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 0}
-  weaponHandler: {fileID: 0}
-  currentState: 0
+--- !u!114 &195414849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195414842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3fcb787841a1540ba76cc3b25d7f48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 195414843}
+  _weaponAnimator: {fileID: 1536856789}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
