@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateMovementInput();
-
-        Debug.Log($"{rigidBody.velocity}");
         
         if (!_isDashing)
         {
@@ -81,7 +79,7 @@ public class PlayerController : MonoBehaviour
         PlayerAnimationManager.StartAttack();
         PlayerAnimationManager.HideWeapon();
         Invoke(nameof(EndAttack), 
-            PlayerAnimationManager.weaponAnimator.GetCurrentAnimatorStateInfo(0).length - 0.4f);
+            PlayerAnimationManager.WeaponAnimator.GetCurrentAnimatorStateInfo(0).length - 0.4f);
     }
 
     private void EndAttack()
@@ -129,6 +127,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
+    
     #region UtilMethods
 
     // Возвращает, смотрит ли персонаж в сторону мыши

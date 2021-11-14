@@ -8,8 +8,8 @@ public class PlayerAnimationManager : MonoBehaviour
     #region Vars
 
     // Public
-    public static Animator playerAnimator;
-    public static Animator weaponAnimator;
+    public static Animator PlayerAnimator;
+    public static Animator WeaponAnimator;
     
     //Private
     [SerializeField]
@@ -30,8 +30,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private void Awake()
     {
-        playerAnimator = _playerAnimator;
-        weaponAnimator = _weaponAnimator;
+        PlayerAnimator = _playerAnimator;
+        WeaponAnimator = _weaponAnimator;
     }
 
     #endregion
@@ -42,37 +42,37 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public static void StartAttack()
     {
-        weaponAnimator.SetBool(ATK, true);
+        WeaponAnimator.SetBool(ATK, true);
     }
 
     public static void StopAttack()
     {
-        weaponAnimator.SetBool(ATK, false);
+        WeaponAnimator.SetBool(ATK, false);
     }
 
     public static void HideWeapon()
     {
-        playerAnimator.SetBool(WPN, false);
+        PlayerAnimator.SetBool(WPN, false);
     }
 
     public static void ShowWeapon()
     {
-        playerAnimator.SetBool(WPN, true);
+        PlayerAnimator.SetBool(WPN, true);
     }
     
     public static void AnimateMovement(float value)
     {
-        playerAnimator.SetFloat(SPD, value);
+        PlayerAnimator.SetFloat(SPD, value);
     }
 
     public static void StartDash()
     {
-        playerAnimator.SetBool(DSH, true);
+        PlayerAnimator.SetBool(DSH, true);
     }
 
     public static void StopDash()
     {
-        playerAnimator.SetBool(DSH, false);
+        PlayerAnimator.SetBool(DSH, false);
     }
 
     #endregion
