@@ -48,6 +48,8 @@
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
+     <Compile Include="Assets\Scripts\World\Generator.cs" />
+     <Compile Include="Assets\Scripts\World\NewWorldManager.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2021.2.2f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
