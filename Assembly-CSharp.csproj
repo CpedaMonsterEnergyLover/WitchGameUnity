@@ -47,6 +47,8 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
+     <Compile Include="Assets\Scripts\World\NewWorldManager.cs" />
+     <Compile Include="Assets\Scripts\World\Generator.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
