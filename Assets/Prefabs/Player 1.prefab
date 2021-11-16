@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3626501011191788513}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19, y: -0.125, z: 0}
+  m_LocalPosition: {x: -0.195, y: 0.344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -131,7 +131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3626501011993654055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.005, y: 0.501, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 3626501012532046344}
   - component: {fileID: 3626501012532046348}
   - component: {fileID: 3626501012532046450}
-  - component: {fileID: 3626501012532046449}
+  - component: {fileID: 3721028201035600974}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -372,8 +372,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: 3626501012532046344}
   _weaponAnimator: {fileID: 3626501011191788518}
---- !u!61 &3626501012532046449
-BoxCollider2D:
+--- !u!70 &3721028201035600974
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -385,16 +385,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019845426, y: -0.07577324}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.49123693, y: 0.8484535}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.045592893, y: 0.10104319}
+  m_Size: {x: 0.52313334, y: 0.18775243}
+  m_Direction: 1
