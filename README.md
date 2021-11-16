@@ -21,9 +21,13 @@ Game is under development pls do not clone this
 
 -- Scriptable
 
-	классы, наследующие Scriptable
+	хранит созданные экземпляры Scriptable
 
 -- Scripts
+
+-- -- Scriptable
+
+	классы, наследующие Scriptable (их реализация)
 
 -- -- AnimationBehaviour
 
