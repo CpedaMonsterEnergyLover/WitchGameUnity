@@ -11,7 +11,7 @@ public class Fader : MonoBehaviour
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent <SpriteRenderer>();
+        _spriteRenderer = GetComponentInParent<SpriteRenderer>();
         _color = _spriteRenderer.color;
     }
 
