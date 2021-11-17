@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6767285006466965309}
   - component: {fileID: 6767285006466965308}
   - component: {fileID: 6998143334706854131}
+  - component: {fileID: 7549145569423154972}
   m_Layer: 0
   m_Name: Pinetree0
   m_TagString: Untagged
@@ -101,3 +102,34 @@ CircleCollider2D:
   m_Offset: {x: 0.03, y: 0.24}
   serializedVersion: 2
   m_Radius: 0.18703842
+--- !u!114 &7549145569423154972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767285006466965311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 97365620
+  m_ShapePath:
+  - {x: -0.12107086, y: 0.12233925, z: 0}
+  - {x: -0.15753174, y: 0.16531563, z: 0}
+  - {x: -0.1541214, y: 0.315197, z: 0}
+  - {x: -0.08023834, y: 0.37513542, z: 0}
+  - {x: 0.213768, y: 0.3594799, z: 0}
+  - {x: 0.22071075, y: 0.21061325, z: 0}
+  - {x: 0.18632507, y: 0.12427139, z: 0}
+  - {x: 0.033226013, y: 0.09378052, z: 0}
+  m_ShapePathHash: 296207205
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -88372

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1976806417990434179}
   - component: {fileID: 1976806417990434176}
   - component: {fileID: 1322000086015401710}
+  - component: {fileID: -3364263093198485118}
   m_Layer: 0
   m_Name: Bigtree1
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976806417990434177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 114.682465, y: 19.470922, z: 0}
+  m_LocalPosition: {x: 114.667, y: 19.355, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -101,3 +102,39 @@ CapsuleCollider2D:
   m_Offset: {x: 0.05, y: 0.34}
   m_Size: {x: 0.9513101, y: 0.44682607}
   m_Direction: 1
+--- !u!114 &-3364263093198485118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976806417990434177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 97365620
+  m_ShapePath:
+  - {x: -0.2938385, y: 0.16540909, z: 0}
+  - {x: -0.31586456, y: 0.26412773, z: 0}
+  - {x: -0.4424057, y: 0.2932186, z: 0}
+  - {x: -0.368721, y: 0.46593666, z: 0}
+  - {x: -0.2800598, y: 0.5020008, z: 0}
+  - {x: 0.3934021, y: 0.48168564, z: 0}
+  - {x: 0.5442276, y: 0.40587425, z: 0}
+  - {x: 0.58605194, y: 0.32262993, z: 0}
+  - {x: 0.4769516, y: 0.3097744, z: 0}
+  - {x: 0.4673462, y: 0.22568703, z: 0}
+  - {x: 0.38368225, y: 0.18512535, z: 0}
+  - {x: 0.22415161, y: 0.09918022, z: 0}
+  - {x: -0.07801819, y: 0.09835434, z: 0}
+  m_ShapePathHash: -1379022481
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 33082

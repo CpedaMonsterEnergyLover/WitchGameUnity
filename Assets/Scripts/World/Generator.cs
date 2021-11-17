@@ -91,7 +91,6 @@ public class Generator : MonoBehaviour
                 }
                 
                 // Реки
-
                 if (isRiver <= riversMapGenSettings.levels[0] + 0.04f &&
                     isRiver >= riversMapGenSettings.levels[1] - 0.04f)
                 {
@@ -109,22 +108,6 @@ public class Generator : MonoBehaviour
                     }
                     
                 }
-                
-                /*// Деревья
-                // Не растут на воде и песке
-                if (WaterTilemap.GetTile(point) != waterTile &&
-                    SandTilemap.GetTile(point) != sandTile)
-                {
-                    bool treeRnd = Random.Range(0, 10) == 0;
-                    if (!treeRnd) continue;
-                    // На темной земле растут не ели
-                    if (GroundTilemap.GetTile(point) == fertileGrassTile)
-                    {
-                        TreeTilemap.SetTile(point, trees.collection[0]);
-                    }
-                    // На траве растут ели и желтые деревья
-                    
-                }*/
 
                 BiomeTile biomeTile = GenerateBiomeTile(moistureLevel, soilType, isRiver);
                 if (biomeTile != null)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4220058950246845430}
   - component: {fileID: 4220058950246845425}
   - component: {fileID: 7668806175199777772}
+  - component: {fileID: -2910289924241164783}
   m_Layer: 0
   m_Name: Orangetree0
   m_TagString: Untagged
@@ -98,6 +99,46 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06202843, y: 0.43}
-  m_Size: {x: 1.4188043, y: 0.71991163}
+  m_Offset: {x: -0.00087769266, y: 0.3813909}
+  m_Size: {x: 1.4416811, y: 0.6913185}
   m_Direction: 1
+--- !u!114 &-2910289924241164783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220058950246845424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 97365620
+  m_ShapePath:
+  - {x: -0.3908081, y: 0.05616188, z: 0}
+  - {x: -0.3729782, y: 0.14864922, z: 0}
+  - {x: -0.57302094, y: 0.1316948, z: 0}
+  - {x: -0.72221375, y: 0.1961174, z: 0}
+  - {x: -0.6713486, y: 0.46058655, z: 0}
+  - {x: -0.6510086, y: 0.660635, z: 0}
+  - {x: -0.4786148, y: 0.7751198, z: 0}
+  - {x: 0.020339966, y: 0.718277, z: 0}
+  - {x: 0.5628433, y: 0.64707184, z: 0}
+  - {x: 0.75860596, y: 0.4795208, z: 0}
+  - {x: 0.75271606, y: 0.32496262, z: 0}
+  - {x: 0.6035309, y: 0.25375748, z: 0}
+  - {x: 0.56962585, y: 0.16221046, z: 0}
+  - {x: 0.45773315, y: 0.17916489, z: 0}
+  - {x: 0.38488007, y: 0.011436462, z: 0}
+  - {x: 0.07459259, y: 0.013023376, z: 0}
+  - {x: 0.0033874512, y: 0.053710938, z: 0}
+  m_ShapePathHash: -1010688929
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 33316
