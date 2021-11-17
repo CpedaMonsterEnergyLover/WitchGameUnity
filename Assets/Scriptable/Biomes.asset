@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2db8298cf2da542a9bfadad382c1b1, type: 3}
+  m_Name: Biomes
+  m_EditorClassIdentifier: 
+  list:
+  - signature: "\u0415\u043B\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0
+    maxSoilTypeLevel: 0.37
+    groundSpawnChance: 30
+    waterSpawnChance: 0
+    tiles:
+    - signature: "\u0418 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F"
+      waterTile: 0
+      tile: {fileID: 11400000, guid: ef79b1b4a9988c349a6d761b56a4e16e, type: 2}
+      individualSpawnChance: 30
+    - signature: "\u0415\u043B\u044C \u0431\u043E\u043B\u044C\u0448\u0430\u044F"
+      waterTile: 0
+      tile: {fileID: 11400000, guid: 150ed1211a1675d4e816da5206b7a7a3, type: 2}
+      individualSpawnChance: 70
+  - signature: "\u0415\u0431\u0430\u0442\u044C \u043D\u0435 \u0435\u043B\u043E\u0432\u044B\u0439
+      \u043B\u0435\u0441"
+    minMoistureLevel: 0.362
+    maxMoistureLevel: 0.631
+    minSoilTypeLevel: 0.37
+    maxSoilTypeLevel: 0.518
+    groundSpawnChance: 15
+    waterSpawnChance: 0
+    tiles:
+    - signature: "\u041E\u0440\u0430\u043D\u0436"
+      waterTile: 0
+      tile: {fileID: 11400000, guid: 8b557459b8915f44e8241a7e38d2af45, type: 2}
+      individualSpawnChance: 30
+    - signature: "\u043D\u0435 \u043E\u0440\u0430\u043D\u0436"
+      waterTile: 0
+      tile: {fileID: 11400000, guid: 380629c6baa947747bef91699e0affcf, type: 2}
+      individualSpawnChance: 70

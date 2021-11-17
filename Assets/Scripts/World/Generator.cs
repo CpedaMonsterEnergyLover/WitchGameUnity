@@ -9,12 +9,14 @@ public class Generator : MonoBehaviour
     // Public
     [Header("Настройки мира")] 
     public bool GenerateOnStart;
-    public bool GenerateCardinalityPoints;
     public int mapWidth;
     public int mapHeight = 50;
     public AnimationCurve cardinality;
     public int seed = 0;
-    [Header("Деревья")] public Trees trees;
+    [Header("Стороны света (1 - юг, 0 - север)")]
+    public bool GenerateCardinalityPoints;
+    public Vector2Int cardinalPoints;
+    [Header("Биомы")] public Biomes biomes;
     [Header("Слои грида")]
     public Tilemap GroundTilemap;
     public Tilemap SandTilemap;
@@ -30,7 +32,6 @@ public class Generator : MonoBehaviour
     public GeneratorSettings soilTypeMapGenSettings;
     public GeneratorSettings riversMapGenSettings;
     public GeneratorSettings moistureMapGenSettings;
-    public Vector2Int cardinalPoints;
     
     // Private 
     private float[] cardinalMap;
@@ -63,6 +64,8 @@ public class Generator : MonoBehaviour
         riversMap = GenerateNoiseMap(riversMapGenSettings, mapWidth, mapHeight, seed, new Vector2(mapWidth, 0));
         moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, seed, new Vector2(mapWidth * 2, 0));
 
+        InitBiomesData();
+        
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -72,10 +75,14 @@ public class Generator : MonoBehaviour
                 float soilType = soilTypeMap[x, y] * cardinalMap[x];
                 GroundTilemap.SetTile(point, soilType <= soilTypeMapGenSettings.levels[0] ? fertileGrassTile : grassTile);
 
+                float isRiver = riversMap[x, y];
                 // Уровень влажности
                 float moistureLevel = moistureMap[x, y];
-                if (moistureLevel <= moistureMapGenSettings.levels[0]) 
+                if (moistureLevel <= moistureMapGenSettings.levels[0])
+                {
                     WaterTilemap.SetTile(point, waterTile);
+                    isRiver = 1;
+                }
                 else if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.05f)
                 {
                     GroundTilemap.SetTile(point, fertileGrassTile);
@@ -84,14 +91,18 @@ public class Generator : MonoBehaviour
                 }
                 
                 // Реки
-                float isRiver = riversMap[x, y];
+
                 if (isRiver <= riversMapGenSettings.levels[0] + 0.04f &&
                     isRiver >= riversMapGenSettings.levels[1] - 0.04f)
                 {
                     if (isRiver <= riversMapGenSettings.levels[0] &&
                         isRiver >= riversMapGenSettings.levels[1])
+                    {
                         // Речные тайлы
                         WaterTilemap.SetTile(point, waterTile);
+                        isRiver = 1;
+                    }
+                        
                     if (GroundTilemap.GetTile(point) != fertileGrassTile) {
                         // Тайлы песка
                         SandTilemap.SetTile(point, sandTile);
@@ -99,7 +110,7 @@ public class Generator : MonoBehaviour
                     
                 }
                 
-                // Деревья
+                /*// Деревья
                 // Не растут на воде и песке
                 if (WaterTilemap.GetTile(point) != waterTile &&
                     SandTilemap.GetTile(point) != sandTile)
@@ -113,9 +124,32 @@ public class Generator : MonoBehaviour
                     }
                     // На траве растут ели и желтые деревья
                     
+                }*/
+
+                BiomeTile biomeTile = GenerateBiomeTile(moistureLevel, soilType, isRiver);
+                if (biomeTile != null)
+                {
+                    // Debug.Log(biomeTile.signature);
+                    TreeTilemap.SetTile(point, biomeTile.tile);
                 }
             }
         }
+    }
+
+    private BiomeTile GenerateBiomeTile(float moisture, float soilType, float river)
+    {
+        foreach (Biome biome in biomes.list)
+        {
+            if (!biome.checkMoisture(moisture) || !biome.checkSoilType(soilType)) continue;
+            return biome.GetRandomTile(river == 1.0f);
+        }
+
+        return null;
+    }
+
+    private void InitBiomesData()
+    {
+        biomes.list.ForEach(biome => biome.InitTileChances());
     }
     
     private float[] GenerateCardinalMap()
