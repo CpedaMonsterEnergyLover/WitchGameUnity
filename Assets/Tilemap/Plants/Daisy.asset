@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Daisy
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 7648445074336673080, guid: 60557ed2b6713114c8c4e051776fe504, type: 3}
+  m_DefaultGameObject: {fileID: 239784628477024972, guid: 75af2116317df594e9c09b6675d8f2b0, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

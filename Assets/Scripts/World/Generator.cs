@@ -74,57 +74,58 @@ public class Generator : MonoBehaviour
             for (int y = 0; y < mapHeight; y++)
             {
                 Vector3Int point = new Vector3Int(x, y, 0);
+                
                 float isRiver = riversMap[x, y];
                 float moistureLevel = moistureMap[x, y];
                 float soilType = soilTypeMap[x, y] * cardinalMap[x];
 
-                // Тип почвы (сухая, обычная, плодородная)
+                // Тип почвы (Торф, лес, поле)
                 if (soilType <= soilTypeMapGenSettings.levels[0])
                 {
                     GroundTilemap.SetTile(point, fertileGrassTile);
                 } else {
                     GroundTilemap.SetTile(point, grassTile);
-                    if (soilType > soilTypeMapGenSettings.levels[1]) PlainsTilemap.SetTile(point, plainsTile);
+                    if (soilType > soilTypeMapGenSettings.levels[1] && moistureLevel > moistureMapGenSettings.levels[1] + 0.05f) 
+                        PlainsTilemap.SetTile(point, plainsTile);
                 }
 
                 // Уровень влажности
                 if (moistureLevel <= moistureMapGenSettings.levels[0])
                 {
                     WaterTilemap.SetTile(point, waterTile);
-                    isRiver = 1;
+                    moistureMap[x, y] = 0f;
                 }
-                else if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.05f)
+                else if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.06f)
                 {
                     GroundTilemap.SetTile(point, fertileGrassTile);
-                    if (moistureLevel <= moistureMapGenSettings.levels[1])
-                    {
-                        if (soilType <= soilTypeMapGenSettings.levels[1])
-                        {
-                            WaterTilemap.SetTile(point, swampTile);
-                        }
-                    }
+                    if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.01f)
+                        WaterTilemap.SetTile(point, swampTile);
                 }
-                
+
                 // Реки
                 if (isRiver <= riversMapGenSettings.levels[0] + 0.03f &&
                     isRiver >= riversMapGenSettings.levels[1] - 0.03f)
                 {
+                    if (GroundTilemap.GetTile(point) != fertileGrassTile && 
+                        moistureLevel >= moistureMapGenSettings.levels[1]) {
+                        // Тайлы песка
+                        SandTilemap.SetTile(point, sandTile);
+                        moistureMap[x, y] = 0.01f;
+                    }
+                    
                     if (isRiver <= riversMapGenSettings.levels[0] &&
                         isRiver >= riversMapGenSettings.levels[1])
                     {
                         // Речные тайлы
                         WaterTilemap.SetTile(point, waterTile);
-                        isRiver = 1;
+                        moistureMap[x, y] = 0f;
                     }
-                        
-                    if (GroundTilemap.GetTile(point) != fertileGrassTile && moistureLevel >= moistureMapGenSettings.levels[1]) {
-                        // Тайлы песка
-                        SandTilemap.SetTile(point, sandTile);
-                    }
-                    
                 }
 
-                BiomeTile biomeTile = GenerateBiomeTile(moistureLevel, soilType, isRiver);
+                // После обновления значений карты влажности надо заново их считать
+                moistureLevel = moistureMap[x, y];
+
+                BiomeTile biomeTile = GenerateBiomeTile(moistureLevel, soilType);
                 if (biomeTile != null)
                 {
                     // Debug.Log(biomeTile.signature);
@@ -134,12 +135,12 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private BiomeTile GenerateBiomeTile(float moisture, float soilType, float river)
+    private BiomeTile GenerateBiomeTile(float moisture, float soilType)
     {
         foreach (Biome biome in biomes.list)
         {
             if (!biome.checkMoisture(moisture) || !biome.checkSoilType(soilType)) continue;
-            return biome.GetRandomTile(river == 1.0f);
+            return biome.GetRandomTile();
         }
 
         return null;

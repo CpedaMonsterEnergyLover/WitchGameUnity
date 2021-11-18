@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MossyStone
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 3010491762359807747, guid: d1f48c62c78caed4c9faaba7c00da410, type: 3}
+  m_DefaultGameObject: {fileID: 726816630218163460, guid: 7772bc922f57b7b48b692f582d5f24bd, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 1952314899037200113, guid: 48c142de4272f8f42a2f08ed34165e0f, type: 3}
+  m_DefaultGameObject: {fileID: 2111188826900288511, guid: c8fe705feb39db2458f1f598ed637924, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []
