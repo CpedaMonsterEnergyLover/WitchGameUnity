@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Tree0
+  m_Name: SmallOak
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 6233407683141229803, guid: 600e161473b58174a849d33884da57c9, type: 3}
+  m_DefaultGameObject: {fileID: 6739504746978712490, guid: 45a0809125cb27143a4b5edc05c100ba, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Drytree
+  m_Name: DryTree
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 8152323582491599891, guid: bdb9745fe2c8718459400695028e155c, type: 3}
+  m_DefaultGameObject: {fileID: 6683432959305754305, guid: bdb9745fe2c8718459400695028e155c, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

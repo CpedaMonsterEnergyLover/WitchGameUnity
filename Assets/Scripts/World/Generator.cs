@@ -64,8 +64,8 @@ public class Generator : MonoBehaviour
         
         cardinalMap = GenerateCardinalMap();
         soilTypeMap = GenerateNoiseMap(soilTypeMapGenSettings, mapWidth, mapHeight, _seed, Vector2.zero);
-        riversMap = GenerateNoiseMap(riversMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth, 0));
-        moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 2, 0));
+        riversMap = GenerateNoiseMap(riversMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 5, 0));
+        moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 10, 0));
 
         InitBiomesData();
         

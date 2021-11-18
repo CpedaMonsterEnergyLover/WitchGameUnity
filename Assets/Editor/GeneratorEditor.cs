@@ -11,9 +11,7 @@ public class GeneratorEditor : Editor {
         DrawDefaultInspector();
         
         if (GUILayout.Button ("Update")) {
-            generator.TreeTilemap.ClearAllTiles();
-            generator.SandTilemap.ClearAllTiles();
-            generator.WaterTilemap.ClearAllTiles();
+            generator.ClearAllTiles();
             generator.GenerateWorld();
         }
         

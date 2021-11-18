@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Oak
+  m_Name: BigOak
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 4749222923166424574, guid: 70945cb02ec609a4ba30bb430b158793, type: 3}
+  m_DefaultGameObject: {fileID: 6912212976691318702, guid: e8b56d500cb746349a4c2e151967d80e, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

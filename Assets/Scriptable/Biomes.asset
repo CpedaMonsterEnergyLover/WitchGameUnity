@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Biomes
   m_EditorClassIdentifier: 
   list:
-  - signature: "\u0411\u043E\u043B\u044C\u0448\u043E\u0439 \u0435\u043B\u043E\u0432\u044B\u0439
-      \u043B\u0435\u0441"
+  - signature: "\u0421\u043E\u0441\u043D\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.2
     maxMoistureLevel: 1
     minSoilTypeLevel: 0
@@ -22,7 +21,7 @@ MonoBehaviour:
     groundSpawnChance: 75
     waterSpawnChance: 0
     tiles:
-    - signature: "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u0435\u043B\u044C"
+    - signature: "\u0421\u043E\u0441\u043D\u0430"
       waterTile: 0
       tile: {fileID: 11400000, guid: 380629c6baa947747bef91699e0affcf, type: 2}
       individualSpawnChance: 20

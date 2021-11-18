@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Birch
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 8040919701869227225, guid: 3a6715bdaf5872543938031846b39b07, type: 3}
+  m_DefaultGameObject: {fileID: 7918223253703770396, guid: 3a6715bdaf5872543938031846b39b07, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []
