@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Fader : MonoBehaviour
 {
+    private const float FadeAmount = 0.15f;
+    
     private SpriteRenderer _spriteRenderer;
     private Color _color;
     private IEnumerator routine;
@@ -18,14 +20,14 @@ public class Fader : MonoBehaviour
     public void FadeOut()
     {
         if(routine is not null) StopCoroutine(routine);
-        routine = Fade(_color.a, 0.1f, -0.05f);
+        routine = Fade(_color.a, FadeAmount, -0.05f);
         StartCoroutine(routine);
     }
 
     public void FadeIn()
     {
         if(routine is not null) StopCoroutine(routine);
-        routine = Fade(0.1f, 1f, 0.05f);
+        routine = Fade(_color.a, 1f, 0.05f);
         StartCoroutine(routine);
     }
 

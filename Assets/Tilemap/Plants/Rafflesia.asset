@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f8d02ee82175a9459acea72fe763f1a, type: 3}
-  m_Name: SoilTypeMapGenerator
+  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Name: Rafflesia
   m_EditorClassIdentifier: 
-  scale: 60
-  levels:
-  - 0.3
-  - 0.65
-  octaves: 5
-  persistance: 0.5
-  lacunarity: 3
+  m_DefaultSprite: {fileID: 0}
+  m_DefaultGameObject: {fileID: 5272847704232693237, guid: 041ae5f14b929c74f89f3fc71c792d22, type: 3}
+  m_DefaultColliderType: 1
+  m_TilingRules: []

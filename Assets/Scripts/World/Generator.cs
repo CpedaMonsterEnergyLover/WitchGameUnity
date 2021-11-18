@@ -11,8 +11,8 @@ public class Generator : MonoBehaviour
     public bool GenerateOnStart;
     public int mapWidth;
     public int mapHeight = 50;
+    public string seed;
     public AnimationCurve cardinality;
-    public int seed = 0;
     [Header("Стороны света (1 - юг, 0 - север)")]
     public bool GenerateCardinalityPoints;
     public Vector2Int cardinalPoints;
@@ -21,6 +21,7 @@ public class Generator : MonoBehaviour
     public Tilemap GroundTilemap;
     public Tilemap SandTilemap;
     public Tilemap WaterTilemap;
+    public Tilemap PlainsTilemap;
     public Tilemap TreeTilemap;
     [Header("Тайлы")]
     public TileBase fertileGrassTile;
@@ -28,14 +29,15 @@ public class Generator : MonoBehaviour
     public TileBase sandTile;
     public TileBase waterTile;
     public TileBase swampTile;
+    public TileBase plainsTile;
     [Header("Генераторы")]
     public GeneratorSettings soilTypeMapGenSettings;
     public GeneratorSettings riversMapGenSettings;
     public GeneratorSettings moistureMapGenSettings;
     
-    // Private 
+    // Private
+    private int _seed;
     private float[] cardinalMap;
-
     private float[,] soilTypeMap;
     private float[,] riversMap;
     private float[,] moistureMap;
@@ -55,14 +57,15 @@ public class Generator : MonoBehaviour
     
     public void GenerateWorld()
     {
-        Random.InitState(seed);
+        _seed = Animator.StringToHash(seed);
+        Random.InitState(_seed);
         
         if(GenerateCardinalityPoints) cardinalPoints = GetCardinalPoints();
         
         cardinalMap = GenerateCardinalMap();
-        soilTypeMap = GenerateNoiseMap(soilTypeMapGenSettings, mapWidth, mapHeight, seed, Vector2.zero);
-        riversMap = GenerateNoiseMap(riversMapGenSettings, mapWidth, mapHeight, seed, new Vector2(mapWidth, 0));
-        moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, seed, new Vector2(mapWidth * 2, 0));
+        soilTypeMap = GenerateNoiseMap(soilTypeMapGenSettings, mapWidth, mapHeight, _seed, Vector2.zero);
+        riversMap = GenerateNoiseMap(riversMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth, 0));
+        moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 2, 0));
 
         InitBiomesData();
         
@@ -71,13 +74,20 @@ public class Generator : MonoBehaviour
             for (int y = 0; y < mapHeight; y++)
             {
                 Vector3Int point = new Vector3Int(x, y, 0);
-                // Тип почвы (сухая, обычная, плодородная)
-                float soilType = soilTypeMap[x, y] * cardinalMap[x];
-                GroundTilemap.SetTile(point, soilType <= soilTypeMapGenSettings.levels[0] ? fertileGrassTile : grassTile);
-
                 float isRiver = riversMap[x, y];
-                // Уровень влажности
                 float moistureLevel = moistureMap[x, y];
+                float soilType = soilTypeMap[x, y] * cardinalMap[x];
+
+                // Тип почвы (сухая, обычная, плодородная)
+                if (soilType <= soilTypeMapGenSettings.levels[0])
+                {
+                    GroundTilemap.SetTile(point, fertileGrassTile);
+                } else {
+                    GroundTilemap.SetTile(point, grassTile);
+                    if (soilType > soilTypeMapGenSettings.levels[1]) PlainsTilemap.SetTile(point, plainsTile);
+                }
+
+                // Уровень влажности
                 if (moistureLevel <= moistureMapGenSettings.levels[0])
                 {
                     WaterTilemap.SetTile(point, waterTile);
@@ -87,12 +97,17 @@ public class Generator : MonoBehaviour
                 {
                     GroundTilemap.SetTile(point, fertileGrassTile);
                     if (moistureLevel <= moistureMapGenSettings.levels[1])
-                        WaterTilemap.SetTile(point, swampTile);
+                    {
+                        if (soilType <= soilTypeMapGenSettings.levels[1])
+                        {
+                            WaterTilemap.SetTile(point, swampTile);
+                        }
+                    }
                 }
                 
                 // Реки
-                if (isRiver <= riversMapGenSettings.levels[0] + 0.04f &&
-                    isRiver >= riversMapGenSettings.levels[1] - 0.04f)
+                if (isRiver <= riversMapGenSettings.levels[0] + 0.03f &&
+                    isRiver >= riversMapGenSettings.levels[1] - 0.03f)
                 {
                     if (isRiver <= riversMapGenSettings.levels[0] &&
                         isRiver >= riversMapGenSettings.levels[1])
@@ -102,7 +117,7 @@ public class Generator : MonoBehaviour
                         isRiver = 1;
                     }
                         
-                    if (GroundTilemap.GetTile(point) != fertileGrassTile) {
+                    if (GroundTilemap.GetTile(point) != fertileGrassTile && moistureLevel >= moistureMapGenSettings.levels[1]) {
                         // Тайлы песка
                         SandTilemap.SetTile(point, sandTile);
                     }
@@ -167,6 +182,7 @@ public class Generator : MonoBehaviour
         WaterTilemap.ClearAllTiles();
         SandTilemap.ClearAllTiles();
         TreeTilemap.ClearAllTiles();
+        PlainsTilemap.ClearAllTiles();
     }
 
     #endregion
