@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Fader : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class Fader : MonoBehaviour
     
     private SpriteRenderer _spriteRenderer;
     private Color _color;
-    private IEnumerator routine;
+    private IEnumerator _routine;
+    public bool IsFaded;
+    public bool IsBlocked;
 
-    private void Awake()
+    private void Start()
     {
         _spriteRenderer = GetComponentInParent<SpriteRenderer>();
         _color = _spriteRenderer.color;
@@ -19,21 +22,22 @@ public class Fader : MonoBehaviour
 
     public void FadeOut()
     {
-        if(routine is not null) StopCoroutine(routine);
-        routine = Fade(_color.a, FadeAmount, -0.05f);
-        StartCoroutine(routine);
+        if (IsBlocked) return;
+        if(_routine is not null) StopCoroutine(_routine);
+        _routine = Fade(_color.a, FadeAmount, -0.05f);
+        StartCoroutine(_routine);
     }
 
     public void FadeIn()
     {
-        if(routine is not null) StopCoroutine(routine);
-        routine = Fade(_color.a, 1f, 0.05f);
-        StartCoroutine(routine);
+        if(_routine is not null) StopCoroutine(_routine);
+        _routine = Fade(_color.a, 1f, 0.05f);
+        StartCoroutine(_routine);
     }
 
     private IEnumerator Fade(float from, float to, float direction)
     {
-        if (Math.Sign(direction) == -1)
+        if (direction < 0)
         {
             for (float ft = from;  ft > to; ft += direction)
             {

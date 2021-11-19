@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SmallOak
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 6739504746978712490, guid: 45a0809125cb27143a4b5edc05c100ba, type: 3}
+  m_DefaultGameObject: {fileID: 6632383631379209973, guid: 45a0809125cb27143a4b5edc05c100ba, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

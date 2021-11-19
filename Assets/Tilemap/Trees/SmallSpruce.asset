@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SmallSpruce
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 5100165450068224822, guid: f7398894abdb94b42809f2316c145e61, type: 3}
+  m_DefaultGameObject: {fileID: 5380639177587398265, guid: f7398894abdb94b42809f2316c145e61, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

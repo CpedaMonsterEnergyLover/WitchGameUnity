@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pine
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 2631023171733533292, guid: 8dd51cec7ded28e49a52ef395f78d894, type: 3}
+  m_DefaultGameObject: {fileID: 2879167886039669097, guid: 8dd51cec7ded28e49a52ef395f78d894, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

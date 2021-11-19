@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DryTree
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 6683432959305754305, guid: bdb9745fe2c8718459400695028e155c, type: 3}
+  m_DefaultGameObject: {fileID: 5819856570607541741, guid: bdb9745fe2c8718459400695028e155c, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BigSpruce
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 3099620752970762221, guid: 6fda5a39bef43e04f929f4f979d634ff, type: 3}
+  m_DefaultGameObject: {fileID: 2103907452424057625, guid: 6fda5a39bef43e04f929f4f979d634ff, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

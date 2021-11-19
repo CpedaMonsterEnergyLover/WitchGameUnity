@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OrangeTree
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 2048144772894964170, guid: 9d407d83ea406734c950f625b9098916, type: 3}
+  m_DefaultGameObject: {fileID: 3099207170925861650, guid: 9d407d83ea406734c950f625b9098916, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

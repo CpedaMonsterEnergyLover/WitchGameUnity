@@ -9,6 +9,7 @@ public class FOVFader : MonoBehaviour
         if (fader is not null)
         {
             fader.FadeOut();
+            fader.IsFaded = true;
         }
     }
 
@@ -19,6 +20,7 @@ public class FOVFader : MonoBehaviour
         if (fader is not null)
         {
             fader.FadeIn();
+            fader.IsFaded = false;
         }
     }
 }

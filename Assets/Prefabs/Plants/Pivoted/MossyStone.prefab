@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6185953864301481997}
   - component: {fileID: 6182292527938162021}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MossyStone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
