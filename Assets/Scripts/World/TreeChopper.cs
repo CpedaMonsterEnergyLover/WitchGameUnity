@@ -6,11 +6,14 @@ using UnityEngine;
 public class TreeChopper : MonoBehaviour
 {
     private Fader _fader;
-    private int hp = 3;
+    private int _hp = 2;
+    private bool _isShaking;
+    private bool _isChopped;
 
     private void OnMouseEnter()
     {
         _fader = transform.parent.GetComponentInChildren<Fader>();
+        if (_fader is null) return;
         if(_fader.IsFaded) _fader.FadeIn();
     }
 
@@ -20,48 +23,58 @@ public class TreeChopper : MonoBehaviour
         if(_fader.IsFaded) _fader.FadeOut();
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
-        ChopTree();
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+        {
+            ChopTree();
+        }
     }
 
     private void ChopTree()
     {
-        hp--;
-        if (hp > 0)
+        if (_isShaking || _isChopped) return;
+        _hp--;
+        Debug.Log("Hp left " + _hp);
+        if (_hp > 0)
         {
-            StartCoroutine(Shake(0.75f, 12.5f));
+            StartCoroutine(Shake(0.75f, 15f));
         }
         else 
         {
-            _fader.IsBlocked = true;
             _fader.FadeIn();
             StartCoroutine(Fall(2.5f, 
                 transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
         }
     }
     
-    
-    
-    IEnumerator Fall(float duration, float direction) {
+    private IEnumerator Fall(float duration, float direction)
+    {
+        _isChopped = true;
+        _fader.IsBlocked = true;
         float t = 0.0f;
         while ( t  < duration )
         {
             t += Time.deltaTime;
-            transform.parent.GetChild(2).rotation = Quaternion.AngleAxis(t / duration * 85f, direction < 0 ? Vector3.forward : Vector3.back);
+            _fader.transform.rotation = Quaternion.AngleAxis
+            (t / duration * 85f, 
+                direction < 0 ? Vector3.forward : Vector3.back);
             yield return null;
         }
-        Destroy(transform.parent.parent.gameObject);
+
+        Destroy(_fader.gameObject);
     }
 
-    IEnumerator Shake(float duration, float speed)
+    private IEnumerator Shake(float duration, float speed)
     {
+        _isShaking = true;
         float t = 0.0f;
         while ( t  < duration )
         {
             t += Time.deltaTime;
-            transform.parent.GetChild(2).rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
+            _fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
             yield return null;
         }
+        _isShaking = false;
     }
 }
