@@ -17,5 +17,5 @@ MonoBehaviour:
   - 0.475
   - 0.375
   octaves: 5
-  persistance: 0.21
+  persistance: 0.243
   lacunarity: 3.46

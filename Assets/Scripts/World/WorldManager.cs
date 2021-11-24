@@ -11,6 +11,7 @@ public class WorldManager : MonoBehaviour
     // Public fields
     public Generator generator;
     public Transform playerTransform;
+    public int targetFrameRate = 60;
     [Range(1,50)]
     public int viewRangeX;
     [Range(1,50)]
@@ -34,13 +35,13 @@ public class WorldManager : MonoBehaviour
     public TileBase plainsGrassTile;
     
     // Private fields
-    private WorldTile[,] WorldTiles;
+    public WorldTile[,] WorldTiles { private set; get; }
     private Tilemap[] tilemapByEnumIndex;
     private TileBase[] tilebaseByEnumIndex;
     
     // Tile cache
-    private List<WorldTile> tileCache = new();
-    private List<Vector3Int> loadedTiles = new();
+    public List<WorldTile> tileCache { private set; get; }
+    public List<Vector3Int> loadedTiles { private set; get; }
 
     #endregion
 
@@ -54,6 +55,7 @@ public class WorldManager : MonoBehaviour
         int mapCenterY = generator.mapHeight / 2;
         worldGrid.transform.position = new Vector3(0f, 0f, 0);
         playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
+        Application.targetFrameRate = targetFrameRate;
     }
 
     private void Start()
@@ -101,8 +103,6 @@ public class WorldManager : MonoBehaviour
             loadedTiles.Remove(tile);
         });
         toRemove.Clear();
-        
-        Debug.Log("Cache size " + tileCache.Count);
     }
 
     #endregion
@@ -113,6 +113,8 @@ public class WorldManager : MonoBehaviour
 
     public WorldTile[,] Generate()
     {
+        tileCache = new List<WorldTile>();
+        loadedTiles = new List<Vector3Int>();
         ClearAllTiles();
         InitTileIndexArrays();
         return generator.GenerateWorld();
