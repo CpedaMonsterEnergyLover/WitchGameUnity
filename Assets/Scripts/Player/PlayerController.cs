@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
 
     #region UnityMethods
 
-    private void Awake()
-    {
-        Application.targetFrameRate = 60;
-    }
-
     private void Update()
     {
         UpdateMovementInput();
