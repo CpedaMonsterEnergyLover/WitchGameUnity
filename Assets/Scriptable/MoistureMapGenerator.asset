@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8d02ee82175a9459acea72fe763f1a, type: 3}
   m_Name: MoistureMapGenerator
   m_EditorClassIdentifier: 
-  scale: 120
+  scale: 75
   levels:
   - 0.05
   - 0.2
   octaves: 5
-  persistance: 0.559
+  persistance: 0.536
   lacunarity: 1.94

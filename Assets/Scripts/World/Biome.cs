@@ -61,7 +61,7 @@ public class Biome
 public class BiomeTile
 {
     public string signature;
-    public RuleTile tile;
+    public RuleTile ruleTile;
     // Индивидуальный шанс спавна объекта
     // ДЛЯ БИОМА СУММА ВСЕХ ИНДИВИДУАЛЬНЫХ ШАНСОВ СПАВНА ЕГО ОБЪЕКТОВ ДОЛЖНА БЫТЬ РАВНА 100
     // ИНАЧЕ КАКИЕ-ТО ИЗ НИХ БУДУТ УЩЕМЛЕНЫ ИЛИ ДАЖЕ НЕ ВЛЕЗУТ В РАНДОМ

@@ -21,13 +21,13 @@ MonoBehaviour:
     spawnChance: 75
     tiles:
     - signature: "\u0421\u043E\u0441\u043D\u0430"
-      tile: {fileID: 11400000, guid: 380629c6baa947747bef91699e0affcf, type: 2}
+      ruleTile: {fileID: 11400000, guid: 380629c6baa947747bef91699e0affcf, type: 2}
       individualSpawnChance: 15
     - signature: "\u041F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A"
-      tile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
+      ruleTile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
       individualSpawnChance: 75
     - signature: "\u0417\u0430\u043C\u0448\u0435\u043B\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C"
-      tile: {fileID: 11400000, guid: d495ca21033fecb42b5047833bc39982, type: 2}
+      ruleTile: {fileID: 11400000, guid: d495ca21033fecb42b5047833bc39982, type: 2}
       individualSpawnChance: 10
   - signature: "\u0415\u043B\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.1
@@ -37,13 +37,13 @@ MonoBehaviour:
     spawnChance: 50
     tiles:
     - signature: "\u0418 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F"
-      tile: {fileID: 11400000, guid: ef79b1b4a9988c349a6d761b56a4e16e, type: 2}
+      ruleTile: {fileID: 11400000, guid: ef79b1b4a9988c349a6d761b56a4e16e, type: 2}
       individualSpawnChance: 15
     - signature: "\u0415\u043B\u044C \u0431\u043E\u043B\u044C\u0448\u0430\u044F"
-      tile: {fileID: 11400000, guid: 150ed1211a1675d4e816da5206b7a7a3, type: 2}
+      ruleTile: {fileID: 11400000, guid: 150ed1211a1675d4e816da5206b7a7a3, type: 2}
       individualSpawnChance: 35
     - signature: "\u041F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A"
-      tile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
+      ruleTile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
       individualSpawnChance: 50
   - signature: "\u0414\u0443\u0431\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.3
@@ -53,13 +53,13 @@ MonoBehaviour:
     spawnChance: 50
     tiles:
     - signature: "\u0434\u0443\u0431"
-      tile: {fileID: 11400000, guid: ef921dc85edaead4c8181e0da86df46e, type: 2}
+      ruleTile: {fileID: 11400000, guid: 38b33bec949ab054e9d66056545965b9, type: 2}
       individualSpawnChance: 30
     - signature: "\u0434\u0443\u0431 \u043F\u043E\u043C\u0435\u043D\u044C\u0448\u0435"
-      tile: {fileID: 11400000, guid: efcbdfe88bcd3be49b67b780619dc061, type: 2}
+      ruleTile: {fileID: 11400000, guid: ef921dc85edaead4c8181e0da86df46e, type: 2}
       individualSpawnChance: 10
     - signature: "\u041A\u0443\u0441\u0442\u0438\u043A"
-      tile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
+      ruleTile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
       individualSpawnChance: 60
   - signature: "\u0426\u0432\u0435\u0442\u043D\u043E\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.3
@@ -69,13 +69,13 @@ MonoBehaviour:
     spawnChance: 25
     tiles:
     - signature: "\u041E\u0440\u0430\u043D\u0436"
-      tile: {fileID: 11400000, guid: 8b557459b8915f44e8241a7e38d2af45, type: 2}
+      ruleTile: {fileID: 11400000, guid: 8b557459b8915f44e8241a7e38d2af45, type: 2}
       individualSpawnChance: 10
     - signature: "\u043D\u0435 \u043E\u0440\u0430\u043D\u0436"
-      tile: {fileID: 11400000, guid: 604bfbfa0d015f445a50b9e719842650, type: 2}
+      ruleTile: {fileID: 11400000, guid: 604bfbfa0d015f445a50b9e719842650, type: 2}
       individualSpawnChance: 15
     - signature: "\u041A\u0443\u0441\u0442\u0438\u043A"
-      tile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
+      ruleTile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
       individualSpawnChance: 75
   - signature: "\u0411\u043E\u043B\u043E\u0442\u043E"
     minMoistureLevel: 0.02
@@ -85,16 +85,16 @@ MonoBehaviour:
     spawnChance: 50
     tiles:
     - signature: "\u0441\u0443\u0445\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E"
-      tile: {fileID: 11400000, guid: 80a4448d3aa5d274188098455619b6b6, type: 2}
+      ruleTile: {fileID: 11400000, guid: 80a4448d3aa5d274188098455619b6b6, type: 2}
       individualSpawnChance: 5
     - signature: "\u0440\u0430\u0444\u0444\u043B\u0435\u0437\u0438\u044F"
-      tile: {fileID: 11400000, guid: 9e4193238da04a84dbf88c5a01082f32, type: 2}
+      ruleTile: {fileID: 11400000, guid: 9e4193238da04a84dbf88c5a01082f32, type: 2}
       individualSpawnChance: 10
     - signature: "\u0446\u0432\u0435\u0442\u043E\u0447\u0435\u043A"
-      tile: {fileID: 11400000, guid: 103a87003df5f5242822d0476fcc4f97, type: 2}
+      ruleTile: {fileID: 11400000, guid: 103a87003df5f5242822d0476fcc4f97, type: 2}
       individualSpawnChance: 50
     - signature: "\u041F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A"
-      tile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
+      ruleTile: {fileID: 11400000, guid: 0ab175f6bffe7264b9bb608d9f08123a, type: 2}
       individualSpawnChance: 35
   - signature: "\u0411\u0435\u0440\u0435\u0437\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.6
@@ -104,10 +104,10 @@ MonoBehaviour:
     spawnChance: 45
     tiles:
     - signature: "\u0411\u0435\u0440\u0435\u0437\u0430"
-      tile: {fileID: 11400000, guid: 1546aabaa72316b4db4d23fe0fa8d540, type: 2}
+      ruleTile: {fileID: 11400000, guid: 1546aabaa72316b4db4d23fe0fa8d540, type: 2}
       individualSpawnChance: 20
     - signature: "\u041A\u0443\u0441\u0442\u0438\u043A"
-      tile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
+      ruleTile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
       individualSpawnChance: 80
   - signature: "\u042F\u0431\u043B\u043E\u043D\u0438"
     minMoistureLevel: 0.6
@@ -117,7 +117,7 @@ MonoBehaviour:
     spawnChance: 20
     tiles:
     - signature: "\u042F\u0431\u043B\u043E\u043D\u044F"
-      tile: {fileID: 11400000, guid: 64559c6c56f654943941760a4e2ba680, type: 2}
+      ruleTile: {fileID: 11400000, guid: 64559c6c56f654943941760a4e2ba680, type: 2}
       individualSpawnChance: 100
   - signature: "\u041B\u0443\u0433"
     minMoistureLevel: 0.3
@@ -127,10 +127,10 @@ MonoBehaviour:
     spawnChance: 70
     tiles:
     - signature: "\u0422\u0440\u0430\u0432\u0430"
-      tile: {fileID: 11400000, guid: 739e38c302df6c9498b297fb34e0961a, type: 2}
+      ruleTile: {fileID: 11400000, guid: 739e38c302df6c9498b297fb34e0961a, type: 2}
       individualSpawnChance: 97
     - signature: "\u041A\u0430\u043C\u0435\u043D\u044C"
-      tile: {fileID: 11400000, guid: a8ee5664f92965946a4454caed10691b, type: 2}
+      ruleTile: {fileID: 11400000, guid: a8ee5664f92965946a4454caed10691b, type: 2}
       individualSpawnChance: 3
   - signature: "\u0417\u0435\u043B\u0435\u043D\u044B\u0439 \u043B\u0443\u0433"
     minMoistureLevel: 0.3
@@ -140,10 +140,10 @@ MonoBehaviour:
     spawnChance: 70
     tiles:
     - signature: "\u0422\u0440\u0430\u0432\u0430"
-      tile: {fileID: 11400000, guid: de0a688764cc3f244ae52743ff5a6ba1, type: 2}
+      ruleTile: {fileID: 11400000, guid: de0a688764cc3f244ae52743ff5a6ba1, type: 2}
       individualSpawnChance: 80
     - signature: "\u0426\u0432\u0435\u0442\u043E\u0447\u043A\u0438"
-      tile: {fileID: 11400000, guid: 5bc3429661f246d4b963c31da8e3ae35, type: 2}
+      ruleTile: {fileID: 11400000, guid: 5bc3429661f246d4b963c31da8e3ae35, type: 2}
       individualSpawnChance: 20
   - signature: "\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\u0438"
     minMoistureLevel: 0.25
@@ -153,7 +153,7 @@ MonoBehaviour:
     spawnChance: 60
     tiles:
     - signature: "\u041A\u0443\u0441\u0442"
-      tile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
+      ruleTile: {fileID: 11400000, guid: 9bb0ffa164b0b26438abc0984a3e42b8, type: 2}
       individualSpawnChance: 20
   - signature: "\u0412\u043E\u0434\u0430"
     minMoistureLevel: 0
@@ -163,10 +163,10 @@ MonoBehaviour:
     spawnChance: 15
     tiles:
     - signature: "\u041A\u0443\u0432\u0448\u0438\u043D\u043A\u0430 \u0431\u043E\u043B\u044C\u0448\u0430\u044F"
-      tile: {fileID: 11400000, guid: 2eae649f7abfe03418ffb45c616f6c64, type: 2}
+      ruleTile: {fileID: 11400000, guid: 2eae649f7abfe03418ffb45c616f6c64, type: 2}
       individualSpawnChance: 2
     - signature: "\u041C\u0438\u043A\u0440\u043E\u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0430"
-      tile: {fileID: 11400000, guid: db9c91422ee72d546bb4c0056be23554, type: 2}
+      ruleTile: {fileID: 11400000, guid: db9c91422ee72d546bb4c0056be23554, type: 2}
       individualSpawnChance: 98
   - signature: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u0431\u0435\u0440\u0435\u0433"
     minMoistureLevel: 0.01
@@ -176,5 +176,5 @@ MonoBehaviour:
     spawnChance: 8
     tiles:
     - signature: "\u041A\u0430\u043C\u0435\u043D\u044C"
-      tile: {fileID: 11400000, guid: a8ee5664f92965946a4454caed10691b, type: 2}
+      ruleTile: {fileID: 11400000, guid: a8ee5664f92965946a4454caed10691b, type: 2}
       individualSpawnChance: 100

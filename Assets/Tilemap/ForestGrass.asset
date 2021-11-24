@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: pipo-map001_0
+  m_Name: ForestGrass
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -488034484, guid: 22935dbe2ba15154a838d30397c735a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
