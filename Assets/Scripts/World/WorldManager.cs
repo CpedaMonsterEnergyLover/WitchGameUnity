@@ -117,6 +117,7 @@ public class WorldManager : MonoBehaviour
         loadedTiles = new List<Vector3Int>();
         ClearAllTiles();
         InitTileIndexArrays();
+        // GroundTilemap.
         return generator.GenerateWorld();
     }
 

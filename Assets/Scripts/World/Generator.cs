@@ -1,7 +1,4 @@
-using System;
-using System.Text;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class Generator : MonoBehaviour
@@ -66,6 +63,8 @@ public class Generator : MonoBehaviour
         moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 10, 0));
 
         InitBiomesData();
+        
+        
         
         for (int x = 0; x < mapWidth; x++)
         {
