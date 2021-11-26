@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Tropical
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 1468552601687247008, guid: ba6a6fc52e797f3488de422ac33eb81d, type: 3}
+  m_DefaultGameObject: {fileID: 3829114249702152879, guid: ad741602460afab45bfae59072ff5111, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

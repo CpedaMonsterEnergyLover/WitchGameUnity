@@ -5,9 +5,14 @@ using UnityEngine;
 public class TreeSaveData : InteractableSaveData
 {
     [Header("Tree data")] 
-    public int barkLeft = 20;
-    public int resinLeft = 10;
-    public bool signed = false;
+    public int barkLeft;
+    public int resinLeft;
+    public bool signed;
 
-    public TreeSaveData(int id) : base(InteractableType.Tree, id) { }
+    public TreeSaveData(int id) : base(InteractableType.Tree, id)
+    {
+        barkLeft = 20;
+        resinLeft = 10;
+        signed = false;
+    }
 }

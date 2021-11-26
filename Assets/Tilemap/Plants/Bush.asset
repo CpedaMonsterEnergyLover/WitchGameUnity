@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bush
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 6807141041109441329, guid: b4b9955cfad65f540b3adda3f5e9fe1d, type: 3}
+  m_DefaultGameObject: {fileID: 3337882223382903268, guid: 0878469a8cc9ca047bfa14ac20867d38, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

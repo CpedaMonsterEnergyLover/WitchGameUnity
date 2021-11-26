@@ -8,7 +8,7 @@ public class InteractableSaveData
     public string instanceID = null;
     public InteractableType interactableType;
     public int interactableID;
-    public Vector3Int position;
+    public Vector3 position;
 
     public override string ToString()
     {

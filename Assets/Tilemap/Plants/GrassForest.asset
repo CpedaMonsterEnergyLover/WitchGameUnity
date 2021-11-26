@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GrassForest
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 863335795326402688, guid: 1f86192e11c1cfb4386dea27a452f08e, type: 3}
+  m_DefaultGameObject: {fileID: 8501037824442680476, guid: 58d762768f123c549a9e66367458eac5, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7585542505672853430}
-  - component: {fileID: 8401812526537138539}
   - component: {fileID: 3044361212705022178}
   m_Layer: 0
-  m_Name: Interactor
+  m_Name: TreeInteractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,18 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8401812526537138539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8885617985730878702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8788433c4568844bd373cf5c5bea1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3044361212705022178
 BoxCollider2D:
   m_ObjectHideFlags: 0

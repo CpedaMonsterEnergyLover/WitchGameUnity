@@ -1,4 +1,5 @@
 using System.Text;
+using UnityEngine;
 
 public class WoodTree : Interactable
 {
@@ -8,16 +9,20 @@ public class WoodTree : Interactable
     
     #region ClassMethods
 
+    protected override void Interact()
+    {
+        base.Interact();
+        Debug.Log("Fucking oak lul");
+    }
 
     protected override void InitInstanceData(InteractableSaveData data)
     {
         InstanceData = new TreeSaveData(data.interactableID);
         InstanceData.instanceID = GenerateID();
-        /*GetInstanceData().MaxHealth = (int) (GetData().witherSpeed * 
-                                             World.WorldSettings.seasonLength * 
-                                             GetInstanceData().FrostResistance * 24);
-        GetInstanceData().Health = GetInstanceData().MaxHealth;*/
     }
+    
+     protected override void OnTileLoad() { }
+
     
     
     #endregion

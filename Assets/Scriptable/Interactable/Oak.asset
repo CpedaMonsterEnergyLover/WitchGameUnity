@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: Oak
   m_EditorClassIdentifier: 
-  interactableType: 0
-  name: 
+  interactableType: 1
+  prefab: {fileID: 666572998755079261, guid: e8b56d500cb746349a4c2e151967d80e, type: 3}
+  name: "\u0414\u0443\u0431"
   hasFruits: 0
   bloomDuration: 1
   fertileDuration: 1
-  barkItem: 
+  barkItem: "\u041A\u043E\u0440\u0430 \u0434\u0443\u0431\u0430"
   resinItem: 
-  logItem: 
+  logItem: "\u0414\u0443\u0431\u043E\u0432\u043E\u0435 \u0431\u0440\u0435\u0432\u043D\u043E"

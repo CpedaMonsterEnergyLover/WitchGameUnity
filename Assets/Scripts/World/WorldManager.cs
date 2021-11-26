@@ -20,6 +20,8 @@ public class WorldManager : MonoBehaviour
     public int tileCacheSize;
     [Header("Грид")]
     public Grid worldGrid;
+    [Header("К чему крепить все объекты")]
+    public Transform gameObjectsTransform;
     [Header("Слои грида")]
     public Tilemap GroundTilemap;
     public Tilemap SandTilemap;
@@ -35,9 +37,9 @@ public class WorldManager : MonoBehaviour
     public TileBase plainsGrassTile;
     
     // Private fields
-    public WorldTile[,] WorldTiles { private set; get; }
-    private Tilemap[] tilemapByEnumIndex;
-    private TileBase[] tilebaseByEnumIndex;
+    public WorldData worldData;
+    private Tilemap[] _tilemapByEnumIndex;
+    private TileBase[] _tilebaseByEnumIndex;
     
     // Tile cache
     public List<WorldTile> tileCache { private set; get; }
@@ -62,8 +64,7 @@ public class WorldManager : MonoBehaviour
     {
         if (generator.GenerateOnStart)
         {
-            WorldTiles = Generate();
-            //DrawAllTiles(WorldTiles);
+            Generate();
         }
     }
 
@@ -78,11 +79,11 @@ public class WorldManager : MonoBehaviour
                 int targetY = y + playerPosition.y;
                 // Проверка на выход за пределы карты
                 if (targetX < 0 || targetX >= generator.mapWidth || targetY < 0 || targetY >= generator.mapHeight) continue;
-                WorldTile tile = WorldTiles[targetX, targetY];
+                WorldTile tile = worldData.WorldTiles[targetX, targetY];
                 // Если тайл еще не загружен
                 if (tile.loaded && !tile.cached) continue;
                 Vector3Int pos = new Vector3Int(targetX, targetY);
-                DrawTile(WorldTiles, pos);
+                DrawTile(worldData.WorldTiles, pos);
             }
         }
 
@@ -99,7 +100,7 @@ public class WorldManager : MonoBehaviour
         
         toRemove.ForEach(tile =>
         {
-            EraseTile(WorldTiles[tile.x, tile.y]);
+            EraseTile(worldData.WorldTiles[tile.x, tile.y]);
             loadedTiles.Remove(tile);
         });
         toRemove.Clear();
@@ -111,27 +112,25 @@ public class WorldManager : MonoBehaviour
 
     #region ClassMethods
 
-    public WorldTile[,] Generate()
+    public void Generate()
     {
+        InteractableObjects.InitCollection();
         tileCache = new List<WorldTile>();
         loadedTiles = new List<Vector3Int>();
         ClearAllTiles();
         InitTileIndexArrays();
-        // GroundTilemap.
-        return generator.GenerateWorld();
+        worldData = generator.GenerateWorld();
     }
 
-    public void DrawAllTiles(WorldTile[,] tiles)
+    public void DrawAllTiles()
     {
-        InitTileIndexArrays();
-
-        for (int x = 0; x < tiles.GetLength(0); x++)
+        for (int x = 0; x < worldData.MapWidth; x++)
         {
-            for (int y = 0; y < tiles.GetLength(1); y++)
+            for (int y = 0; y < worldData.MapHeight; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
                 loadedTiles.Add(position);
-                DrawTile(tiles, position);
+                DrawTile(worldData.WorldTiles, position);
             }
         }
     }
@@ -146,7 +145,7 @@ public class WorldManager : MonoBehaviour
         {
             // Если на нем есть почва, ставит ее
             if (tile.layers[i] != SoilType.None)
-                tilemapByEnumIndex[i].SetTile(position, tilebaseByEnumIndex[(int) tile.layers[i]]);
+                _tilemapByEnumIndex[i].SetTile(position, _tilebaseByEnumIndex[(int) tile.layers[i]]);
         }
         
         // Если кеширован, то включает его объект
@@ -156,11 +155,8 @@ public class WorldManager : MonoBehaviour
             tileCache.Remove(tile);
         }
         
-        // Если не кеширован то создает заново и
-        // Сохраняет ссылку на экземпляр созданного
-        tile.instantiatedObject = AddTileObject(tile.ruleTile, position);
-        tile.loaded = true;
-        tile.cached = false;
+        tile.InstantiateInteractable(gameObjectsTransform);
+        
     }
 
     private void EraseTile(WorldTile tile)
@@ -170,7 +166,7 @@ public class WorldManager : MonoBehaviour
         {
             // Если на нем есть что-то, чистит тайл
             if (tile.layers[i] != SoilType.None)
-                tilemapByEnumIndex[i].SetTile(tile.position, null);
+                _tilemapByEnumIndex[i].SetTile(tile.position, null);
         }
         
         CacheTile(tile);
@@ -198,19 +194,16 @@ public class WorldManager : MonoBehaviour
         TreeTilemap.SetTile(peek.position, null);
     }
 
-    private GameObject AddTileObject(RuleTile ruleTile, Vector3Int position)
-    {
-        if (ruleTile is not null) TreeTilemap.SetTile(position, ruleTile);
-        return TreeTilemap.GetInstantiatedObject(position);
-    }
-
     public void ClearAllTiles()
     {
         GroundTilemap.ClearAllTiles();
         WaterTilemap.ClearAllTiles();
         SandTilemap.ClearAllTiles();
-        TreeTilemap.ClearAllTiles();
         PlainsTilemap.ClearAllTiles();
+        foreach (Transform GO in gameObjectsTransform)
+        {
+            DestroyImmediate(GO.gameObject);
+        }
     }
 
     #endregion
@@ -221,8 +214,8 @@ public class WorldManager : MonoBehaviour
 
     private void InitTileIndexArrays()
     {
-        tilemapByEnumIndex = CreateTilemapByEnumIndexArray();
-        tilebaseByEnumIndex = CreateTilebaseByEnumIndexArray();
+        _tilemapByEnumIndex = CreateTilemapByEnumIndexArray();
+        _tilebaseByEnumIndex = CreateTilebaseByEnumIndexArray();
     }
     
     public Tilemap[] CreateTilemapByEnumIndexArray()

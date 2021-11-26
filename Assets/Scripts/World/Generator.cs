@@ -41,16 +41,10 @@ public class Generator : MonoBehaviour
                 settings.octaves, settings.persistance, settings.lacunarity, offset);
     }
     
-    public WorldTile[,] GenerateWorld()
+    public WorldData GenerateWorld()
     {
-        WorldTile[,] worldTiles = new WorldTile[mapWidth, mapHeight];
-        for (int x = 0; x < worldTiles.GetLength(0); x++)
-        {
-            for (int y = 0; y < worldTiles.GetLength(1); y++)
-            {
-                worldTiles[x, y] = new WorldTile();
-            }
-        }
+
+        WorldData worldData = new WorldData(mapWidth, mapHeight);
 
         _seed = Animator.StringToHash(seed);
         Random.InitState(_seed);
@@ -63,8 +57,6 @@ public class Generator : MonoBehaviour
         moistureMap = GenerateNoiseMap(moistureMapGenSettings, mapWidth, mapHeight, _seed, new Vector2(mapWidth * 10, 0));
 
         InitBiomesData();
-        
-        
         
         for (int x = 0; x < mapWidth; x++)
         {
@@ -79,13 +71,13 @@ public class Generator : MonoBehaviour
                 // Тип почвы (Торф, лес, поле)
                 if (soilType <= soilTypeMapGenSettings.levels[0])
                 {
-                    worldTiles[x, y].AddLayer(GridLayer.Ground, SoilType.FertileGrass);
+                    worldData.SetLayer(x, y, GridLayer.Ground, SoilType.FertileGrass);
                 } else {
-                    worldTiles[x, y].AddLayer(GridLayer.Ground, SoilType.ForestGrass);
+                    worldData.SetLayer(x, y, GridLayer.Ground, SoilType.ForestGrass);
                     if (soilType > soilTypeMapGenSettings.levels[1] &&
                         moistureLevel > moistureMapGenSettings.levels[1] + 0.05f)
                     {
-                        worldTiles[x, y].AddLayer(GridLayer.Plains, SoilType.PlainsGrass);
+                        worldData.SetLayer(x, y, GridLayer.Plains, SoilType.PlainsGrass);
                     }
                 }
 
@@ -93,16 +85,16 @@ public class Generator : MonoBehaviour
                 if (moistureLevel <= moistureMapGenSettings.levels[0])
                 {
                     // Озера
-                    worldTiles[x, y].AddLayer(GridLayer.Water, SoilType.Water);
+                    worldData.SetLayer(x, y, GridLayer.Water, SoilType.Water);
                     moistureMap[x, y] = 0f;
                 }
                 else if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.06f)
                 {
                     // Болота
-                    worldTiles[x, y].AddLayer(GridLayer.Ground, SoilType.FertileGrass);
+                    worldData.SetLayer(x, y, GridLayer.Ground, SoilType.FertileGrass);
                     if (moistureLevel <= moistureMapGenSettings.levels[1] + 0.01f)
                     {
-                        worldTiles[x, y].AddLayer(GridLayer.Water, SoilType.Swamp);
+                        worldData.SetLayer(x, y, GridLayer.Water, SoilType.Swamp);
                     }
                 }
 
@@ -110,10 +102,10 @@ public class Generator : MonoBehaviour
                 if (isRiver <= riversMapGenSettings.levels[0] + 0.03f &&
                     isRiver >= riversMapGenSettings.levels[1] - 0.03f)
                 {
-                    if (worldTiles[x, y].GetLayer(GridLayer.Ground) != SoilType.FertileGrass
+                    if (worldData.GetLayer(x, y, GridLayer.Ground) != SoilType.FertileGrass
                         && moistureLevel >= moistureMapGenSettings.levels[1]) {
                         // Тайлы песка
-                        worldTiles[x, y].AddLayer(GridLayer.Sand, SoilType.Sand);
+                        worldData.SetLayer(x, y, GridLayer.Sand, SoilType.Sand);
                         moistureMap[x, y] = 0.01f;
                     }
                     
@@ -121,7 +113,7 @@ public class Generator : MonoBehaviour
                         isRiver >= riversMapGenSettings.levels[1])
                     {
                         // Речные тайлы
-                        worldTiles[x, y].AddLayer(GridLayer.Water, SoilType.Water);
+                        worldData.SetLayer(x, y, GridLayer.Water, SoilType.Water);
                         moistureMap[x, y] = 0f;
                     }
                 }
@@ -129,31 +121,27 @@ public class Generator : MonoBehaviour
                 // После обновления значений карты влажности надо заново их считать в переменную
                 moistureLevel = moistureMap[x, y];
 
-                worldTiles[x, y].moistureLevel = moistureLevel;
-                worldTiles[x, y].position = point;
+                worldData.SetMoistureLevel(x, y, moistureLevel);
+                worldData.SetPosition(x, y, point);
 
-                BiomeTile biomeTile = GenerateBiomeTile(moistureLevel, soilType);
-                if (biomeTile is not null) worldTiles[x, y].ruleTile = biomeTile.ruleTile;
+                InteractableIdentifier interactableIdentifier = GenerateBiomeTile(moistureLevel, soilType);
+                worldData.AddInteractableObject(interactableIdentifier, point);
             }
         }
 
-        return worldTiles;
+        return worldData;
     }
 
-    private BiomeTile GenerateBiomeTile(float moisture, float soilType)
+    private InteractableIdentifier GenerateBiomeTile(float moisture, float soilType)
     {
         foreach (Biome biome in biomes.list)
         {
             if (!biome.checkMoisture(moisture) || !biome.checkSoilType(soilType)) continue;
-            return biome.GetRandomTile();
+            InteractableIdentifier identifier = biome.GetRandomTile();
+            return identifier;
         }
 
         return null;
-    }
-
-    private void InitBiomesData()
-    {
-        biomes.list.ForEach(biome => biome.InitTileChances());
     }
     
     private float[] GenerateCardinalMap()
@@ -182,7 +170,10 @@ public class Generator : MonoBehaviour
 
     #region UtilMethods
 
-    
+    private void InitBiomesData()
+    {
+        biomes.list.ForEach(biome => biome.InitTileChances());
+    }
 
     #endregion
 }

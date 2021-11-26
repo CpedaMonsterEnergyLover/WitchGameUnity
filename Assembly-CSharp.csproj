@@ -43,30 +43,31 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Scriptable\InteractableData.cs" />
      <Compile Include="Assets\Scripts\World\Fader.cs" />
+     <Compile Include="Assets\Scripts\World\WorldData.cs" />
+     <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Biomes.cs" />
+     <Compile Include="Assets\Scripts\UI\InspectionText.cs" />
      <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Scriptable\TreeData.cs" />
      <Compile Include="Assets\Scripts\World\Generator.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
+     <Compile Include="Assets\Scripts\Interactable\InteractableObjects.cs" />
      <Compile Include="Assets\Scripts\World\Noise\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TreeChopper.cs" />
      <Compile Include="Assets\Scripts\World\Biome.cs" />
+     <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Scriptable\InteractableData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractableObjects.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Scriptable\TreeData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
-     <Compile Include="Assets\Scripts\UI\InspectionText.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

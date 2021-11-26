@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class Interactable : MonoBehaviour
@@ -19,6 +20,7 @@ public class Interactable : MonoBehaviour
     
     // Private fields
     protected bool InitComplete = false;
+    protected bool loaded;
 
     #endregion
 
@@ -26,13 +28,37 @@ public class Interactable : MonoBehaviour
 
     #region UnityMethods
 
-    
+    private void OnMouseDown()
+    {
+        Interact();
+    }
+
+    /*private void Start()
+    {
+        Init();
+    }*/
 
     #endregion
 
 
 
     #region ClassMethods
+    
+    public static GameObject Create(GameObject prefab, Transform parent, InteractableSaveData saveData)
+    {
+        GameObject instantiatedObject = Instantiate(prefab, parent);
+        instantiatedObject.transform.position = saveData.position;
+        instantiatedObject.transform.rotation = Quaternion.identity;
+        Interactable addedScript = saveData.interactableType switch
+        {
+            InteractableType.Herb => instantiatedObject.AddComponent<WoodTree>(),
+            InteractableType.Tree => instantiatedObject.AddComponent<WoodTree>(),
+            InteractableType.Rock => instantiatedObject.AddComponent<WoodTree>(),
+            _ => throw new ArgumentOutOfRangeException("Unknown interactable type", new Exception())
+        };
+        addedScript.Init(saveData);
+        return instantiatedObject;
+    } 
 
     private void Init(InteractableSaveData data)
     {
@@ -44,7 +70,8 @@ public class Interactable : MonoBehaviour
         // Инициализирует начальные значения
         if (IsNew()) InitInstanceData(data);
         
-        //При загрузке тайла, пересчитывает данные объекта
+        // При загрузке тайла, производит все свойственные ему действия
+        // По прошествии времени
         OnTileLoad();
 
         InitComplete = true;
@@ -60,9 +87,7 @@ public class Interactable : MonoBehaviour
 
 
     #region Utils
-    
-    private void LoadData(InteractableType type, int id) { }
-    
+
     // Должен быть переопределен 
     protected virtual void InitInstanceData(InteractableSaveData data) { }
     

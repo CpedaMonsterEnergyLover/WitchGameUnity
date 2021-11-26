@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GrassPlains
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 863335795326402688, guid: 0443f34d2641e4843bf2f298da8798cf, type: 3}
+  m_DefaultGameObject: {fileID: 1193539120484319695, guid: 5636ee36dbea7174d8f67824855f9d76, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

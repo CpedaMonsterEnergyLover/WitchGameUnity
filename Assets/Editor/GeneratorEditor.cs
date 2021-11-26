@@ -12,7 +12,8 @@ public class GeneratorEditor : Editor {
         
         if (GUILayout.Button ("Update"))
         {
-            worldManager.DrawAllTiles(worldManager.Generate());
+            worldManager.Generate();
+            worldManager.DrawAllTiles();
         }
         
         if (GUILayout.Button ("Clear all")) {

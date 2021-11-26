@@ -37,10 +37,11 @@ public class Biome
         return value >= minSoilTypeLevel && value <= maxSoilTypeLevel;
     }
 
-    public BiomeTile GetRandomTile()
+    public InteractableIdentifier GetRandomTile()
     {
-        int rnd = Random.Range(1, 101);
-        return rnd > spawnChance ? null : groundTilesRndMap[Random.Range(0, groundTilesRndMap.Count)];
+        int rnd = Random.Range(1, 99);
+        InteractableIdentifier identifier = groundTilesRndMap[Random.Range(0, groundTilesRndMap.Count)].identifier;
+        return rnd > spawnChance ? null : identifier;
     }
     
     public void InitTileChances()
@@ -62,9 +63,17 @@ public class BiomeTile
 {
     public string signature;
     public RuleTile ruleTile;
+    public InteractableIdentifier identifier;
     // Индивидуальный шанс спавна объекта
     // ДЛЯ БИОМА СУММА ВСЕХ ИНДИВИДУАЛЬНЫХ ШАНСОВ СПАВНА ЕГО ОБЪЕКТОВ ДОЛЖНА БЫТЬ РАВНА 100
     // ИНАЧЕ КАКИЕ-ТО ИЗ НИХ БУДУТ УЩЕМЛЕНЫ ИЛИ ДАЖЕ НЕ ВЛЕЗУТ В РАНДОМ
     [Range(1,100)]
     public int individualSpawnChance;
+}
+
+[Serializable]
+public class InteractableIdentifier
+{
+    public InteractableType type;
+    public int id;
 }

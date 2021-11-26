@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Mushroom0
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 1621143816409468601, guid: 883e5804015dc1d4a8e9deb2a4d0d9ef, type: 3}
+  m_DefaultGameObject: {fileID: 3778788772734426559, guid: 0d596b523b5fdd642ad13370eff4db97, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules: []

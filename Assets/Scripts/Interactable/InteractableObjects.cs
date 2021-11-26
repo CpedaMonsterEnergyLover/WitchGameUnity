@@ -38,8 +38,6 @@ public class InteractableObjects : MonoBehaviour
         _herbs = herbs;
         _trees = trees;
         if(inspectText is not null) InspectText = inspectText;
-        
-        InitCollection();
     }
 
     #endregion
