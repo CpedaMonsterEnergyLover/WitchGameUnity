@@ -17,7 +17,7 @@ public class GeneratorEditor : Editor {
         }
         
         if (GUILayout.Button ("Clear all")) {
-            worldManager.ClearAllTiles();
+            worldManager.ClearWorld();
         }
     }
 }

@@ -8,7 +8,7 @@ public class InteractableObjects : MonoBehaviour
     #region Vars
     
     // Public fields
-    public static readonly InteractableData[][] Collection = new InteractableData[TypesMAX][];
+    public static InteractableData[][] Collection;
     
     // Private fields
     [Header("Текст всплывающей подсказки (ссылка)")]
@@ -23,9 +23,6 @@ public class InteractableObjects : MonoBehaviour
 
     private const int TypesMAX = 2;
     private static Text InspectText;
-    
-    private static InteractableData[] _herbs;
-    private static InteractableData[] _trees;
 
     #endregion
 
@@ -35,8 +32,6 @@ public class InteractableObjects : MonoBehaviour
 
     private void Awake()
     {
-        _herbs = herbs;
-        _trees = trees;
         if(inspectText is not null) InspectText = inspectText;
     }
 
@@ -46,10 +41,11 @@ public class InteractableObjects : MonoBehaviour
 
     #region ClassMethods
 
-    public static void InitCollection()
+    public void InitCollection()
     {
-        Collection[(int) InteractableType.Herb] = _herbs;
-        Collection[(int) InteractableType.Tree] = _trees;
+        Collection = new InteractableData[TypesMAX][];
+        Collection[(int) InteractableType.Herb] = herbs;
+        Collection[(int) InteractableType.Tree] = trees;
     }
     
     public static void InspectTextEnabled(bool enabled)

@@ -647,6 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generator: {fileID: 671492613}
   playerTransform: {fileID: 1031646214527821418}
+  interactableObjects: {fileID: 671492614}
   targetFrameRate: 60
   viewRangeX: 16
   viewRangeY: 10
@@ -7415,7 +7416,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11916,8 +11917,8 @@ Tilemap:
   - m_RefCount: 450
     m_Data: {fileID: 11400000, guid: 54ac094d4d41afc4aaae0af31ef94341, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: -495418734, guid: 53fd1d3357664ae4b8aca96376ba134b, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 1
@@ -11926,8 +11927,8 @@ Tilemap:
     m_Data: {fileID: 462033141, guid: 53fd1d3357664ae4b8aca96376ba134b, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -189031274, guid: 53fd1d3357664ae4b8aca96376ba134b, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -495418734, guid: 53fd1d3357664ae4b8aca96376ba134b, type: 3}
   - m_RefCount: 48
     m_Data: {fileID: -535936025, guid: 53fd1d3357664ae4b8aca96376ba134b, type: 3}
   - m_RefCount: 48

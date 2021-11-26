@@ -11,6 +11,7 @@ public class WorldManager : MonoBehaviour
     // Public fields
     public Generator generator;
     public Transform playerTransform;
+    public InteractableObjects interactableObjects;
     public int targetFrameRate = 60;
     [Range(1,50)]
     public int viewRangeX;
@@ -114,10 +115,10 @@ public class WorldManager : MonoBehaviour
 
     public void Generate()
     {
-        InteractableObjects.InitCollection();
+        interactableObjects.InitCollection();
         tileCache = new List<WorldTile>();
         loadedTiles = new List<Vector3Int>();
-        ClearAllTiles();
+        ClearWorld();
         InitTileIndexArrays();
         worldData = generator.GenerateWorld();
     }
@@ -194,16 +195,24 @@ public class WorldManager : MonoBehaviour
         TreeTilemap.SetTile(peek.position, null);
     }
 
-    public void ClearAllTiles()
+    public void ClearWorld()
+    {
+        ClearAllTiles();
+        ClearAllInteractable();
+    }
+    
+    private void ClearAllTiles()
     {
         GroundTilemap.ClearAllTiles();
         WaterTilemap.ClearAllTiles();
         SandTilemap.ClearAllTiles();
         PlainsTilemap.ClearAllTiles();
-        foreach (Transform GO in gameObjectsTransform)
-        {
-            DestroyImmediate(GO.gameObject);
-        }
+    }
+
+    private void ClearAllInteractable()
+    {
+        while (gameObjectsTransform.childCount > 0)
+            DestroyImmediate(gameObjectsTransform.GetChild(0).gameObject);
     }
 
     #endregion

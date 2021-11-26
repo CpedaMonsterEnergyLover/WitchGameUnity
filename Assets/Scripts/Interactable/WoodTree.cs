@@ -23,7 +23,5 @@ public class WoodTree : Interactable
     
      protected override void OnTileLoad() { }
 
-    
-    
-    #endregion
+     #endregion
 }
