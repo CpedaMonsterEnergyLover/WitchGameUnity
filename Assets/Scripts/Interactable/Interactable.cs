@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,18 +9,23 @@ public class Interactable : MonoBehaviour
     #region Vars
 
     // Public fields
-    // Содержит общие поля объекта
-    public InteractableData Data;
-    public InteractableData GetData() => Data;
+    public InteractableData Data => data;
+    public InteractableSaveData InstanceData => instanceData;
+    
+    // Private fields
     
     [SerializeReference]
     // Содержит сохраняемые поля объекта
-    public InteractableSaveData InstanceData;
-    public InteractableSaveData GetInstanceData() => InstanceData;
+    protected InteractableSaveData instanceData;
+    [SerializeReference]
+    // Содержит общие поля объекта
+    protected InteractableData data;
     
-    // Private fields
-    protected bool InitComplete = false;
+    protected bool InitComplete;
     protected Fader _fader;
+    
+    // Содержит ссылку на тайл в котором находится
+    protected WorldTile tile;
 
 
     #endregion
@@ -71,20 +77,16 @@ public class Interactable : MonoBehaviour
     private InteractableSaveData LoadData(InteractableSaveData saveData)
     {
         // Загружает данные, зависящие от типа объекта
-        Data = InteractableObjects.Get(saveData.identifier);
-        InstanceData = saveData;
+        data = InteractableObjects.Get(saveData.identifier);
+        instanceData = saveData;
 
         // Если объект был создан пустой, то есть в data отсутствует instanceID
         // Инициализирует начальные значения
         if (IsNew()) InitInstanceData(saveData);
-        
-        // При загрузке тайла, производит все свойственные ему действия
-        // По прошествии времени
-        OnTileLoad();
 
         InitComplete = true;
 
-        return GetInstanceData();
+        return InstanceData;
     }
 
     protected virtual void Interact()
@@ -95,7 +97,7 @@ public class Interactable : MonoBehaviour
     protected virtual void Inspect()
     {
         FadeIn();
-        InteractableObjects.SetInspectText(GetData().name);
+        InteractableObjects.SetInspectText(Data.name);
         InteractableObjects.SetInspectTextEnabled(true);
     }
 
@@ -106,9 +108,10 @@ public class Interactable : MonoBehaviour
     }
 
     // Должен быть переопределен
-    public virtual void OnTileLoad()
+    public virtual void OnTileLoad(WorldTile loadedTile)
     {
         _fader = GetComponentInChildren<Fader>();
+        tile = loadedTile;
     }
     
     #endregion
@@ -118,6 +121,13 @@ public class Interactable : MonoBehaviour
     #region Utils
 
     public void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
+
+    protected void Destroy()
+    {
+        tile.savedData = null;
+        tile.instantiatedInteractable = null;
+        GameObject.Destroy(gameObject);
+    }
     
     private void FadeIn()
     {
@@ -130,12 +140,12 @@ public class Interactable : MonoBehaviour
     }
     
     // Должен быть переопределен 
-    protected virtual void InitInstanceData(InteractableSaveData data) { }
+    protected virtual void InitInstanceData(InteractableSaveData saveData) { }
 
     // Проверяет, был ли инициализирован объект
     private bool IsNew()
     {
-        return string.IsNullOrEmpty(GetInstanceData().instanceID);
+        return string.IsNullOrEmpty(InstanceData.instanceID);
     }
     
     // Генерирует уникальный айди
@@ -157,9 +167,9 @@ public class Interactable : MonoBehaviour
 public class InteractableIdentifier
 {
     public InteractableType type;
-    public int id;
+    public string id;
 
-    public InteractableIdentifier(InteractableType type, int id)
+    public InteractableIdentifier(InteractableType type, string id)
     {
         this.type = type;
         this.id = id;

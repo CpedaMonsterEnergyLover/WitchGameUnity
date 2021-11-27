@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GenerateOnStart: 1
-  mapWidth: 100
+  mapWidth: 50
   mapHeight: 100
   seed: "\u043A\u043E\u043B\u044F"
   cardinality:
@@ -754,6 +754,7 @@ MonoBehaviour:
   herbs: []
   trees:
   - {fileID: 11400000, guid: bf183cf4bfaf49447af2a40cc878af61, type: 2}
+  - {fileID: 11400000, guid: e031f69fb3d812149a697c55d761381c, type: 2}
 --- !u!1 &757849072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8038,7 +8039,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129937684}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 

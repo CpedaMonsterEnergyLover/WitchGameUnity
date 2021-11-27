@@ -37,7 +37,7 @@ public class WorldManager : MonoBehaviour
     public TileBase plainsGrassTile;
     
     // Private fields
-    private WorldData worldData;
+    private static WorldData worldData;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
     
@@ -203,8 +203,8 @@ public class WorldManager : MonoBehaviour
         _tilemapByEnumIndex = CreateTilemapByEnumIndexArray();
         _tilebaseByEnumIndex = CreateTilebaseByEnumIndexArray();
     }
-    
-    public Tilemap[] CreateTilemapByEnumIndexArray()
+
+    private Tilemap[] CreateTilemapByEnumIndexArray()
     {
         Tilemap[] tileMaps = new Tilemap[6];
         tileMaps[(int)GridLayer.Ground] = GroundTilemap;
@@ -213,8 +213,8 @@ public class WorldManager : MonoBehaviour
         tileMaps[(int)GridLayer.Water] = WaterTilemap;
         return tileMaps;
     }
-    
-    public TileBase[] CreateTilebaseByEnumIndexArray()
+
+    private TileBase[] CreateTilebaseByEnumIndexArray()
     {
         TileBase[] tileBases = new TileBase[6];
         tileBases[(int)SoilType.Water] = waterTile;
@@ -227,7 +227,7 @@ public class WorldManager : MonoBehaviour
 
     }
 
-    public bool CoordsBelongsToWorld(int x, int y)
+    public static bool CoordsBelongsToWorld(int x, int y)
     {
         return x >= 0 && x < worldData.MapWidth && y > 0 && y < worldData.MapHeight;
     }

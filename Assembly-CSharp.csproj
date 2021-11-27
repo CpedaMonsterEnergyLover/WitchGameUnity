@@ -44,7 +44,7 @@
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\InteractableData.cs" />
-     <Compile Include="Assets\Scripts\World\Fader.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Biomes.cs" />
@@ -64,7 +64,6 @@
      <Compile Include="Assets\Scripts\Interactable\InteractableObjects.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
-     <Compile Include="Assets\Scripts\World\TreeChopper.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />

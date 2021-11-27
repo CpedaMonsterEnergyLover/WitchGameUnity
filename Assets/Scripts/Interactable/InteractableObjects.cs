@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +8,8 @@ public class InteractableObjects : MonoBehaviour
     #region Vars
     
     // Public fields
-    public static InteractableData Get(InteractableType type, int id) => Collection[(int) type][id];
-    public static InteractableData Get(InteractableIdentifier identifier) => Collection[(int) identifier.type][identifier.id];
+    public static InteractableData Get(string id) =>  Collection[id];
+    public static InteractableData Get(InteractableIdentifier identifier) => Collection[identifier.id];
 
     // Private fields
 
@@ -18,16 +20,16 @@ public class InteractableObjects : MonoBehaviour
 
     [Header("Игровые объекты")]
     [SerializeField]
-    private InteractableData[] herbs;
+    private List<InteractableData> herbs;
     [SerializeField]
-    private InteractableData[] trees;
+    private List<InteractableData> trees;
 
     private const int TypesMAX = 2;
     private static Text InspectText;
 
-    private static InteractableData[][] Collection = new InteractableData[TypesMAX][];
+    private static Dictionary<string, InteractableData> Collection;
 
-    
+
     #endregion
 
 
@@ -51,8 +53,10 @@ public class InteractableObjects : MonoBehaviour
 
     public void InitCollection()
     {
-        Collection[(int) InteractableType.Herb] = herbs;
-        Collection[(int) InteractableType.Tree] = trees;
+        Collection = new Dictionary<string, InteractableData>();
+        herbs.ForEach(i => Collection[i.identifier.id] = i);
+        trees.ForEach(i => Collection[i.identifier.id] = i);
+        Collection[""] = null;
     }
 
     public static void SetInspectTextEnabled(bool enabled) => InspectText.enabled = enabled;

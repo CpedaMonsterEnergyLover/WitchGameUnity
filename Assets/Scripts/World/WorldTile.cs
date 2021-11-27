@@ -36,7 +36,7 @@ public class WorldTile
 
         instantiatedInteractable.transform.position =
             new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
-        instantiatedInteractable.OnTileLoad();
+        instantiatedInteractable.OnTileLoad(this);
     }
 
     // Помещает слои тайла на слои грида
@@ -50,10 +50,10 @@ public class WorldTile
         }
     }
     
-    // Убирает объект тайла из мира
+    // Убирает interactable этого тайла из мира
     public void DestroyInteractable()
     {
-        savedData = instantiatedInteractable.GetInstanceData().DeepClone();
+        savedData = instantiatedInteractable.InstanceData.DeepClone();
         Object.DestroyImmediate(instantiatedInteractable.gameObject);
         instantiatedInteractable = null;
     }

@@ -26,8 +26,12 @@ public class TreeData : InteractableData
     [Tooltip("Длительность созревания плодов в сезонах")]
     public float fertileDuration = 1;
 
+    /*
     [SerializeField] private string barkItem;
     [SerializeField] private string resinItem;
     [SerializeField] private string logItem;
+    */
+    
+    
 
 }

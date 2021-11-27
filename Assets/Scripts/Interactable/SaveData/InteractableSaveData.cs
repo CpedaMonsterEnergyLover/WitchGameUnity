@@ -19,10 +19,7 @@ public class InteractableSaveData
         this.identifier = identifier;
     }
 
-    protected InteractableSaveData()
-    {
-        return;
-    }
+    protected InteractableSaveData() { }
 
     public virtual InteractableSaveData DeepClone()
     {

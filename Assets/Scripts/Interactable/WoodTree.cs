@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 public class WoodTree : Interactable
@@ -8,9 +6,8 @@ public class WoodTree : Interactable
     #region Vars
 
     // Public fields
-    public new TreeData GetData() => (TreeData) Data;
-
-    public new TreeSaveData GetInstanceData() => (TreeSaveData) InstanceData;
+    public new TreeData Data => (TreeData) data;
+    public new TreeSaveData InstanceData => (TreeSaveData) instanceData;
 
     // Private fields
     private bool _isShaking;
@@ -27,33 +24,48 @@ public class WoodTree : Interactable
         ChopTree();
     }
 
-    protected override void InitInstanceData(InteractableSaveData data)
+    protected override void InitInstanceData(InteractableSaveData saveData)
     {
-        InstanceData = new TreeSaveData(data.identifier.id);
-        InstanceData.instanceID = GenerateID();
+        instanceData = new TreeSaveData(saveData.identifier.id);
+        instanceData.instanceID = GenerateID();
     }
 
-    public override void OnTileLoad()
+    public override void OnTileLoad(WorldTile loadedTile)
     {
-        base.OnTileLoad();
-        if(GetInstanceData().isChopped) RemoveLeaves();
+        base.OnTileLoad(loadedTile);
+        if(InstanceData.isChopped) RemoveLeaves();
     }
     
      private void ChopTree()
      {
-         if (_isShaking || GetInstanceData().isChopped) return;
-         GetInstanceData().health--;
-         Debug.Log("Hp left " + GetInstanceData().health);
-         if (GetInstanceData().health > 0)
+         if (_isShaking) return;
+         InstanceData.health--;
+         Debug.Log("Hp left " + InstanceData.health);
+         if (InstanceData.isChopped)
          {
-             StartCoroutine(Shake(0.75f, 15f));
+             if (InstanceData.health > 0)
+             {
+                 StartCoroutine(RootActionDelay(0.75f));
+             }
+             else
+             {
+                 Destroy();
+             }
          }
-         else 
+         else
          {
-             _fader.FadeIn();
-             StartCoroutine(Fall(2.5f, 
-                 transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
+             if (InstanceData.health > 0)
+             {
+                 StartCoroutine(Shake(0.75f, 15f));
+             }
+             else 
+             {
+                 _fader.FadeIn();
+                 StartCoroutine(Fall(2.5f, 
+                     transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
+             }
          }
+         
      }
 
      private void RemoveLeaves()
@@ -69,7 +81,8 @@ public class WoodTree : Interactable
 
      private IEnumerator Fall(float duration, float direction)
      {
-         GetInstanceData().isChopped = true;
+         InstanceData.health = 3;
+         InstanceData.isChopped = true;
          _fader.IsBlocked = true;
          float t = 0.0f;
          while ( t  < duration )
@@ -92,6 +105,18 @@ public class WoodTree : Interactable
          {
              t += Time.deltaTime;
              _fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
+             yield return null;
+         }
+         _isShaking = false;
+     }
+
+     private IEnumerator RootActionDelay(float duration)
+     {
+         _isShaking = true;
+         float t = 0.0f;
+         while (t < duration)
+         {
+             t += Time.deltaTime;
              yield return null;
          }
          _isShaking = false;

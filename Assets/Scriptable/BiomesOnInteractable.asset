@@ -22,7 +22,9 @@ MonoBehaviour:
     tiles:
     - signature: "\u0434\u0443\u0431"
       ruleTile: {fileID: 11400000, guid: 38b33bec949ab054e9d66056545965b9, type: 2}
-      identifier:
-        type: 1
-        id: 0
-      individualSpawnChance: 100
+      data: {fileID: 11400000, guid: bf183cf4bfaf49447af2a40cc878af61, type: 2}
+      individualSpawnChance: 50
+    - signature: "\u0441\u043E\u0441\u043D\u0430"
+      ruleTile: {fileID: 11400000, guid: 38b33bec949ab054e9d66056545965b9, type: 2}
+      data: {fileID: 11400000, guid: e031f69fb3d812149a697c55d761381c, type: 2}
+      individualSpawnChance: 50
