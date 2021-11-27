@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -38,13 +37,17 @@ public class WorldManager : MonoBehaviour
     public TileBase plainsGrassTile;
     
     // Private fields
-    public WorldData worldData;
+    private WorldData worldData;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
     
     // Tile cache
-    public List<WorldTile> tileCache { private set; get; }
-    public List<Vector3Int> loadedTiles { private set; get; }
+    private TileCache _tileCache;
+    private List<Vector3Int> loadedTiles;
+    
+    // Properties
+    public int CurrentCacheSize => _tileCache.Size;
+    public int CurrentLoadedTilesAmount => loadedTiles.Count;
 
     #endregion
 
@@ -71,6 +74,9 @@ public class WorldManager : MonoBehaviour
 
     private void Update()
     {
+        _tileCache.SetMaxSize(tileCacheSize);
+        
+        // Прогрузка тайлов вокруг игрока
         Vector3Int playerPosition = Vector3Int.FloorToInt(playerTransform.position);
         for (int x = - viewRangeX; x <= viewRangeX; x++)
         {
@@ -79,30 +85,30 @@ public class WorldManager : MonoBehaviour
                 int targetX = x + playerPosition.x;
                 int targetY = y + playerPosition.y;
                 // Проверка на выход за пределы карты
-                if (targetX < 0 || targetX >= generator.mapWidth || targetY < 0 || targetY >= generator.mapHeight) continue;
-                WorldTile tile = worldData.WorldTiles[targetX, targetY];
-                // Если тайл еще не загружен
-                if (tile.loaded && !tile.cached) continue;
-                Vector3Int pos = new Vector3Int(targetX, targetY);
-                DrawTile(worldData.WorldTiles, pos);
+                if (!CoordsBelongsToWorld(targetX, targetY)) continue;
+                
+                // Если тайл еще не загружен, загружает его
+                WorldTile tile = worldData.GetTile(targetX, targetY);
+                if (tile.loaded) continue;
+                LoadTile(targetX, targetY);
             }
         }
 
-
+        // Составляет список координат тайлов, которы нужно убрать
+        // Из поля зрения игрока
         List<Vector3Int> toRemove = new();
         loadedTiles.ForEach(tile =>
         {
             Vector3Int target = playerPosition - tile;
             if (Math.Abs(target.x) > viewRangeX + 1 || Math.Abs(target.y) > viewRangeY + 1)
-            {
                 toRemove.Add(tile);
-            }
         });
         
-        toRemove.ForEach(tile =>
+        // Очищает все тайлы из составленного списка
+        toRemove.ForEach(tilePosition =>
         {
-            EraseTile(worldData.WorldTiles[tile.x, tile.y]);
-            loadedTiles.Remove(tile);
+            RemoveTile(tilePosition.x, tilePosition.y);
+            loadedTiles.Remove(tilePosition);
         });
         toRemove.Clear();
     }
@@ -115,11 +121,19 @@ public class WorldManager : MonoBehaviour
 
     public void Generate()
     {
+        // TODO: вынести инородные инициализации из этого метода в более подходящее место
+        
+        // Инициализация коллекции игровых объектов
         interactableObjects.InitCollection();
-        tileCache = new List<WorldTile>();
-        loadedTiles = new List<Vector3Int>();
-        ClearWorld();
+        
+        // Инициализация индексов слоев грида и тайлов
         InitTileIndexArrays();
+        
+        // Инициализация Кеша
+        _tileCache = new TileCache(tileCacheSize);
+        loadedTiles = new List<Vector3Int>();
+        
+        ClearWorld();
         worldData = generator.GenerateWorld();
     }
 
@@ -129,70 +143,33 @@ public class WorldManager : MonoBehaviour
         {
             for (int y = 0; y < worldData.MapHeight; y++)
             {
-                Vector3Int position = new Vector3Int(x, y, 0);
-                loadedTiles.Add(position);
-                DrawTile(worldData.WorldTiles, position);
+                loadedTiles.Add(new Vector3Int(x, y, 0));
+                LoadTile(x, y);
             }
         }
     }
 
-    private void DrawTile(WorldTile[,] tiles, Vector3Int position)
+    private void LoadTile(int x, int y)
     {
-        WorldTile tile = tiles[position.x, position.y];
-        loadedTiles.Add(position);
-        // Отрисовка тайлов
-        // Проходит по всем слоям тайла кроме того на котором объекты
-        for (int i = 0; i < tile.layers.Length; i++)
-        {
-            // Если на нем есть почва, ставит ее
-            if (tile.layers[i] != SoilType.None)
-                _tilemapByEnumIndex[i].SetTile(position, _tilebaseByEnumIndex[(int) tile.layers[i]]);
-        }
-        
-        // Если кеширован, то включает его объект
-        if (tile.cached)
-        {
-            tile.instantiatedObject.SetActive(true);
-            tileCache.Remove(tile);
-        }
-        
-        tile.InstantiateInteractable(gameObjectsTransform);
-        
+        WorldTile tile = worldData.GetTile(x, y);
+        tile.Load(gameObjectsTransform, _tilemapByEnumIndex, _tilebaseByEnumIndex);
+        _tileCache.Remove(tile);
+        loadedTiles.Add(new Vector3Int(x, y, 0));
     }
 
-    private void EraseTile(WorldTile tile)
+    private void RemoveTile(int x, int y)
     {
-        // Проходит по всем слоям тайла кроме того на котором объекты
-        for (int i = 0; i < tile.layers.Length; i++)
+        WorldTile tile = worldData.GetTile(x, y);
+        // Очищает грид
+        tile.Erase(_tilemapByEnumIndex);
+        if (tile.HasInteractable)
         {
-            // Если на нем есть что-то, чистит тайл
-            if (tile.layers[i] != SoilType.None)
-                _tilemapByEnumIndex[i].SetTile(tile.position, null);
+            // Кеширует тайл
+            _tileCache.Add(tile);
         }
-        
-        CacheTile(tile);
-    }
 
-    private void CacheTile(WorldTile tile)
-    {
         tile.loaded = false;
-        // Если на тайле нет объекта, то кешировать нечего
-        if (tile.instantiatedObject is null) return;
-        // Если размер кеша превышает заданный, удаляет из памяти самый первый
-        if (tileCache.Count >= tileCacheSize) DropCachePeek();
-        tile.instantiatedObject.SetActive(false);
-        tile.cached = true;
-        tileCache.Add(tile);
-    }
-
-    private void DropCachePeek()
-    {
-        WorldTile peek = tileCache.First();
-        peek.loaded = false;
-        loadedTiles.Remove(peek.position);
-        peek.cached = false;
-        tileCache.Remove(peek);
-        TreeTilemap.SetTile(peek.position, null);
+        // Убирать из loadedTiles не надо, тк это происходит в цикле апдейта
     }
 
     public void ClearWorld()
@@ -248,6 +225,11 @@ public class WorldManager : MonoBehaviour
         tileBases[(int)SoilType.PlainsGrass] = plainsGrassTile;
         return tileBases;
 
+    }
+
+    public bool CoordsBelongsToWorld(int x, int y)
+    {
+        return x >= 0 && x < worldData.MapWidth && y > 0 && y < worldData.MapHeight;
     }
 
     #endregion

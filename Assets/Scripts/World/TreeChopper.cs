@@ -10,43 +10,14 @@ public class TreeChopper : MonoBehaviour
     private bool _isShaking;
     private bool _isChopped;
 
-    private void OnMouseEnter()
-    {
-        _fader = transform.parent.GetComponentInChildren<Fader>();
-        if (_fader is null) return;
-        if(_fader.IsFaded) _fader.FadeIn();
-    }
 
-    private void OnMouseExit()
-    {
-        if (_fader is null) return;
-        if(_fader.IsFaded) _fader.FadeOut();
-    }
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
-        {
-            ChopTree();
-        }
+       
     }
 
-    private void ChopTree()
-    {
-        if (_isShaking || _isChopped) return;
-        _hp--;
-        Debug.Log("Hp left " + _hp);
-        if (_hp > 0)
-        {
-            StartCoroutine(Shake(0.75f, 15f));
-        }
-        else 
-        {
-            _fader.FadeIn();
-            StartCoroutine(Fall(2.5f, 
-                transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
-        }
-    }
+    
     
     private IEnumerator Fall(float duration, float direction)
     {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +6,12 @@ public class InteractableObjects : MonoBehaviour
     #region Vars
     
     // Public fields
-    public static InteractableData[][] Collection;
-    
+    public static InteractableData Get(InteractableType type, int id) => Collection[(int) type][id];
+    public static InteractableData Get(InteractableIdentifier identifier) => Collection[(int) identifier.type][identifier.id];
+
     // Private fields
+
+    // TODO: перенести в класс UI
     [Header("Текст всплывающей подсказки (ссылка)")]
     [SerializeField] 
     private Text inspectText;
@@ -24,6 +25,9 @@ public class InteractableObjects : MonoBehaviour
     private const int TypesMAX = 2;
     private static Text InspectText;
 
+    private static InteractableData[][] Collection = new InteractableData[TypesMAX][];
+
+    
     #endregion
 
 
@@ -32,7 +36,11 @@ public class InteractableObjects : MonoBehaviour
 
     private void Awake()
     {
-        if(inspectText is not null) InspectText = inspectText;
+        if (inspectText is not null)
+        {
+            InspectText = inspectText;
+            inspectText.enabled = false;
+        }
     }
 
     #endregion
@@ -43,17 +51,13 @@ public class InteractableObjects : MonoBehaviour
 
     public void InitCollection()
     {
-        Collection = new InteractableData[TypesMAX][];
         Collection[(int) InteractableType.Herb] = herbs;
         Collection[(int) InteractableType.Tree] = trees;
     }
-    
-    public static void InspectTextEnabled(bool enabled)
-    {
-        InspectText.enabled = enabled;
-    }
 
-    public static void SetInspectText(string text)
+    public static void SetInspectTextEnabled(bool enabled) => InspectText.enabled = enabled;
+    
+    public static void SetInspectText(string text = "")
     {
         InspectText.text = text;
     }

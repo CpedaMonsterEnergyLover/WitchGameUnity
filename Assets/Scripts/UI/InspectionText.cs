@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InspectionText : MonoBehaviour
@@ -11,8 +8,4 @@ public class InspectionText : MonoBehaviour
         transform.position = Input.mousePosition;
     }
 
-    private void Awake()
-    {
-        enabled = false;
-    }
 }

@@ -1,36 +1,84 @@
-using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-// Хранит информацию о тайлах мира
-// То есть исключительно о слоях грида 
-// НЕ сущности и НЕ объекты
+
+// Хранит информацию о тайле мира\
 [System.Serializable]
 public class WorldTile
 {
     public SoilType[] layers = {SoilType.None, SoilType.None, SoilType.None, SoilType.None};
     public float moistureLevel;
-    public InteractableSaveData interactableSaveData;
-    public GameObject instantiatedObject;
+    public bool HasInteractable => savedData is not null;
+    public Interactable instantiatedInteractable;
+    public InteractableSaveData savedData;
     public bool loaded;
     public bool cached;
     public Vector3Int position;
 
-    public void InstantiateInteractable(Transform attachTo)
+    // Загружает данные клетки на сцену
+    public void Load(Transform attachTo, Tilemap[] tilemaps, TileBase[] tilebases)
     {
-        // Если объект загружается, он удаляется из кеша 
         loaded = true;
-        cached = false;
-        if (interactableSaveData is null)
+
+        // Рисует слои грида
+        Draw(tilemaps, tilebases);
+        
+        if (!HasInteractable) return;
+
+        if (cached)
         {
-            instantiatedObject = null;
-            return;
+            SetHidden(false);
+        }
+        else
+        {
+            instantiatedInteractable = Interactable.Create(attachTo, savedData);
         }
 
-        GameObject prefab = InteractableObjects.Collection
-            [(int) interactableSaveData.interactableType][interactableSaveData.interactableID].prefab;
-        instantiatedObject = Interactable.Create(prefab, attachTo, interactableSaveData);
+        instantiatedInteractable.transform.position =
+            new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+        instantiatedInteractable.OnTileLoad();
+    }
+
+    // Помещает слои тайла на слои грида
+    public void Draw(Tilemap[] tilemaps, TileBase[] tilebases)
+    {
+        for (int i = 0; i < layers.Length; i++)
+        {
+            // Если на слое есть почва, ставит ее на грид
+            if (layers[i] != SoilType.None)
+                tilemaps[i].SetTile(position, tilebases[(int) layers[i]]);
+        }
     }
     
+    // Убирает объект тайла из мира
+    public void DestroyInteractable()
+    {
+        savedData = instantiatedInteractable.GetInstanceData().DeepClone();
+        Object.DestroyImmediate(instantiatedInteractable.gameObject);
+        instantiatedInteractable = null;
+    }
+
+    // Убирает слои тайла с грида
+    public void Erase(Tilemap[] tilemaps)
+    {
+        // Проходит по всем слоям
+        for (int i = 0; i < layers.Length; i++)
+        {
+            /*// Если на нем есть что-то, чистит тайл
+            if (layers[i] != SoilType.None)*/
+                tilemaps[i].SetTile(position, null);
+        }
+    }
+
+    public void SetHidden(bool isHidden)
+    {
+        instantiatedInteractable.SetActive(!isHidden);
+    }
+    
+    
+
+    #region Utils
+
     public void AddLayer(GridLayer layer, SoilType soilType)
     {
         layers[(int) layer] = soilType;
@@ -45,6 +93,8 @@ public class WorldTile
     {
         layers[(int) layer] = soilType;
     }
+
+    #endregion
 }
 
 public enum SoilType

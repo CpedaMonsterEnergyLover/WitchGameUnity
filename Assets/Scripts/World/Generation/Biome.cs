@@ -71,9 +71,3 @@ public class BiomeTile
     public int individualSpawnChance;
 }
 
-[Serializable]
-public class InteractableIdentifier
-{
-    public InteractableType type;
-    public int id;
-}

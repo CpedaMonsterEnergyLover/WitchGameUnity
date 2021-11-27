@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using UnityEngine;
-using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class Interactable : MonoBehaviour
@@ -20,7 +19,8 @@ public class Interactable : MonoBehaviour
     
     // Private fields
     protected bool InitComplete = false;
-    protected bool loaded;
+    protected Fader _fader;
+
 
     #endregion
 
@@ -28,15 +28,23 @@ public class Interactable : MonoBehaviour
 
     #region UnityMethods
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
-        Interact();
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+            Interact();
+        else 
+            InteractableObjects.SetInspectTextEnabled(true);
     }
-
-    /*private void Start()
+    
+    private void OnMouseEnter()
     {
-        Init();
-    }*/
+        Inspect();
+    }
+    
+    private void OnMouseExit()
+    {
+        StopInspect();
+    }
 
     #endregion
 
@@ -44,55 +52,85 @@ public class Interactable : MonoBehaviour
 
     #region ClassMethods
     
-    public static GameObject Create(GameObject prefab, Transform parent, InteractableSaveData saveData)
+    public static Interactable Create(Transform parent, InteractableSaveData saveData)
     {
+        GameObject prefab = InteractableObjects.Get(saveData.identifier).prefab;
         GameObject instantiatedObject = Instantiate(prefab, parent);
-        instantiatedObject.transform.position = saveData.position;
         instantiatedObject.transform.rotation = Quaternion.identity;
-        Interactable addedScript = saveData.interactableType switch
+        Interactable addedScript = saveData.identifier.type switch
         {
             InteractableType.Herb => instantiatedObject.AddComponent<WoodTree>(),
             InteractableType.Tree => instantiatedObject.AddComponent<WoodTree>(),
             InteractableType.Rock => instantiatedObject.AddComponent<WoodTree>(),
             _ => throw new ArgumentOutOfRangeException("Unknown interactable type", new Exception())
         };
-        addedScript.Init(saveData);
-        return instantiatedObject;
+        addedScript.LoadData(saveData);
+        return addedScript;
     } 
 
-    private void Init(InteractableSaveData data)
+    private InteractableSaveData LoadData(InteractableSaveData saveData)
     {
         // Загружает данные, зависящие от типа объекта
-        Data = InteractableObjects.Collection[(int) data.interactableType][data.interactableID];
-        InstanceData = data;
+        Data = InteractableObjects.Get(saveData.identifier);
+        InstanceData = saveData;
 
         // Если объект был создан пустой, то есть в data отсутствует instanceID
         // Инициализирует начальные значения
-        if (IsNew()) InitInstanceData(data);
+        if (IsNew()) InitInstanceData(saveData);
         
         // При загрузке тайла, производит все свойственные ему действия
         // По прошествии времени
         OnTileLoad();
 
         InitComplete = true;
-    }
-    
-    protected virtual void Interact()
-    {
-        //Debug.Log("Interacting with " + GetData.name);
+
+        return GetInstanceData();
     }
 
+    protected virtual void Interact()
+    {
+        InteractableObjects.SetInspectTextEnabled(false);
+    }
+    
+    protected virtual void Inspect()
+    {
+        FadeIn();
+        InteractableObjects.SetInspectText(GetData().name);
+        InteractableObjects.SetInspectTextEnabled(true);
+    }
+
+    protected virtual void StopInspect()
+    {
+        FadeOut();
+        InteractableObjects.SetInspectTextEnabled(false);
+    }
+
+    // Должен быть переопределен
+    public virtual void OnTileLoad()
+    {
+        _fader = GetComponentInChildren<Fader>();
+    }
+    
     #endregion
 
 
 
     #region Utils
 
+    public void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
+    
+    private void FadeIn()
+    {
+        if (_fader is not null && _fader.IsFaded) _fader.FadeIn();
+    }
+
+    private void FadeOut()
+    {
+        if (_fader is not null && _fader.IsFaded) _fader.FadeOut();
+    }
+    
     // Должен быть переопределен 
     protected virtual void InitInstanceData(InteractableSaveData data) { }
-    
-    // Должен быть переопределен
-    protected virtual void OnTileLoad() { }
 
     // Проверяет, был ли инициализирован объект
     private bool IsNew()
@@ -111,4 +149,24 @@ public class Interactable : MonoBehaviour
     }
     
     #endregion
+}
+
+
+
+[Serializable]
+public class InteractableIdentifier
+{
+    public InteractableType type;
+    public int id;
+
+    public InteractableIdentifier(InteractableType type, int id)
+    {
+        this.type = type;
+        this.id = id;
+    }
+
+    public override string ToString()
+    {
+        return $"{type}:{id}";
+    }
 }

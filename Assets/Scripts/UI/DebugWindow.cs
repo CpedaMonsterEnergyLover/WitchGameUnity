@@ -39,9 +39,9 @@ public class DebugWindow : MonoBehaviour
                 .Append("\nView distance: X: ")
                 .Append(world.viewRangeX).Append(", Y: ").Append(world.viewRangeY)
                 .Append("\nChunks loaded: ")
-                .Append(world.loadedTiles.Count)
+                .Append(world.CurrentLoadedTilesAmount)
                 .Append("\nCached objects: ")
-                .Append(world.tileCache.Count)
+                .Append(world.CurrentCacheSize)
                 .Append("/")
                 .Append(world.tileCacheSize)
                 // Timeline data

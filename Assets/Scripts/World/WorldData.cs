@@ -4,7 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public class WorldData
 {
-    public WorldTile[,] WorldTiles { private set; get; }
+    private WorldTile[,] WorldTiles;
+
+    public WorldTile GetTile(int x, int y) => WorldTiles[x, y];
+    
     public List<int> Entitites { private set; get; }
     public int MapWidth { private set; get; }
     public int MapHeight { private set; get; }
@@ -25,7 +28,7 @@ public class WorldData
 
     public void SetLayer(int x, int y, GridLayer layer, SoilType soilType)
     {
-        WorldTiles[x, y].AddLayer(GridLayer.Ground, SoilType.FertileGrass);
+        WorldTiles[x, y].AddLayer(layer, soilType);
     }
 
     public SoilType GetLayer(int x, int y, GridLayer layer)
@@ -47,22 +50,20 @@ public class WorldData
     {
         // Если идентификатор пришел пустой, значит тайл пустой
         if (identifier is null) {
-            WorldTiles[position.x, position.y].interactableSaveData = null;
+            WorldTiles[position.x, position.y].savedData = null;
             return;
         }
         // Если не пустой, создает дату объекта 
-        InteractableSaveData saveData = new InteractableSaveData(identifier.type, identifier.id)
-        {
-            position = new Vector3(position.x + 0.5f, position.y + 0.5f, position.z)
-        };
-        WorldTiles[position.x, position.y].interactableSaveData = saveData;
+        InteractableSaveData saveData = new InteractableSaveData(identifier);
+        WorldTiles[position.x, position.y].savedData = saveData;
     }
 
     public void ClearObjects()
     {
         foreach (WorldTile worldTile in WorldTiles)
         {
-            if (worldTile.instantiatedObject is not null) Object.DestroyImmediate(worldTile.instantiatedObject);
+            if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
         }
     }
+    
 }

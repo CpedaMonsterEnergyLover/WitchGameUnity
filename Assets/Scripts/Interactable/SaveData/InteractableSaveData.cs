@@ -1,23 +1,31 @@
+using System.Transactions;
 using UnityEngine;
 
 [System.Serializable]
 // Базовый класс объединяющий общие сохраняемые данные всех игровых объектов
 public class InteractableSaveData
 {
-    [Header("Interactible data")]
-    public string instanceID = null;
-    public InteractableType interactableType;
-    public int interactableID;
-    public Vector3 position;
+    [Header("Interactable data")]
+    public string instanceID;
+    public InteractableIdentifier identifier;
 
     public override string ToString()
     {
-        return interactableType + ":" + interactableID + position;
+        return identifier.type + ":" + identifier.id;
     }
     
-    public InteractableSaveData(InteractableType type, int id)
+    public InteractableSaveData(InteractableIdentifier identifier)
     {
-        interactableType = type;
-        interactableID = id;
+        this.identifier = identifier;
+    }
+
+    protected InteractableSaveData()
+    {
+        return;
+    }
+
+    public virtual InteractableSaveData DeepClone()
+    {
+        return null;
     }
 }
