@@ -46,8 +46,8 @@ public class WorldManager : MonoBehaviour
     private List<Vector3Int> loadedTiles;
     
     // Properties
-    public int CurrentCacheSize => _tileCache.Size;
-    public int CurrentLoadedTilesAmount => loadedTiles.Count;
+    public int CurrentCacheSize => _tileCache?.Size ?? 0;
+    public int CurrentLoadedTilesAmount => loadedTiles?.Count ?? 0;
 
     #endregion
 
@@ -57,10 +57,6 @@ public class WorldManager : MonoBehaviour
 
     private void Awake()
     {
-        int mapCenterX = generator.mapWidth / 2;
-        int mapCenterY = generator.mapHeight / 2;
-        worldGrid.transform.position = new Vector3(0f, 0f, 0);
-        playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
         Application.targetFrameRate = targetFrameRate;
     }
 
@@ -69,11 +65,17 @@ public class WorldManager : MonoBehaviour
         if (generator.GenerateOnStart)
         {
             Generate();
+            worldGrid.transform.position = new Vector3(0f, 0f, 0);
+            int mapCenterX = generator.mapWidth / 2;
+            int mapCenterY = generator.mapHeight / 2;
+            playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
         }
     }
 
     private void Update()
     {
+        if (!generator.GenerateOnStart) return;
+        
         _tileCache.SetMaxSize(tileCacheSize);
         
         // Прогрузка тайлов вокруг игрока

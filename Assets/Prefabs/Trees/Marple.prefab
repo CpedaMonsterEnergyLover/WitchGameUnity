@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 7553986369075226263}
   m_Layer: 2
   m_Name: roots
-  m_TagString: Untagged
+  m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

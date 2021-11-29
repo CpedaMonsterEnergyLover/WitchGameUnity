@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public GameObject bulletPrefab;
+
     public Transform playerTransform;
     public bool following;
-    private int treeMask;
-
-    private void Awake()
-    {
-        treeMask = LayerMask.GetMask("Terrain");
-    }
 
     // Update is called once per frame
     void Update()
@@ -21,6 +17,14 @@ public class CameraController : MonoBehaviour
             Vector3 position = transform.position;
             position = new Vector3(playerTransform.position.x, playerTransform.position.y + 0.5f, position.z);
             transform.position = position;
+        }
+        
+        if (Input.GetMouseButton(0))
+        {
+            GameObject bullet = Instantiate(bulletPrefab);
+            Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+            targetPosition.z = 0;
+            bullet.transform.position = targetPosition;
         }
 
     }

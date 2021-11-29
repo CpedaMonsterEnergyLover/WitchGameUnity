@@ -11,7 +11,7 @@ public class DebugWindow : MonoBehaviour
     private float deltaTime;
     private bool debugActive;
 
-    private void Update () {
+    private void FixedUpdate () {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
