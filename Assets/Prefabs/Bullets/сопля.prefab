@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481549110536914987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.010148788, w: 0.9999485}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 3
-  m_BlendStyleIndex: 2
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.25613004, b: 0, a: 1}
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.6
+  m_Color: {r: 0.7528966, g: 0.3150943, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
-  m_OverlapOperation: 0
+  m_OverlapOperation: 1
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 0.5
+  m_PointLightInnerRadius: 0.25
+  m_PointLightOuterRadius: 0.39758974
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -121,7 +121,6 @@ GameObject:
   - component: {fileID: 1902816300110790586}
   - component: {fileID: 5563297495391302986}
   - component: {fileID: 7775412664782959286}
-  - component: {fileID: 7155640948535869572}
   - component: {fileID: 127625184100379450}
   m_Layer: 0
   m_Name: "\u0441\u043E\u043F\u043B\u044F"
@@ -138,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3090018743286462098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -208,8 +207,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: 2d235a49a5be4e243810bb0af33e1068, type: 3}
-  m_Color: {r: 1, g: 0.4910017, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bb438a724fc3dbb499ccdb67386d4602, type: 3}
+  m_Color: {r: 0.46037745, g: 0, b: 0.754717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -219,22 +218,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7155640948535869572
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3090018743286462098}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.23
 --- !u!114 &127625184100379450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,14 +230,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a980f9a0e2db9714ca27175309f70f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 4
+  lifeTime: 2.5
+  shootOnStart: 1
   movementProperties:
-    direction: 3
+    direction: 1
     forceDirectionVector: {x: 0, y: 0}
-    minSpeed: 5
-    maxSpeed: 5
+    minSpeed: 3
+    maxSpeed: 3
   hitProperties:
     ignoreObstacles: 1
   homingProperties:
     isHoming: 0
-    homingSpeed: 3
+    rotatingSpeed: 5

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
     public float lifeTime;
@@ -13,14 +13,29 @@ public class Bullet : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private Transform _playerTransform;
-
     private Coroutine _routine;
+
+    private float _finalSpeed;
     
+    // Считает направлениен движения пули до того, как она запускается
     private void Start()
+    {
+        // Если пуля должна быть запущена на старте, запускает ее
+        if(shootOnStart) Shoot();
+    }
+    
+    private void OnDestroy()
+    {
+       if(_routine is not null) StopCoroutine(_routine);
+    }
+    
+    // Запускает пулю, используя классы ее настроек и посчитанные параметры
+    public void Shoot()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
+        // Получает вектор движения пули
         movementProperties.forceDirectionVector = movementProperties.direction switch
         {
             Direction.ToPlayer =>   
@@ -31,35 +46,26 @@ public class Bullet : MonoBehaviour
                 Random.insideUnitCircle.normalized,
             _ => movementProperties.forceDirectionVector
         };
-
-        if(shootOnStart) Shoot();
-    }
-
-    private void OnDestroy()
-    {
-       if(_routine is not null) StopCoroutine(_routine);
-    }
-    
-
-    public void Shoot()
-    {
-        _rigidbody.velocity = movementProperties.forceDirectionVector * 
-                              (movementProperties.maxSpeed == movementProperties.minSpeed 
-                              ? movementProperties.minSpeed :
-                              Random.Range(movementProperties.minSpeed, movementProperties.maxSpeed));
-
-        if (homingProperties.isHoming) _routine = StartCoroutine(MoveToPlayer());
+        
+        // Сохраняет значение полученной скорости, чтобы использовать его в корутинах
+        _finalSpeed = Random.Range(movementProperties.minSpeed, movementProperties.maxSpeed);
+        
+        _rigidbody.velocity = movementProperties.forceDirectionVector * _finalSpeed;
+        if (homingProperties.isHoming) _routine = StartCoroutine(FollowPlayer());
         
         Destroy(gameObject, lifeTime); 
     }
     
-    private IEnumerator MoveToPlayer()
+    // Корутина, вращающая вектор движения пули в плоскости
+    // По направлению вектора от пули до игрока
+    private IEnumerator FollowPlayer()
     {
         for (;;)
         {
             _rigidbody.velocity = Vector3.MoveTowards(
                 _rigidbody.velocity, 
-                _playerTransform.position - transform.position , homingProperties.homingSpeed);
+                _playerTransform.position - transform.position , homingProperties.rotatingSpeed)
+                .normalized * _finalSpeed;
             yield return new WaitForSeconds(0.2f);
         }
     }

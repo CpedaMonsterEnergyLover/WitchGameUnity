@@ -20,7 +20,7 @@ public class BulletMovementProperties
 public class HomingProperties
 {
     public bool isHoming = false;
-    public float homingSpeed = 0.5f;
+    public float rotatingSpeed = 0.5f;
 }
 
 public enum Direction

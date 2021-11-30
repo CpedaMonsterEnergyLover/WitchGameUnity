@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPool : IEnumerable
+public class BulletGroup : IEnumerable
 {
     private List<Bullet> bullets = new List<Bullet>();
 

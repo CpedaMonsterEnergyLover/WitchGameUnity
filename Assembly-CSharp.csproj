@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\InteractableData.cs" />
+     <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
@@ -69,9 +70,8 @@
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
+     <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
-     <Compile Include="Assets\Scripts\Bullet\BulletPool.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

@@ -8,21 +8,20 @@ public class BulletSpawner : MonoBehaviour
 {
     public void Bomb(GameObject prefab, Vector3 position, int count, float radius, float duration, bool moveSimultaniously)
     {
-        StartCoroutine(BulletSpawnerRoutine(prefab, position, count, radius, duration, moveSimultaniously));
+        StartCoroutine(BombPattern(prefab, position, count, radius, duration, moveSimultaniously));
     }
 
-    /*private static Bullet BombPattern()
+    public void Circle(GameObject prefab, Vector3 position,
+        int count, float radius, float angleStart, float angleEnd, float duration, bool moveSimultaniously)
     {
-        Vector3 randomPosition = position + (Vector3) Random.insideUnitCircle * radius;
-        return Instantiate(prefab, randomPosition, Quaternion.identity)
-            .GetComponent<Bullet>();
-    }*/
-    
-    private static IEnumerator BulletSpawnerRoutine(
+        var abc = StartCoroutine(CirclePattern(prefab, position, count, radius,  angleStart, angleEnd, duration, moveSimultaniously));
+    }
+
+    private static IEnumerator BombPattern(
         GameObject prefab, Vector3 position, 
         int count, float radius, float duration, bool moveSimultaniously)
     {
-        BulletPool bulletPool = new BulletPool();
+        BulletGroup bulletGroup = new BulletGroup();
         
         float delay = duration / count;
 
@@ -33,20 +32,47 @@ public class BulletSpawner : MonoBehaviour
             Bullet bullet = Instantiate(prefab, randomPosition, Quaternion.identity)
                 .GetComponent<Bullet>();
 
-            if(moveSimultaniously) bulletPool.Add(bullet);
+            if(moveSimultaniously) bulletGroup.Add(bullet);
+            
+            if (duration != 0.0f) yield return new WaitForSeconds(delay);
 
-            yield return new WaitForSeconds(delay);
         }
         
-        if (moveSimultaniously) bulletPool.ShootAll();
+        if (moveSimultaniously) bulletGroup.ShootAll();
     }
 
-}
 
-public enum BulletPattern
-{
-    Star,
-    Bomb,
-    Circle,
-    Square
+    private static IEnumerator CirclePattern(
+        GameObject prefab, Vector3 position,
+        int count, float radius, float startAngle, float endAngle, float duration, bool moveSimultaniously)
+    {
+        BulletGroup bulletGroup = new BulletGroup();
+
+        float delay = duration / count;
+        float angleStep = (endAngle - startAngle) / count;
+        float currentAngle = startAngle;
+
+        for (int i = 0; i < count; i++)
+        {
+
+            float x = position.x + Mathf.Sin(currentAngle * Mathf.PI / 180f) * radius;
+            float y = position.y + Mathf.Cos(currentAngle * Mathf.PI / 180f) * radius;
+
+            Vector3 newPosition = new Vector3(x, y, 0f);
+            Vector2 direction = (newPosition - position).normalized;
+
+            Bullet bullet = Instantiate(prefab, newPosition, Quaternion.identity)
+                .GetComponent<Bullet>();
+            bullet.movementProperties.direction = Direction.Custom;
+            bullet.movementProperties.forceDirectionVector = direction;
+
+            currentAngle += angleStep;
+
+            if (moveSimultaniously) bulletGroup.Add(bullet);    
+
+            if (duration != 0.0f) yield return new WaitForSeconds(delay);
+        }
+        
+        if (moveSimultaniously) bulletGroup.ShootAll();
+    }
 }

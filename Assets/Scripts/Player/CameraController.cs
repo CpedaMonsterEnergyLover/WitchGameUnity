@@ -14,6 +14,9 @@ public class CameraController : MonoBehaviour
     public float radius;
     public float duration;
     public int count;
+    public int angleStart;
+    public int angleEnd;
+    public bool moveSimultaniously;
 
     // Update is called once per frame
     void Update()
@@ -32,7 +35,7 @@ public class CameraController : MonoBehaviour
             targetPosition.z = 0;
             // bullet.transform.position = targetPosition;
 
-            bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, false);
+            bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
 
         }
         
@@ -43,7 +46,8 @@ public class CameraController : MonoBehaviour
             targetPosition.z = 0;
             // bullet.transform.position = targetPosition;
 
-            bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, false);
+            // bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, false);
+            bulletSpawner.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
 
         }
 
