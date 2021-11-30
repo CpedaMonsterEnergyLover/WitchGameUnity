@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,6 +6,7 @@ using Random = UnityEngine.Random;
 public class Bullet : MonoBehaviour
 {
     public float lifeTime;
+    public bool shootOnStart = true;
     public BulletMovementProperties movementProperties;
     public BulletHitProperties hitProperties;
     public HomingProperties homingProperties;
@@ -26,38 +26,34 @@ public class Bullet : MonoBehaviour
             Direction.ToPlayer =>   
                 (_playerTransform.position - transform.position).normalized,
             Direction.FromPlayer => 
-                ( transform.position - _playerTransform.position).normalized,
+                (transform.position - _playerTransform.position).normalized,
+            Direction.Random =>
+                Random.insideUnitCircle.normalized,
             _ => movementProperties.forceDirectionVector
         };
 
+        if(shootOnStart) Shoot();
+    }
+
+    private void OnDestroy()
+    {
+       if(_routine is not null) StopCoroutine(_routine);
+    }
+    
+
+    public void Shoot()
+    {
         _rigidbody.velocity = movementProperties.forceDirectionVector * 
                               (movementProperties.maxSpeed == movementProperties.minSpeed 
-                                  ? movementProperties.minSpeed :
-                                Random.Range(movementProperties.minSpeed, movementProperties.maxSpeed));
+                              ? movementProperties.minSpeed :
+                              Random.Range(movementProperties.minSpeed, movementProperties.maxSpeed));
 
         if (homingProperties.isHoming) _routine = StartCoroutine(MoveToPlayer());
         
         Destroy(gameObject, lifeTime); 
     }
-
-    private void OnDestroy()
-    {
-        StopCoroutine(_routine);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        bool isPlayer = other.gameObject.CompareTag("PlayerHitBox");
-        bool isObstacle = other.gameObject.CompareTag("ObstacleHitBox");
-        
-        if (!isPlayer && !isObstacle) return;
-        
-        if (isPlayer) Debug.Log("Hit player!" + Time.time);
-        
-        if(!hitProperties.ignoreObstacles) Destroy(gameObject);
-    }
-
-    public IEnumerator MoveToPlayer()
+    
+    private IEnumerator MoveToPlayer()
     {
         for (;;)
         {

@@ -249,12 +249,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 4
   movementProperties:
-    direction: 1
+    direction: 3
     forceDirectionVector: {x: 0, y: 0}
-    minSpeed: 1
-    maxSpeed: 20
+    minSpeed: 5
+    maxSpeed: 5
   hitProperties:
     ignoreObstacles: 1
   homingProperties:
-    isHoming: 1
+    isHoming: 0
     homingSpeed: 3

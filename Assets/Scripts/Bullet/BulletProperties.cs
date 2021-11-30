@@ -28,4 +28,5 @@ public enum Direction
     Custom,
     ToPlayer,
     FromPlayer,
+    Random
 }
