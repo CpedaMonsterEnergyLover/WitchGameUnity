@@ -11,7 +11,16 @@ public class BulletMovementProperties
 {
     public Direction direction = Direction.ToPlayer;
     public Vector2 forceDirectionVector = Vector2.zero;
-    public float speed = 2.0f;
+    public float minSpeed = 2.0f;
+    public float maxSpeed = 2.0f;
+    
+}
+
+[System.Serializable]
+public class HomingProperties
+{
+    public bool isHoming = false;
+    public float homingSpeed = 0.5f;
 }
 
 public enum Direction

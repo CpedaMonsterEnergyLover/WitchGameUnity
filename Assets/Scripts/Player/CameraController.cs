@@ -21,10 +21,13 @@ public class CameraController : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            GameObject bullet = Instantiate(bulletPrefab);
+            // GameObject bullet = Instantiate(bulletPrefab);
             Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
-            bullet.transform.position = targetPosition;
+            // bullet.transform.position = targetPosition;
+            
+            BulletPatternSpawner.Bomb(bulletPrefab, targetPosition, 10);
+            
         }
 
     }
