@@ -16,10 +16,12 @@ public class FrogBehaviour : MonoBehaviour
     private bool _isShooting;
     private bool _isLicking;
     private bool _isBlinking;
+    private bool _isMoving;
     private Animator animator;
     private string currentState;
     private Transform player;
     private float timeBtwShots;
+    public float speed;
     public float startTimeBtwShots;
     public GameObject projectile;
     private static string IDLE = "frog_idle";
@@ -39,18 +41,23 @@ public class FrogBehaviour : MonoBehaviour
     void Update()
     {
         if(!_isJumping && !_isShooting) Idle();
-        if (Vector2.Distance(new Vector2(player.position.x, player.position.y), transform.position) < 7
+        if (Vector2.Distance(player.position, transform.position) < 7
             && timeBtwShots <= 0)
         {
             timeBtwShots = startTimeBtwShots;
             StartShoot();
-        }else
+        }
+        else
         {
             timeBtwShots -= Time.deltaTime;
         }
-        
-        
-        
+        if(Vector2.Distance(player.position, transform.position) < 2)
+            transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+        else if (Vector2.Distance(player.position, transform.position) > 3)
+            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        else if (Vector2.Distance(player.position, transform.position) > 2 &&
+                 Vector2.Distance(player.position, transform.position) < 3)
+            transform.position = this.transform.position;
     }
 
     void ChangeAnimationState(string newState)
