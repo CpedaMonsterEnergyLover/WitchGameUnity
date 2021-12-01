@@ -1,78 +1,123 @@
-
-
-    
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
+
+[RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(Animator))]
 public class Entity : MonoBehaviour
 {
-    public Rigidbody2D rigidBody;
-    private bool _isJumping;
-    private bool _isShooting;
-    private bool _isMoving;
+
+    // Public fields
+    public EntityData data;
+    
+    // Private fields
+    private Vector3 _target;
+    private float _distanceFromPlayer;
+    private Rigidbody2D _rigidBody;
     private Animator _animator;
-    private string _currentState;
+    private EntityState _state;
     private Transform _player;
     private float _timeBtwShots;
-    public float speed;
-    public float startTimeBtwShots;
-    public float shootingDistance;
-    public GameObject projectile;
+    private bool _attackDelayed;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
-        _animator = GetComponent<Animator>();
-        _timeBtwShots = startTimeBtwShots;
+        Init();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Vector2.Distance(_player.position, transform.position) < shootingDistance
-            && _timeBtwShots <= 0)
+        _distanceFromPlayer = Vector2.Distance(_player.position, transform.position);
+
+        if (_distanceFromPlayer <= data.followDistance)
         {
-            _timeBtwShots = startTimeBtwShots;
-             StartShoot();
+            if(_state != EntityState.Fleeing) FollowPlayer();
+            if (_distanceFromPlayer <= data.attackDistance)
+            {
+                if (_state != EntityState.Attacking) Attack();
+            }
+            if (_distanceFromPlayer < data.keepsDistance)
+            {
+                KeepDistanceFromPlayer();
+            }
         }
         else
         {
-            _timeBtwShots -= Time.deltaTime;
+            Wander();
         }
-
-        if (Vector2.Distance(_player.position, transform.position) < 2)
-            transform.position = Vector2.MoveTowards(transform.position, _player.position, -speed * Time.deltaTime);
-        else if (Vector2.Distance(_player.position, transform.position) > 3)
-            transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
-        else if (Vector2.Distance(_player.position, transform.position) > 2 &&
-                 Vector2.Distance(_player.position, transform.position) < 3)
-            transform.position = this.transform.position;
-    }
-    // depricated because vova wants to use animator instead manual animation change
-    /*void ChangeAnimationState(string newState)
-    {
-        if (currentState == newState) return;
-        animator.Play(newState);
-        currentState = newState;
-    }*/
-
-    void StartShoot()
-    {
-        if (_isShooting) return;
-        _isShooting = true;
-        Instantiate(projectile, transform.position, Quaternion.identity);
-        Invoke("StopShoot", 0.3f);
+        
+        if (_state != EntityState.Attacking && _state != EntityState.Fleeing && _state != EntityState.Casting)
+            Move(_target);
     }
 
-    void StopShoot()
+    protected virtual void Init()
     {
-        _isShooting = false;
+        _state = EntityState.Idle;
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+    }
+
+    private void Move(Vector2 position)
+    {
+        _rigidBody.velocity = (position - (Vector2) transform.position).normalized * data.movementSpeed;
+    }
+    
+    protected virtual void FollowPlayer()
+    {
+        _state = EntityState.Following;
+        _target = _player.position;
+    }
+
+    protected virtual void KeepDistanceFromPlayer()
+    {
+        _target = (transform.position - _player.position).normalized * data.keepsDistance;
+        _state = EntityState.KeepingDistance;
+
+    }
+
+    protected virtual void Flee()
+    {
+        _target = -_player.position;
+        _state = EntityState.Fleeing;
+    }
+
+    protected virtual void Attack()
+    {
+        if (_attackDelayed) return;
+        Instantiate(data.bulletPrefab, transform.position + (Vector3) data.bulletOffset, Quaternion.identity);
+        Invoke(nameof(StopAttack), data.attackDelay);
+        _attackDelayed = true;
+    }
+
+    protected virtual void StopAttack()
+    {
+        _state = EntityState.Idle;
+        _attackDelayed = false;
+    }
+
+    protected virtual void Wander()
+    {
+        if (_state != EntityState.Wandering || Vector2.Distance(transform.position, _target) <= 0.5f ) ChangeWanderDestination();
+        _state = EntityState.Wandering;
+    }
+
+    protected virtual void ChangeWanderDestination()
+    {
+        _target = (Vector3) Random.insideUnitCircle * data.keepsDistance;
     }
     
 }
-    
+
+public enum EntityState
+{
+    Idle,
+    Following,
+    Fleeing,
+    Casting,
+    Attacking,
+    Wandering,
+    KeepingDistance
+}

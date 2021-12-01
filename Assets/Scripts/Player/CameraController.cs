@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     public float radius;
     public float duration;
     public int count;
+    public int countOfTurns;
     public int angleStart;
     public int angleEnd;
     public bool moveSimultaniously;
@@ -28,28 +29,19 @@ public class CameraController : MonoBehaviour
             transform.position = position;
         }
         
-        if (Input.GetMouseButton(1))
+        Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        targetPosition.z = 0;
+        
+        /*if (Input.GetMouseButton(1))
         {
-            // GameObject bullet = Instantiate(bulletPrefab);
-            Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-            targetPosition.z = 0;
-            // bullet.transform.position = targetPosition;
-
             bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
-
         }
         
         if (Input.GetMouseButtonDown(0))
         {
-            // GameObject bullet = Instantiate(bulletPrefab);
-            Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-            targetPosition.z = 0;
-            // bullet.transform.position = targetPosition;
-
-            // bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, false);
-            bulletSpawner.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
-
-        }
+            // bulletSpawner.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
+            bulletSpawner.Spiral(bulletPrefab, targetPosition, count, countOfTurns, duration, angleStart);
+        }*/
 
     }
 }

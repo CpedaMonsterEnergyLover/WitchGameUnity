@@ -233,12 +233,12 @@ MonoBehaviour:
   lifeTime: 4
   shootOnStart: 1
   movementProperties:
-    direction: 1
+    direction: 3
     forceDirectionVector: {x: 0, y: 0}
-    minSpeed: 7
-    maxSpeed: 7
+    minSpeed: 3
+    maxSpeed: 10
   hitProperties:
     ignoreObstacles: 1
   homingProperties:
-    isHoming: 1
+    isHoming: 0
     rotatingSpeed: 5

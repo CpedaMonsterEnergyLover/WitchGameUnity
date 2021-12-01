@@ -12,9 +12,19 @@ public class BulletSpawner : MonoBehaviour
     }
 
     public void Circle(GameObject prefab, Vector3 position,
-        int count, float radius, float angleStart, float angleEnd, float duration, bool moveSimultaniously)
+        int count, float radius, float startAngle, float endAngle, float duration, bool moveSimultaniously)
     {
-        var abc = StartCoroutine(CirclePattern(prefab, position, count, radius,  angleStart, angleEnd, duration, moveSimultaniously));
+        StartCoroutine(CirclePattern(prefab, position, count, radius,  startAngle, endAngle, duration, moveSimultaniously));
+    }
+
+    public void Spiral(GameObject prefab, Vector3 position, int bulletsPerTurn, int countOfTurns, float duration,
+        float startAngle)
+    {
+        int count = bulletsPerTurn * countOfTurns;
+        float radius = 0.25f;
+        float endAngle = startAngle + 360 * countOfTurns;
+        bool moveSimultaniously = false;
+        StartCoroutine(CirclePattern(prefab, position, count, radius,  startAngle, endAngle, duration, moveSimultaniously));
     }
 
     private static IEnumerator BombPattern(
