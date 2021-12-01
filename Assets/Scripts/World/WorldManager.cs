@@ -35,12 +35,16 @@ public class WorldManager : MonoBehaviour
     public TileBase waterTile;
     public TileBase swampTile;
     public TileBase plainsGrassTile;
+
+    public static BulletSpawner BulletSpawner;
     
     // Private fields
     private static WorldData worldData;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
-    
+    [SerializeField]
+    private BulletSpawner _bulletSpawner;
+
     // Tile cache
     private TileCache _tileCache;
     private List<Vector3Int> loadedTiles;
@@ -48,6 +52,8 @@ public class WorldManager : MonoBehaviour
     // Properties
     public int CurrentCacheSize => _tileCache?.Size ?? 0;
     public int CurrentLoadedTilesAmount => loadedTiles?.Count ?? 0;
+    
+    
 
     #endregion
 
@@ -58,6 +64,7 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = targetFrameRate;
+        BulletSpawner = _bulletSpawner;
     }
 
     private void Start()

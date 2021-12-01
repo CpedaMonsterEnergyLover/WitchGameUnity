@@ -6,7 +6,7 @@ public class EntityData : ScriptableObject
 {
     public GameObject bulletPrefab;
     [SerializeField]
-    public Vector2 bulletOffset;
+    public Vector3 bulletOffset;
     public new string name; 
     public float attackDistance;
     public float attackDelay;

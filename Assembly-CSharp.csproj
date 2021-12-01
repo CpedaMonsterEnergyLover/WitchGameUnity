@@ -42,39 +42,40 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
-     <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
-     <Compile Include="Assets\Scripts\World\WorldTile.cs" />
-     <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
-     <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\InteractableData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractableObjects.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
-     <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
-     <Compile Include="Assets\Scripts\World\TileCache.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Biomes.cs" />
      <Compile Include="Assets\Scripts\UI\InspectionText.cs" />
-     <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
-     <Compile Include="Assets\Scripts\EntitiesBehaviour\FrogBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Entities\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
+     <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\TreeData.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Generator.cs" />
-     <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
+     <Compile Include="Assets\Scripts\World\WorldTile.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldManager.cs" />
+     <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
+     <Compile Include="Assets\Scripts\Entities\EntityData\EntityData.cs" />
+     <Compile Include="Assets\Scripts\Interactable\InteractableObjects.cs" />
+     <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
+     <Compile Include="Assets\Scripts\World\TileCache.cs" />
+     <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
+     <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
+     <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
+     <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
+     <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\EntitiesBehaviour\Entity.cs" />
-     <Compile Include="Assets\Scripts\EntitiesBehaviour\GhostBehaviour.cs" />
-     <Compile Include="Assets\Scripts\EntitiesBehaviour\EntityData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -705,9 +706,6 @@
      <Reference Include="Unity.2D.Tilemap.Extras">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.Animation.Editor">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.InternalAPIEngineBridge.001">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
      </Reference>
@@ -717,17 +715,29 @@
      <Reference Include="Unity.2D.PixelPerfect">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.Tilemap.Editor">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Animation.Editor">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="PsdPlugin">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Tilemap.Editor">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualStudio.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="PPv2URPConverters">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
@@ -737,6 +747,9 @@
      </Reference>
      <Reference Include="Unity.Burst.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Searcher.Editor">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.IK.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
@@ -750,6 +763,9 @@
      <Reference Include="Unity.2D.Psdimporter.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
      </Reference>
@@ -759,8 +775,8 @@
      <Reference Include="Unity.Rider.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.InternalAPIEditorBridge.001">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
@@ -768,14 +784,23 @@
      <Reference Include="Unity.2D.Tilemap.Extras.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.InternalAPIEditorBridge.001">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Mathematics">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.IK.Runtime">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.ShaderGraph.Editor">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Burst">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Editor">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.Animation.Runtime">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
@@ -783,8 +808,14 @@
      <Reference Include="Unity.2D.PixelPerfect.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Timeline.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
@@ -798,41 +829,11 @@
      <Reference Include="Unity.2D.Common.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.SpriteShape.Runtime">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Searcher.Editor">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="PPv2URPConverters">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Editor">
      <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.ShaderGraph.Editor">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     <Reference Include="Unity.2D.SpriteShape.Runtime">
+     <HintPath>C:/Users/VovaC/WitchGame/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

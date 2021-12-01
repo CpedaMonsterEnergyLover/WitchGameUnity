@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float dashDuration;
     
     // Private
+    [SerializeField]
     private Vector2 _movementInput;
     private int _lookDirection = 1;
     private bool _isDashing;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateMovementInput();
-        
+
         if (!_isDashing)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -147,6 +148,6 @@ public class PlayerController : MonoBehaviour
             _lookDirection, 1, 1);
         gameObject.transform.localScale = scale;
     }
-
+    
     #endregion
 }
