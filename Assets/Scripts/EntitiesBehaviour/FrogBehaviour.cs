@@ -65,11 +65,10 @@ public class FrogBehaviour : MonoBehaviour
         _isJumping = true;
         ChangeAnimationState(JUMP);
         rigidBody.AddForce(new Vector2(0,jumpSpeed));
-        Invoke(nameof(StopJump), jumpDuration);
+        Invoke("StopJump", jumpDuration);
     }
     void StopJump()
     {
-        ChangeAnimationState(IDLE);
         _isJumping = false;
         rigidBody.velocity = Vector2.zero;
     }
@@ -78,17 +77,14 @@ public class FrogBehaviour : MonoBehaviour
     {
         if (_isShooting) return;
         _isShooting = true;
-        Debug.Log("я пидарас начал");
         ChangeAnimationState(SHOOT);
         Instantiate(projectile, transform.position, Quaternion.identity);
         Invoke("StopShoot", 0.3f);
-        //StopShoot();
     }
 
     void StopShoot()
     {
         Debug.Log("я пидарас закончил");
-        //ChangeAnimationState(IDLE);
         _isShooting = false;
     }
 
