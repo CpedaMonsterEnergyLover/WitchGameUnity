@@ -84,13 +84,11 @@ public class FrogBehaviour : MonoBehaviour
 
     void StopShoot()
     {
-        Debug.Log("я пидарас закончил");
         _isShooting = false;
     }
 
     void Idle()
     {
         ChangeAnimationState(IDLE);
-        
     }
 }

@@ -230,15 +230,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a980f9a0e2db9714ca27175309f70f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 2.5
+  lifeTime: 4
   shootOnStart: 1
   movementProperties:
     direction: 1
     forceDirectionVector: {x: 0, y: 0}
-    minSpeed: 3
-    maxSpeed: 3
+    minSpeed: 7
+    maxSpeed: 7
   hitProperties:
     ignoreObstacles: 1
   homingProperties:
-    isHoming: 0
+    isHoming: 1
     rotatingSpeed: 5

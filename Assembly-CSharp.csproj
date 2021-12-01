@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Scriptable\Biomes.cs" />
      <Compile Include="Assets\Scripts\UI\InspectionText.cs" />
      <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
+     <Compile Include="Assets\Scripts\EntitiesBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\TreeData.cs" />
@@ -58,7 +59,6 @@
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
-     <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
