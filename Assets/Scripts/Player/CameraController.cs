@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public BulletSpawner bulletSpawner;
 
     public Transform playerTransform;
     public bool following;
@@ -32,16 +31,16 @@ public class CameraController : MonoBehaviour
         Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = 0;
         
-        /*if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
         {
-            bulletSpawner.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
+            BulletSpawner.Instance.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
         }
         
         if (Input.GetMouseButtonDown(0))
         {
-            // bulletSpawner.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
-            bulletSpawner.Spiral(bulletPrefab, targetPosition, count, countOfTurns, duration, angleStart);
-        }*/
+            BulletSpawner.Instance.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
+            // BulletSpawner.Instance.Spiral(bulletPrefab, targetPosition, count, countOfTurns, duration, angleStart);
+        }
 
     }
 }

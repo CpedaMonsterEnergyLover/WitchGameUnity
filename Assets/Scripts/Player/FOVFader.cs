@@ -8,7 +8,7 @@ public class FOVFader : MonoBehaviour
         Fader fader = other.gameObject.GetComponent<Fader>();
         if (fader is not null)
         {
-            fader.FadeOut();
+            fader.FadeOut(0.15f);
             fader.IsFaded = true;
         }
     }

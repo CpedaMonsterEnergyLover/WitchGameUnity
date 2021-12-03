@@ -235,8 +235,8 @@ MonoBehaviour:
   movementProperties:
     direction: 3
     forceDirectionVector: {x: 0, y: 0}
-    minSpeed: 3
-    maxSpeed: 10
+    minSpeed: 5
+    maxSpeed: 5
   hitProperties:
     ignoreObstacles: 1
   homingProperties:

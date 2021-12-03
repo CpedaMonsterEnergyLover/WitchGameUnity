@@ -2,33 +2,51 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-[RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D)), 
+ RequireComponent(typeof(Animator))]
 public class Entity : MonoBehaviour
 {
+    #region Vars
 
-    // Public fields
+    // Protected fields
     [SerializeField]
     protected EntityData data;
+
+    protected void SetTarget(Vector2 newTarget) => GetTarget = newTarget;
+    protected Vector2 GetTarget { get; private set; }
+
+    protected void SetMovementSpeed(float percent) => _currentMovementSpeed = data.movementSpeed * percent;
+    protected void SetAttackDelay(float newDelay) => _currentAttackDelay = newDelay;
+    protected void SetMovementSpeedToDefault() => _currentMovementSpeed = data.movementSpeed;
+    protected void SetAttackDelayToDefault() => _currentAttackDelay = data.attackDelay;
+    protected void SetState(EntityState newState) => _state = newState;
+    protected Vector2 PlayerPosition => _player.position;
+    
     
     // Private fields
-    protected Vector2 _target;
-    protected float _distanceFromPlayer;
-    protected Rigidbody2D _rigidBody;
-    protected Animator _animator;
-    protected EntityState _state;
-    protected Transform _player;
-    protected bool _attackDelayed;
-    protected float _currentMovementSpeed;
-    protected float _currentAttackDelay;
+    private float _distanceFromPlayer;
+    private Rigidbody2D _rigidBody;
+    private Animator _animator;
+    public EntityState _state;
+    private Transform _player;
+    private bool _attackDelayed;
+    private float _currentMovementSpeed;
+    private float _currentAttackDelay;
+
+    #endregion
+
+
+
+    #region UnityMethods
 
     // Start is called before the first frame update
     private void Start()
     {
-        Init();
+        OnStart();
     }
 
     // Update is called once per frame
-    private void Update()
+    protected virtual void Update()
     {
         // Если кастует спелл то никуда не двигается
         if (_state == EntityState.Casting)
@@ -38,10 +56,11 @@ public class Entity : MonoBehaviour
         } 
         
         // Считает расстояние до игрока
-        _distanceFromPlayer = Vector2.Distance(_player.position, transform.position);
+        _distanceFromPlayer = DistanceFrom(PlayerPosition);
         
         // В зоне преследования
-        if (_distanceFromPlayer <= data.followDistance)
+        if (_state == EntityState.Following && _distanceFromPlayer <= data.followDistance 
+            || _state != EntityState.Following && _distanceFromPlayer <= data.aggroDistance )
         {
             // Подошел слишком быстро к игроку
             if (_distanceFromPlayer <= data.keepsDistance)
@@ -51,7 +70,6 @@ public class Entity : MonoBehaviour
             // В зоне атаки
             else if (_distanceFromPlayer <= data.attackDistance)
             {
-                _state = EntityState.Attacking;
                 // Начинает маневрировать
                 Maneur();
                 if (_attackDelayed) return;
@@ -71,22 +89,43 @@ public class Entity : MonoBehaviour
         }
         
         // По результатам кадра двигает монстра в полученный таргет
-        MoveTo(_target);
+        MoveTo(GetTarget);
     }
-
+    
+    protected virtual void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(GetTarget, 0.2f);
+        Gizmos.DrawLine(transform.position, GetTarget);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.attackDistance);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, data.followDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, data.aggroDistance);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, data.keepsDistance);
+    }
+    
+    #endregion
+    
+    
+    
     // Инициализация переменных
-    protected virtual void Init()
+    protected virtual void OnStart()
     {
         _currentMovementSpeed = data.movementSpeed;
         _currentAttackDelay = data.attackDelay;
-        _state = EntityState.Idle;
+        _state = EntityState.Wandering;
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
 
     // Двигает по прямой в торону таргета
-    private void MoveTo(Vector2 position)
+    protected virtual void MoveTo(Vector2 position)
     {
         _rigidBody.velocity = (position - (Vector2) transform.position).normalized * _currentMovementSpeed;
     }
@@ -94,15 +133,15 @@ public class Entity : MonoBehaviour
     // Меняет таргет на игрока, меняет стейт
     protected virtual void FollowPlayer()
     {
-        _state = EntityState.Following;
-        _target = _player.position;
+        SetState(EntityState.Following);
+        SetTarget(PlayerPosition);
     }
 
     // Меняет таргет на точку лежащую от игрока подальше, меняет стейт
     protected virtual void KeepDistanceFromPlayer()
     {
-        _target = (transform.position - _player.position).normalized * data.attackDistance;
-        _state = EntityState.KeepingDistance;
+        SetTarget((transform.position - (Vector3) PlayerPosition).normalized * data.attackDistance);
+        SetState(EntityState.KeepingDistance);
 
     }
 
@@ -110,9 +149,9 @@ public class Entity : MonoBehaviour
     // TODO: придумать куда она будет двигаться, можно взять в принципе как в KeepDistanceFromPlayer 
     protected virtual void Flee()
     {
-        _target = -_player.position;
-        _state = EntityState.Fleeing;
-        _currentMovementSpeed = data.movementSpeed * 1.2f;
+        SetTarget(-PlayerPosition);
+        SetState(EntityState.Fleeing);
+        SetMovementSpeed(1.2f);
     }
 
     // Стандартная атака сущности
@@ -124,7 +163,7 @@ public class Entity : MonoBehaviour
     // Вызывается после атаки, управляет временем между атаками
     protected virtual void StopAttackDelay()
     {
-        _state = EntityState.Idle;
+        SetState(EntityState.Following);
         _attackDelayed = false;
     }
 
@@ -132,26 +171,26 @@ public class Entity : MonoBehaviour
     // Если он еще не дошел до своего таргета то таргет не изменится
     protected virtual void Wander()
     {
-        if (_state != EntityState.Wandering || Vector2.Distance(transform.position, _target) <= 0.1f)
+        if (_state != EntityState.Wandering || DistanceFrom(GetTarget) <= 0.25f)
             ChangeWanderDestination();
-        _state = EntityState.Wandering;
+        SetState(EntityState.Wandering);
     }
 
     // Выбирает точку в которую будет идти когда ему нехуй делать
     protected virtual void ChangeWanderDestination()
     {
-        _target = (Vector2) transform.position + Random.insideUnitCircle * data.keepsDistance;
+        SetTarget(GetRandomTargetInRadius(2));
     }
 
     // Управляет тем куда бы съебаться во время атаки
     // Аналогично Wandering, пока не достигнута предыдущая точка, он не выберет новую
     protected virtual void Maneur()
     {
+        if(_state == EntityState.KeepingDistance) return;
         if (_state != EntityState.Maneuring ||
-            _state != EntityState.Idle ||
-            Vector2.Distance(transform.position, _target) <= 0.1f)
+            DistanceFrom(GetTarget) <= 0.25f)
             ChangeManeurDestination();
-        _state = EntityState.Maneuring;
+        SetState(EntityState.Maneuring);
     }
 
     protected virtual void ChangeManeurDestination()
@@ -163,30 +202,45 @@ public class Entity : MonoBehaviour
     // Кастовать скилл
     protected void CastSkill(float castDuration, float delayDuration)
     {
-        _state = EntityState.Casting;
-        _currentAttackDelay = delayDuration;
+        SetState(EntityState.Casting);
+        SetAttackDelay(delayDuration);
         Invoke(nameof(CastSkillEnd), castDuration);
     }
     
     private void CastSkillEnd()
     {
-        _state = EntityState.Idle;
-        _currentAttackDelay = data.attackDelay;
+        SetState(EntityState.Following);
+        SetAttackDelayToDefault();
     }
     
     // останавливает движение
-    protected void StopMove() => _rigidBody.velocity = Vector2.zero;
+    protected void StopMove()
+    {
+        _rigidBody.velocity = Vector2.zero;
+    }
+
+
+
+    #region Utils
+
+    public float DistanceFrom(Vector2 from) => Vector2.Distance(transform.position, from);
+
+    protected Vector2 GetRandomTargetInRadius(float radius = 1f)
+    {
+        return (Vector2) transform.position + VectorUtil.RandomOnCircle(radius);
+    }
+
+    #endregion
+    
 
 }
 
 public enum EntityState
 {
-    Idle,
     Following,
     Fleeing,
     Casting,
     Maneuring,
     Wandering,
     KeepingDistance,
-    Attacking
 }

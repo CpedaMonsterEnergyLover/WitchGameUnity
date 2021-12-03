@@ -1,10 +1,24 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class BulletSpawner : MonoBehaviour
 {
+    #region Singleton
+
+    public static BulletSpawner Instance;
+
+    private void Awake()
+    {
+        if(Instance is null) Instance = this;
+        else Debug.LogError("Found instance of BulletSpawner. You did something wrong.");
+    }
+
+    #endregion
+    
+    
     public void Bomb(GameObject prefab, Vector3 position, int count, float radius, float duration, bool moveSimultaniously)
     {
         StartCoroutine(BombPattern(prefab, position, count, radius, duration, moveSimultaniously));

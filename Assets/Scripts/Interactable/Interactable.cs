@@ -135,7 +135,7 @@ public class Interactable : MonoBehaviour
 
     private void FadeOut()
     {
-        if (_fader is not null && _fader.IsFaded) _fader.FadeOut();
+        if (_fader is not null && _fader.IsFaded) _fader.FadeOut(0.15f);
     }
     
     // Должен быть переопределен 

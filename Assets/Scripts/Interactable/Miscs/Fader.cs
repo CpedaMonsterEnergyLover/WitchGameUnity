@@ -1,18 +1,15 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Fader : MonoBehaviour
 {
-    private const float FadeAmount = 0.15f;
-    
     private SpriteRenderer _spriteRenderer;
     private Color _color;
     private IEnumerator _routine;
-    public bool IsFaded;
-    public bool IsBlocked;
+    public bool IsFaded { get; set; }
+    public bool IsBlocked { get; set; }
+    public float Speed { get; set; } = 0.05f;
+    
 
     private void Start()
     {
@@ -20,18 +17,18 @@ public class Fader : MonoBehaviour
         _color = _spriteRenderer.color;
     }
 
-    public void FadeOut()
+    public void FadeOut(float amount)
     {
         if (IsBlocked) return;
         if(_routine is not null) StopCoroutine(_routine);
-        _routine = Fade(_color.a, FadeAmount, -0.05f);
+        _routine = Fade(_color.a, amount, - Speed);
         StartCoroutine(_routine);
     }
 
     public void FadeIn()
     {
         if(_routine is not null) StopCoroutine(_routine);
-        _routine = Fade(_color.a, 1f, 0.05f);
+        _routine = Fade(_color.a, 1f, Speed);
         StartCoroutine(_routine);
     }
 

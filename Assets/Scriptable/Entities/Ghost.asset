@@ -15,8 +15,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8366519097138824809, guid: c70d998a890104d42aaaa7331cb58b34, type: 3}
   bulletOffset: {x: 0, y: 0.5, z: 0}
   name: Ghost
-  attackDistance: 4
+  attackDistance: 5.71
   attackDelay: 2.3
-  movementSpeed: 2
+  movementSpeed: 2.2
   followDistance: 10
-  keepsDistance: 1.5
+  aggroDistance: 7.13
+  keepsDistance: 1.9

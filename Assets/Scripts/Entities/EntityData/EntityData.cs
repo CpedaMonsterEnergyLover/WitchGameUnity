@@ -12,6 +12,7 @@ public class EntityData : ScriptableObject
     public float attackDelay;
     public float movementSpeed;
     public float followDistance;
+    public float aggroDistance;
     public float keepsDistance;
     
     

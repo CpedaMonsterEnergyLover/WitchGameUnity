@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
+     <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\Scriptable\Trees.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
