@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
         Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = 0;
         
-        if (Input.GetMouseButton(1))
+        /*if (Input.GetMouseButton(1))
         {
             BulletSpawner.Instance.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
         }
@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
         {
             BulletSpawner.Instance.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
             // BulletSpawner.Instance.Spiral(bulletPrefab, targetPosition, count, countOfTurns, duration, angleStart);
-        }
+        }*/
 
     }
 }
