@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a056d8397ea1d4b80dce3b70133266, type: 3}
+  m_Name: Banshee
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
+  bulletOffset: {x: 0, y: 0.5, z: 0}
+  name: Ghost
+  attackDistance: 3.43
+  attackDelay: 2.3
+  movementSpeed: 2.5
+  followDistance: 10
+  aggroDistance: 3.72
+  keepsDistance: 1.64

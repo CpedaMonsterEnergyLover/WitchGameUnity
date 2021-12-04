@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Fader : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer SpriteRenderer { get; private set; }
     private Color _color;
     private IEnumerator _routine;
     public bool IsFaded { get; set; }
@@ -13,8 +13,8 @@ public class Fader : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer = GetComponentInParent<SpriteRenderer>();
-        _color = _spriteRenderer.color;
+        SpriteRenderer = GetComponentInParent<SpriteRenderer>();
+        _color = SpriteRenderer.color;
     }
 
     public void FadeOut(float amount)
@@ -39,7 +39,7 @@ public class Fader : MonoBehaviour
             for (float ft = from;  ft > to; ft += direction)
             {
                 _color.a = ft;
-                _spriteRenderer.color = _color;
+                SpriteRenderer.color = _color;
                 yield return new WaitForSeconds(.01f);
             }
         }
@@ -48,7 +48,7 @@ public class Fader : MonoBehaviour
             for (float ft = from;  ft < to; ft += direction)
             {
                 _color.a = ft;
-                _spriteRenderer.color = _color;
+                SpriteRenderer.color = _color;
                 yield return new WaitForSeconds(.01f);
             }
         }

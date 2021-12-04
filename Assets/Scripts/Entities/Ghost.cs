@@ -5,7 +5,7 @@ public class Ghost : Entity
 {
     private float _wanderingRotationDirection;
     private Vector2 _spawnPoint;
-    private Fader _fader;
+    protected Fader _fader;
 
     private void UpdateWanderingRotationDirection() => _wanderingRotationDirection = Random.Range(0, 2) * 2 - 1;
 
@@ -62,7 +62,7 @@ public class Ghost : Entity
 
     protected override void Attack()
     {
-        if (_state == EntityState.KeepingDistance) return;
+        if (State == EntityState.KeepingDistance) return;
         
         FadeIn();
         
@@ -77,11 +77,11 @@ public class Ghost : Entity
         }
     }
 
-    private void CastFirstSkill()
+    protected virtual void CastFirstSkill()
     {
         // Родительский класс управляет всяким калом связанным с задержками атаки
         // И отображением каста
-        CastSkill(1.5f, 5f);
+        WaitForAnimation(1.5f, 5f);
         // Собственно сама атака
         BulletSpawner.Instance.Circle
             (data.bulletPrefab, transform.position + data.bulletOffset,
@@ -104,7 +104,7 @@ public class Ghost : Entity
     {
         SetTarget((transform.position - (Vector3) PlayerPosition).normalized * 3);
         FadeOut(0.0f);
-        SetState(EntityState.KeepingDistance);
+        State=EntityState.KeepingDistance;
         
     }
 
