@@ -1,12 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Banshee : Ghost
 {
-
     public float minAngle;
     public float maxAngle;
     public float minSpeed;
@@ -40,7 +37,8 @@ public class Banshee : Ghost
             before != EntityState.KeepingDistance)
         {
             Animator.SetBool(Following, true);
-            WaitForAnimation(1.5f, 4f);
+            WaitForAnimationStart(4f);
+            Invoke(nameof(WaitForAnimationEnd), 1.5f);
         }
     }
 
@@ -56,10 +54,36 @@ public class Banshee : Ghost
         }
     }
 
-    protected override void CastFirstSkill()
+    protected override void Attack()
     {
-        Debug.Log("STARTING MEGA ANAL ATTACK");
-        StartCoroutine(FlyAttack(Random.Range(2f, 7.5f), 0.05f));
+        if (State == EntityState.KeepingDistance) return;
+        
+        FadeIn();
+
+        float rnd = Random.Range(0.0f, 1.0f);
+        
+        // С шансом 30% может прокнуть сильная атака
+        if (rnd > 0.7f)
+        {
+            if (rnd > 0.85f) CastFirstSkill();
+            else CastSecondSkill();
+        }
+        else
+        {
+            BulletSpawner.SingleBullet(Data.commonAttackBullet, transform.position + Data.bulletOffset);
+        }
+    }
+    
+    private void CastFirstSkill()
+    {
+        StartCoroutine(FlyAttack(8f, 0.05f));
+    }
+
+    private void CastSecondSkill()
+    {
+        WaitForAnimationStart(3.5f);
+        BulletSpawner.Instance.Bomb(Data.secondSkillBullet, BulletPosition, 
+            50, 0f, 4f, false, WaitForAnimationEnd);
     }
     
     private IEnumerator FlyAttack(float duration, float step)
@@ -74,7 +98,7 @@ public class Banshee : Ghost
 
             Vector3 distance = (Vector3) PlayerPosition - transform.position;
 
-            float angle = distance.magnitude >= data.followDistance - 2 ? 10 : Random.Range(minAngle, maxAngle);  
+            float angle = distance.magnitude >= Data.followDistance - 2 ? 10 : Random.Range(minAngle, maxAngle);  
             
             Vector2 newVelocity = Vector3.MoveTowards(
                 RigidBody.velocity, distance
@@ -83,11 +107,10 @@ public class Banshee : Ghost
             
             RigidBody.velocity = newVelocity;
             if(bulletSpawnCounter % 5 == 0)
-                Instantiate(data.bulletPrefab, transform.position + data.bulletOffset, Quaternion.identity);
+                Instantiate(Data.firstSkillBullet, transform.position + Data.bulletOffset, Quaternion.identity);
             
             yield return new WaitForSeconds(step);
         }
         _flying = false;
-        Debug.Log("ANAL ATTACK HAS ENDED T.T");
     }
 }

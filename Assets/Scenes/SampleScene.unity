@@ -17248,7 +17248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23fe304350a47214d82c155a1fe36580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 3b60e9a3bc85cd14081cdebbcfcbb266, type: 2}
+  data: {fileID: 11400000, guid: 085d16a2b12e7834993421ef44cd73f5, type: 2}
   minAngle: 0.85
   maxAngle: 1.25
   minSpeed: 5

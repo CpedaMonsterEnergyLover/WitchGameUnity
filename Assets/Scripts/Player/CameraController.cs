@@ -34,13 +34,13 @@ public class CameraController : MonoBehaviour
         /*if (Input.GetMouseButton(1))
         {
             BulletSpawner.Instance.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
-        }
+        } */
         
         if (Input.GetMouseButtonDown(0))
         {
-            BulletSpawner.Instance.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
+            // BulletSpawner.Instance.Circle(bulletPrefab, targetPosition, count, radius, angleStart, angleEnd,duration, moveSimultaniously);
             // BulletSpawner.Instance.Spiral(bulletPrefab, targetPosition, count, countOfTurns, duration, angleStart);
-        }*/
+        }
 
     }
 }

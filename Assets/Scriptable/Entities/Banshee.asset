@@ -9,15 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93a056d8397ea1d4b80dce3b70133266, type: 3}
+  m_Script: {fileID: 11500000, guid: c90f5193d376dc1479e1a79027e0bab2, type: 3}
   m_Name: Banshee
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
-  bulletOffset: {x: 0, y: 0.5, z: 0}
-  name: Ghost
+  commonAttackBullet: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
+  bulletOffset: {x: -0.02, y: 0.78, z: 0}
+  name: Banshee
   attackDistance: 3.43
   attackDelay: 2.3
   movementSpeed: 2.5
   followDistance: 10
   aggroDistance: 3.72
   keepsDistance: 1.64
+  firstSkillBullet: {fileID: 3090018743286462098, guid: 99657899d8f6e4a4f9b6e781bd4cc21f, type: 3}
+  secondSkillBullet: {fileID: 3090018743286462098, guid: 6fcf4e24ecfec73438d1425d08fda177, type: 3}

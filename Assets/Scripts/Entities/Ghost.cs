@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Fader))]
 public class Ghost : Entity
 {
+    public new GhostData Data => (GhostData) data;
+
     private float _wanderingRotationDirection;
     private Vector2 _spawnPoint;
     protected Fader _fader;
@@ -73,19 +75,19 @@ public class Ghost : Entity
         }
         else
         {
-            Instantiate(data.bulletPrefab, transform.position + data.bulletOffset, Quaternion.identity);
+            BulletSpawner.SingleBullet(Data.commonAttackBullet, transform.position + Data.bulletOffset);
         }
     }
 
-    protected virtual void CastFirstSkill()
+    private void CastFirstSkill()
     {
         // Родительский класс управляет всяким калом связанным с задержками атаки
         // И отображением каста
-        WaitForAnimation(1.5f, 5f);
+        WaitForAnimationStart(5f);
         // Собственно сама атака
         BulletSpawner.Instance.Circle
-            (data.bulletPrefab, transform.position + data.bulletOffset,
-                8, 0.8f, 0, 360, 1.25f, true);
+            (Data.firstSkillBullet, transform.position + Data.bulletOffset,
+                12, 0.8f, Random.Range(0, 360), 1f, true, WaitForAnimationEnd);
     }
 
     protected override void Maneur()
@@ -118,14 +120,14 @@ public class Ghost : Entity
         Gizmos.DrawSphere(_spawnPoint, 0.35f);
     }
 
-    private void FadeOut(float amount)
+    protected void FadeOut(float amount)
     {
         if (_fader.IsFaded) return;
         _fader.FadeOut(amount);
         _fader.IsFaded = true;
     }
     
-    private void FadeIn()
+    protected void FadeIn()
     {
         if (!_fader.IsFaded) return;
         _fader.FadeIn();

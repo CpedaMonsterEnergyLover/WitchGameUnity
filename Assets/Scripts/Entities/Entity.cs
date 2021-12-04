@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
 
     // Public vars
     public EntityState State { protected set; get; }
+    public EntityData Data => data;
     
     // Protected fields
     [SerializeField]
@@ -18,13 +19,13 @@ public class Entity : MonoBehaviour
 
     protected void SetTarget(Vector2 newTarget) => GetTarget = newTarget;
     protected Vector2 GetTarget { get; private set; }
-
     protected void SetMovementSpeed(float percent) => _currentMovementSpeed = data.movementSpeed * percent;
     protected void SetAttackDelay(float newDelay) => _currentAttackDelay = newDelay;
     protected void SetMovementSpeedToDefault() => _currentMovementSpeed = data.movementSpeed;
     protected void SetAttackDelayToDefault() => _currentAttackDelay = data.attackDelay;
     protected Vector2 PlayerPosition => _player.position;
     public Animator Animator { private set; get; }
+    public Vector2 BulletPosition => transform.position + data.bulletOffset;
 
     
     // Private fields
@@ -105,8 +106,9 @@ public class Entity : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(GetTarget, 0.2f);
         Gizmos.DrawLine(transform.position, GetTarget);
-        
+
         Gizmos.color = Color.red;
+        Gizmos.DrawSphere(BulletPosition, 0.1f);
         Gizmos.DrawWireSphere(transform.position, data.attackDistance);
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, data.followDistance);
@@ -164,7 +166,7 @@ public class Entity : MonoBehaviour
     // Стандартная атака сущности
     protected virtual void Attack()
     {
-        Instantiate(data.bulletPrefab, transform.position + data.bulletOffset, Quaternion.identity);
+        Instantiate(data.commonAttackBullet, transform.position + data.bulletOffset, Quaternion.identity);
     }
 
     // Вызывается после атаки, управляет временем между атаками
@@ -207,14 +209,13 @@ public class Entity : MonoBehaviour
     
     // Меняет стейт на кастующий скилл и управляет длительностью того сколько он будет стоять
     // Кастовать скилл
-    protected void WaitForAnimation(float timeToWait, float attackDelayDuration)
+    protected void WaitForAnimationStart(float attackDelayDuration)
     {
         State=EntityState.Waiting;
         SetAttackDelay(attackDelayDuration);
-        Invoke(nameof(WaitForAnimationEnd), timeToWait);
     }
-    
-    private void WaitForAnimationEnd()
+
+    protected void WaitForAnimationEnd()
     {
         State=EntityState.Following;
         SetAttackDelayToDefault();
