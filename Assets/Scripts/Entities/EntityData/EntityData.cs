@@ -1,10 +1,16 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Entity/BaseEntity")]
-[System.Serializable]
 public class EntityData : ScriptableObject
 {
-    [Header("Entity data")]
+    [Header("Entity data")] 
+    public int id;
+    [SerializeField]
+    public List<int> hostileEntitiesIDS = new();
+    public int deaggroTimer;
+    public EntityType entityType;
     public GameObject commonAttackBullet;
     [SerializeField]
     public Vector3 bulletOffset;

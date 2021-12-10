@@ -54,10 +54,13 @@
      <Compile Include="Assets\Scripts\Entities\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
+     <Compile Include="Assets\Scripts\Entities\FOVProvider.cs" />
      <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Compile Include="Assets\Scripts\Interactable\Scriptable\TreeData.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Generator.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
+     <Compile Include="Assets\Scripts\Entities\EntityData\GhostData.cs" />
+     <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
@@ -78,7 +81,6 @@
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\Entities\EntityData\GhostData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

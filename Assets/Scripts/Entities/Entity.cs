@@ -268,5 +268,6 @@ public enum EntityState
     Maneuring,
     Wandering,
     KeepingDistance,
-    Any
+    Any,
+    Attacking
 }

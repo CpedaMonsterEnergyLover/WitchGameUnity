@@ -42,8 +42,6 @@ public class WorldManager : MonoBehaviour
     private static WorldData worldData;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
-    [SerializeField]
-    private BulletSpawner _bulletSpawner;
 
     // Tile cache
     private TileCache _tileCache;
@@ -64,7 +62,6 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = targetFrameRate;
-        BulletSpawner = _bulletSpawner;
     }
 
     private void Start()

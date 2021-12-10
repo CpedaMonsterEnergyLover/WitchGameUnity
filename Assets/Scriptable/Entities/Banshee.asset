@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90f5193d376dc1479e1a79027e0bab2, type: 3}
   m_Name: Banshee
   m_EditorClassIdentifier: 
+  id: 2
+  entityType: 0
   commonAttackBullet: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
   bulletOffset: {x: -0.02, y: 0.78, z: 0}
   name: Banshee
   attackDistance: 3.43
-  attackDelay: 2.3
+  attackDelay: 1.6
   movementSpeed: 2.5
   followDistance: 10
   aggroDistance: 3.72

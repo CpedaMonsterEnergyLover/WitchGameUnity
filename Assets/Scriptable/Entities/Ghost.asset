@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90f5193d376dc1479e1a79027e0bab2, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  commonAttackBullet: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
+  id: 0
+  hostileEntitiesIDS: 
+  deaggroTimer: 3
+  entityType: 0
+  commonAttackBullet: {fileID: 3090018743286462098, guid: c6a610ab735f96f49af1c915d6eb2589, type: 3}
   bulletOffset: {x: 0, y: 0.5, z: 0}
   name: Ghost
-  attackDistance: 5.71
+  attackDistance: 5.12
   attackDelay: 2.3
   movementSpeed: 2.2
-  followDistance: 10
-  aggroDistance: 7.13
+  followDistance: 12.15
+  aggroDistance: 7.31
   keepsDistance: 2
-  firstSkillBullet: {fileID: 3090018743286462098, guid: 99657899d8f6e4a4f9b6e781bd4cc21f, type: 3}
+  firstSkillBullet: {fileID: 3090018743286462098, guid: fdb82a53f50c17f48bfed9772de0db89, type: 3}
   secondSkillBullet: {fileID: 0}
