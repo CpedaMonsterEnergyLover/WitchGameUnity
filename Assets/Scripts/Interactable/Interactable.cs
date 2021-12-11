@@ -13,11 +13,11 @@ public class Interactable : MonoBehaviour
     
     // Private fields
     
-    [SerializeReference]
     // Содержит сохраняемые поля объекта
-    protected InteractableSaveData instanceData;
     [SerializeReference]
+    protected InteractableSaveData instanceData;
     // Содержит общие поля объекта
+    [SerializeReference]
     protected InteractableData data;
     
     protected bool InitComplete;
