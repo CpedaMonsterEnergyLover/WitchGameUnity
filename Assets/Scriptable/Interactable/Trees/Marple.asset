@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
-  m_Name: Pine
+  m_Name: Marple
   m_EditorClassIdentifier: 
   identifier:
     type: 1
-    id: pine
-  prefab: {fileID: 2879167886039669097, guid: 8dd51cec7ded28e49a52ef395f78d894, type: 3}
-  name: "\u041E\u0442\u0441\u043E\u0441\u0443"
+    id: marple
+  prefab: {fileID: 6255207582732814617, guid: f19f0312802cfa64b8d158f3d23f009a, type: 3}
+  name: "\u041A\u043B\u0435\u043D"
   hasFruits: 0
   bloomDuration: 1
   fertileDuration: 1

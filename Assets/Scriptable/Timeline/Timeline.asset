@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70c8d332388bf2478330cbb9c260276, type: 3}
-  m_Name: TreeCollection
+  m_Script: {fileID: 11500000, guid: 564b9ea40cc4d5a41884ed0515de32ce, type: 3}
+  m_Name: Timeline
   m_EditorClassIdentifier: 
-  collection:
-  - {fileID: 11400000, guid: ef921dc85edaead4c8181e0da86df46e, type: 2}
+  startSeason: 6
+  seasonLength: 5
+  startYear: 1526
+  startHour: 9
+  startDay: 1

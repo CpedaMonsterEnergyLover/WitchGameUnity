@@ -10,7 +10,7 @@ public class WoodTree : Interactable
     public new TreeSaveData InstanceData => (TreeSaveData) instanceData;
 
     // Private fields
-    private bool _isShaking;
+    private bool _delayed;
     
     #endregion
     
@@ -38,7 +38,7 @@ public class WoodTree : Interactable
     
      private void ChopTree()
      {
-         if (_isShaking) return;
+         if (_delayed) return;
          InstanceData.health--;
          Debug.Log("Hp left " + InstanceData.health);
          if (InstanceData.isChopped)
@@ -99,7 +99,7 @@ public class WoodTree : Interactable
 
      private IEnumerator Shake(float duration, float speed)
      {
-         _isShaking = true;
+         _delayed = true;
          float t = 0.0f;
          while ( t  < duration )
          {
@@ -107,19 +107,19 @@ public class WoodTree : Interactable
              _fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
              yield return null;
          }
-         _isShaking = false;
+         _delayed = false;
      }
 
      private IEnumerator RootActionDelay(float duration)
      {
-         _isShaking = true;
+         _delayed = true;
          float t = 0.0f;
          while (t < duration)
          {
              t += Time.deltaTime;
              yield return null;
          }
-         _isShaking = false;
+         _delayed = false;
      }
 
      #endregion

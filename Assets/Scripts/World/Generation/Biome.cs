@@ -39,9 +39,11 @@ public class Biome
 
     public InteractableIdentifier GetRandomTile()
     {
-        int rnd = Random.Range(1, 99);
-        InteractableIdentifier identifier = groundTilesRndMap[Random.Range(0, groundTilesRndMap.Count)].data.identifier;
-        return rnd > spawnChance ? null : identifier;
+        int chanceRnd = Random.Range(1, 99);
+        int rnd2 = Random.Range(0, groundTilesRndMap.Count);
+        if (groundTilesRndMap[rnd2].data is null) return null;
+        InteractableIdentifier identifier = groundTilesRndMap[rnd2].data.identifier;
+        return chanceRnd > spawnChance ? null : identifier;
     }
     
     public void InitTileChances()
@@ -61,8 +63,6 @@ public class Biome
 [Serializable]
 public class BiomeTile
 {
-    public string signature;
-    public RuleTile ruleTile;
     public InteractableData data;
     // Индивидуальный шанс спавна объекта
     // ДЛЯ БИОМА СУММА ВСЕХ ИНДИВИДУАЛЬНЫХ ШАНСОВ СПАВНА ЕГО ОБЪЕКТОВ ДОЛЖНА БЫТЬ РАВНА 100

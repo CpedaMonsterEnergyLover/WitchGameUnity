@@ -63,7 +63,7 @@ public class Generator : MonoBehaviour
             for (int y = 0; y < mapHeight; y++)
             {
                 Vector3Int point = new Vector3Int(x, y, 0);
-
+                
                 float isRiver = riversMap[x, y];
                 float moistureLevel = moistureMap[x, y];
                 float soilType = soilTypeMap[x, y] * cardinalMap[x];

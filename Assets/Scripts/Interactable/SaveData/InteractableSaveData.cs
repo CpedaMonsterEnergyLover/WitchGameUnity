@@ -16,6 +16,7 @@ public class InteractableSaveData
     
     public InteractableSaveData(InteractableIdentifier identifier)
     {
+        if (string.IsNullOrEmpty(identifier.id)) Debug.LogError("Interactable ID is empty or null");
         this.identifier = identifier;
     }
 
@@ -23,6 +24,7 @@ public class InteractableSaveData
 
     public virtual InteractableSaveData DeepClone()
     {
+        Debug.LogError("Tried to clone interactable data base class.");
         return null;
     }
 }

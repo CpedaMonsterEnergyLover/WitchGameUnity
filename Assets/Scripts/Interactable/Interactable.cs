@@ -64,7 +64,7 @@ public class Interactable : MonoBehaviour
         instantiatedObject.transform.rotation = Quaternion.identity;
         Interactable addedScript = saveData.identifier.type switch
         {
-            InteractableType.Herb => instantiatedObject.AddComponent<WoodTree>(),
+            InteractableType.Herb => instantiatedObject.AddComponent<Herb>(),
             InteractableType.Tree => instantiatedObject.AddComponent<WoodTree>(),
             InteractableType.Rock => instantiatedObject.AddComponent<WoodTree>(),
             _ => throw new ArgumentOutOfRangeException("Unknown interactable type", new Exception())

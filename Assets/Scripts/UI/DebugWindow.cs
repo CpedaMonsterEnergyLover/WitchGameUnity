@@ -8,22 +8,29 @@ public class DebugWindow : MonoBehaviour
     public Text modeText;
     public Text debugText;
 
-    private float deltaTime;
-    private bool debugActive;
+    private float _deltaTime;
+    private bool _debugActive;
 
     private void FixedUpdate () {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            if (debugActive) DisableDebug();
+            if (_debugActive) DisableDebug();
             else EnableDebug();
         }
         
-        if (debugActive)
+        if (_debugActive)
         {
             // FPS
-            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-            float fps = 1.0f / deltaTime;
+            _deltaTime += (Time.deltaTime - _deltaTime) * 0.1f;
+            float fps = 1.0f / _deltaTime;
+            
+            // Active holidays
+            StringBuilder activeHolidays = new StringBuilder();
+            HolidaysManager.ActiveHolidays.ForEach(delegate(Holiday holiday)
+            {
+                activeHolidays.Append(holiday.name).Append(" ");
+            });
             
             // Update text
             debugText.text = new StringBuilder()
@@ -45,15 +52,14 @@ public class DebugWindow : MonoBehaviour
                 .Append("/")
                 .Append(world.tileCacheSize)
                 // Timeline data
-                /*.Append("\nDate: ").Append(Timeline.time)
-                .Append("\nTotal hours: ").Append(Timeline.TotalHours)
+                .Append("\nDate: ").Append(TimelineManager.time)
+                .Append("\nTotal hours: ").Append(TimelineManager.TotalHours)
                 .Append("\nSun curve: ")
                 .Append(SunCycleManager.TodaysSunCurve)
                 .Append("\nIs sun down: ")
                 .Append(SunCycleManager.IsSunDownCached)
                 .Append("\nActive event: ")
-                .Append(ActiveHolidays)
-                .Append(HolidaysManager.IsHolidayActive(1))*/
+                .Append(activeHolidays)
                 .ToString();
         }
         
@@ -67,21 +73,21 @@ public class DebugWindow : MonoBehaviour
 
     void EnableDebug()
     {
-        if (!debugActive)
+        if (!_debugActive)
         {
             modeText.text = "Debug mode ON";
             debugText.enabled = true;
-            debugActive = true;
+            _debugActive = true;
         }
     }
 
     void DisableDebug()
     {
-        if (debugActive)
+        if (_debugActive)
         {
             modeText.text = "Press F1 to enable debug";
             debugText.enabled = false;
-            debugActive = false;
+            _debugActive = false;
         }
     }
 }

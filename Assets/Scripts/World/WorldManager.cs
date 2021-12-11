@@ -51,8 +51,6 @@ public class WorldManager : MonoBehaviour
     public int CurrentCacheSize => _tileCache?.Size ?? 0;
     public int CurrentLoadedTilesAmount => loadedTiles?.Count ?? 0;
     
-    
-
     #endregion
 
 
@@ -183,7 +181,7 @@ public class WorldManager : MonoBehaviour
         ClearAllTiles();
         ClearAllInteractable();
     }
-    
+
     private void ClearAllTiles()
     {
         GroundTilemap.ClearAllTiles();

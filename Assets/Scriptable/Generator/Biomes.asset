@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2db8298cf2da542a9bfadad382c1b1, type: 3}
+  m_Name: Biomes
+  m_EditorClassIdentifier: 
+  list:
+  - signature: "\u0421\u043E\u0441\u043D\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0.2
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0
+    maxSoilTypeLevel: 0.2
+    spawnChance: 75
+    tiles:
+    - data: {fileID: 11400000, guid: 0c94250e49fc48d499711b7cc4ca754c, type: 2}
+      individualSpawnChance: 15
+    - data: {fileID: 11400000, guid: a7961d1158d8fe1488ad2e1e4e06c0c3, type: 2}
+      individualSpawnChance: 75
+    - data: {fileID: 0}
+      individualSpawnChance: 10
+  - signature: "\u0415\u043B\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0.1
+    maxMoistureLevel: 0.7
+    minSoilTypeLevel: 0.2
+    maxSoilTypeLevel: 0.4
+    spawnChance: 50
+    tiles:
+    - data: {fileID: 11400000, guid: 51e7c40bd52c98b458e552ff1a762a9f, type: 2}
+      individualSpawnChance: 15
+    - data: {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
+      individualSpawnChance: 35
+    - data: {fileID: 0}
+      individualSpawnChance: 50
+  - signature: "\u0414\u0443\u0431\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0.3
+    maxMoistureLevel: 0.7
+    minSoilTypeLevel: 0.3
+    maxSoilTypeLevel: 0.5
+    spawnChance: 50
+    tiles:
+    - data: {fileID: 11400000, guid: bf183cf4bfaf49447af2a40cc878af61, type: 2}
+      individualSpawnChance: 30
+    - data: {fileID: 11400000, guid: c6d20dbd010b61448bf469d8fad6b2ec, type: 2}
+      individualSpawnChance: 10
+    - data: {fileID: 0}
+      individualSpawnChance: 60
+  - signature: "\u0426\u0432\u0435\u0442\u043D\u043E\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0.3
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.59
+    maxSoilTypeLevel: 0.63
+    spawnChance: 25
+    tiles:
+    - data: {fileID: 11400000, guid: 075a6bb65ce16be40b7279df82242466, type: 2}
+      individualSpawnChance: 10
+    - data: {fileID: 11400000, guid: e031f69fb3d812149a697c55d761381c, type: 2}
+      individualSpawnChance: 15
+    - data: {fileID: 0}
+      individualSpawnChance: 75
+  - signature: "\u0411\u043E\u043B\u043E\u0442\u043E"
+    minMoistureLevel: 0.02
+    maxMoistureLevel: 0.2
+    minSoilTypeLevel: 0
+    maxSoilTypeLevel: 1
+    spawnChance: 50
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 5
+    - data: {fileID: 11400000, guid: e3f828908066d964a917212e426dcabf, type: 2}
+      individualSpawnChance: 10
+    - data: {fileID: 0}
+      individualSpawnChance: 50
+    - data: {fileID: 0}
+      individualSpawnChance: 35
+  - signature: "\u0411\u0435\u0440\u0435\u0437\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
+    minMoistureLevel: 0.6
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.15
+    maxSoilTypeLevel: 0.4
+    spawnChance: 45
+    tiles:
+    - data: {fileID: 11400000, guid: 310990ce44f989d45bcefb329cc2ed5a, type: 2}
+      individualSpawnChance: 20
+    - data: {fileID: 0}
+      individualSpawnChance: 80
+  - signature: "\u042F\u0431\u043B\u043E\u043D\u0438"
+    minMoistureLevel: 0.6
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.77
+    maxSoilTypeLevel: 1
+    spawnChance: 20
+    tiles:
+    - data: {fileID: 11400000, guid: 00a9968407ab82040a5c9df130814d28, type: 2}
+      individualSpawnChance: 100
+  - signature: "\u041B\u0443\u0433"
+    minMoistureLevel: 0.3
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.65
+    maxSoilTypeLevel: 1
+    spawnChance: 70
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 97
+    - data: {fileID: 0}
+      individualSpawnChance: 3
+  - signature: "\u0417\u0435\u043B\u0435\u043D\u044B\u0439 \u043B\u0443\u0433"
+    minMoistureLevel: 0.3
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.5
+    maxSoilTypeLevel: 0.65
+    spawnChance: 70
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 80
+    - data: {fileID: 0}
+      individualSpawnChance: 20
+  - signature: "\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\u0438"
+    minMoistureLevel: 0.25
+    maxMoistureLevel: 1
+    minSoilTypeLevel: 0.45
+    maxSoilTypeLevel: 0.6
+    spawnChance: 60
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 20
+  - signature: "\u0412\u043E\u0434\u0430"
+    minMoistureLevel: 0
+    maxMoistureLevel: 0
+    minSoilTypeLevel: 0
+    maxSoilTypeLevel: 1
+    spawnChance: 15
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 2
+    - data: {fileID: 0}
+      individualSpawnChance: 98
+  - signature: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u0431\u0435\u0440\u0435\u0433"
+    minMoistureLevel: 0.01
+    maxMoistureLevel: 0.01
+    minSoilTypeLevel: 0.3
+    maxSoilTypeLevel: 1
+    spawnChance: 8
+    tiles:
+    - data: {fileID: 0}
+      individualSpawnChance: 100
