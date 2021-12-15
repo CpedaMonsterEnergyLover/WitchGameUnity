@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,15 +13,24 @@ public class Inventory : MonoBehaviour
     {
         if(Instance is null) Instance = this;
         else Debug.LogError("Found instance of Inventory. You did something wrong.");
+        SubscribeToEvents();
     }
 
     #endregion
 
+    public float rowHeight = 80;
+    public float minHeight = 280;
+    public Bag testBag;
+    public GameObject slotPrefab;
+    
     public Transform inventoryTransform;
     public Transform hotBarTransform;
+    public SpriteRenderer itemHandlerRenderer;
 
     public GameObject slotSelection;
     public Color selectionColor;
+    public SlotColors slotColors;
+    public Color SlotColor(ItemType type) => slotColors.colors[(int)type].color;
 
     public InventorySlot itemPicker;
     public InventorySlot SelectedSlot { get; private set; }
@@ -29,21 +39,21 @@ public class Inventory : MonoBehaviour
     public int selectedSlotIndex;
 
     [SerializeReference]
-    private List<InventorySlot> _slots;
+    private List<InventorySlot> _slots = new();
 
-    public delegate void OnItemChanged();
-
-    public OnItemChanged ONItemChanged;
+    /*public delegate void OnItemChanged();
+    public OnItemChanged ONItemChanged;*/
 
     // Private fields
     private bool _active = true;
-
+    
     private void Start()
     {
         _slots.AddRange(hotBarTransform.GetComponentsInChildren<InventorySlot>());
         _slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
         ShowInventory(_active);
         SelectSlot(0);
+        AddItem(testBag, 1);
     }
 
     private void Update()
@@ -78,18 +88,62 @@ public class Inventory : MonoBehaviour
         SelectedSlot = _slots[index];
         SelectedSlot.GetComponent<Image>().color = selectionColor;
 
+        /*// Item handler
+        if (SelectedSlot.HasItem)
+        {
+            itemHandlerRenderer.enabled = true;
+            itemHandlerRenderer.sprite = SelectedSlot.Item.icon;
+        }
+        else
+        {
+            itemHandlerRenderer.enabled = false;
+        }*/
     }
     
     public void AddItem(Item item, int amount)
     {
-        foreach (InventorySlot slot in _slots)
+        while (amount > 0)
         {
-            if (slot.Count == 0 || (slot.Item == item && slot.Count < item.maxStack))
+            int added = 0;
+            
+            // Если такой предмет уже есть в инвентаре и у него неполный стак
+            InventorySlot slotWithTheSameItem = FindSlotWithItemAndFreeSpace(item);
+            if (slotWithTheSameItem is not null)
             {
-                int added = slot.AddItem(item, amount);
-                Debug.Log(added);
-                amount -= added;
-                if (amount <= 0) break;
+                // Предмет добавляется к предмету
+                added = slotWithTheSameItem.AddItem(item, amount);
+            }
+            // Если такого предмета еще нет в инвентаре
+            else
+            {
+                // Если предмет спец. типа
+                if (item.type != ItemType.Any)
+                {
+                    // сначала ищет первый свободный слот этого типа
+                    InventorySlot emptySlot = FindEmptySlotOfType(item.type);
+                    if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
+                    // Если такого нет, то добавляется в первый свободный слот типа Any
+                    else
+                    {
+                        emptySlot = FindEmptySlotOfType(ItemType.Any);
+                        if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
+                    }
+                }
+                // Если предмет общего типа
+                else
+                {
+                    // Добавляется в первый свободный слот общего типа
+                    InventorySlot emptySlot = FindEmptySlotOfType(ItemType.Any);
+                    if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
+                }
+            }
+            
+            amount -= added;
+
+            if (added == 0)
+            {
+                Debug.Log($"При добавлении в инвентарь {item.name}, {amount} не влезло");
+                break;
             }
         }
     }
@@ -97,7 +151,21 @@ public class Inventory : MonoBehaviour
     private void AddItemByIndex(int index, Item item, int amount)
     {
         _slots[index].AddItem(item, amount);
-        ONItemChanged?.Invoke();
+    }
+
+    public InventorySlot FindSlotWithItem(Item item)
+    {
+        return _slots.Find(slot => slot.StoredItem == item);
+    }
+
+    private InventorySlot FindSlotWithItemAndFreeSpace(Item item)
+    {
+        return _slots.Find(slot => slot.StoredItem == item && slot.StoredCount < item.maxStack);
+    }
+
+    private InventorySlot FindEmptySlotOfType(ItemType type)
+    {
+        return _slots.Find(slot => slot.HasItem == false && slot.SlotType == type);
     }
 
     public void PickItem(Item item, int count)
@@ -122,4 +190,66 @@ public class Inventory : MonoBehaviour
     {
         ShowInventory(!_active);
     }
+    
+    public InventorySlot AddSlot(ItemType slotType)
+    {
+        GameObject slotInstance = Instantiate(slotPrefab, inventoryTransform);
+        InventorySlot inventorySlot = slotInstance.GetComponent<InventorySlot>();
+        inventorySlot.SlotType = slotType;
+        return inventorySlot;
+    }
+
+    private void UpdateHeight()
+    {
+        int rows = _slots.Count / 8;
+
+        var parentRectTransform = inventoryTransform.parent.GetComponent<RectTransform>();
+        var sizeDelta = parentRectTransform.sizeDelta;
+        sizeDelta.y = Mathf.Clamp(rowHeight * rows, minHeight, 1000f);
+        parentRectTransform.sizeDelta = sizeDelta;
+
+    }
+    
+    #region Events
+
+    private void EquipBag(Bag bag)
+    {
+        Debug.Log($"Equip bag{bag.name}");
+        for (int i = 0; i < bag.slotsAmount; i++)
+        {
+            var slot = AddSlot(bag.itemType);
+            bag.Slots.Add(slot);
+            _slots.Add(slot);
+        }
+        UpdateHeight();
+    }
+
+    private void UnequipBag(Bag bag)
+    {
+        Debug.Log($"Unequip bag{bag.name}");
+        bag.Slots.ForEach(slot =>
+        {
+            _slots.Remove(slot);
+            Destroy(slot.gameObject);
+        });
+        bag.Slots.Clear();
+        UpdateHeight();
+    }
+
+    private void HighlightBagSlots(Bag bag)
+    {
+        Debug.Log("Bag equip denied");
+        bag.Slots.ForEach(slot =>
+            slot.Shake()
+        );
+    }
+
+    private void SubscribeToEvents()
+    {
+        InventorySlot.ONBagEquip += EquipBag;
+        InventorySlot.ONBagEquipDenied += HighlightBagSlots;
+        InventorySlot.ONBagUnequip += UnequipBag;
+    }
+
+    #endregion
 }

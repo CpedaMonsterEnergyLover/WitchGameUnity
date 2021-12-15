@@ -1,65 +1,118 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler, IBeginDragHandler, IEndDragHandler*/
 {
-    public ItemType ItemType { get; private set; }
-    [SerializeField] public Item Item;
-    [SerializeField] public int Count = 0;
+    public ItemType SlotType;
+    [SerializeField] 
+    public Item StoredItem;
+    [SerializeField] 
+    public int StoredCount = 0;
 
-    public Image icon;
-    public Text value;
-    public bool HasItem => Item is not null && Count > 0;
+    public Image itemIcon;
+    public Text itemText;
+    public bool HasItem => StoredItem is not null && StoredCount > 0;
+    
+    public delegate void BagEquipEvent(Bag bag);
+    public static event BagEquipEvent ONBagEquip;
+    
+    public delegate void BagUnequipEvent(Bag bag);
+    public static event BagUnequipEvent ONBagUnequip;
+    
+    public delegate void BagEquipDeniedEvent(Bag bag);
+    public static event BagEquipDeniedEvent ONBagEquipDenied;
+
+    private Coroutine _routine;
+
+    #region UnityMethods
+
+    private void Start()
+    {
+        GetComponent<Image>().color = Inventory.Instance.SlotColor(SlotType);
+    }
+
+    #endregion
+
+
+
+    #region ClassMethods
 
     // Добавляет предметы в слот и возвращает, сколько предметов влезло
     public int AddItem(Item item, int amount)
     {
+        // Если слот для сумок и пытаются поместить сумку
+        if (SlotType == ItemType.Bag && item.type == ItemType.Bag)
+                if (!ManageBagEquip((Bag) item)) return 0;
+        
         // Если в слоте уже лежит предмет и пытаются добавить другой - он не добавляется
-        if (Item is not null && Item != item) return 0;
-        int canFit = Item is null ? item.maxStack : Item.maxStack - Count;
+        if (StoredItem is not null && StoredItem != item) return 0;
+        // Если в слот нельзя класть предметы этого типа - они не добавляются
+        if (SlotType != ItemType.Any && SlotType != item.type) return 0;
+        
+
+
+        int canFit = StoredItem is null ? item.maxStack : StoredItem.maxStack - StoredCount;
         int added = canFit < amount ? canFit : amount;
-        
-        Count += added;
-        icon.sprite = item.icon;
-        icon.enabled = true;
-        Item = item;
-        
-        if (Count > 1)
-        {
-            value.text = Count.ToString();
-            value.enabled = true;
-        }
+        StoredCount += added;
+        StoredItem = item;
+
+        UpdateUI();
 
         return added;
     }
 
+
     // Удаляет предметы из слота
     public void RemoveItem(int amount)
     {
-        if (Item is null || amount == 0) return;
-        if (Count - amount <= 0)
+        if (StoredItem is null || amount == 0) return;
+        if (StoredCount - amount <= 0)
         {
-            Count = 0;
-            icon.enabled = false;
-            Item = null;
-            value.enabled = false;
+            StoredCount = 0;
+            itemIcon.enabled = false;
+            StoredItem = null;
+            itemText.enabled = false;
         }
         else
         {
-            Count -= amount;
-            value.text = Count.ToString();
+            StoredCount -= amount;
+            itemText.text = StoredCount.ToString();
         }
     }
 
-    public void Clear()
+    private bool ManageBagEquip(Bag bag)
     {
-        RemoveItem(Count);
+        Bag storedBag = (Bag) StoredItem;
+        if (HasItem)
+        {
+            if (storedBag.IsEmpty())
+            {
+                ONBagUnequip?.Invoke(storedBag);
+                ONBagEquip?.Invoke(bag);
+                return true;
+            }
+
+            ONBagEquipDenied?.Invoke(storedBag);
+            return false;
+        }
+        ONBagEquip?.Invoke(bag);
+        return true;
     }
 
+    private bool ManageBagUnequip(Bag bag)
+    {
+        Bag storedBag = (Bag) StoredItem;
+        if (storedBag.IsEmpty())
+        {
+            ONBagUnequip?.Invoke(storedBag);
+            return true;
+        }
+        ONBagEquipDenied?.Invoke(storedBag);
+        return false;
+    }
+    
     // При нажатии на ячейку инвентаря
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -70,16 +123,16 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler,
         // Если игрок ничего не перетаскивает он может взять из слота прнедмет
         var picker = Inventory.Instance.itemPicker;
         int pickedAmount = 0;
-        bool hasPickedItem = picker.Item is not null;
+        bool hasPickedItem = picker.StoredItem is not null;
         bool heldShift = eventData.currentInputModule.input.GetAxisRaw("Shift") != 0;
-        bool pickedSameItem = Item == picker.Item;
+        bool pickedSameItem = StoredItem == picker.StoredItem;
 
         if (leftClick)
         {
-            pickedAmount = Count;
+            pickedAmount = StoredCount;
         } else if (rightClick)
         {
-            if (heldShift) pickedAmount = Count / 2 == 0 ? 1 : Count / 2;
+            if (heldShift) pickedAmount = StoredCount / 2 == 0 ? 1 : StoredCount / 2;
             else pickedAmount = 1;
         } 
         
@@ -89,7 +142,12 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler,
             // И если в слоте нет предмета, ничего не происходит
             if (!HasItem) return;
 
-            Inventory.Instance.PickItem(Item, pickedAmount);
+            // Проверка на сумку
+            // Если слот для сумок и пытаются убрать сумку
+            if (SlotType == ItemType.Bag && StoredItem.type == ItemType.Bag)
+                if (!ManageBagUnequip((Bag) StoredItem)) return;
+            
+            Inventory.Instance.PickItem(StoredItem, pickedAmount);
             RemoveItem(pickedAmount);
         }
         // Если игрок перетаскивает предмет
@@ -102,48 +160,87 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler,
                 {
                     if (rightClick)
                     {
-                        int added = picker.AddItem(Item, pickedAmount);
+                        if (heldShift)
+                        {
+                            pickedAmount = StoredCount;
+                        }
+                        int added = picker.AddItem(StoredItem, pickedAmount);
                         RemoveItem(added);
                         return;
                     }
-                    int added2 = AddItem(picker.Item, picker.Count);
+                    int added2 = AddItem(picker.StoredItem, picker.StoredCount);
                     picker.RemoveItem(added2);
-                    if (picker.Count <= 0) Inventory.Instance.ClearPicker();
+                    if (picker.StoredCount <= 0) Inventory.Instance.ClearPicker();
                 }
                 else
                 {
-                    Item tempItem = picker.Item;
-                    int tempCount = picker.Count;
+                    // Если слот для сумок и пытаются убрать сумку
+                    if (SlotType == ItemType.Bag && StoredItem.type == ItemType.Bag)
+                        if (!ManageBagUnequip((Bag) StoredItem)) return;
+                    
+                    Item tempItem = picker.StoredItem;
+                    int tempCount = picker.StoredCount;
                     picker.Clear();
-                    picker.AddItem(Item, Count);
+                    picker.AddItem(StoredItem, StoredCount);
                     Clear();
                     AddItem(tempItem, tempCount);
                 }
             }
             else
             {
-                if (leftClick) pickedAmount = picker.Count;
+                if (leftClick) pickedAmount = picker.StoredCount;
                 else if (rightClick) pickedAmount = 1;
                 
-                int added = AddItem(picker.Item, pickedAmount);
+                int added = AddItem(picker.StoredItem, pickedAmount);
                 picker.RemoveItem(added);
-                if (picker.Count <= 0) Inventory.Instance.ClearPicker();
+                if (picker.StoredCount <= 0) Inventory.Instance.ClearPicker();
             }
         }
     }
 
-    /*public void OnDrag(PointerEventData eventData)
+    public void Shake()
     {
-        throw new NotImplementedException();
+        if (_routine is not null) StopCoroutine(_routine);
+        _routine = StartCoroutine(Shake(0.75f, 30f));
+
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    #endregion
+
+    #region Utils
+
+    private IEnumerator Shake(float duration, float speed)
     {
-        throw new NotImplementedException();
+        float t = 0.0f;
+        while ( t  < duration )
+        {
+            t += Time.deltaTime;
+            float angle = Mathf.Sin(t * speed) * 5; 
+            itemIcon.transform.rotation  = Quaternion.AngleAxis(angle, Vector3.forward);
+            Debug.Log(angle);
+            // itemIcon.GetComponent<SpriteRenderer>().color = new Color(1f, 0.08f, 0f);
+            yield return null;
+        }
+        // itemIcon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+    }
+    
+    public void Clear()
+    {
+        RemoveItem(StoredCount);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void UpdateUI()
     {
-        throw new NotImplementedException();
-    }*/
+        itemIcon.sprite = StoredItem.icon;
+        itemIcon.enabled = true;
+        
+        if (StoredCount > 1)
+        {
+            itemText.text = StoredCount.ToString();
+            itemText.enabled = true;
+        }
+    }
+
+
+    #endregion
 }

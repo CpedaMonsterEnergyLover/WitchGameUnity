@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Settings/Biomes list")]
 public class Biomes : ScriptableObject
 {
     public List<Biome> list;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Season settings/Holidays list")]
+[CreateAssetMenu(menuName = "Settings/Holidays list")]
 public class HolidaysList : ScriptableObject
 {
     [SerializeField]

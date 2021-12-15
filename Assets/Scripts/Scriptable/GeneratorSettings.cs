@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Settings/Generator settings")]
 public class GeneratorSettings : ScriptableObject
 {
     public float scale;

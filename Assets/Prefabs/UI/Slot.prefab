@@ -265,5 +265,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   Count: 0
-  icon: {fileID: 1129419629450014617}
-  value: {fileID: 6500286783728623978}
+  itemIcon: {fileID: 1129419629450014617}
+  itemText: {fileID: 6500286783728623978}

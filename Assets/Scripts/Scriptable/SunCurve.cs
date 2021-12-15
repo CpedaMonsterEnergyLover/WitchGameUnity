@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Season settings/Sun curve")]
+[CreateAssetMenu(menuName = "Settings/Sun curve")]
 public class SunCurve : ScriptableObject
 {
     [SerializeField]

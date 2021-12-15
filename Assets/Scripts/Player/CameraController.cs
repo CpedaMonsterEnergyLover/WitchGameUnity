@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
             transform.position = position;
         }
         
-        Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        /*Vector3 targetPosition = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = 0;
 
 
@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
                 if (tile.HasInteractable) return;
                 WorldManager.AddInteractable(targetPositionInt, new InteractableIdentifier(InteractableType.Herb, "calendula"));
             }
-        }
+        }*/
 
         /*if (Input.GetMouseButton(1))
         {

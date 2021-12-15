@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Settings/Timeline settings")]
 public class TimelineSettings : ScriptableObject 
 {
     public Season startSeason;

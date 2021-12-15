@@ -8,7 +8,6 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         _inventory = Inventory.Instance;
-        _inventory.ONItemChanged += UpdateUI;
     }
 
     // Update is called once per frame

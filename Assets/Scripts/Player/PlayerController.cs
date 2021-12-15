@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
             } else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
             {
                 if (EventSystem.current.IsPointerOverGameObject()) return;
-                Attack();
+                //Attack();
             }
         }
         
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         _isDashing = true;
         rigidBody.velocity *= dashSpeed;
         PlayerAnimationManager.StartDash();
+        // Inventory.Instance.itemHandlerRenderer.enabled = false;
         CancelInvoke(nameof(StartDash));
         Invoke(nameof(StopDash), dashDuration);
         EndAttack();
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         _isDashing = false;
         rigidBody.velocity = Vector2.zero;
+        // Inventory.Instance.itemHandlerRenderer.enabled = true;
         PlayerAnimationManager.StopDash();
     }
 
