@@ -51,7 +51,7 @@ public class TimelineManager : MonoBehaviour
     #endregion
     
     //TODO: remove
-    private int _passedHour = -1;
+    // private int _passedHour = -1;
 
     #region UnityMethods
 
@@ -67,8 +67,8 @@ public class TimelineManager : MonoBehaviour
             (int) timelineSettings.startSeason,
             timelineSettings.startDay <= timelineSettings.seasonLength ? timelineSettings.startDay : timelineSettings.seasonLength,
             timelineSettings.startHour, 0);
-
-        TotalHours = time.TotalHours();
+        
+        TotalHours = 0;
         
         SubscribeToEvents();
 

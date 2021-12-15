@@ -16,7 +16,7 @@ public class WorldTile
     public Vector3Int position;
 
     // Загружает данные клетки на сцену
-    public void Load(Transform attachTo, Tilemap[] tilemaps, TileBase[] tilebases)
+    public void Load(Tilemap[] tilemaps, TileBase[] tilebases)
     {
         loaded = true;
 
@@ -24,6 +24,17 @@ public class WorldTile
         Draw(tilemaps, tilebases);
         
         if (!HasInteractable) return;
+        LoadInteractable();
+    }
+
+    public void LoadInteractable()
+    {
+        if (!InteractableObjects.Collection.ContainsKey(savedData.identifier.id))
+        {
+            Debug.LogWarning($"The given key was not present in the Collection of objects:{savedData.identifier.id}");
+            savedData = null;
+            return;
+        }
 
         if (cached)
         {
@@ -31,7 +42,7 @@ public class WorldTile
         }
         else
         {
-            instantiatedInteractable = Interactable.Create(attachTo, savedData);
+            instantiatedInteractable = Interactable.Create(savedData);
         }
 
         instantiatedInteractable.transform.position =

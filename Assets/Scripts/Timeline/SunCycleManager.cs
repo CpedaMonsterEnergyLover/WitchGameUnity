@@ -106,13 +106,11 @@ public class SunCycleManager : MonoBehaviour
     private static void OnSunset()
     {
         if(!IsSunDownCached) IsSunDownCached = true;
-        Debug.Log("Sunset event");
     }
     
     private static void OnSunrise()
     {
         if(IsSunDownCached) IsSunDownCached = false;
-        Debug.Log("Sunrise event");
     }
     
     public static void InvokeOnSunriseEvent()

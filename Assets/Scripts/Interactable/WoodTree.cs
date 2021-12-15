@@ -60,7 +60,7 @@ public class WoodTree : Interactable
              }
              else 
              {
-                 _fader.FadeIn();
+                 Fader.FadeIn();
                  StartCoroutine(Fall(2.5f, 
                      transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
              }
@@ -70,7 +70,7 @@ public class WoodTree : Interactable
 
      private void RemoveLeaves()
      {
-         if(_fader is not null) Destroy(_fader.gameObject);
+         if(Fader is not null) Destroy(Fader.gameObject);
      }
      
      #endregion
@@ -83,12 +83,12 @@ public class WoodTree : Interactable
      {
          InstanceData.health = 3;
          InstanceData.isChopped = true;
-         _fader.IsBlocked = true;
+         Fader.IsBlocked = true;
          float t = 0.0f;
          while ( t  < duration )
          {
              t += Time.deltaTime;
-             _fader.transform.rotation = Quaternion.AngleAxis
+             Fader.transform.rotation = Quaternion.AngleAxis
              (t / duration * 85f, 
                  direction < 0 ? Vector3.forward : Vector3.back);
              yield return null;
@@ -104,7 +104,7 @@ public class WoodTree : Interactable
          while ( t  < duration )
          {
              t += Time.deltaTime;
-             _fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
+             Fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
              yield return null;
          }
          _delayed = false;

@@ -20,8 +20,6 @@ public class WorldManager : MonoBehaviour
     public int tileCacheSize;
     [Header("Грид")]
     public Grid worldGrid;
-    [Header("К чему крепить все объекты")]
-    public Transform gameObjectsTransform;
     [Header("Слои грида")]
     public Tilemap GroundTilemap;
     public Tilemap SandTilemap;
@@ -39,7 +37,11 @@ public class WorldManager : MonoBehaviour
     public static BulletSpawner BulletSpawner;
     
     // Private fields
-    private static WorldData worldData;
+    [Header("К чему крепить все объекты"), SerializeField]
+    private Transform _gameObjectsTransform;
+    
+    public static Transform GameObjectsTransform;
+    public static WorldData WorldData;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
 
@@ -60,6 +62,7 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = targetFrameRate;
+        GameObjectsTransform = _gameObjectsTransform;
     }
 
     private void Start()
@@ -92,7 +95,7 @@ public class WorldManager : MonoBehaviour
                 if (!CoordsBelongsToWorld(targetX, targetY)) continue;
                 
                 // Если тайл еще не загружен, загружает его
-                WorldTile tile = worldData.GetTile(targetX, targetY);
+                WorldTile tile = WorldData.GetTile(targetX, targetY);
                 if (tile.loaded) continue;
                 LoadTile(targetX, targetY);
             }
@@ -104,7 +107,7 @@ public class WorldManager : MonoBehaviour
         loadedTiles.ForEach(tile =>
         {
             Vector3Int target = playerPosition - tile;
-            if (Math.Abs(target.x) > viewRangeX + 1 || Math.Abs(target.y) > viewRangeY + 1)
+            if (Math.Abs(target.x) > viewRangeX || Math.Abs(target.y) > viewRangeY)
                 toRemove.Add(tile);
         });
         
@@ -138,14 +141,14 @@ public class WorldManager : MonoBehaviour
         loadedTiles = new List<Vector3Int>();
         
         ClearWorld();
-        worldData = generator.GenerateWorld();
+        WorldData = generator.GenerateWorld();
     }
 
     public void DrawAllTiles()
     {
-        for (int x = 0; x < worldData.MapWidth; x++)
+        for (int x = 0; x < WorldData.MapWidth; x++)
         {
-            for (int y = 0; y < worldData.MapHeight; y++)
+            for (int y = 0; y < WorldData.MapHeight; y++)
             {
                 loadedTiles.Add(new Vector3Int(x, y, 0));
                 LoadTile(x, y);
@@ -155,15 +158,15 @@ public class WorldManager : MonoBehaviour
 
     private void LoadTile(int x, int y)
     {
-        WorldTile tile = worldData.GetTile(x, y);
-        tile.Load(gameObjectsTransform, _tilemapByEnumIndex, _tilebaseByEnumIndex);
+        WorldTile tile = WorldData.GetTile(x, y);
+        tile.Load(_tilemapByEnumIndex, _tilebaseByEnumIndex);
         _tileCache.Remove(tile);
         loadedTiles.Add(new Vector3Int(x, y, 0));
     }
 
     private void RemoveTile(int x, int y)
     {
-        WorldTile tile = worldData.GetTile(x, y);
+        WorldTile tile = WorldData.GetTile(x, y);
         // Очищает грид
         tile.Erase(_tilemapByEnumIndex);
         if (tile.HasInteractable)
@@ -192,8 +195,14 @@ public class WorldManager : MonoBehaviour
 
     private void ClearAllInteractable()
     {
-        while (gameObjectsTransform.childCount > 0)
-            DestroyImmediate(gameObjectsTransform.GetChild(0).gameObject);
+        while (_gameObjectsTransform.childCount > 0)
+            DestroyImmediate(_gameObjectsTransform.GetChild(0).gameObject);
+    }
+
+    public static void AddInteractable(Vector3Int tile, InteractableIdentifier identifier)
+    {
+        WorldData.AddInteractableObject(identifier, tile);
+        WorldData.GetTile(tile.x, tile.y).LoadInteractable();
     }
 
     #endregion
@@ -233,7 +242,7 @@ public class WorldManager : MonoBehaviour
 
     public static bool CoordsBelongsToWorld(int x, int y)
     {
-        return x >= 0 && x < worldData.MapWidth && y > 0 && y < worldData.MapHeight;
+        return x >= 0 && x < WorldData.MapWidth && y > 0 && y < WorldData.MapHeight;
     }
 
     #endregion

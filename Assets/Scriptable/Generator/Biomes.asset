@@ -37,7 +37,7 @@ MonoBehaviour:
       individualSpawnChance: 15
     - data: {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
       individualSpawnChance: 35
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: a7961d1158d8fe1488ad2e1e4e06c0c3, type: 2}
       individualSpawnChance: 50
   - signature: "\u0414\u0443\u0431\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.3
@@ -50,7 +50,7 @@ MonoBehaviour:
       individualSpawnChance: 30
     - data: {fileID: 11400000, guid: c6d20dbd010b61448bf469d8fad6b2ec, type: 2}
       individualSpawnChance: 10
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: 6cc5f0712a99e9546825816519e434ec, type: 2}
       individualSpawnChance: 60
   - signature: "\u0426\u0432\u0435\u0442\u043D\u043E\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.3
@@ -63,7 +63,7 @@ MonoBehaviour:
       individualSpawnChance: 10
     - data: {fileID: 11400000, guid: e031f69fb3d812149a697c55d761381c, type: 2}
       individualSpawnChance: 15
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
       individualSpawnChance: 75
   - signature: "\u0411\u043E\u043B\u043E\u0442\u043E"
     minMoistureLevel: 0.02
@@ -72,13 +72,13 @@ MonoBehaviour:
     maxSoilTypeLevel: 1
     spawnChance: 50
     tiles:
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: 28e1375d4f6922640ae99b5fed2a09bc, type: 2}
       individualSpawnChance: 5
     - data: {fileID: 11400000, guid: e3f828908066d964a917212e426dcabf, type: 2}
       individualSpawnChance: 10
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: a7961d1158d8fe1488ad2e1e4e06c0c3, type: 2}
       individualSpawnChance: 50
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: 5003a513f8c7e2448b510e2e5fa0bd76, type: 2}
       individualSpawnChance: 35
   - signature: "\u0411\u0435\u0440\u0435\u0437\u043E\u0432\u044B\u0439 \u043B\u0435\u0441"
     minMoistureLevel: 0.6
@@ -89,14 +89,14 @@ MonoBehaviour:
     tiles:
     - data: {fileID: 11400000, guid: 310990ce44f989d45bcefb329cc2ed5a, type: 2}
       individualSpawnChance: 20
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
       individualSpawnChance: 80
   - signature: "\u042F\u0431\u043B\u043E\u043D\u0438"
     minMoistureLevel: 0.6
     maxMoistureLevel: 1
     minSoilTypeLevel: 0.77
     maxSoilTypeLevel: 1
-    spawnChance: 20
+    spawnChance: 5
     tiles:
     - data: {fileID: 11400000, guid: 00a9968407ab82040a5c9df130814d28, type: 2}
       individualSpawnChance: 100
@@ -107,10 +107,12 @@ MonoBehaviour:
     maxSoilTypeLevel: 1
     spawnChance: 70
     tiles:
-    - data: {fileID: 0}
-      individualSpawnChance: 97
-    - data: {fileID: 0}
-      individualSpawnChance: 3
+    - data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
+      individualSpawnChance: 98
+    - data: {fileID: 11400000, guid: c190252b3b93dd045b3ae1ba27bfc330, type: 2}
+      individualSpawnChance: 1
+    - data: {fileID: 11400000, guid: 26a4d6058dac69e4683dced7c5cb894f, type: 2}
+      individualSpawnChance: 1
   - signature: "\u0417\u0435\u043B\u0435\u043D\u044B\u0439 \u043B\u0443\u0433"
     minMoistureLevel: 0.3
     maxMoistureLevel: 1
@@ -118,9 +120,9 @@ MonoBehaviour:
     maxSoilTypeLevel: 0.65
     spawnChance: 70
     tiles:
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
       individualSpawnChance: 80
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: 9f7986c0be863a84faffd65ad3b02945, type: 2}
       individualSpawnChance: 20
   - signature: "\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\u0438"
     minMoistureLevel: 0.25
@@ -129,8 +131,10 @@ MonoBehaviour:
     maxSoilTypeLevel: 0.6
     spawnChance: 60
     tiles:
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: da35ccc9c0e203c4c9b3472fa3cfc008, type: 2}
       individualSpawnChance: 20
+    - data: {fileID: 11400000, guid: 6cc5f0712a99e9546825816519e434ec, type: 2}
+      individualSpawnChance: 80
   - signature: "\u0412\u043E\u0434\u0430"
     minMoistureLevel: 0
     maxMoistureLevel: 0
@@ -138,9 +142,9 @@ MonoBehaviour:
     maxSoilTypeLevel: 1
     spawnChance: 15
     tiles:
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: bb79dd4f450888542bd2e6e326215a56, type: 2}
       individualSpawnChance: 2
-    - data: {fileID: 0}
+    - data: {fileID: 11400000, guid: f5b3cc34dfaaf5a4fa7b242e396bd089, type: 2}
       individualSpawnChance: 98
   - signature: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u0431\u0435\u0440\u0435\u0433"
     minMoistureLevel: 0.01

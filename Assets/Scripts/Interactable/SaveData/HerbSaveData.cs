@@ -5,25 +5,19 @@ using UnityEngine;
 [Serializable]
 public class HerbSaveData : InteractableSaveData
 {
-    [Header("Herb data")]
-    public float fertility;
-    public float growthSpeed;
-    public float frostResistance;
+    [Header("Herb data")] 
+    public float fertility = 1f;
+    public float growthSpeed = 1f;
+    public float frostResistance = 1f;
     
-    public GrowthStage growthStage;
-    public int nextStageHour;
-    public bool withering;
-    public bool decaying;
-    
+    public GrowthStage growthStage = GrowthStage.Sprout;
+    public int nextStageHour = 0;
+    public bool withering = false;
+    public bool decaying = false;
+
     public HerbSaveData(string id) : base(new InteractableIdentifier(InteractableType.Herb, id))
     {
-        fertility = 1f;
-        growthSpeed = 1f;
-        frostResistance = 1f;
-        growthStage = GrowthStage.Sprout;
-        withering = false;
-        decaying = false;
-        nextStageHour = 0;
+        nextStageHour = creationHour;
     }
     
     public HerbSaveData() { }
@@ -40,7 +34,8 @@ public class HerbSaveData : InteractableSaveData
             frostResistance = frostResistance,
             nextStageHour = nextStageHour,
             withering = withering,
-            decaying = decaying
+            decaying = decaying,
+            creationHour = creationHour
         };
     }
 }

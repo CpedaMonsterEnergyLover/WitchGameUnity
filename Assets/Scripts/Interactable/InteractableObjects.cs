@@ -9,7 +9,7 @@ public class InteractableObjects : MonoBehaviour
     
     // Public fields
     public static InteractableData Get(string id) =>  Collection[id];
-    public static InteractableData Get(InteractableIdentifier identifier) => Collection[identifier.id];
+    public static InteractableData Get(InteractableIdentifier identifier) =>  Collection[identifier.id];
 
     // Private fields
 
@@ -27,7 +27,7 @@ public class InteractableObjects : MonoBehaviour
     private const int TypesMAX = 2;
     private static Text InspectText;
 
-    private static Dictionary<string, InteractableData> Collection;
+    public static Dictionary<string, InteractableData> Collection;
 
 
     #endregion

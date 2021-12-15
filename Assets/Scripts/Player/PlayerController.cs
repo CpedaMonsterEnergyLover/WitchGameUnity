@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Inventory.Instance.ToggleInventory();
+        }
+        
         UpdateMovementInput();
 
         if (!_isDashing)
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour
                 StartDash();
             } else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
             {
+                if (EventSystem.current.IsPointerOverGameObject()) return;
                 Attack();
             }
         }

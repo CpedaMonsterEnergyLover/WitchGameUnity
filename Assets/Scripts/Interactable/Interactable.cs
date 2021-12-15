@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class Interactable : MonoBehaviour
@@ -19,12 +20,11 @@ public class Interactable : MonoBehaviour
     // Содержит общие поля объекта
     [SerializeReference]
     protected InteractableData data;
-    
-    protected bool InitComplete;
-    protected Fader _fader;
-    
+
+    protected Fader Fader;
+
     // Содержит ссылку на тайл в котором находится
-    protected WorldTile tile;
+    protected WorldTile Tile;
 
 
     #endregion
@@ -32,10 +32,11 @@ public class Interactable : MonoBehaviour
 
 
     #region UnityMethods
-
+    
     private void OnMouseOver()
     {
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (Input.GetMouseButton(0)/* || Input.GetMouseButtonDown(0)*/)
             Interact();
         else 
             InteractableObjects.SetInspectTextEnabled(true);
@@ -43,7 +44,8 @@ public class Interactable : MonoBehaviour
     
     private void OnMouseEnter()
     {
-        Inspect();
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //Inspect();
     }
     
     private void OnMouseExit()
@@ -57,10 +59,10 @@ public class Interactable : MonoBehaviour
 
     #region ClassMethods
     
-    public static Interactable Create(Transform parent, InteractableSaveData saveData)
+    public static Interactable Create(InteractableSaveData saveData)
     {
         GameObject prefab = InteractableObjects.Get(saveData.identifier).prefab;
-        GameObject instantiatedObject = Instantiate(prefab, parent);
+        GameObject instantiatedObject = Instantiate(prefab, WorldManager.GameObjectsTransform);
         instantiatedObject.transform.rotation = Quaternion.identity;
         Interactable addedScript = saveData.identifier.type switch
         {
@@ -73,7 +75,7 @@ public class Interactable : MonoBehaviour
         return addedScript;
     } 
 
-    private InteractableSaveData LoadData(InteractableSaveData saveData)
+    private void LoadData(InteractableSaveData saveData)
     {
         // Загружает данные, зависящие от типа объекта
         data = InteractableObjects.Get(saveData.identifier);
@@ -82,10 +84,6 @@ public class Interactable : MonoBehaviour
         // Если объект был создан пустой, то есть в data отсутствует instanceID
         // Инициализирует начальные значения
         if (IsNew()) InitInstanceData(saveData);
-
-        InitComplete = true;
-
-        return InstanceData;
     }
 
     protected virtual void Interact()
@@ -109,8 +107,8 @@ public class Interactable : MonoBehaviour
     // Должен быть переопределен
     public virtual void OnTileLoad(WorldTile loadedTile)
     {
-        _fader = GetComponentInChildren<Fader>();
-        tile = loadedTile;
+        Fader = GetComponentInChildren<Fader>();
+        Tile = loadedTile;
     }
     
     #endregion
@@ -119,23 +117,23 @@ public class Interactable : MonoBehaviour
 
     #region Utils
 
-    public void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
+    public virtual void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
 
-    protected void Destroy()
+    protected virtual void Destroy()
     {
-        tile.savedData = null;
-        tile.instantiatedInteractable = null;
+        Tile.savedData = null;
+        Tile.instantiatedInteractable = null;
         GameObject.Destroy(gameObject);
     }
     
     private void FadeIn()
     {
-        if (_fader is not null && _fader.IsFaded) _fader.FadeIn();
+        if (Fader is not null && Fader.IsFaded) Fader.FadeIn();
     }
 
     private void FadeOut()
     {
-        if (_fader is not null && _fader.IsFaded) _fader.FadeOut(0.15f);
+        if (Fader is not null && Fader.IsFaded) Fader.FadeOut(0.15f);
     }
     
     // Должен быть переопределен 

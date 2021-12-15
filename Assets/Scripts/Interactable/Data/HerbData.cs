@@ -7,6 +7,9 @@ using UnityEngine;
 public class HerbData : InteractableData
 {
     [Header("Herb data")]
+    public bool blockGrowth = true;
+
+    public Item item;
     [SerializeField] 
     [Tooltip("Сезон, в который появляются ростки растения")]
     public Season growthSeason;
@@ -16,6 +19,7 @@ public class HerbData : InteractableData
     public float witherSpeed;
     
     [SerializeField] [Tooltip("Сколько сезонов нужно растению чтобы полностью вырасти.")]
+    [Range(0,6)]
     public float growthSpeed;
     
     [SerializeField] 
@@ -41,19 +45,23 @@ public class HerbData : InteractableData
     };
 
 
-    #region ClassProperties
+    #region ClassMethods
 
     public string[] GetLoot(GrowthStage stage) => 
         (int)stage < lootTable.Length ? lootTable[(int)stage].loot : Array.Empty<string>();
 
     public HerbLootTable GetLootTable(GrowthStage stage) => lootTable[(int) stage];
 
+    public int StageGrowthTime => (int) (growthSpeed * TimelineManager.SeasonLength / 4);
+
+    public Sprite SpriteOfGrowthStage(GrowthStage stage) => growthSprites[(int) stage].sprite;
+
     #endregion
     
     
     #region Util
 
-    void OnValidate()
+    private void OnValidate()
     {
         if (lootTable.Length != 5)
         {
@@ -91,6 +99,7 @@ public struct HerbLootTable
     [ShowOnly]
     public GrowthStage growthStage;
     public string[] loot;
+    public Item item;
 
     public HerbLootTable(GrowthStage growthStage) : this()
     {
@@ -114,9 +123,9 @@ public struct HerbLootTable
 [Serializable]
 public enum GrowthStage
 {
-    Sprout,
-    Bush,
-    Blossom,
-    Grown,
-    Decay
+    Sprout = 0,
+    Bush = 1,
+    Blossom = 2,
+    Grown = 3,
+    Decay = 4
 }   
