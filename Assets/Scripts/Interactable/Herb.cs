@@ -56,8 +56,6 @@ public class Herb : Interactable
     protected override void Interact()
     {
         base.Interact();
-        if (Data.item)
-            Inventory.Instance.AddItem(Data.item, 5);
         Destroy();
     }
 

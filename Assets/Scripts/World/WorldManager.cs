@@ -10,7 +10,7 @@ public class WorldManager : MonoBehaviour
     // Public fields
     public Generator generator;
     public Transform playerTransform;
-    public InteractableObjects interactableObjects;
+    public GameObjectsCollection gameObjectsCollection;
     public int targetFrameRate = 60;
     [Range(1,50)]
     public int viewRangeX;
@@ -69,6 +69,7 @@ public class WorldManager : MonoBehaviour
     {
         if (generator.GenerateOnStart)
         {
+          
             Generate();
             worldGrid.transform.position = new Vector3(0f, 0f, 0);
             int mapCenterX = generator.mapWidth / 2;
@@ -129,15 +130,18 @@ public class WorldManager : MonoBehaviour
     public void Generate()
     {
         // TODO: вынести инородные инициализации из этого метода в более подходящее место
-        
+        // Сейчас вся инициализация помещена в генерацию потому что требуется нажимать
+        // Эту кнопку изнутри юнити
+
+        // Инициализация Кеша
+        _tileCache = new TileCache(tileCacheSize);
+            
         // Инициализация коллекции игровых объектов
-        interactableObjects.InitCollection();
+        gameObjectsCollection.InitCollection();
         
         // Инициализация индексов слоев грида и тайлов
         InitTileIndexArrays();
         
-        // Инициализация Кеша
-        _tileCache = new TileCache(tileCacheSize);
         loadedTiles = new List<Vector3Int>();
         
         ClearWorld();

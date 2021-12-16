@@ -39,7 +39,7 @@ public class Interactable : MonoBehaviour
         if (Input.GetMouseButton(0)/* || Input.GetMouseButtonDown(0)*/)
             Interact();
         else 
-            InteractableObjects.SetInspectTextEnabled(true);
+            GameObjectsCollection.SetInspectTextEnabled(true);
     }
     
     private void OnMouseEnter()
@@ -61,7 +61,7 @@ public class Interactable : MonoBehaviour
     
     public static Interactable Create(InteractableSaveData saveData)
     {
-        GameObject prefab = InteractableObjects.Get(saveData.identifier).prefab;
+        GameObject prefab = GameObjectsCollection.GetInteractable(saveData.identifier).prefab;
         GameObject instantiatedObject = Instantiate(prefab, WorldManager.GameObjectsTransform);
         instantiatedObject.transform.rotation = Quaternion.identity;
         Interactable addedScript = saveData.identifier.type switch
@@ -78,7 +78,7 @@ public class Interactable : MonoBehaviour
     private void LoadData(InteractableSaveData saveData)
     {
         // Загружает данные, зависящие от типа объекта
-        data = InteractableObjects.Get(saveData.identifier);
+        data = GameObjectsCollection.GetInteractable(saveData.identifier);
         instanceData = saveData;
 
         // Если объект был создан пустой, то есть в data отсутствует instanceID
@@ -88,20 +88,20 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Interact()
     {
-        InteractableObjects.SetInspectTextEnabled(false);
+        GameObjectsCollection.SetInspectTextEnabled(false);
     }
     
     protected virtual void Inspect()
     {
         FadeIn();
-        InteractableObjects.SetInspectText(Data.name);
-        InteractableObjects.SetInspectTextEnabled(true);
+        GameObjectsCollection.SetInspectText(Data.name);
+        GameObjectsCollection.SetInspectTextEnabled(true);
     }
 
     protected virtual void StopInspect()
     {
         FadeOut();
-        InteractableObjects.SetInspectTextEnabled(false);
+        GameObjectsCollection.SetInspectTextEnabled(false);
     }
 
     // Должен быть переопределен

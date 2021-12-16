@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1fa51e6e1e0224ab223b9f450e2318, type: 3}
   m_Name: Meat
   m_EditorClassIdentifier: 
-  type: 3
+  identifier:
+    type: 3
+    id: raw_meat
   name: "\u0421\u044B\u0440\u043E\u0435 \u043C\u044F\u0441\u043E"
-  id: meat
   icon: {fileID: 21300000, guid: 0358a18be7bd21d43a93cf5654bbb6ac, type: 3}
   maxStack: 8

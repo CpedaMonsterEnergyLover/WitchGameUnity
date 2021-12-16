@@ -29,7 +29,7 @@ public class WorldTile
 
     public void LoadInteractable()
     {
-        if (!InteractableObjects.Collection.ContainsKey(savedData.identifier.id))
+        if (!GameObjectsCollection.InteractableCollection.ContainsKey(savedData.identifier.id))
         {
             Debug.LogWarning($"The given key was not present in the Collection of objects:{savedData.identifier.id}");
             savedData = null;

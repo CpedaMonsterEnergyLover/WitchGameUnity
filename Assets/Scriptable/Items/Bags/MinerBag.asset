@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbc6d4d723049f48befd53420c8343c, type: 3}
   m_Name: MinerBag
   m_EditorClassIdentifier: 
-  type: 2
+  identifier:
+    type: 2
+    id: miner_bag
   name: Miner bag
-  id: bag_0
   icon: {fileID: 21300000, guid: 4e9f404edf161ff4eb6fc0f5c23684f9, type: 3}
   maxStack: 1
   slotsAmount: 8
-  itemType: 4
+  containsItemsOfType: 0

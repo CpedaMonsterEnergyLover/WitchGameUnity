@@ -9,7 +9,6 @@ public class HerbData : InteractableData
     [Header("Herb data")]
     public bool blockGrowth = true;
 
-    public Item item;
     [SerializeField] 
     [Tooltip("Сезон, в который появляются ростки растения")]
     public Season growthSeason;
@@ -99,7 +98,7 @@ public struct HerbLootTable
     [ShowOnly]
     public GrowthStage growthStage;
     public string[] loot;
-    public Item item;
+    public ItemData item;
 
     public HerbLootTable(GrowthStage growthStage) : this()
     {

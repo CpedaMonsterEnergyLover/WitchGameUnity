@@ -4,7 +4,8 @@ using UnityEngine;
 
 class ItemSpawner : EditorWindow
 {
-    private Item pickedItem;
+    private ItemData pickedItem;
+    private int amount = 1;
     
     [MenuItem ("Window/Item spawner")]
     public static void  ShowWindow () {
@@ -13,15 +14,16 @@ class ItemSpawner : EditorWindow
     
     void OnGUI ()
     {
+        amount = EditorGUILayout.IntField("Amount:", amount);
         if (GUILayout.Button("click")) {
-            EditorGUIUtility.ShowObjectPicker<Item>(null, true, "", GUIUtility.GetControlID(FocusType.Passive) + 100);
+            EditorGUIUtility.ShowObjectPicker<ItemData>(null, true, "", GUIUtility.GetControlID(FocusType.Passive) + 100);
         }
 
         if (Event.current.commandName == "ObjectSelectorClosed") {
             if (Application.isPlaying)
             {
-                var item = (Item) EditorGUIUtility.GetObjectPickerObject();
-                if (item is not null) Inventory.Instance.AddItem(item, 1);
+                var item = (ItemData) EditorGUIUtility.GetObjectPickerObject();
+                if (item is not null) Inventory.Instance.AddItem(item.identifier, amount);
             }
         }
     }

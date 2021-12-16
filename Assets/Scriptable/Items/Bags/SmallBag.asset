@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbc6d4d723049f48befd53420c8343c, type: 3}
   m_Name: SmallBag
   m_EditorClassIdentifier: 
-  type: 2
+  identifier:
+    type: 2
+    id: small_bag
   name: small bag
-  id: bag_1
   icon: {fileID: 21300000, guid: bc0187255683a6a48bb60144d786a5fd, type: 3}
   maxStack: 1
   slotsAmount: 4
-  itemType: 0
+  containsItemsOfType: 0

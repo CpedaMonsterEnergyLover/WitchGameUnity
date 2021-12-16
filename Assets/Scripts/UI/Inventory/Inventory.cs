@@ -20,7 +20,6 @@ public class Inventory : MonoBehaviour
 
     public float rowHeight = 80;
     public float minHeight = 280;
-    public Bag testBag;
     public GameObject slotPrefab;
     
     public Transform inventoryTransform;
@@ -53,7 +52,6 @@ public class Inventory : MonoBehaviour
         _slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
         ShowInventory(_active);
         SelectSlot(0);
-        AddItem(testBag, 1);
     }
 
     private void Update()
@@ -99,6 +97,11 @@ public class Inventory : MonoBehaviour
             itemHandlerRenderer.enabled = false;
         }*/
     }
+
+    public void AddItem(ItemIdentifier identifier, int amount)
+    {
+        AddItem(Item.Create(identifier), amount);
+    }
     
     public void AddItem(Item item, int amount)
     {
@@ -117,10 +120,10 @@ public class Inventory : MonoBehaviour
             else
             {
                 // Если предмет спец. типа
-                if (item.type != ItemType.Any)
+                if (item.Type != ItemType.Any)
                 {
                     // сначала ищет первый свободный слот этого типа
-                    InventorySlot emptySlot = FindEmptySlotOfType(item.type);
+                    InventorySlot emptySlot = FindEmptySlotOfType(item.Data.identifier.type);
                     if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
                     // Если такого нет, то добавляется в первый свободный слот типа Any
                     else
@@ -140,9 +143,9 @@ public class Inventory : MonoBehaviour
             
             amount -= added;
 
-            if (added == 0)
+            if (added <= 0)
             {
-                Debug.Log($"При добавлении в инвентарь {item.name}, {amount} не влезло");
+                Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
                 break;
             }
         }
@@ -155,17 +158,17 @@ public class Inventory : MonoBehaviour
 
     public InventorySlot FindSlotWithItem(Item item)
     {
-        return _slots.Find(slot => slot.StoredItem == item);
+        return _slots.Find(slot => item.Compare(slot.storedItem));
     }
 
     private InventorySlot FindSlotWithItemAndFreeSpace(Item item)
     {
-        return _slots.Find(slot => slot.StoredItem == item && slot.StoredCount < item.maxStack);
+        return _slots.Find(slot => item.Compare(slot.storedItem) && slot.StoredCount < item.Data.maxStack);
     }
 
     private InventorySlot FindEmptySlotOfType(ItemType type)
     {
-        return _slots.Find(slot => slot.HasItem == false && slot.SlotType == type);
+        return _slots.Find(slot => !slot.HasItem && slot.SlotType == type);
     }
 
     public void PickItem(Item item, int count)
@@ -214,11 +217,14 @@ public class Inventory : MonoBehaviour
 
     private void EquipBag(Bag bag)
     {
-        Debug.Log($"Equip bag{bag.name}");
-        for (int i = 0; i < bag.slotsAmount; i++)
+        BagData bagData = bag.Data;
+        BagSaveData bagSaveData = bag.InstanceData;
+        
+        Debug.Log($"Equip bag{bagData.name}");
+        for (int i = 0; i < bagData.slotsAmount; i++)
         {
-            var slot = AddSlot(bag.itemType);
-            bag.Slots.Add(slot);
+            var slot = AddSlot(bagData.containsItemsOfType);
+            bagSaveData.Slots.Add(slot);
             _slots.Add(slot);
         }
         UpdateHeight();
@@ -226,20 +232,20 @@ public class Inventory : MonoBehaviour
 
     private void UnequipBag(Bag bag)
     {
-        Debug.Log($"Unequip bag{bag.name}");
-        bag.Slots.ForEach(slot =>
+        BagSaveData bagSaveData = bag.InstanceData;
+        
+        bagSaveData.Slots.ForEach(slot =>
         {
             _slots.Remove(slot);
             Destroy(slot.gameObject);
         });
-        bag.Slots.Clear();
+        bagSaveData.Slots.Clear();
         UpdateHeight();
     }
 
     private void HighlightBagSlots(Bag bag)
     {
-        Debug.Log("Bag equip denied");
-        bag.Slots.ForEach(slot =>
+        bag.InstanceData.Slots.ForEach(slot =>
             slot.Shake()
         );
     }
