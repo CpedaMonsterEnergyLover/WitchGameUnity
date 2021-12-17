@@ -106,8 +106,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private bool TryUnequipBag()
     {
         if (SlotType != ItemType.Bag ||
-            storedItem.Data.identifier.type != ItemType.Bag ||
-            !ItemPicker.Instance.itemSlot.HasItem) return true;
+            storedItem.Data.identifier.type != ItemType.Bag) return true;
 
         Bag storedBag = (Bag) storedItem;
 

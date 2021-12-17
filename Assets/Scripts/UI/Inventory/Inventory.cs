@@ -219,6 +219,7 @@ public class Inventory : MonoBehaviour
 
     private void UnequipBag(Bag bag)
     {
+        Debug.Log("Unequip bag");
         BagSaveData bagSaveData = bag.InstanceData;
         
         bagSaveData.Slots.ForEach(slot =>

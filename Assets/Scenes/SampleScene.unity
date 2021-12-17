@@ -17271,7 +17271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8835642265728589268, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5515889221891405617, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}
@@ -18952,6 +18952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99673c0feecce344abe098e2a7600ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlot: {fileID: 1496077459}
 --- !u!114 &1496077463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20896,7 +20897,6 @@ MonoBehaviour:
   slotSelection: {fileID: 2051819360}
   selectionColor: {r: 1, g: 0.09019608, b: 0, a: 0.20784314}
   slotColors: {fileID: 11400000, guid: 0992fce73b4166c4b81c7fd2721b05ad, type: 2}
-  itemPicker: {fileID: 1496077459}
   selectedSlotIndex: 6
   _slots: []
 --- !u!1 &1220360156733761573
