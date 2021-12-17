@@ -3,32 +3,36 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
+    #region Singleton
+
+    public static Tooltip Instance;
+
+    private void Awake()
+    {
+        if (Instance is null) Instance = this;
+        else Debug.LogError("Found multiple instances of tooltip");
+        SetEnabled(false);
+    }
+
+    #endregion
+
     public RectTransform panelRect;
     public Text title;
     public Text subtitle;
     public Text description;
-
-    private static Tooltip instance;
-
-    public static void SetEnabled(bool isEnabled)
+    
+    public void SetEnabled(bool isEnabled)
     {
-        instance.panelRect.gameObject.SetActive(isEnabled);
-    }
-
-    public static void SetData(TooltipData data)
-    {
-        instance.title.text = data.Title;
-        instance.subtitle.text = data.Subtitle;
-        instance.description.text = data.Description;
-        instance.UpdatePosition();
-        SetEnabled(true);
+        if (isEnabled) Instance.UpdatePosition();
+        gameObject.SetActive(isEnabled);
     }
     
-    private void Awake()
+    public void SetData(TooltipData data)
     {
-        if (instance is null) instance = this;
-        else Debug.LogError("Found multiple instances of tooltip");
-        SetEnabled(false);
+        Instance.title.text = data.Title;
+        Instance.subtitle.text = data.Subtitle;
+        Instance.description.text = data.Description;
+        SetEnabled(true);
     }
 
     private void UpdatePosition()
@@ -42,7 +46,7 @@ public class Tooltip : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         UpdatePosition();
     }

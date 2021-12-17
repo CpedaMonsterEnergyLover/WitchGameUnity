@@ -106,7 +106,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private bool TryUnequipBag()
     {
         if (SlotType != ItemType.Bag ||
-            storedItem.Data.identifier.type != ItemType.Bag) return true;
+            storedItem.Data.identifier.type != ItemType.Bag ||
+            !ItemPicker.Instance.itemSlot.HasItem) return true;
 
         Bag storedBag = (Bag) storedItem;
 
@@ -122,12 +123,13 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (HasItem) Tooltip.SetData(storedItem.GetToolTipData());
+        if (!HasItem || ItemPicker.Instance.itemSlot.HasItem) return;
+        Tooltip.Instance.SetData(storedItem.GetToolTipData());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Tooltip.SetEnabled(false);
+        Tooltip.Instance.SetEnabled(false);
     }
     
     // При нажатии на ячейку инвентаря
@@ -138,11 +140,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (eventData.button == PointerEventData.InputButton.Middle) return;
 
         // Если игрок ничего не перетаскивает он может взять из слота прнедмет
-        var picker = Inventory.Instance.itemPicker;
         int pickedAmount = 0;
-        bool hasPickedItem = picker.storedItem is not null;
         bool heldShift = eventData.currentInputModule.input.GetAxisRaw("Shift") != 0;
-        bool pickedSameItem = storedItem == picker.storedItem;
+        InventorySlot picker = ItemPicker.Instance.itemSlot;
+        bool hasPickedItem = picker.HasItem;
+        bool pickedSameItem = HasItem &&  storedItem.Compare(picker.storedItem);
 
         if (leftClick)
         {
@@ -162,7 +164,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             // Проверка на сумку
             if (!TryUnequipBag()) return;
             
-            Inventory.Instance.PickItem(storedItem, pickedAmount);
+            ItemPicker.Instance.SetItem(storedItem, pickedAmount);
             RemoveItem(pickedAmount);
         }
         // Если игрок перетаскивает предмет
@@ -185,7 +187,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                     }
                     int added2 = AddItem(picker.storedItem, picker.StoredCount);
                     picker.RemoveItem(added2);
-                    if (picker.StoredCount <= 0) Inventory.Instance.ClearPicker();
+                    if (picker.StoredCount <= 0) ItemPicker.Instance.Clear();
                 }
                 else
                 {
@@ -208,7 +210,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                 
                 int added = AddItem(picker.storedItem, pickedAmount);
                 picker.RemoveItem(added);
-                if (picker.StoredCount <= 0) Inventory.Instance.ClearPicker();
+                if (picker.StoredCount <= 0) ItemPicker.Instance.Clear();
             }
         }
     }

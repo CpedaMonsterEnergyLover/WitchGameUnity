@@ -30,7 +30,6 @@ public class Inventory : MonoBehaviour
     public SlotColors slotColors;
     public Color SlotColor(ItemType type) => slotColors.colors[(int)type].color;
 
-    public InventorySlot itemPicker;
     public InventorySlot SelectedSlot { get; private set; }
 
     [ShowOnly]
@@ -169,21 +168,7 @@ public class Inventory : MonoBehaviour
     {
         return _slots.Find(slot => !slot.HasItem && slot.SlotType == type);
     }
-
-    public void PickItem(Item item, int count)
-    {
-        itemPicker.gameObject.SetActive(true);
-        itemPicker.AddItem(item, count);
-        Tooltip.SetEnabled(false);
-    }
-
-    public void ClearPicker()
-    {
-        itemPicker.gameObject.SetActive(false);
-        itemPicker.enabled = false;
-        Tooltip.SetEnabled(true);
-    }
-
+    
     public void ShowInventory(bool isShown)
     {
         inventoryTransform.parent.gameObject.SetActive(isShown);
@@ -213,6 +198,8 @@ public class Inventory : MonoBehaviour
         parentRectTransform.sizeDelta = sizeDelta;
 
     }
+    
+    
     
     #region Events
 
