@@ -19,4 +19,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4e9f404edf161ff4eb6fc0f5c23684f9, type: 3}
   maxStack: 1
   slotsAmount: 8
-  containsItemsOfType: 0
+  containsItemsOfType: 4

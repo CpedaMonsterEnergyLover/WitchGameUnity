@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -175,12 +174,14 @@ public class Inventory : MonoBehaviour
     {
         itemPicker.gameObject.SetActive(true);
         itemPicker.AddItem(item, count);
+        Tooltip.SetEnabled(false);
     }
 
     public void ClearPicker()
     {
         itemPicker.gameObject.SetActive(false);
         itemPicker.enabled = false;
+        Tooltip.SetEnabled(true);
     }
 
     public void ShowInventory(bool isShown)
@@ -220,7 +221,6 @@ public class Inventory : MonoBehaviour
         BagData bagData = bag.Data;
         BagSaveData bagSaveData = bag.InstanceData;
         
-        Debug.Log($"Equip bag{bagData.name}");
         for (int i = 0; i < bagData.slotsAmount; i++)
         {
             var slot = AddSlot(bagData.containsItemsOfType);

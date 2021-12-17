@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler, IBeginDragHandler, IEndDragHandler*/
+public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public ItemType SlotType;
     [SerializeField] 
@@ -117,6 +117,17 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler,
         }
         ONBagEquipDenied?.Invoke(storedBag);
         return false;
+    }
+    
+    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (HasItem) Tooltip.SetData(storedItem.GetToolTipData());
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Tooltip.SetEnabled(false);
     }
     
     // При нажатии на ячейку инвентаря
@@ -246,4 +257,5 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler/*, IDragHandler,
 
 
     #endregion
+
 }

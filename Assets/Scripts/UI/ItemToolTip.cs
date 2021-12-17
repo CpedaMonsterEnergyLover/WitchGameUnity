@@ -1,9 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class GhostBehaviour : MonoBehaviour
+public class ItemToolTip : MonoBehaviour
 {
-    public Animator animator;
-    
     // Start is called before the first frame update
     void Start()
     {

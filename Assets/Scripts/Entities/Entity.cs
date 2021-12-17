@@ -1,5 +1,4 @@
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(Rigidbody2D)), 

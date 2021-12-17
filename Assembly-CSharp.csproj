@@ -107,6 +107,9 @@
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
+     <Compile Include="Assets\Scripts\UI\ItemToolTip.cs" />
+     <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

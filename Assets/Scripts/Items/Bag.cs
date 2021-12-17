@@ -14,6 +14,11 @@ public class Bag : Item
         instanceData = new BagSaveData();
     }
 
+    protected override string GetDescription()
+    {
+        return base.GetDescription() + "\n" +
+               $"Хранит {Data.containsItemsOfType}\nМожет содержать до {Data.slotsAmount} предметов";
+    }
 }
 
 

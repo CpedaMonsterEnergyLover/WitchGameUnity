@@ -42,6 +42,16 @@ public class Item
         bool targetIDIsTheSame = Data.identifier.id.Equals(compareWith.Data.identifier.id);
         return targetTypeIsTheSame && targetIDIsTheSame;
     }
+
+    public TooltipData GetToolTipData()
+    {
+        return new TooltipData(Data.name, Data.identifier.ToString(), GetDescription());
+    }
+
+    protected virtual string GetDescription()
+    {
+        return $"Макс. кол-во в стаке: {Data.maxStack}";
+    }
     
     // TODO: Tooltip
     

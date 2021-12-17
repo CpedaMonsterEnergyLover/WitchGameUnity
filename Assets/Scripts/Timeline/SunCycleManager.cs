@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using UnityEngine;
 
 public class SunCycleManager : MonoBehaviour

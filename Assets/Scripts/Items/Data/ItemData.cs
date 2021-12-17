@@ -8,6 +8,7 @@ public class ItemData : ScriptableObject
     public new string name = "New item";
     public Sprite icon;
     public int maxStack = 1;
+
 }
 
 public enum ItemType
