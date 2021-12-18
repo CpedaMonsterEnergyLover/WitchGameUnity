@@ -25,8 +25,7 @@ public class Interactable : MonoBehaviour
 
     // Содержит ссылку на тайл в котором находится
     protected WorldTile Tile;
-
-
+    
     #endregion
 
 
@@ -35,22 +34,20 @@ public class Interactable : MonoBehaviour
     
     private void OnMouseOver()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (!CursorManager.Instance.InteractAllowed) return;
         if (Input.GetMouseButton(0)/* || Input.GetMouseButtonDown(0)*/)
             Interact();
-        else 
-            GameObjectsCollection.SetInspectTextEnabled(true);
     }
     
     private void OnMouseEnter()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        //Inspect();
+        if (!CursorManager.Instance.InteractAllowed) return;
+        FadeIn();
     }
     
     private void OnMouseExit()
     {
-        StopInspect();
+        FadeOut();
     }
 
     #endregion
@@ -58,6 +55,11 @@ public class Interactable : MonoBehaviour
 
 
     #region ClassMethods
+
+    public static GameObject GetPrefab(InteractableIdentifier identifier)
+    {
+        return GameObjectsCollection.GetInteractable(identifier).prefab;
+    }
     
     public static Interactable Create(InteractableSaveData saveData)
     {
@@ -88,22 +90,10 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Interact()
     {
-        GameObjectsCollection.SetInspectTextEnabled(false);
+        Debug.Log($"Interacting with{Data.name}");
     }
     
-    protected virtual void Inspect()
-    {
-        FadeIn();
-        GameObjectsCollection.SetInspectText(Data.name);
-        GameObjectsCollection.SetInspectTextEnabled(true);
-    }
-
-    protected virtual void StopInspect()
-    {
-        FadeOut();
-        GameObjectsCollection.SetInspectTextEnabled(false);
-    }
-
+    
     // Должен быть переопределен
     public virtual void OnTileLoad(WorldTile loadedTile)
     {

@@ -48,7 +48,6 @@ public class Inventory : MonoBehaviour
     {
         _slots.AddRange(hotBarTransform.GetComponentsInChildren<InventorySlot>());
         _slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
-        ShowInventory(_active);
         SelectSlot(0);
     }
 
@@ -161,7 +160,7 @@ public class Inventory : MonoBehaviour
 
     private InventorySlot FindSlotWithItemAndFreeSpace(Item item)
     {
-        return _slots.Find(slot => item.Compare(slot.storedItem) && slot.StoredCount < item.Data.maxStack);
+        return _slots.Find(slot => item.Compare(slot.storedItem) && slot.StoredAmount < item.Data.maxStack);
     }
 
     private InventorySlot FindEmptySlotOfType(ItemType type)
@@ -219,7 +218,6 @@ public class Inventory : MonoBehaviour
 
     private void UnequipBag(Bag bag)
     {
-        Debug.Log("Unequip bag");
         BagSaveData bagSaveData = bag.InstanceData;
         
         bagSaveData.Slots.ForEach(slot =>
@@ -241,7 +239,7 @@ public class Inventory : MonoBehaviour
     private void SubscribeToEvents()
     {
         InventorySlot.ONBagEquip += EquipBag;
-        InventorySlot.ONBagEquipDenied += HighlightBagSlots;
+        InventorySlot.ONBagUnEquipDenied += HighlightBagSlots;
         InventorySlot.ONBagUnequip += UnequipBag;
     }
 

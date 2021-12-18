@@ -70,13 +70,6 @@ public class GameObjectsCollection : MonoBehaviour
         ItemCollection = new Dictionary<string, ItemData>();
         items.ForEach(i => ItemCollection[i.identifier.id] = i);
     }
-
-    public static void SetInspectTextEnabled(bool enabled) => InspectText.enabled = enabled;
     
-    public static void SetInspectText(string text = "")
-    {
-        InspectText.text = text;
-    }
-
     #endregion
 }

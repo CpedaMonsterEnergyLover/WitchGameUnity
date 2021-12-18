@@ -23,7 +23,10 @@ class ItemSpawner : EditorWindow
             if (Application.isPlaying)
             {
                 var item = (ItemData) EditorGUIUtility.GetObjectPickerObject();
-                if (item is not null) Inventory.Instance.AddItem(item.identifier, amount);
+                if (item is not null)
+                {
+                    Inventory.Instance.AddItem(item.identifier, amount);
+                }
             }
         }
     }

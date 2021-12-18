@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class Item
 {
     public ItemData Data => data;
@@ -8,10 +9,9 @@ public class Item
     public ItemType Type => Data.identifier.type;
     
     // Содержит сохраняемые поля объекта
-    [SerializeReference]
+    [SerializeReference, SerializeField]
     protected ItemSaveData instanceData = new();
     // Содержит общие поля объекта
-    [SerializeReference]
     protected ItemData data;
 
     // Constructor
@@ -22,20 +22,22 @@ public class Item
 
     public static Item Create(ItemIdentifier identifier)
     {
-        return identifier.type switch
+        var created = identifier.type switch
         {
             ItemType.Any => new Item(identifier),
             ItemType.Food => new Item(identifier),
             ItemType.Herb => new Item(identifier),
             ItemType.Mineral => new Item(identifier),
             ItemType.Bag => new Bag(identifier),
+            ItemType.Furniture => new Furniture(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };
+        return created;
     }
 
     public virtual bool Compare(Item compareWith)
     {
-        bool targetIsNull = compareWith is null;
+        bool targetIsNull = compareWith?.Data is null;
         if (targetIsNull) return false;
         
         bool targetTypeIsTheSame = Data.identifier.type == compareWith.Data.identifier.type;
@@ -53,7 +55,10 @@ public class Item
         return $"Макс. кол-во в стаке: {Data.maxStack}";
     }
     
-    // TODO: Tooltip
-    
     // TODO: ONPickup
+
+    public override string ToString()
+    {
+        return $"{Data.identifier.type}:{Data.identifier.id}";
+    }
 }

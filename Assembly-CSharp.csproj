@@ -77,7 +77,6 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCycleManager.cs" />
-     <Compile Include="Assets\Scripts\UI\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysManager.cs" />
      <Compile Include="Assets\Scripts\Util\TimeUtil.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
@@ -103,13 +102,18 @@
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
-     <Compile Include="Assets\Scripts\UI\ItemToolTip.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
      <Compile Include="Assets\Scripts\Scriptable\TimelineSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
+     <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
+     <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
+     <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
+     <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
+     <Compile Include="Assets\Scripts\Items\Furniture.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

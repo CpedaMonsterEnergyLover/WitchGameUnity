@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,14 +7,14 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public ItemType SlotType;
-    [SerializeField] 
+    [SerializeField]
     public Item storedItem;
     [SerializeField] 
-    public int StoredCount = 0;
+    public int StoredAmount = 0;
 
     public Image itemIcon;
     public Text itemText;
-    public bool HasItem => storedItem is not null && StoredCount > 0;
+    public bool HasItem => storedItem is not null && StoredAmount > 0;
     
     public delegate void BagEquipEvent(Bag bag);
     public static event BagEquipEvent ONBagEquip;
@@ -22,11 +23,16 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public static event BagUnequipEvent ONBagUnequip;
     
     public delegate void BagEquipDeniedEvent(Bag bag);
-    public static event BagEquipDeniedEvent ONBagEquipDenied;
+    public static event BagEquipDeniedEvent ONBagUnEquipDenied;
 
     private Coroutine _routine;
 
     #region UnityMethods
+
+    private void Awake()
+    {
+        storedItem = null;
+    }
 
     private void Start()
     {
@@ -43,16 +49,16 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public int AddItem(Item item, int amount)
     {
         // Если слот для сумок и пытаются поместить сумку
-        if (!TryUquipBag(item)) return 0;
+        if (!TryEquipBag(item)) return 0;
         
         // Если в слоте уже лежит предмет и пытаются добавить другой - он не добавляется
         if (storedItem is not null && !item.Compare(storedItem)) return 0;
         // Если в слот нельзя класть предметы этого типа - они не добавляются
         if (SlotType != ItemType.Any && SlotType != item.Type) return 0;
 
-        int canFit = storedItem is null ? item.Data.maxStack : storedItem.Data.maxStack - StoredCount;
+        int canFit = storedItem is null ? item.Data.maxStack : storedItem.Data.maxStack - StoredAmount;
         int added = canFit < amount ? canFit : amount;
-        StoredCount += added;
+        StoredAmount += added;
         storedItem = item;
 
         UpdateUI();
@@ -64,22 +70,28 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Удаляет предметы из слота
     public void RemoveItem(int amount)
     {
-        if (storedItem is null || amount == 0) return;
-        if (StoredCount - amount <= 0)
+        if (storedItem is null || amount <= 0)
         {
-            StoredCount = 0;
+            return;
+        }
+        if (StoredAmount - amount <= 0)
+        {
+            StoredAmount = 0;
             itemIcon.enabled = false;
             storedItem = null;
             itemText.enabled = false;
         }
         else
         {
-            StoredCount -= amount;
-            itemText.text = StoredCount.ToString();
+            StoredAmount -= amount;
+            if (StoredAmount <= 1) itemText.enabled = false;
+            itemText.text = StoredAmount.ToString();
         }
+
+                // UpdateUI();
     }
 
-    private bool TryUquipBag(Item item)
+    private bool TryEquipBag(Item item)
     {
         if (SlotType != ItemType.Bag ||
             item.Type != ItemType.Bag) return true;
@@ -96,7 +108,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                 return true;
             }
 
-            ONBagEquipDenied?.Invoke(storedBag);
+            ONBagUnEquipDenied?.Invoke(storedBag);
             return false;
         }
         ONBagEquip?.Invoke(bag);
@@ -108,6 +120,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (SlotType != ItemType.Bag ||
             storedItem.Data.identifier.type != ItemType.Bag) return true;
 
+        if (ItemPicker.Instance.itemSlot.HasItem) return false;
+
         Bag storedBag = (Bag) storedItem;
 
         if (storedBag.InstanceData.IsEmpty())
@@ -115,7 +129,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             ONBagUnequip?.Invoke(storedBag);
             return true;
         }
-        ONBagEquipDenied?.Invoke(storedBag);
+        ONBagUnEquipDenied?.Invoke(storedBag);
         return false;
     }
     
@@ -147,10 +161,10 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
         if (leftClick)
         {
-            pickedAmount = StoredCount;
+            pickedAmount = StoredAmount;
         } else if (rightClick)
         {
-            if (heldShift) pickedAmount = StoredCount / 2 == 0 ? 1 : StoredCount / 2;
+            if (heldShift) pickedAmount = StoredAmount / 2 == 0 ? 1 : StoredAmount / 2;
             else pickedAmount = 1;
         } 
         
@@ -178,38 +192,37 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                     {
                         if (heldShift)
                         {
-                            pickedAmount = StoredCount;
+                            pickedAmount = StoredAmount;
                         }
-                        int added = picker.AddItem(storedItem, pickedAmount);
+                        int added = ItemPicker.Instance.SetItem(storedItem, pickedAmount);
                         RemoveItem(added);
                         return;
                     }
-                    int added2 = AddItem(picker.storedItem, picker.StoredCount);
+                    int added2 = AddItem(picker.storedItem, picker.StoredAmount);
                     picker.RemoveItem(added2);
-                    if (picker.StoredCount <= 0) ItemPicker.Instance.Clear();
+                    if (picker.StoredAmount <= 0) ItemPicker.Instance.Clear();
                 }
                 else
                 {
                     // Проверка на сумку
                     if (!TryUnequipBag()) return;
 
-                    
                     Item tempItem = picker.storedItem;
-                    int tempCount = picker.StoredCount;
+                    int tempCount = picker.StoredAmount;
                     picker.Clear();
-                    picker.AddItem(storedItem, StoredCount);
+                    ItemPicker.Instance.SetItem(storedItem, pickedAmount);
                     Clear();
                     AddItem(tempItem, tempCount);
                 }
             }
             else
             {
-                if (leftClick) pickedAmount = picker.StoredCount;
+                if (leftClick) pickedAmount = picker.StoredAmount;
                 else if (rightClick) pickedAmount = 1;
                 
                 int added = AddItem(picker.storedItem, pickedAmount);
                 picker.RemoveItem(added);
-                if (picker.StoredCount <= 0) ItemPicker.Instance.Clear();
+                if (picker.StoredAmount <= 0) ItemPicker.Instance.Clear();
             }
         }
     }
@@ -233,15 +246,13 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             t += Time.deltaTime;
             float angle = Mathf.Sin(t * speed) * 5; 
             itemIcon.transform.rotation  = Quaternion.AngleAxis(angle, Vector3.forward);
-            // itemIcon.GetComponent<SpriteRenderer>().color = new Color(1f, 0.08f, 0f);
             yield return null;
         }
-        // itemIcon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
     
     public void Clear()
     {
-        RemoveItem(StoredCount);
+        RemoveItem(StoredAmount);
     }
 
     public void UpdateUI()
@@ -249,10 +260,14 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         itemIcon.sprite = storedItem.Data.icon;
         itemIcon.enabled = true;
         
-        if (StoredCount > 1)
+        if (StoredAmount > 1)
         {
-            itemText.text = StoredCount.ToString();
+            itemText.text = StoredAmount.ToString();
             itemText.enabled = true;
+        }
+        else
+        {
+            itemText.enabled = false;
         }
     }
 

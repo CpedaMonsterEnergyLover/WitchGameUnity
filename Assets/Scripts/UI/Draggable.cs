@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Draggable : MonoBehaviour, IDragHandler
+public class Draggable : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     public Vector2 offset;
     
@@ -10,14 +10,21 @@ public class Draggable : MonoBehaviour, IDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.dragging)
+            CursorManager.Instance.Mode = CursorMode.HoverUI;
         {
             if (_parentRectTransform is null) 
                 _parentRectTransform = transform.parent.GetComponent<RectTransform>();
             
             var position = eventData.position;
-            position.x -= _parentRectTransform.sizeDelta.x / 2 + offset.x;
-            position.y -= _parentRectTransform.sizeDelta.y / 2 + offset.y;
+            var sizeDelta = _parentRectTransform.sizeDelta;
+            position.x -= sizeDelta.x / 2 + offset.x;
+            position.y -= sizeDelta.y / 2 + offset.y;
             transform.parent.position = position;
         }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    { 
+        CursorManager.Instance.ResetMode();
     }
 }

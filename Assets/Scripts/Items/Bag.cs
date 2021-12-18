@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class Bag : Item
 {
     // Public Fields
@@ -22,7 +23,7 @@ public class Bag : Item
 }
 
 
-
+[System.Serializable]
 public class BagSaveData : ItemSaveData
 {
     public List<InventorySlot> Slots { get; } = new();
@@ -36,6 +37,7 @@ public class BagSaveData : ItemSaveData
 
 
 [CreateAssetMenu(menuName = "Items/Bag")]
+[System.Serializable]
 public class BagData : ItemData
 {
     public int slotsAmount;

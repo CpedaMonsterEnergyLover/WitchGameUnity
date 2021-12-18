@@ -133,6 +133,8 @@ public class WorldManager : MonoBehaviour
         // Сейчас вся инициализация помещена в генерацию потому что требуется нажимать
         // Эту кнопку изнутри юнити
 
+        _gameObjectsTransform = GameObjectsTransform;
+        
         // Инициализация Кеша
         _tileCache = new TileCache(tileCacheSize);
             
@@ -154,7 +156,7 @@ public class WorldManager : MonoBehaviour
         {
             for (int y = 0; y < WorldData.MapHeight; y++)
             {
-                loadedTiles.Add(new Vector3Int(x, y, 0));
+                // loadedTiles.Add(new Vector3Int(x, y, 0));
                 LoadTile(x, y);
             }
         }
@@ -207,6 +209,12 @@ public class WorldManager : MonoBehaviour
     {
         WorldData.AddInteractableObject(identifier, tile);
         WorldData.GetTile(tile.x, tile.y).LoadInteractable();
+    }
+    
+    public static void AddInteractable(WorldTile tile, InteractableIdentifier identifier)
+    {
+        WorldData.AddInteractableObject(identifier, tile.position);
+        tile.LoadInteractable();
     }
 
     #endregion

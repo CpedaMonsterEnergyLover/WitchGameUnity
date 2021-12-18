@@ -37,10 +37,9 @@ public class CameraController : MonoBehaviour
             {
                 WorldTile tile = WorldManager.WorldData.GetTile(targetPositionInt.x, targetPositionInt.y);
                 if (tile.HasInteractable) return;
-                WorldManager.AddInteractable(targetPositionInt, new InteractableIdentifier(InteractableType.Herb, "calendula"));
+                
             }
         }*/
-
         /*if (Input.GetMouseButton(1))
         {
             BulletSpawner.Instance.Bomb(bulletPrefab, targetPosition, count, radius, duration, moveSimultaniously);
