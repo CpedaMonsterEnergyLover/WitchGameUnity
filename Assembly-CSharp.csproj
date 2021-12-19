@@ -42,8 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
+     <Compile Include="Assets\Scripts\Items\Food.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
@@ -56,7 +58,6 @@
      <Compile Include="Assets\Scripts\Scriptable\SunCurve.cs" />
      <Compile Include="Assets\Scripts\Interactable\Herb.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\BagsPanel.cs" />
-     <Compile Include="Assets\Scripts\UI\InspectionText.cs" />
      <Compile Include="Assets\Scripts\Items\Data\ItemData.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
@@ -90,30 +91,31 @@
      <Compile Include="Assets\Scripts\Entities\EntityData\EntityData.cs" />
      <Compile Include="Assets\Scripts\Interactable\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
+     <Compile Include="Assets\Scripts\Items\Furniture.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
      <Compile Include="Assets\Scripts\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Scriptable\HolidaysList.cs" />
+     <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SlotColors.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
+     <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
+     <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
+     <Compile Include="Assets\Scripts\UI\Hotbar.cs" />
      <Compile Include="Assets\Scripts\Scriptable\TimelineSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
-     <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
-     <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
-     <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
-     <Compile Include="Assets\Scripts\Items\Furniture.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

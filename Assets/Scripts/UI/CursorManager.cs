@@ -22,6 +22,7 @@ public class CursorManager : MonoBehaviour
     public CursorMode Mode;
     public bool InteractAllowed => InMode(CursorMode.InWorld);
     public bool InMode(CursorMode mode) => Mode == mode;
+    public bool IsOverUI => EventSystem.current.IsPointerOverGameObject();
 
 
     private void Start()
@@ -31,7 +32,7 @@ public class CursorManager : MonoBehaviour
 
     public void ResetMode()
     {
-        Mode = EventSystem.current.IsPointerOverGameObject() ? CursorMode.HoverUI : CursorMode.InWorld;
+        Mode = IsOverUI ? CursorMode.HoverUI : ItemPicker.Instance.itemSlot.HasItem ? CursorMode.HoldItem : CursorMode.InWorld;
     }
     
     private void OnCursorEnterUI()

@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public ItemType SlotType;
-    [SerializeField]
+    public ItemType slotType;
+    [SerializeReference]
     public Item storedItem;
-    [SerializeField] 
-    public int StoredAmount = 0;
+    public int storedAmount = 0;
 
     public Image itemIcon;
     public Text itemText;
-    public bool HasItem => storedItem is not null && StoredAmount > 0;
+    public bool HasItem => storedItem is not null && storedAmount > 0;
     
     public delegate void BagEquipEvent(Bag bag);
     public static event BagEquipEvent ONBagEquip;
@@ -36,7 +35,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     private void Start()
     {
-        GetComponent<Image>().color = Inventory.Instance.SlotColor(SlotType);
+        GetComponent<Image>().color = Inventory.Instance.SlotColor(slotType);
     }
 
     #endregion
@@ -48,17 +47,17 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // Добавляет предметы в слот и возвращает, сколько предметов влезло
     public int AddItem(Item item, int amount)
     {
-        // Если слот для сумок и пытаются поместить сумку
+        // Отвечает за надевание сумки
         if (!TryEquipBag(item)) return 0;
         
         // Если в слоте уже лежит предмет и пытаются добавить другой - он не добавляется
         if (storedItem is not null && !item.Compare(storedItem)) return 0;
         // Если в слот нельзя класть предметы этого типа - они не добавляются
-        if (SlotType != ItemType.Any && SlotType != item.Type) return 0;
+        if (slotType != ItemType.Any && slotType != item.Type) return 0;
 
-        int canFit = storedItem is null ? item.Data.maxStack : storedItem.Data.maxStack - StoredAmount;
+        int canFit = storedItem is null ? item.Data.maxStack : storedItem.Data.maxStack - storedAmount;
         int added = canFit < amount ? canFit : amount;
-        StoredAmount += added;
+        storedAmount += added;
         storedItem = item;
 
         UpdateUI();
@@ -74,26 +73,25 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         {
             return;
         }
-        if (StoredAmount - amount <= 0)
+        if (storedAmount - amount <= 0)
         {
-            StoredAmount = 0;
+            storedAmount = 0;
             itemIcon.enabled = false;
             storedItem = null;
             itemText.enabled = false;
         }
         else
         {
-            StoredAmount -= amount;
-            if (StoredAmount <= 1) itemText.enabled = false;
-            itemText.text = StoredAmount.ToString();
+            storedAmount -= amount;
+            if (storedAmount <= 1) itemText.enabled = false;
+            itemText.text = storedAmount.ToString();
         }
 
-                // UpdateUI();
     }
 
     private bool TryEquipBag(Item item)
     {
-        if (SlotType != ItemType.Bag ||
+        if (slotType != ItemType.Bag ||
             item.Type != ItemType.Bag) return true;
 
         Bag bag = (Bag) item;
@@ -117,7 +115,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     private bool TryUnequipBag()
     {
-        if (SlotType != ItemType.Bag ||
+        if (slotType != ItemType.Bag ||
             storedItem.Data.identifier.type != ItemType.Bag) return true;
 
         if (ItemPicker.Instance.itemSlot.HasItem) return false;
@@ -148,6 +146,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     // При нажатии на ячейку инвентаря
     public void OnPointerDown(PointerEventData eventData)
     {
+        // Если инвентарь не открыт, никаких интеракций не должно происходить
+        // TODO: если клик по панели быстрого доступа, меняется слот
+        
+        if (!Inventory.Instance.IsActive) return;
+        
         bool leftClick = eventData.button == PointerEventData.InputButton.Left;
         bool rightClick = eventData.button == PointerEventData.InputButton.Right;
         if (eventData.button == PointerEventData.InputButton.Middle) return;
@@ -161,10 +164,10 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
         if (leftClick)
         {
-            pickedAmount = StoredAmount;
+            pickedAmount = storedAmount;
         } else if (rightClick)
         {
-            if (heldShift) pickedAmount = StoredAmount / 2 == 0 ? 1 : StoredAmount / 2;
+            if (heldShift) pickedAmount = storedAmount / 2 == 0 ? 1 : storedAmount / 2;
             else pickedAmount = 1;
         } 
         
@@ -177,7 +180,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             // Проверка на сумку
             if (!TryUnequipBag()) return;
             
-            ItemPicker.Instance.SetItem(storedItem, pickedAmount);
+            ItemPicker.Instance.SetItem(this, pickedAmount);
             RemoveItem(pickedAmount);
         }
         // Если игрок перетаскивает предмет
@@ -192,37 +195,37 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                     {
                         if (heldShift)
                         {
-                            pickedAmount = StoredAmount;
+                            pickedAmount = storedAmount;
                         }
-                        int added = ItemPicker.Instance.SetItem(storedItem, pickedAmount);
+                        int added = ItemPicker.Instance.SetItem(this, pickedAmount);
                         RemoveItem(added);
                         return;
                     }
-                    int added2 = AddItem(picker.storedItem, picker.StoredAmount);
+                    int added2 = AddItem(picker.storedItem, picker.storedAmount);
                     picker.RemoveItem(added2);
-                    if (picker.StoredAmount <= 0) ItemPicker.Instance.Clear();
+                    if (picker.storedAmount <= 0) ItemPicker.Instance.Clear();
                 }
                 else
                 {
                     // Проверка на сумку
                     if (!TryUnequipBag()) return;
-
+                    
                     Item tempItem = picker.storedItem;
-                    int tempCount = picker.StoredAmount;
+                    int tempCount = picker.storedAmount;
                     picker.Clear();
-                    ItemPicker.Instance.SetItem(storedItem, pickedAmount);
+                    ItemPicker.Instance.SetItem(this, pickedAmount);
                     Clear();
                     AddItem(tempItem, tempCount);
                 }
             }
             else
             {
-                if (leftClick) pickedAmount = picker.StoredAmount;
+                if (leftClick) pickedAmount = picker.storedAmount;
                 else if (rightClick) pickedAmount = 1;
                 
                 int added = AddItem(picker.storedItem, pickedAmount);
                 picker.RemoveItem(added);
-                if (picker.StoredAmount <= 0) ItemPicker.Instance.Clear();
+                if (picker.storedAmount <= 0) ItemPicker.Instance.Clear();
             }
         }
     }
@@ -238,6 +241,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     #region Utils
 
+    public static bool BelongsToHotbar(InventorySlot slot)
+    {
+        return Hotbar.Instance.slots.Contains(slot);
+    }
+    
     private IEnumerator Shake(float duration, float speed)
     {
         float t = 0.0f;
@@ -252,7 +260,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     
     public void Clear()
     {
-        RemoveItem(StoredAmount);
+        RemoveItem(storedAmount);
     }
 
     public void UpdateUI()
@@ -260,9 +268,9 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         itemIcon.sprite = storedItem.Data.icon;
         itemIcon.enabled = true;
         
-        if (StoredAmount > 1)
+        if (storedAmount > 1)
         {
-            itemText.text = StoredAmount.ToString();
+            itemText.text = storedAmount.ToString();
             itemText.enabled = true;
         }
         else

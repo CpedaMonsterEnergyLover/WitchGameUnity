@@ -25,7 +25,7 @@ public class Item
         var created = identifier.type switch
         {
             ItemType.Any => new Item(identifier),
-            ItemType.Food => new Item(identifier),
+            ItemType.Food => new Food(identifier),
             ItemType.Herb => new Item(identifier),
             ItemType.Mineral => new Item(identifier),
             ItemType.Bag => new Bag(identifier),

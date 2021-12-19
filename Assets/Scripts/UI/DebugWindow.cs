@@ -62,7 +62,7 @@ public class DebugWindow : MonoBehaviour
                 .Append(activeHolidays)
                 .Append("\nCursor Mode: ").Append(CursorManager.Instance.Mode)
                 .Append("\nPicked Item: ")
-                .Append(ItemPicker.Instance.itemSlot.HasItem ? ItemPicker.Instance.itemSlot.StoredAmount : "0").Append(" of ")
+                .Append(ItemPicker.Instance.itemSlot.HasItem ? ItemPicker.Instance.itemSlot.storedAmount : "0").Append(" of ")
                 .Append(ItemPicker.Instance.itemSlot.HasItem ? ItemPicker.Instance.Item.Data.name : "nothing")
                 .Append("\nPicker preview active: ").Append(ItemPicker.Instance._previewActive)
                 .ToString();

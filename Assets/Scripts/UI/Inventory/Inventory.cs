@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class Inventory : MonoBehaviour
         if(Instance is null) Instance = this;
         else Debug.LogError("Found instance of Inventory. You did something wrong.");
         SubscribeToEvents();
+        slots.AddRange(Hotbar.Instance.hotBarTransform.GetComponentsInChildren<InventorySlot>());
+        slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
     }
 
     #endregion
@@ -22,78 +25,25 @@ public class Inventory : MonoBehaviour
     public GameObject slotPrefab;
     
     public Transform inventoryTransform;
-    public Transform hotBarTransform;
-    public SpriteRenderer itemHandlerRenderer;
 
-    public GameObject slotSelection;
-    public Color selectionColor;
+    
     public SlotColors slotColors;
     public Color SlotColor(ItemType type) => slotColors.colors[(int)type].color;
-
-    public InventorySlot SelectedSlot { get; private set; }
-
-    [ShowOnly]
-    public int selectedSlotIndex;
-
+    
     [SerializeReference]
-    private List<InventorySlot> _slots = new();
+    public List<InventorySlot> slots = new();
 
-    /*public delegate void OnItemChanged();
-    public OnItemChanged ONItemChanged;*/
+    public delegate void InventoryClosedEvent();
+    public static event InventoryClosedEvent ONInventoryClosed;
+    
+    public delegate void InventoryOpenedEvent();
+    public static event InventoryOpenedEvent ONInventoryOpened;
 
     // Private fields
-    private bool _active = true;
-    
-    private void Start()
-    {
-        _slots.AddRange(hotBarTransform.GetComponentsInChildren<InventorySlot>());
-        _slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
-        SelectSlot(0);
-    }
+    private bool _active;
+    public bool IsActive => _active;
 
-    private void Update()
-    {
-        float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
-        if (wheel < - 0)
-        {
-            SelectSlot(selectedSlotIndex + 1);
-        }
-        else if (wheel > 0)
-        {
-            SelectSlot(selectedSlotIndex - 1);
-        }
-    }
 
-    public void SelectSlot(int index)
-    {
-        if (index > 7) index = 0;
-        if (index < 0) index = 7;
-        
-        // Arrow position
-        var selectionTransform = slotSelection.GetComponent<RectTransform>();
-        var position = slotSelection.transform.localPosition;
-        position.x = 18 + 72 * index
-                     - slotSelection.transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2;
-        selectionTransform.transform.localPosition = position;
-        
-        // Slot color
-        if(SelectedSlot is not null) SelectedSlot.GetComponent<Image>().color = Color.white;
-        
-        selectedSlotIndex = index;
-        SelectedSlot = _slots[index];
-        SelectedSlot.GetComponent<Image>().color = selectionColor;
-
-        /*// Item handler
-        if (SelectedSlot.HasItem)
-        {
-            itemHandlerRenderer.enabled = true;
-            itemHandlerRenderer.sprite = SelectedSlot.Item.icon;
-        }
-        else
-        {
-            itemHandlerRenderer.enabled = false;
-        }*/
-    }
 
     public void AddItem(ItemIdentifier identifier, int amount)
     {
@@ -150,28 +100,41 @@ public class Inventory : MonoBehaviour
     
     private void AddItemByIndex(int index, Item item, int amount)
     {
-        _slots[index].AddItem(item, amount);
+        slots[index].AddItem(item, amount);
     }
 
     public InventorySlot FindSlotWithItem(Item item)
     {
-        return _slots.Find(slot => item.Compare(slot.storedItem));
+        return slots.Find(slot => item.Compare(slot.storedItem));
     }
 
     private InventorySlot FindSlotWithItemAndFreeSpace(Item item)
     {
-        return _slots.Find(slot => item.Compare(slot.storedItem) && slot.StoredAmount < item.Data.maxStack);
+        return slots.Find(slot => item.Compare(slot.storedItem) && slot.storedAmount < item.Data.maxStack);
     }
 
     private InventorySlot FindEmptySlotOfType(ItemType type)
     {
-        return _slots.Find(slot => !slot.HasItem && slot.SlotType == type);
+        return slots.Find(slot => !slot.HasItem && slot.slotType == type);
     }
     
     public void ShowInventory(bool isShown)
     {
         inventoryTransform.parent.gameObject.SetActive(isShown);
         _active = isShown;
+        
+        if (isShown) ONInventoryOpened?.Invoke();
+        else
+        {
+            ONInventoryClosed?.Invoke();
+            Invoke(nameof(ResetCursorAfterCloseInventory), 0.1f);
+        }
+    }
+
+    private void ResetCursorAfterCloseInventory()
+    {
+        CursorManager.Instance.ResetMode();
+        if(!CursorManager.Instance.InMode(CursorMode.HoverUI)) Tooltip.Instance.SetEnabled(false);
     }
 
     public void ToggleInventory()
@@ -183,13 +146,13 @@ public class Inventory : MonoBehaviour
     {
         GameObject slotInstance = Instantiate(slotPrefab, inventoryTransform);
         InventorySlot inventorySlot = slotInstance.GetComponent<InventorySlot>();
-        inventorySlot.SlotType = slotType;
+        inventorySlot.slotType = slotType;
         return inventorySlot;
     }
 
     private void UpdateHeight()
     {
-        int rows = _slots.Count / 8;
+        int rows = slots.Count / 8;
 
         var parentRectTransform = inventoryTransform.parent.GetComponent<RectTransform>();
         var sizeDelta = parentRectTransform.sizeDelta;
@@ -204,6 +167,7 @@ public class Inventory : MonoBehaviour
 
     private void EquipBag(Bag bag)
     {
+        Debug.Log("Equip bag");
         BagData bagData = bag.Data;
         BagSaveData bagSaveData = bag.InstanceData;
         
@@ -211,18 +175,19 @@ public class Inventory : MonoBehaviour
         {
             var slot = AddSlot(bagData.containsItemsOfType);
             bagSaveData.Slots.Add(slot);
-            _slots.Add(slot);
+            slots.Add(slot);
         }
         UpdateHeight();
     }
 
     private void UnequipBag(Bag bag)
     {
+        Debug.Log("Unequip bag");
         BagSaveData bagSaveData = bag.InstanceData;
         
         bagSaveData.Slots.ForEach(slot =>
         {
-            _slots.Remove(slot);
+            slots.Remove(slot);
             Destroy(slot.gameObject);
         });
         bagSaveData.Slots.Clear();

@@ -5,7 +5,7 @@
     
     }
 
-    bool PlaceAllowed(WorldTile tile)
+    bool AllowPlace(WorldTile tile)
     {
         return false;
     }
