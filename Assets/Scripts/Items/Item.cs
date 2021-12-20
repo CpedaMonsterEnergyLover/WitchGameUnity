@@ -29,6 +29,7 @@ public class Item
             ItemType.Herb => new Item(identifier),
             ItemType.Mineral => new Item(identifier),
             ItemType.Bag => new Bag(identifier),
+            ItemType.Instrument => new Instrument(identifier),
             ItemType.Furniture => new Furniture(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };

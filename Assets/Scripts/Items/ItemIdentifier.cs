@@ -3,11 +3,11 @@ public class ItemIdentifier
 {
     public ItemType type;
     public string id;
-    
-    public ItemIdentifier(ItemType type, string id)
+
+    public ItemIdentifier(ItemType type)
     {
         this.type = type;
-        this.id = id;
+        id = "";
     }
 
     public override string ToString()

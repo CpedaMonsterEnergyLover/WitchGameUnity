@@ -52,7 +52,7 @@ public class Herb : Interactable
         if(!isHidden) TimelineManager.ONTotalHourPassed -= GrowOnHour;
     }
 
-    protected override void Interact()
+    public override void Interact()
     {
         base.Interact();
         Destroy();

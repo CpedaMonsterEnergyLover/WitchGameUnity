@@ -116,6 +116,10 @@
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
+     <Compile Include="Assets\Scripts\Items\Instrument.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

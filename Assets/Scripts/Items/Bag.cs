@@ -35,13 +35,3 @@ public class BagSaveData : ItemSaveData
 }
 
 
-
-[CreateAssetMenu(menuName = "Items/Bag")]
-[System.Serializable]
-public class BagData : ItemData
-{
-    public int slotsAmount;
-    public ItemType containsItemsOfType;
-}
-
-

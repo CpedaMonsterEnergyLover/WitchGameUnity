@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemPicker : MonoBehaviour
 {
@@ -27,12 +28,13 @@ public class ItemPicker : MonoBehaviour
     private GameObject _interactablePreview;
     public bool _previewActive;
     // Тайл, над которым находится курсор с пикером
-    private WorldTile _tile;
+    private WorldTile _tileUnderPicker;
     private InventorySlot _pickedFrom;
     private readonly List<SpriteRenderer> _previewRenderers = new();
     
     public bool IsPlaceable => Item is IPlaceable;
     public bool IsUsable => Item is IUsable;
+    public bool IsConsumable => Item is IConsumable;
 
     private void Start()
     {
@@ -69,7 +71,7 @@ public class ItemPicker : MonoBehaviour
         if (_interactablePreview is not null) DestroyImmediate(_interactablePreview);
         _previewRenderers.Clear();
         _previewActive = false;
-        _tile = null;
+        _tileUnderPicker = null;
         CursorManager.Instance.ResetMode();
         if(CursorManager.Instance.InMode(CursorMode.HoverUI)) Tooltip.Instance.SetEnabled(true);
 
@@ -84,35 +86,44 @@ public class ItemPicker : MonoBehaviour
     {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 5;
-        mousePosition.x -= 34;
-        mousePosition.y += 34;
+        /*mousePosition.x -= 34;
+        mousePosition.y += 34;*/
         transform.position = mousePosition;
-        if(_previewActive) UpdatePreviewPosition();
     }
     
     private void Update()
     {
+        GetTileUnderPicker();
         UpdatePosition();
         
         CursorManager.Instance.Mode = CursorMode.HoldItem;
         
-        if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.IsOverUI)
+        bool clicked = Input.GetMouseButtonDown(0) && !CursorManager.Instance.IsOverUI;
+        
+        if (IsPlaceable)
         {
-            if (IsPlaceable && _tile is not null)
-            {
-                TryPlaceItem();
-            }
-            else if (IsUsable)
-            {
-                TryUseItem();
-            }
+            UpdateInteractablePreview();
+            if(clicked) TryPlaceItem();
+        }else if (IsConsumable)
+        {
+            UpdateConsumablePreview();
+            if(clicked) TryConsumeItem();
+        } else if (IsUsable)
+        {
+            UpdateUsablePreview();
+            if(clicked) TryUseItem();
+        }
+        else
+        {
+            transform.position += new Vector3(-34, +34, 0);
         }
     }
 
     private void TryPlaceItem()
     {
+        if(_tileUnderPicker is null) return;
         IPlaceable pickedPlaceable = (IPlaceable)Item;
-        if (pickedPlaceable.AllowPlace(_tile))
+        if (pickedPlaceable.AllowPlace(_tileUnderPicker))
         {
             // Использует инвок чтобы текущий клик сразу не засчитался на заспавн. объекте
             Invoke(nameof(PlacePickedItem), 0.1f);
@@ -120,12 +131,13 @@ public class ItemPicker : MonoBehaviour
         }
     }
 
-    private void TryUseItem()
+    private void TryConsumeItem()
     {
-        IUsable pickedUsable = (IUsable)Item;
-        if (pickedUsable.AllowUse())
+        if (_tileUnderPicker is null) return;
+        IConsumable pickedConsumable = (IConsumable)Item;
+        if (pickedConsumable.AllowConsume())
         {
-            pickedUsable.Use();
+            pickedConsumable.Consume();
             itemSlot.RemoveItem(1);
             if (itemSlot.storedAmount <= 0) Clear();
             if(!Inventory.Instance.IsActive) Hotbar.Instance.currentSelectedSlot.RemoveItem(1);
@@ -134,33 +146,72 @@ public class ItemPicker : MonoBehaviour
     
     public void PlacePickedItem()
     {
-        ((IPlaceable) Item).Place(_tile);
+        ((IPlaceable) Item).Place(_tileUnderPicker);
         itemSlot.RemoveItem(1);
         if (itemSlot.storedAmount <= 0) Clear();
     }
 
-    private void UpdatePreviewPosition()
+    public void TryUseItem()
     {
-        // Обновляет позицию превью предмета итема в соответствии с гридом
+        if(_tileUnderPicker is null) return;
+        IUsable pickedUsable = (IUsable)Item;
+        if (pickedUsable.AllowUse(_tileUnderPicker))
+            pickedUsable.Use(_tileUnderPicker);
+    }
+
+    private void GetTileUnderPicker()
+    {
         Vector3 mouseWorldPos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
 
-        // Меняет цвет превью в соотв. с условием
         if (WorldManager.CoordsBelongsToWorld(gridPos.x, gridPos.y))
         {
-            WorldTile tile = WorldManager.WorldData.GetTile(gridPos.x, gridPos.y);
-            if (tile is not null)
-            {
-                _interactablePreview.transform.position = gridPos + new Vector3(0.5f, 0.5f, 0);
-                
-                _previewRenderers.ForEach(r =>
-                {
-                    r.color = ((IPlaceable)Item).AllowPlace(tile) ? previewAllowColor : previewDenyColor;
-                });
-            }
+            _tileUnderPicker = WorldManager.WorldData.GetTile(gridPos.x, gridPos.y);
+        }
+    }
 
-            _tile = tile;
+    private void UpdateInteractablePreview()
+    {
+        if(!_previewActive || _tileUnderPicker is null) return;
+        
+        _interactablePreview.transform.position = _tileUnderPicker.position + new Vector3(0.5f, 0.5f, 0);
+        _previewRenderers.ForEach(r =>
+        {
+            r.color = ((IPlaceable)Item).AllowPlace(_tileUnderPicker) ? previewAllowColor : previewDenyColor;
+        });
+    }
+
+    private void UpdateConsumablePreview()
+    {
+        if (((IConsumable) Item).AllowConsume())
+        {
+            itemSlot.itemIcon.color = Color.white;
+            transform.position += new Vector3(-34, +34, 0);
+        }
+        else
+        {
+            itemSlot.itemIcon.color = new Color(1, 1, 1, 0.5f);
+        }
+    }
+
+    private void UpdateUsablePreview()
+    {
+        if (((IUsable) Item).AllowUse(_tileUnderPicker) && 
+            !CursorManager.Instance.IsOverUI)
+        {
+            itemSlot.itemIcon.color = Color.white;
+            // transform.position += new Vector3(+40, -40, 0);
+            transform.position += new Vector3(10, -10, 0);
+        }
+        else
+        {
+            if(!PickedFromInventory) itemSlot.itemIcon.color = new Color(1, 1, 1, 0f);
+            else
+            {
+                itemSlot.itemIcon.color = new Color(1, 1, 1, 1f);
+                transform.position += new Vector3(-34, +34, 0);
+            }
         }
     }
 
@@ -220,9 +271,6 @@ public class ItemPicker : MonoBehaviour
     {
         // Очищает пикер от предыдущего предмета
         if (itemSlot.HasItem) Clear();
-        if (!slot.HasItem) return;
-        
-        
         UpdatePreview(slot);
     }
 
@@ -232,9 +280,10 @@ public class ItemPicker : MonoBehaviour
         if (!slot.HasItem) return;
         bool canPlace = slot.storedItem is IPlaceable;
         bool canUse = slot.storedItem is IUsable;
+        bool canConsume = slot.storedItem is IConsumable;
         
         // Если в слоте хотбара есть предмет, и его можно использовать или поставить
-        if (canPlace || canUse)
+        if (canConsume || canPlace || canUse)
         {
             SetItem(slot, slot.storedAmount);
             if (CursorManager.Instance.InMode(CursorMode.InWorld))
@@ -260,6 +309,7 @@ public class ItemPicker : MonoBehaviour
             Clear();
         }
         // Затем обновляет превью предмета из хотбара
+        // Использует инвок потому что до конца кадра инвентарь не будет закрыт
         Invoke(nameof(ToInvoke), 0.11f);
     }
     

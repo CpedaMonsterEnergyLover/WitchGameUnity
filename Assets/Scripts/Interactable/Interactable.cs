@@ -32,16 +32,8 @@ public class Interactable : MonoBehaviour
 
     #region UnityMethods
     
-    private void OnMouseOver()
-    {
-        if (!CursorManager.Instance.InteractAllowed) return;
-        if (Input.GetMouseButton(0)/* || Input.GetMouseButtonDown(0)*/)
-            Interact();
-    }
-    
     private void OnMouseEnter()
     {
-        if (!CursorManager.Instance.InteractAllowed) return;
         FadeIn();
     }
     
@@ -88,9 +80,8 @@ public class Interactable : MonoBehaviour
         if (IsNew()) InitInstanceData(saveData);
     }
 
-    protected virtual void Interact()
+    public virtual void Interact()
     {
-        Debug.Log($"Interacting with{Data.name}");
     }
     
     

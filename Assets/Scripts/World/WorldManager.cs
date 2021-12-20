@@ -34,7 +34,6 @@ public class WorldManager : MonoBehaviour
     public TileBase swampTile;
     public TileBase plainsGrassTile;
 
-    public static BulletSpawner BulletSpawner;
     
     // Private fields
     [Header("К чему крепить все объекты"), SerializeField]
@@ -133,7 +132,7 @@ public class WorldManager : MonoBehaviour
         // Сейчас вся инициализация помещена в генерацию потому что требуется нажимать
         // Эту кнопку изнутри юнити
 
-        _gameObjectsTransform = GameObjectsTransform;
+        GameObjectsTransform = _gameObjectsTransform;
         
         // Инициализация Кеша
         _tileCache = new TileCache(tileCacheSize);

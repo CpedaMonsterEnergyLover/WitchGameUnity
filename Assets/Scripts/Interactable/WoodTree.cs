@@ -18,7 +18,7 @@ public class WoodTree : Interactable
     
     #region ClassMethods
 
-    protected override void Interact()
+    public override void Interact()
     {
         base.Interact();
         ChopTree();

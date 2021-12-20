@@ -1,14 +1,16 @@
 using UnityEngine;
 
-public class Food : Item, IUsable
+public class Food : Item, IConsumable
 {
 
-    public void Use()
+    public new FoodData Data => (FoodData) data;
+    
+    public void Consume()
     {
-        Debug.Log($"{Data.name} used!");
+        Debug.Log($"{Data.name} consumed! {Data.saturation} hunger restored");
     }
 
-    public bool AllowUse() => true;
+    public bool AllowConsume() => true;
 
     public Food(ItemIdentifier identifier) : base(identifier)
     {
