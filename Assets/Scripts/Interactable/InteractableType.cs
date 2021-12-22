@@ -3,5 +3,6 @@ public enum InteractableType
 {
     Herb,
     Tree,
-    Rock
+    Rock,
+    CropBed
 }

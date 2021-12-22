@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b084d451d3b48debb8e65df0b3ba0b8, type: 3}
-  m_Name: Hoe
+  m_Name: IronAxe
   m_EditorClassIdentifier: 
   placedObject: {fileID: 0}
   identifier:
-    type: 6
-    id: hoe
-  name: hoe
-  icon: {fileID: 21300000, guid: 590bd435e46487940b2a783f4bebef8d, type: 3}
+    type: 7
+    id: iron_axe
+  name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0442\u043E\u043F\u043E\u0440"
+  icon: {fileID: 21300000, guid: 9fd74b942cc14c744a8d4a3f425e7d4e, type: 3}
   maxStack: 1
-  maxDurability: 228
-  canInteractWith: []
+  maxDurability: 292
+  damage: 2
+  canInteractWith: 01000000

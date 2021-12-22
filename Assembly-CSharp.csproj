@@ -43,9 +43,11 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
-     <Compile Include="Assets\Scripts\Items\Food.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Food.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
@@ -76,8 +78,11 @@
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Instrument.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCycleManager.cs" />
+     <Compile Include="Assets\Scripts\Interactable\CropBed.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Hoe.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysManager.cs" />
      <Compile Include="Assets\Scripts\Util\TimeUtil.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
@@ -87,20 +92,25 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
      <Compile Include="Assets\Scripts\Entities\EntityData\EntityData.cs" />
      <Compile Include="Assets\Scripts\Interactable\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
-     <Compile Include="Assets\Scripts\Items\Furniture.cs" />
+     <Compile Include="Assets\Scripts\Events\ItemEvents.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Furniture.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
-     <Compile Include="Assets\Scripts\Items\Item.cs" />
-     <Compile Include="Assets\Scripts\Items\Bag.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Scriptable\HolidaysList.cs" />
      <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SlotColors.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
@@ -116,10 +126,7 @@
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\Items\Instrument.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
-     <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
-     <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
+     <Compile Include="Assets\ItemsOnStart.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

@@ -1,9 +1,10 @@
+using UnityEngine;
+
 public class Furniture : Item, IPlaceable
 {
     public void Place(WorldTile tile)
     {
-        WorldManager.AddInteractable(tile, Data.placedObject.identifier);
-
+        Debug.Log("This item's missing placed gameobject");
     }
 
     public bool AllowPlace(WorldTile tile)

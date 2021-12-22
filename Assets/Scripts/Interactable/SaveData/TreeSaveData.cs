@@ -11,24 +11,26 @@ public class TreeSaveData : InteractableSaveData
     public int health;
     public bool isChopped;
 
-    public TreeSaveData(string id) : base(new InteractableIdentifier(InteractableType.Tree, id))
+    // Конструктор для инициализации значеий
+    public TreeSaveData(InteractableSaveData interactableSaveData)
     {
-        barkLeft = 20;
-        resinLeft = 10;
-        signed = false;
-        health = 3;
-        isChopped = false;
+        creationHour = interactableSaveData.creationHour;
+        instanceID = interactableSaveData.instanceID;
+        identifier = interactableSaveData.identifier;
     }
+    // Конструктор для клонирования
     protected TreeSaveData() { }
 
     public override InteractableSaveData DeepClone()
     {
-        return new TreeSaveData()
+        return new TreeSaveData
         {
+            identifier = identifier,
+            creationHour = creationHour,
+            instanceID = instanceID,
+            
             barkLeft = barkLeft,
             health = health,
-            identifier = identifier,
-            instanceID = instanceID,
             isChopped = isChopped,
             resinLeft = resinLeft,
             signed = signed

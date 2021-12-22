@@ -1,11 +1,11 @@
 ﻿public interface IUsable {
 
-    public void Use(WorldTile tile)
+    public virtual void Use(WorldTile tile)
     {
         
     }
 
-    public bool AllowUse(WorldTile tile)
+    public virtual bool AllowUse(WorldTile tile)
     {
         return true;
     }

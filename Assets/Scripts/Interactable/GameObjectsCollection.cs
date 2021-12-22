@@ -27,6 +27,9 @@ public class GameObjectsCollection : MonoBehaviour
     [Header("Деревья")]
     [SerializeField]
     private List<InteractableData> trees;
+    [Header("Другое")]
+    [SerializeField]
+    private List<InteractableData> others;
     [Header("Предметы")]
     [SerializeField]
     private List<ItemData> items;
@@ -64,6 +67,7 @@ public class GameObjectsCollection : MonoBehaviour
         InteractableCollection = new Dictionary<string, InteractableData>();
         herbs.ForEach(i => InteractableCollection[i.identifier.id] = i);
         trees.ForEach(i => InteractableCollection[i.identifier.id] = i);
+        others.ForEach(i => InteractableCollection[i.identifier.id] = i);
         InteractableCollection[""] = null;
         
         // Items collection

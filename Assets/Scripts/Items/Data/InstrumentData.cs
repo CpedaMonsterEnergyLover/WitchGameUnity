@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class InstrumentData : ItemData
 {
-    public int maxDurability = 228;
-    public List<InteractableData> canInteractWith = new();
+    public int maxDurability;
+    public int damage;
+    public List<InteractableType> canInteractWith = new();
     
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     [Header("Item data")] 
-    public InteractableData placedObject;
     public ItemIdentifier identifier;
     public new string name = "New item";
     public Sprite icon;
@@ -19,5 +18,9 @@ public enum ItemType
     Food,
     Mineral,
     Furniture,
-    Instrument
+    Instrument,
+    Axe,
+    Hoe,
+    Shovel,
+    Seed
 }

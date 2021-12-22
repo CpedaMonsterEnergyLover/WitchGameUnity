@@ -27,13 +27,13 @@ public class WorldTile
         LoadInteractable();
     }
 
-    public void LoadInteractable()
+    public Interactable LoadInteractable()
     {
         if (!GameObjectsCollection.InteractableCollection.ContainsKey(savedData.identifier.id))
         {
             Debug.LogWarning($"The given key was not present in the Collection of objects:{savedData.identifier.id}");
             savedData = null;
-            return;
+            return null;
         }
 
         if (cached)
@@ -43,11 +43,14 @@ public class WorldTile
         else
         {
             instantiatedInteractable = Interactable.Create(savedData);
+
         }
 
         instantiatedInteractable.transform.position =
             new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
         instantiatedInteractable.OnTileLoad(this);
+
+        return instantiatedInteractable;
     }
 
     // Помещает слои тайла на слои грида
@@ -61,12 +64,17 @@ public class WorldTile
         }
     }
     
-    // Убирает interactable этого тайла из мира
-    public void DestroyInteractable()
+    // Убирает объект interactable этого тайла из мира
+    public void UnloadInteractable()
     {
         savedData = instantiatedInteractable.InstanceData.DeepClone();
         Object.DestroyImmediate(instantiatedInteractable.gameObject);
         instantiatedInteractable = null;
+    }
+
+    public void DestroyInteractable()
+    {
+        instantiatedInteractable.Destroy();
     }
 
     // Убирает слои тайла с грида
@@ -83,7 +91,7 @@ public class WorldTile
 
     public void SetHidden(bool isHidden)
     {
-        instantiatedInteractable.SetActive(!isHidden);
+        if(instantiatedInteractable is not null) instantiatedInteractable.SetActive(!isHidden);
     }
     
     

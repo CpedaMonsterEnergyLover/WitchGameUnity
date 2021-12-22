@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
+[CreateAssetMenu(menuName = "Interactable/Base")]
 public class InteractableData : ScriptableObject
 {
     [Header("Interactable data")] 

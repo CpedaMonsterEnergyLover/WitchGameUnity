@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class Interactable : MonoBehaviour
@@ -15,15 +14,16 @@ public class Interactable : MonoBehaviour
     // Private fields
     
     // Содержит сохраняемые поля объекта
-    [SerializeReference]
+    [SerializeReference, Header("Instance data")]
     protected InteractableSaveData instanceData;
     // Содержит общие поля объекта
-    [SerializeReference]
+    [SerializeReference, Header("Data")]
     protected InteractableData data;
 
     protected Fader Fader;
 
     // Содержит ссылку на тайл в котором находится
+    [SerializeReference]
     protected WorldTile Tile;
     
     #endregion
@@ -56,13 +56,14 @@ public class Interactable : MonoBehaviour
     public static Interactable Create(InteractableSaveData saveData)
     {
         GameObject prefab = GameObjectsCollection.GetInteractable(saveData.identifier).prefab;
-        GameObject instantiatedObject = Instantiate(prefab, WorldManager.GameObjectsTransform);
+        GameObject instantiatedObject = Instantiate(prefab, WorldManager.Instance.GameObjectsTransform);
         instantiatedObject.transform.rotation = Quaternion.identity;
         Interactable addedScript = saveData.identifier.type switch
         {
             InteractableType.Herb => instantiatedObject.AddComponent<Herb>(),
             InteractableType.Tree => instantiatedObject.AddComponent<WoodTree>(),
             InteractableType.Rock => instantiatedObject.AddComponent<WoodTree>(),
+            InteractableType.CropBed => instantiatedObject.AddComponent<CropBed>(),
             _ => throw new ArgumentOutOfRangeException("Unknown interactable type", new Exception())
         };
         addedScript.LoadData(saveData);
@@ -80,11 +81,13 @@ public class Interactable : MonoBehaviour
         if (IsNew()) InitInstanceData(saveData);
     }
 
-    public virtual void Interact()
+    public virtual void Interact(float value = 1.0f)
     {
     }
-    
-    
+
+    public virtual bool AllowInteract() => true;
+
+
     // Должен быть переопределен
     public virtual void OnTileLoad(WorldTile loadedTile)
     {
@@ -100,25 +103,28 @@ public class Interactable : MonoBehaviour
 
     public virtual void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
 
-    protected virtual void Destroy()
+    public virtual void Destroy()
     {
         Tile.savedData = null;
         Tile.instantiatedInteractable = null;
         GameObject.Destroy(gameObject);
     }
     
-    private void FadeIn()
+    protected void FadeIn()
     {
         if (Fader is not null && Fader.IsFaded) Fader.FadeIn();
     }
 
-    private void FadeOut()
+    protected void FadeOut()
     {
         if (Fader is not null && Fader.IsFaded) Fader.FadeOut(0.15f);
     }
     
     // Должен быть переопределен 
-    protected virtual void InitInstanceData(InteractableSaveData saveData) { }
+    protected virtual void InitInstanceData(InteractableSaveData saveData)
+    {
+        instanceData.instanceID = GenerateID();
+    }
 
     // Проверяет, был ли инициализирован объект
     private bool IsNew()

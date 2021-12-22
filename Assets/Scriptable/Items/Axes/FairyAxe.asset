@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b084d451d3b48debb8e65df0b3ba0b8, type: 3}
-  m_Name: Axe
+  m_Name: FairyAxe
   m_EditorClassIdentifier: 
   placedObject: {fileID: 0}
   identifier:
-    type: 6
-    id: axe
-  name: Axe
-  icon: {fileID: 21300000, guid: 9fd74b942cc14c744a8d4a3f425e7d4e, type: 3}
+    type: 7
+    id: fairy_axe
+  name: "\u0422\u043E\u043F\u043E\u0440 \u0444\u0435\u0439"
+  icon: {fileID: 21300000, guid: 3cfab5e274dc4d14481e61497d09d647, type: 3}
   maxStack: 1
-  maxDurability: 20
-  canInteractWith:
-  - {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
-  - {fileID: 11400000, guid: 0c94250e49fc48d499711b7cc4ca754c, type: 2}
+  maxDurability: 527
+  damage: 3
+  canInteractWith: 01000000

@@ -39,7 +39,9 @@ public class TileCache
         WorldTile peek = _tiles.First();
         peek.loaded = false;
         peek.cached = false;
-        peek.DestroyInteractable();
+        peek.UnloadInteractable();
         _tiles.Remove(peek);
     }
+
+    public bool Contains(WorldTile tile) => _tiles.Contains(tile);
 }

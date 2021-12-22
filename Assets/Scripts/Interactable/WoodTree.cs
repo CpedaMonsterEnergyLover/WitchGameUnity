@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class WoodTree : Interactable
     public new TreeSaveData InstanceData => (TreeSaveData) instanceData;
 
     // Private fields
+    [SerializeField]
     private bool _delayed;
     
     #endregion
@@ -18,55 +20,48 @@ public class WoodTree : Interactable
     
     #region ClassMethods
 
-    public override void Interact()
+    public override void Interact(float value = 1.0f)
     {
-        base.Interact();
-        ChopTree();
+        ChopTree((int) value);
+    }
+
+    public override bool AllowInteract()
+    {
+        return !_delayed;
     }
 
     protected override void InitInstanceData(InteractableSaveData saveData)
     {
-        instanceData = new TreeSaveData(saveData.identifier.id);
-        instanceData.instanceID = GenerateID();
+        instanceData = new TreeSaveData(saveData);
+        InstanceData.health = Data.health;
+        base.InitInstanceData(saveData);
     }
 
     public override void OnTileLoad(WorldTile loadedTile)
     {
         base.OnTileLoad(loadedTile);
-        if(InstanceData.isChopped) RemoveLeaves();
+        if(InstanceData.health <= Data.fallOnHealth) RemoveLeaves();
     }
-    
-     private void ChopTree()
-     {
-         if (_delayed) return;
-         InstanceData.health--;
-         Debug.Log("Hp left " + InstanceData.health);
-         if (InstanceData.isChopped)
-         {
-             if (InstanceData.health > 0)
-             {
-                 StartCoroutine(RootActionDelay(0.75f));
-             }
-             else
-             {
-                 Destroy();
-             }
-         }
-         else
-         {
-             if (InstanceData.health > 0)
-             {
-                 StartCoroutine(Shake(0.75f, 15f));
-             }
-             else 
-             {
-                 Fader.FadeIn();
-                 StartCoroutine(Fall(2.5f, 
-                     transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
-             }
-         }
-         
-     }
+
+    private void ChopTree(int dmg)
+    {
+        if (InstanceData.health - dmg <= 0 && !InstanceData.isChopped) InstanceData.health = 1;
+        else InstanceData.health -= dmg;
+
+        Debug.Log($"{InstanceData.health} hp left");
+
+        if (InstanceData.health > 0)
+        {
+         if (InstanceData.health <= Data.fallOnHealth && !InstanceData.isChopped)
+             StartCoroutine(Fall(2.5f, 
+                 transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
+         else StartCoroutine(Shake(1f, (float) Math.PI * 6f));
+        }
+        else 
+        {
+         Destroy();
+        }
+    }
 
      private void RemoveLeaves()
      {
@@ -81,10 +76,12 @@ public class WoodTree : Interactable
 
      private IEnumerator Fall(float duration, float direction)
      {
-         InstanceData.health = 3;
+         _delayed = true;
          InstanceData.isChopped = true;
+         FadeIn();
          Fader.IsBlocked = true;
          float t = 0.0f;
+         
          while ( t  < duration )
          {
              t += Time.deltaTime;
@@ -94,29 +91,27 @@ public class WoodTree : Interactable
              yield return null;
          }
 
+         _delayed = false;
          RemoveLeaves();
      }
 
      private IEnumerator Shake(float duration, float speed)
      {
+         float rootsX = transform.position.x;
+         
          _delayed = true;
          float t = 0.0f;
          while ( t  < duration )
          {
              t += Time.deltaTime;
-             Fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
-             yield return null;
-         }
-         _delayed = false;
-     }
-
-     private IEnumerator RootActionDelay(float duration)
-     {
-         _delayed = true;
-         float t = 0.0f;
-         while (t < duration)
-         {
-             t += Time.deltaTime;
+             if (!InstanceData.isChopped)
+                Fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
+             else
+             {
+                 Vector3 position = transform.position;
+                 position.x = rootsX + Mathf.Sin(t * speed) / 30;
+                 transform.position = position;
+             }
              yield return null;
          }
          _delayed = false;

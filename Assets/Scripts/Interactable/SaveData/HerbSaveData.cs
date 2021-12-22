@@ -11,13 +11,22 @@ public class HerbSaveData : InteractableSaveData
     public float frostResistance = 1f;
     
     public GrowthStage growthStage = GrowthStage.Sprout;
-    public int nextStageHour = 0;
-    public bool withering = false;
-    public bool decaying = false;
+    public int nextStageHour;
+    public bool withering;
+    public bool decaying;
 
-    public HerbSaveData(string id) : base(new InteractableIdentifier(InteractableType.Herb, id))
+    public bool hasBed;
+
+    public HerbSaveData(InteractableIdentifier identifier, bool hasBed = false) : base(identifier)
+    {
+        this.hasBed = hasBed;
+    }
+    
+    // Для инициализации значеий
+    public HerbSaveData(InteractableSaveData interactableSaveData) : base(interactableSaveData.identifier)
     {
         nextStageHour = creationHour;
+        if (interactableSaveData is HerbSaveData) hasBed = ((HerbSaveData) interactableSaveData).hasBed;
     }
     
     public HerbSaveData() { }
@@ -28,6 +37,8 @@ public class HerbSaveData : InteractableSaveData
         {
             identifier = identifier,
             instanceID = instanceID,
+            creationHour = creationHour,
+            
             fertility = fertility,
             growthStage = growthStage,
             growthSpeed = growthSpeed,
@@ -35,7 +46,8 @@ public class HerbSaveData : InteractableSaveData
             nextStageHour = nextStageHour,
             withering = withering,
             decaying = decaying,
-            creationHour = creationHour
+            hasBed = hasBed
         };
+
     }
 }

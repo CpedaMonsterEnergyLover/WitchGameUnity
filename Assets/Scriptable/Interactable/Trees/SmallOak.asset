@@ -17,6 +17,8 @@ MonoBehaviour:
     id: small_oak
   prefab: {fileID: 6632383631379209973, guid: 45a0809125cb27143a4b5edc05c100ba, type: 3}
   name: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0443\u0431"
+  health: 6
+  fallOnHealth: 3
   hasFruits: 0
   bloomDuration: 1
   fertileDuration: 1

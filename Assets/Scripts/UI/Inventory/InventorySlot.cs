@@ -213,7 +213,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                     Item tempItem = picker.storedItem;
                     int tempCount = picker.storedAmount;
                     picker.Clear();
-                    ItemPicker.Instance.SetItem(this, pickedAmount);
+                    ItemPicker.Instance.SetItem(this, storedAmount);
                     Clear();
                     AddItem(tempItem, tempCount);
                 }
@@ -232,13 +232,15 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     public void Shake()
     {
-        if (_routine is not null) StopCoroutine(_routine);
+        if (_routine is not null) return;
         _routine = StartCoroutine(Shake(0.75f, 30f));
 
     }
 
     #endregion
 
+    
+    
     #region Utils
 
     public static bool BelongsToHotbar(InventorySlot slot)
@@ -256,6 +258,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             itemIcon.transform.rotation  = Quaternion.AngleAxis(angle, Vector3.forward);
             yield return null;
         }
+
+        _routine = null;
     }
     
     public void Clear()

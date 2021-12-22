@@ -28,7 +28,7 @@ public class ItemPicker : MonoBehaviour
     private GameObject _interactablePreview;
     public bool _previewActive;
     // Тайл, над которым находится курсор с пикером
-    private WorldTile _tileUnderPicker;
+    public WorldTile _tileUnderPicker;
     private InventorySlot _pickedFrom;
     private readonly List<SpriteRenderer> _previewRenderers = new();
     
@@ -52,15 +52,15 @@ public class ItemPicker : MonoBehaviour
         gameObject.SetActive(true);
         int added = itemSlot.AddItem(fromSlot.storedItem, amount);
         Tooltip.Instance.SetEnabled(false);
-
+        
         if (IsPlaceable)
         {
             _interactablePreview = 
-                Instantiate(Interactable.GetPrefab(Item.Data.placedObject.identifier));
+                Instantiate(((IPlaceable)Item).GetPrefab());
             _interactablePreview.SetActive(false);
             CachePreviewSpriteRenderers();
         }
-
+        
         return added;
     }
 
@@ -86,37 +86,35 @@ public class ItemPicker : MonoBehaviour
     {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 5;
-        /*mousePosition.x -= 34;
-        mousePosition.y += 34;*/
         transform.position = mousePosition;
+        if (IsPlaceable)
+            UpdateInteractablePreview();
+        else if (IsConsumable)
+            UpdateConsumablePreview();
+        else if (IsUsable)
+            UpdateUsablePreview();
+        else
+            transform.position += new Vector3(-34, +34, 0);
+        
     }
     
+    // TODO: добавить для IConsumable разрешенные цели и превью
     private void Update()
     {
+        CursorManager.Instance.Mode = CursorMode.HoldItem;
+
         GetTileUnderPicker();
         UpdatePosition();
         
-        CursorManager.Instance.Mode = CursorMode.HoldItem;
-        
-        bool clicked = Input.GetMouseButtonDown(0) && !CursorManager.Instance.IsOverUI;
-        
-        if (IsPlaceable)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) && !CursorManager.Instance.IsOverUI)
         {
-            UpdateInteractablePreview();
-            if(clicked) TryPlaceItem();
-        }else if (IsConsumable)
-        {
-            UpdateConsumablePreview();
-            if(clicked) TryConsumeItem();
-        } else if (IsUsable)
-        {
-            UpdateUsablePreview();
-            if(clicked) TryUseItem();
-        }
-        else
-        {
-            transform.position += new Vector3(-34, +34, 0);
-        }
+            if (IsPlaceable)
+                TryPlaceItem();
+            else if (IsConsumable)
+                TryConsumeItem();
+            else if (IsUsable)
+                TryUseItem();
+        };
     }
 
     private void TryPlaceItem()
@@ -126,7 +124,7 @@ public class ItemPicker : MonoBehaviour
         if (pickedPlaceable.AllowPlace(_tileUnderPicker))
         {
             // Использует инвок чтобы текущий клик сразу не засчитался на заспавн. объекте
-            Invoke(nameof(PlacePickedItem), 0.1f);
+            PlacePickedItem();
             if(!Inventory.Instance.IsActive) Hotbar.Instance.currentSelectedSlot.RemoveItem(1);
         }
     }
@@ -146,6 +144,7 @@ public class ItemPicker : MonoBehaviour
     
     public void PlacePickedItem()
     {
+        if (_tileUnderPicker is null) return;
         ((IPlaceable) Item).Place(_tileUnderPicker);
         itemSlot.RemoveItem(1);
         if (itemSlot.storedAmount <= 0) Clear();
@@ -165,14 +164,14 @@ public class ItemPicker : MonoBehaviour
         mouseWorldPos.z = 0;
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
 
-        if (WorldManager.CoordsBelongsToWorld(gridPos.x, gridPos.y))
-        {
-            _tileUnderPicker = WorldManager.WorldData.GetTile(gridPos.x, gridPos.y);
-        }
+        _tileUnderPicker = WorldManager.Instance.CoordsBelongsToWorld(gridPos.x, gridPos.y) ? 
+            WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
+            null;
     }
 
     private void UpdateInteractablePreview()
     {
+        transform.position += new Vector3(-34, +34, 0);
         if(!_previewActive || _tileUnderPicker is null) return;
         
         _interactablePreview.transform.position = _tileUnderPicker.position + new Vector3(0.5f, 0.5f, 0);

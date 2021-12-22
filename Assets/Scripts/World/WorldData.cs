@@ -46,16 +46,26 @@ public class WorldData
         WorldTiles[x, y].position = position;
     }
 
-    public void AddInteractableObject(InteractableIdentifier identifier, Vector3Int position)
+    public InteractableSaveData AddInteractableObject(InteractableIdentifier identifier, Vector3Int position)
     {
+        WorldTile tile = WorldTiles[position.x, position.y];
         // Если идентификатор пришел пустой, значит тайл пустой
         if (identifier is null) {
-            WorldTiles[position.x, position.y].savedData = null;
-            return;
+            tile.savedData = null;
+            return null;
         }
+        if (WorldManager.Instance.tileCache.Contains(tile))
+            WorldManager.Instance.tileCache.Remove(tile);
+        
         // Если не пустой, создает дату объекта 
         InteractableSaveData saveData = new InteractableSaveData(identifier);
         WorldTiles[position.x, position.y].savedData = saveData;
+        return saveData;
+    }
+    
+    public void AddInteractableObject(InteractableSaveData data, Vector3Int position)
+    {
+        WorldTiles[position.x, position.y].savedData = data;
     }
 
     public void ClearObjects()

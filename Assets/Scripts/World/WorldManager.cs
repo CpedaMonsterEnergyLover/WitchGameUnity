@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class WorldManager : MonoBehaviour
 {
     #region Vars
 
+    public static WorldManager Instance;
+    
     // Public fields
     public Generator generator;
     public Transform playerTransform;
@@ -34,22 +37,21 @@ public class WorldManager : MonoBehaviour
     public TileBase swampTile;
     public TileBase plainsGrassTile;
 
+    public WorldData WorldData;
+
     
     // Private fields
-    [Header("К чему крепить все объекты"), SerializeField]
-    private Transform _gameObjectsTransform;
-    
-    public static Transform GameObjectsTransform;
-    public static WorldData WorldData;
+    [FormerlySerializedAs("_gameObjectsTransform")] [Header("К чему крепить все объекты"), SerializeField]
+    public Transform GameObjectsTransform;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
 
     // Tile cache
-    private TileCache _tileCache;
+    public TileCache tileCache;
     private List<Vector3Int> loadedTiles;
     
     // Properties
-    public int CurrentCacheSize => _tileCache?.Size ?? 0;
+    public int CurrentCacheSize => tileCache?.Size ?? 0;
     public int CurrentLoadedTilesAmount => loadedTiles?.Count ?? 0;
     
     #endregion
@@ -61,27 +63,29 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = targetFrameRate;
-        GameObjectsTransform = _gameObjectsTransform;
+
+        if (Instance is null) Instance = this;
+        else Debug.LogError("Found multiple instances of WorldManager", this);
     }
 
     private void Start()
     {
         if (generator.GenerateOnStart)
         {
-          
             Generate();
             worldGrid.transform.position = new Vector3(0f, 0f, 0);
             int mapCenterX = generator.mapWidth / 2;
             int mapCenterY = generator.mapHeight / 2;
             playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
         }
+        ItemsOnStart.Instance.AddItemsOnStart();
     }
 
     private void Update()
     {
         if (!generator.GenerateOnStart) return;
         
-        _tileCache.SetMaxSize(tileCacheSize);
+        tileCache.SetMaxSize(tileCacheSize);
         
         // Прогрузка тайлов вокруг игрока
         Vector3Int playerPosition = Vector3Int.FloorToInt(playerTransform.position);
@@ -131,11 +135,9 @@ public class WorldManager : MonoBehaviour
         // TODO: вынести инородные инициализации из этого метода в более подходящее место
         // Сейчас вся инициализация помещена в генерацию потому что требуется нажимать
         // Эту кнопку изнутри юнити
-
-        GameObjectsTransform = _gameObjectsTransform;
         
         // Инициализация Кеша
-        _tileCache = new TileCache(tileCacheSize);
+        tileCache = new TileCache(tileCacheSize);
             
         // Инициализация коллекции игровых объектов
         gameObjectsCollection.InitCollection();
@@ -165,7 +167,7 @@ public class WorldManager : MonoBehaviour
     {
         WorldTile tile = WorldData.GetTile(x, y);
         tile.Load(_tilemapByEnumIndex, _tilebaseByEnumIndex);
-        _tileCache.Remove(tile);
+        tileCache.Remove(tile);
         loadedTiles.Add(new Vector3Int(x, y, 0));
     }
 
@@ -177,7 +179,7 @@ public class WorldManager : MonoBehaviour
         if (tile.HasInteractable)
         {
             // Кеширует тайл
-            _tileCache.Add(tile);
+            tileCache.Add(tile);
         }
 
         tile.loaded = false;
@@ -200,19 +202,26 @@ public class WorldManager : MonoBehaviour
 
     private void ClearAllInteractable()
     {
-        while (_gameObjectsTransform.childCount > 0)
-            DestroyImmediate(_gameObjectsTransform.GetChild(0).gameObject);
+        while (GameObjectsTransform.childCount > 0)
+            DestroyImmediate(GameObjectsTransform.GetChild(0).gameObject);
     }
 
-    public static void AddInteractable(Vector3Int tile, InteractableIdentifier identifier)
+    public void AddInteractable(Vector3Int tile, InteractableIdentifier identifier)
     {
         WorldData.AddInteractableObject(identifier, tile);
         WorldData.GetTile(tile.x, tile.y).LoadInteractable();
     }
     
-    public static void AddInteractable(WorldTile tile, InteractableIdentifier identifier)
+    public void AddInteractable(WorldTile tile, InteractableIdentifier identifier)
     {
+        
         WorldData.AddInteractableObject(identifier, tile.position);
+        tile.LoadInteractable();
+    }
+
+    public void AddInteractable(WorldTile tile, InteractableSaveData data)
+    {
+        WorldData.AddInteractableObject(data, tile.position);
         tile.LoadInteractable();
     }
 
@@ -251,7 +260,7 @@ public class WorldManager : MonoBehaviour
 
     }
 
-    public static bool CoordsBelongsToWorld(int x, int y)
+    public bool CoordsBelongsToWorld(int x, int y)
     {
         return x >= 0 && x < WorldData.MapWidth && y > 0 && y < WorldData.MapHeight;
     }
