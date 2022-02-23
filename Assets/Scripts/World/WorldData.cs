@@ -54,7 +54,7 @@ public class WorldData
             tile.savedData = null;
             return null;
         }
-        if (WorldManager.Instance.tileCache.Contains(tile))
+        if (WorldManager.Instance is not null && WorldManager.Instance.tileCache.Contains(tile))
             WorldManager.Instance.tileCache.Remove(tile);
         
         // Если не пустой, создает дату объекта 

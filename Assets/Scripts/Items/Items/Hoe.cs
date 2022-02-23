@@ -15,7 +15,8 @@ public class Hoe : Instrument
 
     public override bool AllowUse(WorldTile tile)
     {
-        return tile is not null && !tile.HasInteractable && tile.instantiatedInteractable == null;
+        return tile is not null && !tile.HasInteractable && tile.instantiatedInteractable == null &&
+               tile.moistureLevel > 0.1f;
     }
 
     public Hoe(ItemIdentifier identifier) : base(identifier)
