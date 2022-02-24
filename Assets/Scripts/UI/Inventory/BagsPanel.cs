@@ -6,7 +6,7 @@ public class BagsPanel : MonoBehaviour
     public float moveX;
     public bool hideOnStart;
     
-    private bool _isHidden = false;
+    private bool _isHidden;
 
     private void Start()
     {

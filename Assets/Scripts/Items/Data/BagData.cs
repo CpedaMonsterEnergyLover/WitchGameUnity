@@ -5,6 +5,5 @@ using UnityEngine;
 public class BagData : ItemData
 {
     public int slotsAmount;
-    public ItemType containsItemsOfType;
     
 }

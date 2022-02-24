@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -13,26 +11,25 @@ public class Inventory : MonoBehaviour
     {
         if(Instance is null) Instance = this;
         else Debug.LogError("Found instance of Inventory. You did something wrong.");
-        SubscribeToEvents();
-        slots.AddRange(Hotbar.Instance.hotBarTransform.GetComponentsInChildren<InventorySlot>());
-        slots.AddRange(inventoryTransform.GetComponentsInChildren<InventorySlot>());
-    }
+        //SubscribeToEvents();
+        slots.AddRange(CreateSlots(slotAmountOnStart));
+   }
 
     #endregion
+    [Header("Кнопка сортировки")]
+    public SortButton sortButton;
+    [Header("Кол-во слотов на старте")] 
+    public int slotAmountOnStart;
 
-    public float rowHeight = 80;
-    public float minHeight = 280;
+    public List<ItemStack> itemsOnStart;
     public GameObject slotPrefab;
-    
     public Transform inventoryTransform;
-
-    
-    public SlotColors slotColors;
-    public Color SlotColor(ItemType type) => slotColors.colors[(int)type].color;
     
     [SerializeReference]
     public List<InventorySlot> slots = new();
 
+    
+    
     public delegate void InventoryClosedEvent();
     public static event InventoryClosedEvent ONInventoryClosed;
     
@@ -41,16 +38,24 @@ public class Inventory : MonoBehaviour
 
     // Private fields
     private bool _active;
+    private bool _needsUpdate;
     public bool IsActive => _active;
 
 
+    private void Start()
+    {
+        itemsOnStart.ForEach(i =>
+        {
+            Instance.AddItem(i.item.identifier, i.amount);
+        });
+    }
 
     public void AddItem(ItemIdentifier identifier, int amount)
     {
         AddItem(Item.Create(identifier), amount);
     }
     
-    public void AddItem(Item item, int amount)
+    private void AddItem(Item item, int amount)
     {
         while (amount > 0)
         {
@@ -62,30 +67,16 @@ public class Inventory : MonoBehaviour
             {
                 // Предмет добавляется к предмету
                 added = slotWithTheSameItem.AddItem(item, amount);
+                UpdateUI();
             }
             // Если такого предмета еще нет в инвентаре
             else
             {
-                // Если предмет спец. типа
-                if (item.Type != ItemType.Any)
-                {
-                    // сначала ищет первый свободный слот этого типа
-                    InventorySlot emptySlot = FindEmptySlotOfType(item.Data.identifier.type);
-                    if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
-                    // Если такого нет, то добавляется в первый свободный слот типа Any
-                    else
-                    {
-                        emptySlot = FindEmptySlotOfType(ItemType.Any);
-                        if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
-                    }
-                }
-                // Если предмет общего типа
-                else
-                {
-                    // Добавляется в первый свободный слот общего типа
-                    InventorySlot emptySlot = FindEmptySlotOfType(ItemType.Any);
-                    if (emptySlot is not null) added = emptySlot.AddItem(item, amount);
-                }
+                // Добавляется в первый свободный слот
+                InventorySlot emptySlot = FindEmptySlot();
+                if (emptySlot is not null)
+                    added = emptySlot.AddItem(item, amount);
+                UpdateUI();
             }
             
             amount -= added;
@@ -96,11 +87,6 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
-    }
-    
-    private void AddItemByIndex(int index, Item item, int amount)
-    {
-        slots[index].AddItem(item, amount);
     }
 
     public InventorySlot FindSlotWithItem(Item item)
@@ -113,17 +99,25 @@ public class Inventory : MonoBehaviour
         return slots.Find(slot => item.Compare(slot.storedItem) && slot.storedAmount < item.Data.maxStack);
     }
 
-    private InventorySlot FindEmptySlotOfType(ItemType type)
+    private InventorySlot FindEmptySlot()
     {
-        return slots.Find(slot => !slot.HasItem && slot.slotType == type);
+        return slots.Find(slot => !slot.HasItem);
     }
     
     public void ShowInventory(bool isShown)
     {
         inventoryTransform.parent.gameObject.SetActive(isShown);
         _active = isShown;
-        
-        if (isShown) ONInventoryOpened?.Invoke();
+
+        if (isShown)
+        {
+            ONInventoryOpened?.Invoke();
+            if (_needsUpdate)
+            {
+                _needsUpdate = false;
+                UpdateUI();
+            }
+        }
         else
         {
             ONInventoryClosed?.Invoke();
@@ -142,27 +136,40 @@ public class Inventory : MonoBehaviour
         ShowInventory(!_active);
     }
     
-    public InventorySlot AddSlot(ItemType slotType)
+    public InventorySlot CreateSlot()
     {
         GameObject slotInstance = Instantiate(slotPrefab, inventoryTransform);
         InventorySlot inventorySlot = slotInstance.GetComponent<InventorySlot>();
-        inventorySlot.slotType = slotType;
+        inventorySlot.storedItem = null;
         return inventorySlot;
     }
 
-    private void UpdateHeight()
+    public List<InventorySlot> CreateSlots(int amount)
     {
-        int rows = slots.Count / 8;
-
-        var parentRectTransform = inventoryTransform.parent.GetComponent<RectTransform>();
-        var sizeDelta = parentRectTransform.sizeDelta;
-        sizeDelta.y = Mathf.Clamp(rowHeight * rows, minHeight, 1000f);
-        parentRectTransform.sizeDelta = sizeDelta;
-
+        List<InventorySlot> newSlots = new();
+        for (int i = 0; i < amount; i++)
+        {
+            newSlots.Add(CreateSlot());
+        }
+        return newSlots;
     }
-    
-    
-    
+
+    public void UpdateUI()
+    {
+        // Если инвентарь закрыт, то он обновится при открытии
+        if (!_active)
+        {
+            _needsUpdate = true;
+        }
+        // Если инвентарь открыт, он обновится сразу
+        else
+        {
+            slots.Sort(sortButton.currentSortingMode == SortingMode.Name ? ItemSlot.NameComparator : 
+                sortButton.currentSortingMode == SortingMode.Amount ? ItemSlot.AmountComparator : ItemSlot.TypeComparator);
+            for(int i = 0; i < slots.Count; i++) slots[i].transform.SetSiblingIndex(i);
+        }
+    }
+
     #region Events
 
     private void EquipBag(Bag bag)
@@ -173,11 +180,10 @@ public class Inventory : MonoBehaviour
         
         for (int i = 0; i < bagData.slotsAmount; i++)
         {
-            var slot = AddSlot(bagData.containsItemsOfType);
+            var slot = CreateSlot();
             bagSaveData.Slots.Add(slot);
             slots.Add(slot);
         }
-        UpdateHeight();
     }
 
     private void UnequipBag(Bag bag)
@@ -191,7 +197,6 @@ public class Inventory : MonoBehaviour
             Destroy(slot.gameObject);
         });
         bagSaveData.Slots.Clear();
-        UpdateHeight();
     }
 
     private void HighlightBagSlots(Bag bag)
@@ -203,9 +208,9 @@ public class Inventory : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        InventorySlot.ONBagEquip += EquipBag;
+        /*InventorySlot.ONBagEquip += EquipBag;
         InventorySlot.ONBagUnEquipDenied += HighlightBagSlots;
-        InventorySlot.ONBagUnequip += UnequipBag;
+        InventorySlot.ONBagUnequip += UnequipBag;*/
     }
 
     #endregion

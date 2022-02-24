@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\InventoryKeyManager.cs" />
      <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
@@ -87,6 +88,7 @@
      <Compile Include="Assets\Scripts\Util\TimeUtil.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
      <Compile Include="Assets\Scripts\UI\Draggable.cs" />
+     <Compile Include="Assets\Scripts\Items\ItemStack.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
@@ -95,6 +97,7 @@
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
      <Compile Include="Assets\Scripts\Entities\EntityData\EntityData.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
      <Compile Include="Assets\Scripts\Interactable\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Events\ItemEvents.cs" />
@@ -103,12 +106,12 @@
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\HotbarSlot.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Scriptable\HolidaysList.cs" />
      <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
      <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
-     <Compile Include="Assets\Scripts\UI\Inventory\SlotColors.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
@@ -118,6 +121,7 @@
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\ItemSlot.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
      <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
@@ -126,7 +130,6 @@
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\ItemsOnStart.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

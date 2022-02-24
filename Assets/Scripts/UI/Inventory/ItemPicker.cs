@@ -38,11 +38,11 @@ public class ItemPicker : MonoBehaviour
 
     private void Start()
     {
-        CursorHoverCheck.ONCursorEnterUI += ONCursorEnterUI;
+        /*CursorHoverCheck.ONCursorEnterUI += ONCursorEnterUI;
         CursorHoverCheck.ONCursorLeaveUI += ONCursorLeaveUI;
         Hotbar.ONSelectedSlotChanged += ONHotBarSelectedSlotChanged;
         Inventory.ONInventoryClosed += OnInventoryClosed;
-        Inventory.ONInventoryOpened += OnInventoryOpened;
+        Inventory.ONInventoryOpened += OnInventoryOpened;*/
         gameObject.SetActive(false);
     }
 
@@ -266,7 +266,7 @@ public class ItemPicker : MonoBehaviour
     }
 
     // Когда меняется предмет в хотбаре
-    private void ONHotBarSelectedSlotChanged(InventorySlot slot)
+    private void ONHotBarSelectedSlotChanged(ItemSlot slot)
     {
         // Очищает пикер от предыдущего предмета
         if (itemSlot.HasItem) Clear();
@@ -274,7 +274,7 @@ public class ItemPicker : MonoBehaviour
     }
 
     // Засовывает в пикер предмет из слота и обновляет его превью в мире
-    public void UpdatePreview(InventorySlot slot)
+    public void UpdatePreview(ItemSlot slot)
     {
         if (!slot.HasItem) return;
         bool canPlace = slot.storedItem is IPlaceable;
@@ -284,7 +284,7 @@ public class ItemPicker : MonoBehaviour
         // Если в слоте хотбара есть предмет, и его можно использовать или поставить
         if (canConsume || canPlace || canUse)
         {
-            SetItem(slot, slot.storedAmount);
+            SetItem((InventorySlot)slot, slot.storedAmount);
             if (CursorManager.Instance.InMode(CursorMode.InWorld))
             {
                 if (canPlace) ShowInteractablePreview();

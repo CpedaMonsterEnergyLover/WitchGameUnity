@@ -17,31 +17,28 @@ public class Hotbar : MonoBehaviour
 
     #endregion
     
-    public Transform hotBarTransform;
-    
     public GameObject arrow;
     public Color selectionColor;
-    public InventorySlot currentSelectedSlot;
+    public ItemSlot currentSelectedSlot;
     [ShowOnly]
     public int selectedSlotIndex;
-
-    public List<InventorySlot> slots = new();
     
-    public delegate void ItemChangeEvent(InventorySlot slot);
+    public List<HotbarSlot> slots = new();
+    
+    public delegate void ItemChangeEvent(ItemSlot slot);
     public static event ItemChangeEvent ONSelectedSlotChanged;
 
     private void Start()
     {
-        Inventory.ONInventoryOpened += HideSelection;
-        Inventory.ONInventoryClosed += ShowSelection;
-        slots.AddRange(hotBarTransform.GetComponentsInChildren<InventorySlot>());
+        /*Inventory.ONInventoryOpened += HideSelection;
+        Inventory.ONInventoryClosed += ShowSelection;*/
+
         selectedSlotIndex = -1;
         SelectSlot(0);
     }
 
     private void Update()
     {
-        if(Inventory.Instance.IsActive) return;
         SelectFromWheel();
         SelectFromKeyboard();
     }
@@ -51,7 +48,7 @@ public class Hotbar : MonoBehaviour
     {
         // Mouse wheel
         float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
-        if (wheel < - 0)
+        if (wheel < 0)
         {
             SelectSlot(selectedSlotIndex + 1);
         }
@@ -84,28 +81,11 @@ public class Hotbar : MonoBehaviour
         // Apply new color
         currentSelectedSlot.GetComponent<Image>().color = selectionColor;
 
-        ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
+        //        ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
         
         // Arrow position
-        var selectionTransform = arrow.GetComponent<RectTransform>();
-        var position = arrow.transform.localPosition;
-        position.x = 18 + 72 * index
-                     - arrow.transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2;
-        selectionTransform.transform.localPosition = position;
-        
-        
+        arrow.transform.SetParent(currentSelectedSlot.transform, false);
+
     }
 
-    private void ShowSelection()
-    {
-        arrow.SetActive(true);
-        if (currentSelectedSlot is not null) currentSelectedSlot.GetComponent<Image>().color = selectionColor;
-    }
-
-    private void HideSelection()
-    {
-        arrow.SetActive(false);
-        if (currentSelectedSlot is not null) currentSelectedSlot.GetComponent<Image>().color = Color.white;
-    }
-    
 }

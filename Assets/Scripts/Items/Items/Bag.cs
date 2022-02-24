@@ -18,7 +18,7 @@ public class Bag : Item
     protected override string GetDescription()
     {
         return base.GetDescription() + "\n" +
-               $"Хранит {Data.containsItemsOfType}\nМожет содержать до {Data.slotsAmount} предметов";
+               $"Может хранить до {Data.slotsAmount} предметов";
     }
 }
 

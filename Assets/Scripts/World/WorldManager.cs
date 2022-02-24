@@ -66,6 +66,9 @@ public class WorldManager : MonoBehaviour
 
         if (Instance is null) Instance = this;
         else Debug.LogError("Found multiple instances of WorldManager", this);
+        
+        // Инициализация коллекции игровых объектов
+        gameObjectsCollection.InitCollection();
     }
 
     private void Start()
@@ -78,7 +81,6 @@ public class WorldManager : MonoBehaviour
             int mapCenterY = generator.mapHeight / 2;
             playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
         }
-        ItemsOnStart.Instance.AddItemsOnStart();
     }
 
     private void Update()
@@ -141,8 +143,7 @@ public class WorldManager : MonoBehaviour
         // Инициализация Кеша
         tileCache = new TileCache(tileCacheSize);
             
-        // Инициализация коллекции игровых объектов
-        gameObjectsCollection.InitCollection();
+
         
         // Инициализация индексов слоев грида и тайлов
         InitTileIndexArrays();
