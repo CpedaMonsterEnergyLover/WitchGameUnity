@@ -121,7 +121,7 @@ public class Inventory : MonoBehaviour
         else
         {
             ONInventoryClosed?.Invoke();
-            Invoke(nameof(ResetCursorAfterCloseInventory), 0.1f);
+            //Invoke(nameof(ResetCursorAfterCloseInventory), 0.1f);
         }
     }
 

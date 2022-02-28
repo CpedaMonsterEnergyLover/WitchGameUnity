@@ -69,11 +69,9 @@ public class Hotbar : MonoBehaviour
     public void SelectSlot(int index)
     {
         if(selectedSlotIndex == index) return;
-
+        
         if (index > 7) index = 0;
         if (index < 0) index = 7;
-        
-        //TODO: да какова хуя цвет не меняется на старте
         // Reset previous slot color
         if (currentSelectedSlot is not null) currentSelectedSlot.GetComponent<Image>().color = Color.white;
         selectedSlotIndex = index;
@@ -81,11 +79,10 @@ public class Hotbar : MonoBehaviour
         // Apply new color
         currentSelectedSlot.GetComponent<Image>().color = selectionColor;
 
-        //        ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
+        ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
         
         // Arrow position
         arrow.transform.SetParent(currentSelectedSlot.transform, false);
-
     }
 
 }

@@ -13,27 +13,27 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Image itemIcon;
     public Text itemText;
     public bool HasItem => storedItem is not null && storedAmount > 0;
-    
-    protected Coroutine ShakeCoroutine;
-    protected Image Image;
+
+    private Coroutine _shakeCoroutine;
+    private Image _image;
 
     #region UnityMethods
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        Image.color = new Color(0.87f, 0.87f, 0.87f);
+        _image.color = new Color(0.87f, 0.87f, 0.87f);
         InventoryKeyManager.Instance.slotUnderCursor = this;
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
-        Image.color = Color.white;
+        _image.color = Color.white;
         InventoryKeyManager.Instance.slotUnderCursor = null;
     }
 
     private void Start()
     {
-        Image = GetComponent<Image>();
+        _image = GetComponent<Image>();
     }
 
     #endregion
@@ -106,8 +106,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public void Shake()
     {
-        if (ShakeCoroutine is not null) return;
-        ShakeCoroutine = StartCoroutine(Shake(0.75f, 30f));
+        if (_shakeCoroutine is not null) return;
+        _shakeCoroutine = StartCoroutine(Shake(0.75f, 30f));
 
     }
     
@@ -122,7 +122,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             yield return null;
         }
 
-        ShakeCoroutine = null;
+        _shakeCoroutine = null;
     }
     
     public virtual void Clear()

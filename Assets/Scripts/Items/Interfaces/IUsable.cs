@@ -1,13 +1,12 @@
-﻿public interface IUsable {
+﻿using System;
 
-    public virtual void Use(WorldTile tile)
-    {
-        
-    }
-
-    public virtual bool AllowUse(WorldTile tile)
-    {
-        return true;
-    }
+public interface IUsable
+{
+    public void Use(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+        => throw new NotImplementedException();
     
+    public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null) 
+        => false;
+
+    public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null) => false;
 }

@@ -110,9 +110,9 @@ public class InventorySlot : ItemSlot
         {
             if (storedItem is IConsumable consumable)
             {
-                if (consumable.AllowConsume())
+                if (consumable.AllowUse())
                 {
-                    consumable.Consume();
+                    consumable.Use();
                     RemoveItem(1);
                 }
             }

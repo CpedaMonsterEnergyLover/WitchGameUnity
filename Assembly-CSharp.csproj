@@ -70,8 +70,10 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
      <Compile Include="Assets\Scripts\Entities\FOVProvider.cs" />
      <Compile Include="Assets\Scripts\Entities\Entity.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Generator.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\NewItemPicker.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HerbData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
@@ -105,6 +107,7 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\HotbarSlot.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
@@ -117,7 +120,7 @@
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnTile.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
@@ -125,6 +128,7 @@
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
      <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnInteractable.cs" />
      <Compile Include="Assets\Scripts\UI\Hotbar.cs" />
      <Compile Include="Assets\Scripts\Scriptable\TimelineSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />

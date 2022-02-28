@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemPicker : MonoBehaviour
 {
@@ -22,33 +21,34 @@ public class ItemPicker : MonoBehaviour
     public Camera playerCamera;
     public Color previewDenyColor;
     public Color previewAllowColor;
-    public InventorySlot itemSlot;
+    public ItemSlot itemSlot;
     public Item Item => itemSlot.storedItem;
     
     private GameObject _interactablePreview;
     public bool _previewActive;
     // Тайл, над которым находится курсор с пикером
-    public WorldTile _tileUnderPicker;
-    private InventorySlot _pickedFrom;
+    [SerializeField]
+    private WorldTile _tileUnderPicker;
     private readonly List<SpriteRenderer> _previewRenderers = new();
     
     public bool IsPlaceable => Item is IPlaceable;
-    public bool IsUsable => Item is IUsable;
+    public bool IsUsable => Item is IUsableOnTile;
     public bool IsConsumable => Item is IConsumable;
 
     private void Start()
     {
+        Hotbar.ONSelectedSlotChanged += ONHotBarSelectedSlotChanged;
         /*CursorHoverCheck.ONCursorEnterUI += ONCursorEnterUI;
         CursorHoverCheck.ONCursorLeaveUI += ONCursorLeaveUI;
-        Hotbar.ONSelectedSlotChanged += ONHotBarSelectedSlotChanged;
         Inventory.ONInventoryClosed += OnInventoryClosed;
-        Inventory.ONInventoryOpened += OnInventoryOpened;*/
+        Inventory.ONInventoryOpened += OnInventoryOpened;
+        */
         gameObject.SetActive(false);
     }
 
-    public int SetItem(InventorySlot fromSlot, int amount)
+    public int SetItem(ItemSlot fromSlot, int amount)
     {
-        _pickedFrom = fromSlot;
+
         gameObject.SetActive(true);
         int added = itemSlot.AddItem(fromSlot.storedItem, amount);
         Tooltip.Instance.SetEnabled(false);
@@ -95,7 +95,6 @@ public class ItemPicker : MonoBehaviour
             UpdateUsablePreview();
         else
             transform.position += new Vector3(-34, +34, 0);
-        
     }
     
     // TODO: добавить для IConsumable разрешенные цели и превью
@@ -114,14 +113,14 @@ public class ItemPicker : MonoBehaviour
                 TryConsumeItem();
             else if (IsUsable)
                 TryUseItem();
-        };
+        }
     }
 
     private void TryPlaceItem()
     {
         if(_tileUnderPicker is null) return;
         IPlaceable pickedPlaceable = (IPlaceable)Item;
-        if (pickedPlaceable.AllowPlace(_tileUnderPicker))
+        if (pickedPlaceable.AllowUse(tile: _tileUnderPicker))
         {
             // Использует инвок чтобы текущий клик сразу не засчитался на заспавн. объекте
             PlacePickedItem();
@@ -133,9 +132,9 @@ public class ItemPicker : MonoBehaviour
     {
         if (_tileUnderPicker is null) return;
         IConsumable pickedConsumable = (IConsumable)Item;
-        if (pickedConsumable.AllowConsume())
+        if (pickedConsumable.AllowUse())
         {
-            pickedConsumable.Consume();
+            pickedConsumable.Use();
             itemSlot.RemoveItem(1);
             if (itemSlot.storedAmount <= 0) Clear();
             if(!Inventory.Instance.IsActive) Hotbar.Instance.currentSelectedSlot.RemoveItem(1);
@@ -145,7 +144,7 @@ public class ItemPicker : MonoBehaviour
     public void PlacePickedItem()
     {
         if (_tileUnderPicker is null) return;
-        ((IPlaceable) Item).Place(_tileUnderPicker);
+        ((IPlaceable) Item).Use(tile: _tileUnderPicker);
         itemSlot.RemoveItem(1);
         if (itemSlot.storedAmount <= 0) Clear();
     }
@@ -153,9 +152,9 @@ public class ItemPicker : MonoBehaviour
     public void TryUseItem()
     {
         if(_tileUnderPicker is null) return;
-        IUsable pickedUsable = (IUsable)Item;
-        if (pickedUsable.AllowUse(_tileUnderPicker))
-            pickedUsable.Use(_tileUnderPicker);
+        IUsableOnTile pickedUsableOnTile = (IUsableOnTile)Item;
+        if (pickedUsableOnTile.AllowUse(tile: _tileUnderPicker))
+            pickedUsableOnTile.Use(tile: _tileUnderPicker);
     }
 
     private void GetTileUnderPicker()
@@ -177,13 +176,13 @@ public class ItemPicker : MonoBehaviour
         _interactablePreview.transform.position = _tileUnderPicker.position + new Vector3(0.5f, 0.5f, 0);
         _previewRenderers.ForEach(r =>
         {
-            r.color = ((IPlaceable)Item).AllowPlace(_tileUnderPicker) ? previewAllowColor : previewDenyColor;
+            r.color = ((IPlaceable)Item).AllowUse(tile: _tileUnderPicker) ? previewAllowColor : previewDenyColor;
         });
     }
 
     private void UpdateConsumablePreview()
     {
-        if (((IConsumable) Item).AllowConsume())
+        if (((IConsumable) Item).AllowUse())
         {
             itemSlot.itemIcon.color = Color.white;
             transform.position += new Vector3(-34, +34, 0);
@@ -196,7 +195,7 @@ public class ItemPicker : MonoBehaviour
 
     private void UpdateUsablePreview()
     {
-        if (((IUsable) Item).AllowUse(_tileUnderPicker) && 
+        if (((IUsableOnTile) Item).AllowUse(tile: _tileUnderPicker) && 
             !CursorManager.Instance.IsOverUI)
         {
             itemSlot.itemIcon.color = Color.white;
@@ -278,13 +277,13 @@ public class ItemPicker : MonoBehaviour
     {
         if (!slot.HasItem) return;
         bool canPlace = slot.storedItem is IPlaceable;
-        bool canUse = slot.storedItem is IUsable;
+        bool canUse = slot.storedItem is IUsableOnTile;
         bool canConsume = slot.storedItem is IConsumable;
         
         // Если в слоте хотбара есть предмет, и его можно использовать или поставить
         if (canConsume || canPlace || canUse)
         {
-            SetItem((InventorySlot)slot, slot.storedAmount);
+            SetItem(slot, slot.storedAmount);
             if (CursorManager.Instance.InMode(CursorMode.InWorld))
             {
                 if (canPlace) ShowInteractablePreview();
@@ -304,7 +303,7 @@ public class ItemPicker : MonoBehaviour
         // В тот же слот, откуда было взято
         if (itemSlot.HasItem)
         {
-            _pickedFrom.AddItem(itemSlot.storedItem, itemSlot.storedAmount);
+            // _pickedFrom.AddItem(itemSlot.storedItem, itemSlot.storedAmount);
             Clear();
         }
         // Затем обновляет превью предмета из хотбара

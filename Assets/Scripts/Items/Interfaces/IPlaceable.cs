@@ -1,17 +1,7 @@
 ﻿using UnityEngine;
 
-public interface IPlaceable
+public interface IPlaceable : IUsable
 {
-    void Place(WorldTile tile)
-    {
-    
-    }
-
-    bool AllowPlace(WorldTile tile)
-    {
-        return false;
-    }
-
     public GameObject GetPrefab()
     {
         return null;

@@ -5,7 +5,7 @@ public class Seed : Item, IPlaceable
 {
     public new SeedData Data => (SeedData) data;
     
-    public void Place(WorldTile tile)
+    public void Use(WorldTile tile)
     {
         tile.DestroyInteractable();
         WorldManager.Instance.AddInteractable(tile, new HerbSaveData(
@@ -14,7 +14,7 @@ public class Seed : Item, IPlaceable
             ));
     }
 
-    public bool AllowPlace(WorldTile tile)
+    public bool AllowUse(WorldTile tile)
     {
         return tile is not null && 
                tile.HasInteractable &&

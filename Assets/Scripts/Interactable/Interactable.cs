@@ -94,7 +94,7 @@ public class Interactable : MonoBehaviour
         Fader = GetComponentInChildren<Fader>();
         Tile = loadedTile;
     }
-    
+
     #endregion
 
 

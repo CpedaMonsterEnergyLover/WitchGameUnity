@@ -44,7 +44,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public static void StopAttack()
     {
-        WeaponAnimator.SetBool(ATK, false);
+//        WeaponAnimator.SetBool(ATK, false);
     }
 
     public static void HideWeapon()

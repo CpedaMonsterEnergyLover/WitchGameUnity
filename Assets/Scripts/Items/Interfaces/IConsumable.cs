@@ -1,6 +1,4 @@
-﻿public interface IConsumable
+﻿public interface IConsumable : IUsable
 {
-    public void Consume() {}
 
-    public bool AllowConsume() => true;
 }
