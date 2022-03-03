@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-// Хранит информацию о тайле мира\
+// Хранит информацию о тайле мира
 [System.Serializable]
 public class WorldTile
 {
@@ -14,6 +14,7 @@ public class WorldTile
     public bool loaded;
     public bool cached;
     public Vector3Int position;
+    public Vector2 interactableOffset;
 
     // Загружает данные клетки на сцену
     public void Load(Tilemap[] tilemaps, TileBase[] tilebases)
@@ -37,17 +38,13 @@ public class WorldTile
         }
 
         if (cached)
-        {
             SetHidden(false);
-        }
         else
-        {
             instantiatedInteractable = Interactable.Create(savedData);
 
-        }
-
-        instantiatedInteractable.transform.position =
-            new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+        instantiatedInteractable.transform.position = instantiatedInteractable.Data.ignoreOffset ?
+            new Vector3(position.x + 0.5f, position.y + 0.5f, 0)
+            : new Vector3(position.x + interactableOffset.x, position.y + interactableOffset.y, 0);
         instantiatedInteractable.OnTileLoad(this);
 
         return instantiatedInteractable;

@@ -14,12 +14,6 @@ public class GameObjectsCollection : MonoBehaviour
     public static ItemData GetItem(ItemIdentifier identifier) =>  ItemCollection[identifier.id];
 
     // Private fields
-
-    // TODO: перенести в класс UI
-    [Header("Текст всплывающей подсказки (ссылка)")]
-    [SerializeField] 
-    private Text inspectText;
-
     [Header("Игровые объекты")]
     [Header("Травы")]
     [SerializeField]
@@ -34,29 +28,12 @@ public class GameObjectsCollection : MonoBehaviour
     [SerializeField]
     private List<ItemData> items;
 
-    private static Text InspectText;
-
     public static Dictionary<string, InteractableData> InteractableCollection;
     public static Dictionary<string, ItemData> ItemCollection;
 
 
     #endregion
-
-
-
-    #region UnityMethods
-
-    private void Awake()
-    {
-        if (inspectText is not null)
-        {
-            InspectText = inspectText;
-            inspectText.enabled = false;
-        }
-    }
-
-    #endregion
-
+    
     
 
     #region ClassMethods

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1554627385390719827}
   - component: {fileID: 3071005680958817059}
   - component: {fileID: -6480634296452647893}
+  - component: {fileID: -8820590038846180724}
   m_Layer: 0
   m_Name: GrassForest
   m_TagString: Untagged
@@ -111,3 +112,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-8820590038846180724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8501037824442680476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

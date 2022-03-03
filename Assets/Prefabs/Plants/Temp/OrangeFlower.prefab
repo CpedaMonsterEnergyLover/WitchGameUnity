@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8504643689106770865}
   - component: {fileID: 7427644310719180063}
   - component: {fileID: 2986234595181544176}
+  - component: {fileID: -2760447843291373204}
   m_Layer: 0
   m_Name: OrangeFlower
   m_TagString: Untagged
@@ -111,3 +112,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-2760447843291373204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6768076469388959952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

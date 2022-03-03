@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Hoe : Instrument, IUsableOnTile
 {
-    protected override bool FinalUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+    public override void Use(ItemSlot slot,Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         WorldManager.Instance.AddInteractable(tile, new InteractableIdentifier(InteractableType.CropBed, "cropbed"));
-        return true;
+        base.Use(slot, entity, tile, interactable);
     }
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)

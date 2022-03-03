@@ -1,8 +1,21 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Instance
+
+    public static PlayerController Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    #endregion
+    
+    
     #region Vars
     
     // Public
@@ -13,8 +26,7 @@ public class PlayerController : MonoBehaviour
     public float dashDuration;
     
     // Private
-    [SerializeField]
-    private Vector2 _movementInput;
+    public Vector2 MovementInput { get; private set; }
     private int _lookDirection = 1;
     private bool _isDashing;
     private bool _isAttacking;
@@ -56,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!_isDashing)
         {
-            PlayerAnimationManager.AnimateMovement(_movementInput.sqrMagnitude);
+            PlayerAnimationManager.AnimateMovement(MovementInput.sqrMagnitude);
             Move(movementSpeed);
         }
     }
@@ -71,7 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Move(float speed)
     {
         // Если перемещается спиной, снижает его скорость вдвое 
-        rigidBody.velocity = _movementInput * (IsLookingToVelocityDirection() ? speed : speed / 2f);
+        rigidBody.velocity = MovementInput * (IsLookingToVelocityDirection() ? speed : speed / 2f);
     }
 
     private void Attack()
@@ -113,19 +125,17 @@ public class PlayerController : MonoBehaviour
 
     // Меняет сторону, в которую смотрит персонаж, в зависимости 
     // От положения мыши (слева от него или справа от него)
-    private void LookDirectionToMouse()
+    public void LookDirectionToMouse()
     {
-        float mousePosX = Input.mousePosition.x;
-        if (mousePosX <= Screen.width / 2f) _lookDirection = 1;
-        else _lookDirection = -1;
+        _lookDirection = Input.mousePosition.x <= Screen.width / 2f ? 1 : -1;
     }
 
     // Меняет сторону, в которую смотрит персонаж, в зависимости
     // От направления его движения
     private void LookDirectionToVelocity()
     {
-        if (_movementInput.x <= -1f) _lookDirection = 1;
-        else if (_movementInput.x >= 1) _lookDirection = -1;
+        if (MovementInput.x <= -1f) _lookDirection = 1;
+        else if (MovementInput.x >= 1) _lookDirection = -1;
     }
 
     #endregion
@@ -137,20 +147,20 @@ public class PlayerController : MonoBehaviour
     // Возвращает, смотрит ли персонаж в сторону мыши
     private bool IsLookingToVelocityDirection()
     {
-        return _lookDirection != (int) _movementInput.x;
+        return _lookDirection != (int) MovementInput.x;
     }
     
     // Считывает значения осей движения
     private void UpdateMovementInput()
     {
-        _movementInput = new Vector2(
+        MovementInput = new Vector2(
             Input.GetAxisRaw("Horizontal"), 
             Input.GetAxisRaw("Vertical"));
     }
     
     // Поворачивает спрайт персонажа в ту сторону, куда он смотрит
     // (отзеркаливает)
-    private void UpdateLookDirection()
+    public void UpdateLookDirection()
     {
         Vector3 scale = new Vector3(
             _lookDirection, 1, 1);

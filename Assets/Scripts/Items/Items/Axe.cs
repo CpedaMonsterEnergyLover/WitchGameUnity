@@ -1,20 +1,21 @@
 public class Axe : Instrument, IUsableOnInteractable
 {
-    protected override bool FinalUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+    public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        bool interactionHappen = interactable is not null && interactable.AllowInteract();
-        if (interactionHappen)
-            interactable.Interact(Data.damage);
-        return interactionHappen;
+        if (interactable is WoodTree woodTree)
+        {
+            woodTree.Chop(Data.damage);
+            base.Use(slot, entity, tile, interactable);
+        }
     }
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
-        => interactable is WoodTree;
+        => interactable is WoodTree {isFalling: false};
     
     
     protected override string GetDescription()
     {
-        return base.GetDescription() + "\nЭтим топором можно рубить деревья";
+        return base.GetDescription() + "\nРубит деревья и пни";
     }
     
     public Axe(ItemIdentifier identifier) : base(identifier)

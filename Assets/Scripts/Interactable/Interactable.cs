@@ -83,10 +83,8 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact(float value = 1.0f)
     {
+        Debug.Log($"Interacting with {name}");
     }
-
-    public virtual bool AllowInteract() => true;
-
 
     // Должен быть переопределен
     public virtual void OnTileLoad(WorldTile loadedTile)
@@ -133,7 +131,7 @@ public class Interactable : MonoBehaviour
     }
     
     // Генерирует уникальный айди
-    protected string GenerateID()
+    private string GenerateID()
     {
         return new StringBuilder()
             .Append(DateTime.Now.Date.ToString("MM:dd:yyyy:"))

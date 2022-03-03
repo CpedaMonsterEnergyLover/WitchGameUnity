@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +18,7 @@ public class Hotbar : MonoBehaviour
     
     public GameObject arrow;
     public Color selectionColor;
-    public ItemSlot currentSelectedSlot;
+    public HotbarSlot currentSelectedSlot;
     [ShowOnly]
     public int selectedSlotIndex;
     
@@ -83,6 +82,11 @@ public class Hotbar : MonoBehaviour
         
         // Arrow position
         arrow.transform.SetParent(currentSelectedSlot.transform, false);
+    }
+
+    public void ConsumeItem(int amount)
+    {
+        currentSelectedSlot.ReferredSlot.RemoveItem(amount);   
     }
 
 }

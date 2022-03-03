@@ -1,17 +1,29 @@
+using System;
 using UnityEngine;
 
 public class NewItemPicker : MonoBehaviour
 {
-    public Camera playerCamera;
+    #region Singleton
+
+    public static NewItemPicker Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    #endregion
+
+    public InteractionController interactionController;
     public GameObject itemSlotGO;
+    public InteractionBar interactionBar;
     
     [SerializeField]
     private ItemSlot itemSlot;
 
-    private WorldTile _tileUnderCursor;
-    private Interactable _interactableUnderCursor;
-    private Entity _entityUnderCursor;
-    private bool _useAllowed;
+
+    public bool UseAllowed { get; private set; }
+    public bool HideWhileInteracting { set; get; }
 
     private void Start()
     {
@@ -25,10 +37,8 @@ public class NewItemPicker : MonoBehaviour
 
     private void Update()
     {
-        GetObjectsUnderCursor();
         UpdatePosition();
         UpdateVisibility();
-        ListenToKeyboard();
     }
 
     private void OnEnable()
@@ -38,24 +48,22 @@ public class NewItemPicker : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 5;
-        transform.position = mousePosition;// + new Vector3(-34, +34, 0);
+        transform.position = Input.mousePosition;
     }
 
     private void UpdateVisibility()
     {
         if (itemSlot.storedItem is not IUsable usable) return;
-        if (!usable.AllowUse(_entityUnderCursor, _tileUnderCursor, _interactableUnderCursor))
+        if (!usable.AllowUse(interactionController.Data.Entity, interactionController.Data.Tile, interactionController.Data.Interactable))
         {
             itemSlotGO.SetActive(false);
-            _useAllowed = false;
+            UseAllowed = false;
         }
         else
-        {
-            itemSlotGO.SetActive(true);
-            bool inDistance = usable.IsInDistance(_entityUnderCursor, _tileUnderCursor, _interactableUnderCursor);
-            _useAllowed = inDistance;
+        { 
+            itemSlotGO.SetActive(!HideWhileInteracting);
+            bool inDistance = usable.IsInDistance(interactionController.Data.Entity, interactionController.Data.Tile, interactionController.Data.Interactable);
+            UseAllowed = inDistance;
             FadeVisibility(!inDistance);
         }
     }
@@ -66,75 +74,93 @@ public class NewItemPicker : MonoBehaviour
             new Color(1f, 1f, 1f, 0.5f) : Color.white;
     }
 
-    private void ListenToKeyboard()
+    public void UseItem()
     {
-        if(!_useAllowed) return;
-        if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetMouseButton(0)) ((IUsable)itemSlot.storedItem).Use(
-            _entityUnderCursor, _tileUnderCursor, _interactableUnderCursor);
+        if(!UseAllowed) return;
+
+        float useTime = 0.0f;
+
+        if (itemSlot.storedItem is Instrument instrument)
+        {
+            if (instrument.InstanceData.Durability <= 0)
+            {
+                itemSlot.Shake();
+                return;
+            }
+            useTime = instrument.Data.useTime;
+        }
+        
+        Interact(useTime, 
+            () => ((IUsable) itemSlot.storedItem).
+                Use(
+                    Hotbar.Instance.currentSelectedSlot.ReferredSlot,
+                    interactionController.Data.Entity, 
+                    interactionController.Data.Tile, 
+                    interactionController.Data.Interactable));
+    }
+
+    public void UseHand()
+    {
+        Interactable interactableUnderCursor = interactionController.Data.Interactable;
+        if(interactableUnderCursor is null) return;
+        
+        if(Vector2.Distance(PlayerController.Instance.transform.position,
+            interactableUnderCursor.transform.position) > 1.6f) return;
+        
+        Interact(1f, () =>
+            interactableUnderCursor.Interact());
+    }
+
+    private void Interact(float useTime, Action action)
+    {
+        PlayerController.Instance.LookDirectionToMouse();
+        PlayerController.Instance.UpdateLookDirection();
+        interactionBar.StartInteraction(useTime, action);
     }
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)
     {
-        // TODO: IUsableOnEntity, IUsableOnInteractable, IUsableOnTile
-        
         if(Inventory.Instance.IsActive) return;
         // Если в выбранном слоте хотбара есть предмет
-        if (slot.HasItem)
+        if (slot.HasItem && slot.storedItem is IUsable)
         {
-            if (slot.storedItem is IUsable)
-            {
-                itemSlot.storedItem = slot.storedItem;
-                itemSlot.storedAmount = slot.storedAmount;
-                itemSlot.UpdateUI();
-                GetObjectsUnderCursor();
-                UpdatePosition();
-                UpdateVisibility();
-                gameObject.SetActive(true);
-            } else {
-                gameObject.SetActive(false);
-            }
+            SyncWithSlot(slot);
+            UpdatePosition();
+            UpdateVisibility();
+            gameObject.SetActive(true);
+            return;
         }
-        // Если нет предмета
-        else
-        {
-            gameObject.SetActive(false);
-        }
-
+        gameObject.SetActive(false);
     }
 
-    private void GetObjectsUnderCursor()
+    public void SyncWithSlot(ItemSlot slot)
     {
-        Vector3 mouseWorldPos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0;
-
-        // Gets interactable and entity under cursor
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
-        if (hit.collider is not null)
-        {
-            _interactableUnderCursor = hit.collider.gameObject.GetComponent<Interactable>();
-            _entityUnderCursor = hit.collider.gameObject.GetComponent<Entity>();
-        }
-        else
-        {
-            _interactableUnderCursor = null;
-            _entityUnderCursor = null;
-        }
-
-        // Gets tile under cursor
-        Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
-        _tileUnderCursor = WorldManager.Instance.CoordsBelongsToWorld(gridPos.x, gridPos.y) ? 
-            WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
-            null;
+        if(!slot.HasItem) gameObject.SetActive(false);
+        itemSlot.storedItem = slot.storedItem;
+        itemSlot.storedAmount = slot.storedAmount;
+        itemSlot.UpdateUI();
     }
+    
     
     private void OnInventoryClosed()
     {
         OnSelectedHotbarSlotChanged(Hotbar.Instance.currentSelectedSlot);
     }
-
     private void OnInventoryOpened()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnCursorEnterUI()
+    {
+        if(Inventory.Instance.IsActive) return;
+        gameObject.SetActive(false);
+    }
+
+    private void OnCursorLeaveUI()
+    {
+        if (Inventory.Instance.IsActive) return;
+        gameObject.SetActive(true);
     }
 
     private void SubEvents()
@@ -142,6 +168,8 @@ public class NewItemPicker : MonoBehaviour
         Hotbar.ONSelectedSlotChanged += OnSelectedHotbarSlotChanged;
         Inventory.ONInventoryOpened += OnInventoryOpened;
         Inventory.ONInventoryClosed += OnInventoryClosed;
+        CursorHoverCheck.ONCursorEnterUI += OnCursorEnterUI;
+        CursorHoverCheck.ONCursorLeaveUI += OnCursorLeaveUI;
     }
 
     private void UnsubEvents()
@@ -149,5 +177,7 @@ public class NewItemPicker : MonoBehaviour
         Hotbar.ONSelectedSlotChanged -= OnSelectedHotbarSlotChanged;
         Inventory.ONInventoryOpened -= OnInventoryOpened;
         Inventory.ONInventoryClosed -= OnInventoryClosed;
+        CursorHoverCheck.ONCursorEnterUI -= OnCursorEnterUI;
+        CursorHoverCheck.ONCursorLeaveUI -= OnCursorLeaveUI;
     }
 }

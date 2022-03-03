@@ -126,6 +126,10 @@ public class Generator : MonoBehaviour
 
                 InteractableIdentifier interactableIdentifier = GenerateBiomeTile(moistureLevel, soilType);
                 worldData.AddInteractableObject(interactableIdentifier, point);
+                
+                // Interactable offset
+                Vector2 offset = new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
+                worldData.SetInteractableOffset(x, y, offset);
             }
         }
 

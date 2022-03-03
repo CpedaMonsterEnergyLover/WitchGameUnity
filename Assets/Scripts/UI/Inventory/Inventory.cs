@@ -28,8 +28,6 @@ public class Inventory : MonoBehaviour
     [SerializeReference]
     public List<InventorySlot> slots = new();
 
-    
-    
     public delegate void InventoryClosedEvent();
     public static event InventoryClosedEvent ONInventoryClosed;
     
@@ -128,7 +126,7 @@ public class Inventory : MonoBehaviour
     private void ResetCursorAfterCloseInventory()
     {
         CursorManager.Instance.ResetMode();
-        if(!CursorManager.Instance.InMode(CursorMode.HoverUI)) Tooltip.Instance.SetEnabled(false);
+        if(CursorManager.Instance.Mode != CursorMode.HoverUI) Tooltip.Instance.SetEnabled(false);
     }
 
     public void ToggleInventory()

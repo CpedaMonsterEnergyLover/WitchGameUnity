@@ -46,6 +46,8 @@ public class WorldData
         WorldTiles[x, y].position = position;
     }
 
+    public void SetInteractableOffset(int x, int y, Vector2 offset) => WorldTiles[x, y].interactableOffset = offset;
+
     public InteractableSaveData AddInteractableObject(InteractableIdentifier identifier, Vector3Int position)
     {
         WorldTile tile = WorldTiles[position.x, position.y];

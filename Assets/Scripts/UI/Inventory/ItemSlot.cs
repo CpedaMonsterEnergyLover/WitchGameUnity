@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,7 +13,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Text itemText;
     public bool HasItem => storedItem is not null && storedAmount > 0;
 
-    private Coroutine _shakeCoroutine;
     private Image _image;
 
     #region UnityMethods
@@ -75,7 +73,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         UpdateUI();
     }
 
-    public void UpdateUI()
+    public virtual void UpdateUI()
     {
         // Если предмет был последний
         if (storedItem == null || storedAmount <= 0)
@@ -85,6 +83,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if(InventoryKeyManager.Instance.slotUnderCursor == this) 
                 Tooltip.Instance.SetEnabled(false);
         }
+        // Если не последний
         else {
             itemIcon.sprite = storedItem.Data.icon;
             itemIcon.enabled = true;
@@ -92,6 +91,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             itemText.text = storedAmount.ToString();
             itemText.enabled = storedAmount > 1;
         }
+        
     }
 
     public virtual void OnKeyDown()
@@ -106,8 +106,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public void Shake()
     {
-        if (_shakeCoroutine is not null) return;
-        _shakeCoroutine = StartCoroutine(Shake(0.75f, 30f));
+        StartCoroutine(Shake(0.75f, 30f));
 
     }
     
@@ -121,8 +120,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             itemIcon.transform.rotation  = Quaternion.AngleAxis(angle, Vector3.forward);
             yield return null;
         }
-
-        _shakeCoroutine = null;
     }
     
     public virtual void Clear()

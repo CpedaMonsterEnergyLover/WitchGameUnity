@@ -10,4 +10,6 @@ public class InteractableData : ScriptableObject
     public GameObject prefab;
     [SerializeField]
     public new string name;
+
+    public bool ignoreOffset;
 }

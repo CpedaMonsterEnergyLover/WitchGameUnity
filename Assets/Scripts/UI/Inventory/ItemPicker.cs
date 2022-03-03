@@ -1,3 +1,4 @@
+/*
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +43,7 @@ public class ItemPicker : MonoBehaviour
         CursorHoverCheck.ONCursorLeaveUI += ONCursorLeaveUI;
         Inventory.ONInventoryClosed += OnInventoryClosed;
         Inventory.ONInventoryOpened += OnInventoryOpened;
-        */
+        #1#
         gameObject.SetActive(false);
     }
 
@@ -73,7 +74,7 @@ public class ItemPicker : MonoBehaviour
         _previewActive = false;
         _tileUnderPicker = null;
         CursorManager.Instance.ResetMode();
-        if(CursorManager.Instance.InMode(CursorMode.HoverUI)) Tooltip.Instance.SetEnabled(true);
+        if(CursorManager.Instance.Mode == CursorMode.HoverUI) Tooltip.Instance.SetEnabled(true);
 
     }
     
@@ -100,12 +101,12 @@ public class ItemPicker : MonoBehaviour
     // TODO: добавить для IConsumable разрешенные цели и превью
     private void Update()
     {
-        CursorManager.Instance.Mode = CursorMode.HoldItem;
+        // CursorManager.Instance.Mode = CursorMode.HoldItem;
 
         GetTileUnderPicker();
         UpdatePosition();
         
-        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) && !CursorManager.Instance.IsOverUI)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) && !CursorManager.IsOverUI)
         {
             if (IsPlaceable)
                 TryPlaceItem();
@@ -196,7 +197,7 @@ public class ItemPicker : MonoBehaviour
     private void UpdateUsablePreview()
     {
         if (((IUsableOnTile) Item).AllowUse(tile: _tileUnderPicker) && 
-            !CursorManager.Instance.IsOverUI)
+            !CursorManager.IsOverUI)
         {
             itemSlot.itemIcon.color = Color.white;
             // transform.position += new Vector3(+40, -40, 0);
@@ -284,7 +285,7 @@ public class ItemPicker : MonoBehaviour
         if (canConsume || canPlace || canUse)
         {
             SetItem(slot, slot.storedAmount);
-            if (CursorManager.Instance.InMode(CursorMode.InWorld))
+            if (CursorManager.Instance.Mode == CursorMode.InWorld)
             {
                 if (canPlace) ShowInteractablePreview();
             }
@@ -314,3 +315,4 @@ public class ItemPicker : MonoBehaviour
     private void ToInvoke() => UpdatePreview(Hotbar.Instance.currentSelectedSlot);
     
 }
+*/

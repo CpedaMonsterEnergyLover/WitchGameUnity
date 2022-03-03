@@ -210,12 +210,6 @@ public class WorldManager : MonoBehaviour
             DestroyImmediate(GameObjectsTransform.GetChild(0).gameObject);
     }
 
-    public void AddInteractable(Vector3Int tile, InteractableIdentifier identifier)
-    {
-        WorldData.AddInteractableObject(identifier, tile);
-        WorldData.GetTile(tile.x, tile.y).LoadInteractable();
-    }
-    
     public void AddInteractable(WorldTile tile, InteractableIdentifier identifier)
     {
         

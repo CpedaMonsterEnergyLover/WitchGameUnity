@@ -108,13 +108,8 @@ public class InventorySlot : ItemSlot
         // ПКМ
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (storedItem is IConsumable consumable)
-            {
-                if (consumable.AllowUse())
-                {
-                    consumable.Use();
-                    RemoveItem(1);
-                }
+            if (storedItem is IConsumable consumable && consumable.AllowUse()){
+                consumable.Use(this);
             }
         } 
         // Q выбросить

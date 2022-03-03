@@ -9,8 +9,9 @@ public class Food : Item, IConsumable
     {
     }
 
-    public void Use(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+    public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
+        slot.RemoveItem(1);
         Debug.Log($"{Data.name} consumed! {Data.saturation} hunger restored");
     }
 

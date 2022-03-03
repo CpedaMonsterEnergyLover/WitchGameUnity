@@ -12,23 +12,13 @@ public class WoodTree : Interactable
 
     // Private fields
     [SerializeField]
-    private bool _delayed;
+    public bool isFalling;
     
     #endregion
     
     
     
     #region ClassMethods
-
-    public override void Interact(float value = 1.0f)
-    {
-        ChopTree((int) value);
-    }
-
-    public override bool AllowInteract()
-    {
-        return !_delayed;
-    }
 
     protected override void InitInstanceData(InteractableSaveData saveData)
     {
@@ -43,7 +33,7 @@ public class WoodTree : Interactable
         if(InstanceData.health <= Data.fallOnHealth) RemoveLeaves();
     }
 
-    private void ChopTree(int dmg)
+    public void Chop(int dmg)
     {
         if (InstanceData.health - dmg <= 0 && !InstanceData.isChopped) InstanceData.health = 1;
         else InstanceData.health -= dmg;
@@ -76,7 +66,7 @@ public class WoodTree : Interactable
 
      private IEnumerator Fall(float duration, float direction)
      {
-         _delayed = true;
+         isFalling = true;
          InstanceData.isChopped = true;
          FadeIn();
          Fader.IsBlocked = true;
@@ -91,7 +81,7 @@ public class WoodTree : Interactable
              yield return null;
          }
 
-         _delayed = false;
+         isFalling = false;
          RemoveLeaves();
      }
 
@@ -99,7 +89,6 @@ public class WoodTree : Interactable
      {
          float rootsX = transform.position.x;
          
-         _delayed = true;
          float t = 0.0f;
          while ( t  < duration )
          {
@@ -114,7 +103,6 @@ public class WoodTree : Interactable
              }
              yield return null;
          }
-         _delayed = false;
      }
 
      #endregion

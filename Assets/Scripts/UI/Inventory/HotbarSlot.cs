@@ -46,12 +46,18 @@ public class HotbarSlot : ItemSlot
         ReferredSlot = refersTo;
     }
 
+    public override void UpdateUI()
+    {
+        base.UpdateUI();
+        NewItemPicker.Instance.SyncWithSlot(this);
+    }
+
     public override int AddItem(Item item, int amount) => 0;
 
     public override void Clear()
     {
         base.Clear();
-        ReferredSlot.ReferredHotbarSlot = null;
+        if(ReferredSlot is not null) ReferredSlot.ReferredHotbarSlot = null;
         ReferredSlot = null;
     }
 }

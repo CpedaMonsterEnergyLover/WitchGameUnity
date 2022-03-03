@@ -17,3 +17,4 @@ MonoBehaviour:
     id: cropbed
   prefab: {fileID: 2414370750406087172, guid: 8dceb197d91cdc141a3bc9e3e95c157d, type: 3}
   name: "\u0413\u0440\u044F\u0434\u043A\u0430"
+  ignoreOffset: 1

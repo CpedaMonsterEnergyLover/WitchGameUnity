@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Herb : Interactable
@@ -69,7 +70,7 @@ public class Herb : Interactable
 
     public override void Interact(float value = 1.0f)
     {
-        base.Interact();
+        base.Interact(value);
         Destroy();
     }
 
@@ -106,13 +107,5 @@ public class Herb : Interactable
         }
     }
     
-    #endregion
-
-
-
-    #region Events
-
-        
-
     #endregion
 }
