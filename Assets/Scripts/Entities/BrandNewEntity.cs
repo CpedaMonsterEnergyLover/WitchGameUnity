@@ -205,7 +205,7 @@ public class BrandNewEntity : MonoBehaviour
         }
         else
         {
-            int enteredID = newTarget.GetComponent<Entity>().Data.id;
+            int enteredID = newTarget.GetComponent<OldEntity>().Data.id;
             if (Data.hostileEntitiesIDS.Contains(enteredID)) TargetGameObject = newTarget;
         }
 

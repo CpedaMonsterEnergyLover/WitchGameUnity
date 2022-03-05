@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Fader))]
-public class Ghost : Entity
+public class Ghost : OldEntity
 {
     public new GhostData Data => (GhostData) data;
 

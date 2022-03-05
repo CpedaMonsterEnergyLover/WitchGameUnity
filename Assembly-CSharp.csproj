@@ -64,12 +64,12 @@
      <Compile Include="Assets\Scripts\Items\Data\ItemData.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
-     <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
-     <Compile Include="Assets\Scripts\Entities\FrogBehaviour.cs" />
+     <Compile Include="Assets\Scripts\UI\Elements\CloseButton.cs" />
+     <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
-     <Compile Include="Assets\Scripts\Entities\FOVProvider.cs" />
-     <Compile Include="Assets\Scripts\Entities\Entity.cs" />
+     <Compile Include="Assets\Scripts\Entities\Miscs\FOVProvider.cs" />
+     <Compile Include="Assets\Scripts\Entities\OldEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Generator.cs" />
@@ -77,9 +77,9 @@
      <Compile Include="Assets\Scripts\UI\Inventory\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HerbData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
-     <Compile Include="Assets\Scripts\Entities\EntityData\GhostData.cs" />
+     <Compile Include="Assets\Scripts\Entities\Data\GhostData.cs" />
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
-     <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\Tooltip.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Instrument.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
@@ -90,7 +90,7 @@
      <Compile Include="Assets\Scripts\Timeline\HolidaysManager.cs" />
      <Compile Include="Assets\Scripts\Util\TimeUtil.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
-     <Compile Include="Assets\Scripts\UI\Draggable.cs" />
+     <Compile Include="Assets\Scripts\UI\Elements\Draggable.cs" />
      <Compile Include="Assets\Scripts\Items\ItemStack.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
@@ -99,11 +99,10 @@
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
-     <Compile Include="Assets\Scripts\Entities\EntityData\EntityData.cs" />
-     <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
+     <Compile Include="Assets\Scripts\Entities\Data\EntityData.cs" />
+     <Compile Include="Assets\Scripts\UI\Elements\SortButton.cs" />
      <Compile Include="Assets\Scripts\Interactable\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
-     <Compile Include="Assets\Scripts\Events\ItemEvents.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Furniture.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
@@ -117,7 +116,7 @@
      <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
-     <Compile Include="Assets\Scripts\Entities\PlayerHitbox.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Interactable\InteractionController.cs" />
      <Compile Include="Assets\Scripts\Interactable\Shaker.cs" />
@@ -133,12 +132,13 @@
      <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnInteractable.cs" />
-     <Compile Include="Assets\Scripts\UI\Hotbar.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\Hotbar.cs" />
      <Compile Include="Assets\Scripts\Scriptable\TimelineSettings.cs" />
-     <Compile Include="Assets\Scripts\Entities\GhostBehaviour.cs" />
+     <Compile Include="Assets\Scripts\AnimationBehaviour\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
