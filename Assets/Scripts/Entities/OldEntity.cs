@@ -9,11 +9,11 @@ public class OldEntity : MonoBehaviour
 
     // Public vars
     public EntityState State { protected set; get; }
-    public EntityData Data => data;
+    public OldEntityData Data => data;
     
     // Protected fields
     [SerializeField]
-    protected EntityData data;
+    protected OldEntityData data;
     protected Rigidbody2D RigidBody { private set; get; }
 
     protected void SetTarget(Vector2 newTarget) => GetTarget = newTarget;

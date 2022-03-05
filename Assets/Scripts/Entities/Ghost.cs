@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Fader))]
 public class Ghost : OldEntity
 {
-    public new GhostData Data => (GhostData) data;
+    public new OldGhostData Data => (OldGhostData) data;
 
     private float _wanderingRotationDirection;
     private Vector2 _spawnPoint;

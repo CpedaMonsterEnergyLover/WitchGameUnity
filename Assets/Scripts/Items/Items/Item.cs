@@ -6,7 +6,6 @@ public class Item
 {
     public ItemData Data => data;
     public ItemSaveData InstanceData => instanceData;
-    public ItemType Type => Data.identifier.type;
     
     // Содержит сохраняемые поля объекта
     [SerializeReference, SerializeField]
@@ -59,7 +58,6 @@ public class Item
         return $"Макс. кол-во в стаке: {Data.maxStack}";
     }
     
-    // TODO: ONPickup
 
     public override string ToString()
     {

@@ -75,9 +75,9 @@
      <Compile Include="Assets\Scripts\Interactable\Data\HerbData.cs" />
      <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
-     <Compile Include="Assets\Scripts\Entities\Data\GhostData.cs" />
+     <Compile Include="Assets\Scripts\Entities\Data\OldGhostData.cs" />
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
-     <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\Tooltip.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Instrument.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
@@ -97,9 +97,9 @@
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
-     <Compile Include="Assets\Scripts\Entities\Data\EntityData.cs" />
+     <Compile Include="Assets\Scripts\Entities\Data\OldEntityData.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
-     <Compile Include="Assets\Scripts\Interactable\GameObjectsCollection.cs" />
+     <Compile Include="Assets\Scripts\World\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Furniture.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
@@ -116,11 +116,11 @@
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractionController.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Shaker.cs" />
+     <Compile Include="Assets\Scripts\Player\InteractionController.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\Shaker.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Inventory.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractableType.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnTile.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
@@ -139,6 +139,12 @@
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Hotbar.cs" />
+     <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
+     <Compile Include="Assets\Scripts\Entities\Miscs\EntityType.cs" />
+     <Compile Include="Assets\Scripts\Entities\Data\EntityData.cs" />
+     <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
+     <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
+     <Compile Include="Assets\Scripts\Entities\SaveData\ItemEntitySaveData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

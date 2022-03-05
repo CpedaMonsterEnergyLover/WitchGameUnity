@@ -7,17 +7,17 @@ public class BrandNewEntity : MonoBehaviour
     #region Vars
 
     // Public fields
-    public EntityData Data => data;
+    public OldEntityData Data => data;
     public EntityState State { private set; get; }
     public float CurrentMovementSpeed { private set; get; }
     public float CurrentAttackDelay { private set; get; }
 
     public bool HasTargetGO => TargetGameObject is not null;
     public bool HasTargetPoint => TargetPoint.x > Vector2.negativeInfinity.x && TargetPoint.y > Vector2.negativeInfinity.y;
-    public bool IsAgressive => Data.entityType == EntityType.Agressive;
-    public bool IsNeutral => Data.entityType == EntityType.Neutral;
-    public bool IsFriendly => Data.entityType == EntityType.Friendly;
-    public bool IsCompanion => Data.entityType == EntityType.Companion;
+    public bool IsAgressive => Data.entityMood == EntityMood.Agressive;
+    public bool IsNeutral => Data.entityMood == EntityMood.Neutral;
+    public bool IsFriendly => Data.entityMood == EntityMood.Friendly;
+    public bool IsCompanion => Data.entityMood == EntityMood.Companion;
     public bool WillAttackOnlyPlayer => Data.hostileEntitiesIDS.Count == 0;
 
     // Private fields
@@ -26,7 +26,7 @@ public class BrandNewEntity : MonoBehaviour
     // Protected fields
     [Header("Entity data")]
     [SerializeField]
-    protected EntityData data;
+    protected OldEntityData data;
     [Header("FOV provider")]
     [SerializeField] 
     protected FOVProvider fovProvider;
@@ -315,7 +315,7 @@ public class BrandNewEntity : MonoBehaviour
 }
 
 
-public enum EntityType
+public enum EntityMood
 {
     Agressive,
     Neutral,

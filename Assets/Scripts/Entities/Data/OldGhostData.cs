@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Entity/Ghost")]
-public class GhostData : EntityData
+public class OldGhostData : OldEntityData
 {
 
     [Header("Ghost data")] 
