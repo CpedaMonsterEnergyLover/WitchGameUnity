@@ -119,6 +119,7 @@
      <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
      <Compile Include="Assets\Scripts\Entities\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
+     <Compile Include="Assets\Scripts\Interactable\InteractionController.cs" />
      <Compile Include="Assets\Scripts\Interactable\Shaker.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Inventory.cs" />
@@ -138,7 +139,6 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Interactable\InteractionController.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

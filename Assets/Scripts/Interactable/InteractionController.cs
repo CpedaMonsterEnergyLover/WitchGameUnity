@@ -68,4 +68,9 @@ public readonly struct InteractionControllerData
         Tile = tile;
         Interactable = interactable;
     }
+
+    public override string ToString()
+    {
+        return $"Tile: {Tile}, Int: {Interactable}, Entity: {Entity}";
+    }
 }

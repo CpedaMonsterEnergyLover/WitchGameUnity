@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,21 +9,24 @@ public class WorldTile
 {
     public SoilType[] layers = {SoilType.None, SoilType.None, SoilType.None, SoilType.None};
     public float moistureLevel;
-    public bool HasInteractable => savedData is not null;
     public Interactable instantiatedInteractable;
     public InteractableSaveData savedData;
     public bool loaded;
     public bool cached;
     public Vector3Int position;
     public Vector2 interactableOffset;
+    public List<Entity> entities;
+
+    public bool HasInteractable => savedData is not null;
 
     // Загружает данные клетки на сцену
+
     public void Load(Tilemap[] tilemaps, TileBase[] tilebases)
     {
         loaded = true;
 
         // Рисует слои грида
-        Draw(tilemaps, tilebases);
+        DrawGridTile(tilemaps, tilebases);
         
         if (!HasInteractable) return;
         LoadInteractable();
@@ -51,7 +55,7 @@ public class WorldTile
     }
 
     // Помещает слои тайла на слои грида
-    public void Draw(Tilemap[] tilemaps, TileBase[] tilebases)
+    public void DrawGridTile(Tilemap[] tilemaps, TileBase[] tilebases)
     {
         for (int i = 0; i < layers.Length; i++)
         {
