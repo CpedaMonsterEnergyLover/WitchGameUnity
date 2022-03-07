@@ -8,7 +8,7 @@ public class WoodTree : Interactable
 
     // Public fields
     public new TreeData Data => (TreeData) data;
-    public new TreeSaveData InstanceData => (TreeSaveData) instanceData;
+    public new TreeSaveData SaveData => (TreeSaveData) saveData;
 
     // Private fields
     [SerializeField]
@@ -20,29 +20,28 @@ public class WoodTree : Interactable
     
     #region ClassMethods
 
-    protected override void InitInstanceData(InteractableSaveData saveData)
+    protected override void InitSaveData(InteractableData origin)
     {
-        instanceData = new TreeSaveData(saveData);
-        InstanceData.health = Data.health;
-        base.InitInstanceData(saveData);
+        saveData = new TreeSaveData(origin);
+        SaveData.health = Data.health;
     }
 
     public override void OnTileLoad(WorldTile loadedTile)
     {
         base.OnTileLoad(loadedTile);
-        if(InstanceData.health <= Data.fallOnHealth) RemoveLeaves();
+        if(SaveData.health <= Data.fallOnHealth) RemoveLeaves();
     }
 
     public void Chop(int dmg)
     {
-        if (InstanceData.health - dmg <= 0 && !InstanceData.isChopped) InstanceData.health = 1;
-        else InstanceData.health -= dmg;
+        if (SaveData.health - dmg <= 0 && !SaveData.isChopped) SaveData.health = 1;
+        else SaveData.health -= dmg;
 
-        Debug.Log($"{InstanceData.health} hp left");
+        Debug.Log($"{SaveData.health} hp left");
 
-        if (InstanceData.health > 0)
+        if (SaveData.health > 0)
         {
-         if (InstanceData.health <= Data.fallOnHealth && !InstanceData.isChopped)
+         if (SaveData.health <= Data.fallOnHealth && !SaveData.isChopped)
              StartCoroutine(Fall(2.5f, 
                  transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
          else StartCoroutine(Shake(1f, (float) Math.PI * 6f));
@@ -67,7 +66,7 @@ public class WoodTree : Interactable
      private IEnumerator Fall(float duration, float direction)
      {
          isFalling = true;
-         InstanceData.isChopped = true;
+         SaveData.isChopped = true;
          FadeIn();
          Fader.IsBlocked = true;
          float t = 0.0f;
@@ -93,7 +92,7 @@ public class WoodTree : Interactable
          while ( t  < duration )
          {
              t += Time.deltaTime;
-             if (!InstanceData.isChopped)
+             if (!SaveData.isChopped)
                 Fader.transform.rotation  = Quaternion.AngleAxis(Mathf.Sin(t * speed), Vector3.forward);
              else
              {

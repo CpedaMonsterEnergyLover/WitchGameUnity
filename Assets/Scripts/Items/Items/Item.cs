@@ -16,7 +16,7 @@ public class Item
     // Constructor
     public Item(ItemIdentifier identifier)
     {
-        data = GameObjectsCollection.GetItem(identifier);
+        data = GameCollection.Items.Get(identifier.id);
     }
 
     public static Item Create(ItemIdentifier identifier)

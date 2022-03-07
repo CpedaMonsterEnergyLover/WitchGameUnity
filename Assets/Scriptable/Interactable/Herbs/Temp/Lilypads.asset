@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Lilypads
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: lilypads
-  prefab: {fileID: 4169411711263477630, guid: 61d93e8e6b2ae0845b2b80ad3ce83091, type: 3}
+  id: lilypads
+  type: 0
   name: lilypads
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

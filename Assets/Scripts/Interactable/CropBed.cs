@@ -1,42 +1,30 @@
 public class CropBed : Interactable
 {
-    public new CropBedSaveData InstanceData => (CropBedSaveData) instanceData;
+    public new CropBedSaveData SaveData => (CropBedSaveData) saveData;
 
-    protected override void InitInstanceData(InteractableSaveData saveData)
+    protected override void InitSaveData(InteractableData origin)
     {
-        instanceData = new CropBedSaveData(saveData);
-        base.InitInstanceData(saveData);
+        saveData = new CropBedSaveData(origin);
     }
 
-    public override void Interact(float value = 1)
-    {
-    }
 }
 
 public class CropBedSaveData : InteractableSaveData
 {
-    // Для инициализации значеий
-    public CropBedSaveData(InteractableSaveData interactableSaveData)
-    {
-        creationHour = interactableSaveData.creationHour;
-        instanceID = interactableSaveData.instanceID;
-        identifier = interactableSaveData.identifier;
-    }
+    // Для начальной инициализации
+    public CropBedSaveData(InteractableData origin) : base(origin)
+    { }
 
-    // Нужен для клонирования
+    // Конструктор для клонирования
     private CropBedSaveData()
-    {
-    }
+    { }
 
     public override InteractableSaveData DeepClone()
     {
         return new CropBedSaveData
         {
-            instanceID = instanceID,
-            identifier = identifier,
-            creationHour = creationHour,
-            
-            
+            id = id,
+            creationHour = creationHour
         };
     }
 }

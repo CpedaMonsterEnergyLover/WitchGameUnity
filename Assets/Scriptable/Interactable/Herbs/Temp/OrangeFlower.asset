@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: OrangeFlower
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: orange_flower
-  prefab: {fileID: 6768076469388959952, guid: 9ac6c45e4b5c58f42a518cd1ed291ec0, type: 3}
+  id: orangeflower
+  type: 0
   name: prafsdf
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

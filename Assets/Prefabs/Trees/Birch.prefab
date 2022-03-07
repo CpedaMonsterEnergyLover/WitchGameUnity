@@ -111,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1105589956448331224}
   - component: {fileID: 341933263246560863}
+  - component: {fileID: -6380499920962318949}
   m_Layer: 0
   m_Name: Birch
   m_TagString: Untagged
@@ -161,6 +162,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-6380499920962318949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2269123393665758289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5e425c8b117043b175ce360e1781d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 310990ce44f989d45bcefb329cc2ed5a, type: 2}
+  tile:
+    rid: -2
+  isFalling: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &6810757572351923984
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,5 +299,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5c29da619a9114b87f78a6ac83b92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFaded: 0
-  IsBlocked: 0

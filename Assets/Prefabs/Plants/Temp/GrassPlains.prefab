@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5762331777147405936}
   - component: {fileID: -6070519031732596447}
   - component: {fileID: -149898999809551379}
+  - component: {fileID: 6298949927259552521}
   m_Layer: 0
   m_Name: GrassPlains
   m_TagString: Untagged
@@ -124,3 +125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6298949927259552521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193539120484319695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

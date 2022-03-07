@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Paporotnik
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: paporotnik
-  prefab: {fileID: 2612003070656986882, guid: 4417e08fb7d847747bb24213997e096c, type: 3}
+  id: paporotnik
+  type: 0
   name: "\u041F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A"
+  ignoreOffset: 0
   blockGrowth: 1
-  item: {fileID: 11400000, guid: 9fe5dafade41aeb46bfd2b94a23006de, type: 2}
   growthSeason: 4
   witherSpeed: 0
   growthSpeed: 0

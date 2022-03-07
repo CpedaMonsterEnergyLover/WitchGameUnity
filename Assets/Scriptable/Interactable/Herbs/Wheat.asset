@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Wheat
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: wheat
-  prefab: {fileID: 4443274695223501348, guid: 0497684e5d0fe244898ee88e170124f0, type: 3}
+  id: wheat
+  type: 0
   name: "\u041F\u0448\u0435\u043D\u0438\u0446\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: -590225184, guid: 9d6d78c45e404f84fba5977dd6a6557b, type: 3}

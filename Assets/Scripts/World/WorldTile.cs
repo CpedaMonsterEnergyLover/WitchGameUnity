@@ -34,9 +34,9 @@ public class WorldTile
 
     public Interactable LoadInteractable()
     {
-        if (!GameObjectsCollection.InteractableCollection.ContainsKey(savedData.identifier.id))
+        if (!GameCollection.Interactables.ContainsID(savedData.id))
         {
-            Debug.LogWarning($"The given key was not present in the Collection of objects:{savedData.identifier.id}");
+            Debug.LogWarning($"The given key was not present in the Collection of objects: {savedData.id}");
             savedData = null;
             return null;
         }
@@ -44,7 +44,7 @@ public class WorldTile
         if (cached)
             SetHidden(false);
         else
-            instantiatedInteractable = Interactable.Create(savedData);
+            instantiatedInteractable = Interactable.Create(saveData: savedData);
 
         instantiatedInteractable.transform.position = instantiatedInteractable.Data.ignoreOffset ?
             new Vector3(position.x + 0.5f, position.y + 0.5f, 0)
@@ -68,7 +68,7 @@ public class WorldTile
     // Убирает объект interactable этого тайла из мира
     public void UnloadInteractable()
     {
-        savedData = instantiatedInteractable.InstanceData.DeepClone();
+        savedData = instantiatedInteractable.SaveData.DeepClone();
         Object.DestroyImmediate(instantiatedInteractable.gameObject);
         instantiatedInteractable = null;
     }

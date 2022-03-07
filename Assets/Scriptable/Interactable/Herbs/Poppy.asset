@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Poppy
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: poppy
-  prefab: {fileID: 4713520256376422058, guid: 6b269e4621853cf458796a7bed842a33, type: 3}
+  id: poppy
+  type: 0
   name: "\u041C\u0430\u043A"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 139566816, guid: 68c001df35d10f0458094d8b4d6dacd5, type: 3}

@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: SwampPlant
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: swamp_plant
-  prefab: {fileID: 3829114249702152879, guid: ad741602460afab45bfae59072ff5111, type: 3}
+  id: swampplant
+  type: 0
   name: "\u0411\u043E\u043B\u043E\u0442\u043D\u043E\u0435 \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u0435"
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 4
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

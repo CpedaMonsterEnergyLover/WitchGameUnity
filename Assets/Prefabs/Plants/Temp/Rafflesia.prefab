@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7544639333090334743}
   - component: {fileID: 2382657613668331019}
   - component: {fileID: -1303982580724556009}
+  - component: {fileID: -7988482834142467486}
   m_Layer: 0
   m_Name: Rafflesia
   m_TagString: Untagged
@@ -111,3 +112,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-7988482834142467486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272847704232693237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 28e1375d4f6922640ae99b5fed2a09bc, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

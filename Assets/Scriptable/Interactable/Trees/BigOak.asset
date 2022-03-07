@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: BigOak
   m_EditorClassIdentifier: 
-  identifier:
-    type: 1
-    id: big_oak
-  prefab: {fileID: 666572998755079261, guid: e8b56d500cb746349a4c2e151967d80e, type: 3}
+  id: bigoak
+  type: 0
   name: "\u0411\u043E\u043B\u044C\u0448\u043E\u0439 \u0434\u0443\u0431"
+  ignoreOffset: 0
   health: 6
   fallOnHealth: 3
   hasFruits: 0

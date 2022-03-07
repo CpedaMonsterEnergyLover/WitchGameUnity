@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Daisy
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: daisy
-  prefab: {fileID: 7595189490994509718, guid: 0af27ddd7e5356544b137a3ef24005ea, type: 3}
+  id: daisy
+  type: 0
   name: "\u0446\u0432\u0435\u0442\u043E\u0447\u0435\u043A"
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

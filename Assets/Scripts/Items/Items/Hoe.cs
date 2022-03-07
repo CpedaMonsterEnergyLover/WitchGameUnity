@@ -4,7 +4,7 @@ public class Hoe : Instrument, IUsableOnTile
 {
     public override void Use(ItemSlot slot,Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        WorldManager.Instance.AddInteractable(tile, new InteractableIdentifier(InteractableType.CropBed, "cropbed"));
+        WorldManager.Instance.AddInteractable(tile, new InteractableSaveData("cropbed"));
         base.Use(slot, entity, tile, interactable);
     }
 

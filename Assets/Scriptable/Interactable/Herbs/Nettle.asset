@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Nettle
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: nettle
-  prefab: {fileID: 5535772439325594255, guid: 7a6d00a7fe2885f439872064753c52d7, type: 3}
+  id: nettle
+  type: 0
   name: "\u041A\u0440\u0430\u043F\u0438\u0432\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 5
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: -1198127235, guid: cd7ba6733127bdb4d856aae15fc53bbd, type: 3}

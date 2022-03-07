@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: BigLilyPad
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: big_lilypad
-  prefab: {fileID: 817666848549814323, guid: f2b5e22373a5ed64ebf37bf61fd7d4ea, type: 3}
+  id: biglilypad
+  type: 0
   name: "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0430"
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

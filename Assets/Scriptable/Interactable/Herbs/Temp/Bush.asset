@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Bush
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: bush
-  prefab: {fileID: 3337882223382903268, guid: 0878469a8cc9ca047bfa14ac20867d38, type: 3}
+  id: bush
+  type: 0
   name: "\u041A\u0443\u0441\u0442"
+  ignoreOffset: 0
+  blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

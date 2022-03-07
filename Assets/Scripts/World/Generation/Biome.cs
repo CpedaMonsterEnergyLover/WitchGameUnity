@@ -25,35 +25,35 @@ public class Biome
     // То что генерится в биоме
     public List<BiomeTile> tiles;
 
-    private List<BiomeTile> groundTilesRndMap;
+    private List<BiomeTile> _groundTilesRndMap;
 
-    public bool checkMoisture(float value)
+    public bool CheckMoisture(float value)
     {
         return value >= minMoistureLevel && value <= maxMoistureLevel;
     }
 
-    public bool checkSoilType(float value)
+    public bool CheckSoilType(float value)
     {
         return value >= minSoilTypeLevel && value <= maxSoilTypeLevel;
     }
 
-    public InteractableIdentifier GetRandomTile()
+    public InteractableData GetRandomInteractableData()
     {
         int chanceRnd = Random.Range(1, 99);
-        int rnd2 = Random.Range(0, groundTilesRndMap.Count);
-        if (groundTilesRndMap[rnd2].data is null) return null;
-        InteractableIdentifier identifier = groundTilesRndMap[rnd2].data.identifier;
+        int rnd2 = Random.Range(0, _groundTilesRndMap.Count);
+        if (_groundTilesRndMap[rnd2].data is null) return null;
+        InteractableData identifier = _groundTilesRndMap[rnd2].data;
         return chanceRnd > spawnChance ? null : identifier;
     }
     
     public void InitTileChances()
     {
-        groundTilesRndMap = new();
+        _groundTilesRndMap = new();
 
         tiles.ForEach(tile =>
         {
             for (int i = 0; i < tile.individualSpawnChance; i++)
-                groundTilesRndMap.Add(tile);
+                _groundTilesRndMap.Add(tile);
         });
     }
 

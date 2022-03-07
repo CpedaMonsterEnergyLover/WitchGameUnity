@@ -5,11 +5,8 @@ using UnityEngine;
 public class InteractableData : ScriptableObject
 {
     [Header("Interactable data")] 
-    public InteractableIdentifier identifier;
-    // Временный префаб для общего тестирования
-    public GameObject prefab;
-    [SerializeField]
+    public string id;
+    public InteractableType type;
     public new string name;
-
     public bool ignoreOffset;
 }

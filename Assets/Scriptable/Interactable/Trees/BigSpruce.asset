@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: BigSpruce
   m_EditorClassIdentifier: 
-  identifier:
-    type: 1
-    id: big_spruce
-  prefab: {fileID: 2103907452424057625, guid: 6fda5a39bef43e04f929f4f979d634ff, type: 3}
+  id: bigspruce
+  type: 0
   name: "\u0415\u043B\u044C"
+  ignoreOffset: 0
   health: 6
   fallOnHealth: 3
   hasFruits: 0

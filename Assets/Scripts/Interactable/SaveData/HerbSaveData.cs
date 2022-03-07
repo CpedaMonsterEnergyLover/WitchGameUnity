@@ -16,27 +16,22 @@ public class HerbSaveData : InteractableSaveData
     public bool decaying;
 
     public bool hasBed;
+    
+    // Конструктор для начальной инициализации значений
+    public HerbSaveData(InteractableData origin) : base(origin)
+    {
 
-    public HerbSaveData(InteractableIdentifier identifier, bool hasBed = false) : base(identifier)
-    {
-        this.hasBed = hasBed;
     }
     
-    // Для инициализации значеий
-    public HerbSaveData(InteractableSaveData interactableSaveData) : base(interactableSaveData.identifier)
-    {
-        nextStageHour = creationHour;
-        if (interactableSaveData is HerbSaveData) hasBed = ((HerbSaveData) interactableSaveData).hasBed;
-    }
     
+    // Конструктор для клонирования
     public HerbSaveData() { }
     
     public override InteractableSaveData DeepClone()
     {
         return new HerbSaveData
         {
-            identifier = identifier,
-            instanceID = instanceID,
+            id = id,
             creationHour = creationHour,
             
             fertility = fertility,

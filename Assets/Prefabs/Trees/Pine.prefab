@@ -199,8 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5c29da619a9114b87f78a6ac83b92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFaded: 0
-  IsBlocked: 0
 --- !u!70 &4901777922661039408
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -227,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2645395779504968275}
   - component: {fileID: 1335699100673161883}
+  - component: {fileID: -3785172536331362977}
   m_Layer: 0
   m_Name: Pine
   m_TagString: Untagged
@@ -277,3 +276,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3785172536331362977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2879167886039669097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5e425c8b117043b175ce360e1781d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 0c94250e49fc48d499711b7cc4ca754c, type: 2}
+  tile:
+    rid: -2
+  isFalling: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

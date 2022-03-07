@@ -8,7 +8,7 @@ public class Herb : Interactable
 
     // Public Fields
     public new HerbData Data => (HerbData) data;
-    public new HerbSaveData InstanceData => (HerbSaveData) instanceData;
+    public new HerbSaveData SaveData => (HerbSaveData) saveData;
 
     // Private Fields
     private SpriteRenderer _renderer;
@@ -20,31 +20,32 @@ public class Herb : Interactable
 
     #region OverrideMethods
 
-    protected override void InitInstanceData(InteractableSaveData saveData)
+    protected override void InitSaveData(InteractableData origin)
     {
-        instanceData = new HerbSaveData(saveData);
-        base.InitInstanceData(saveData);
+        saveData = new HerbSaveData(origin);
     }
 
     public override void OnTileLoad(WorldTile loadedTile)
     {
         base.OnTileLoad(loadedTile);
 
+        if(SaveData.nextStageHour == 0) SaveData.nextStageHour += TimelineManager.TotalHours + Data.StageGrowthTime;
+        
         // Если вырос на грядке, спавнит ее модель
-        if (InstanceData.hasBed && _bed is null) _bed = Instantiate(GameObjectsCollection.GetInteractable("cropbed").prefab, transform);
+        if (SaveData.hasBed && _bed is null) _bed = Instantiate(GameCollection.Interactables.Get("cropbed"), transform);
         
         // Рост
         if(Data.blockGrowth) return;
         _renderer = GetComponent<SpriteRenderer>();
 
         int counter = 0;
-        while (TimelineManager.TotalHours > InstanceData.nextStageHour && counter <= 6)
+        while (TimelineManager.TotalHours > SaveData.nextStageHour && counter <= 6)
         {
             Grow();
             counter++;
         }
 
-        SetSprite(InstanceData.growthStage);
+        SetSprite(SaveData.growthStage);
         TimelineManager.ONTotalHourPassed += GrowOnHour;
     }
 
@@ -53,9 +54,9 @@ public class Herb : Interactable
         base.Destroy();
 
         // Если вырос на грядке, возвращает ее в мир
-        if (InstanceData.hasBed)
+        if (SaveData.hasBed)
         {
-            WorldManager.Instance.AddInteractable(Tile, new InteractableIdentifier(InteractableType.CropBed, "cropbed"));
+            WorldManager.Instance.AddInteractable(tile, new InteractableSaveData("cropbed"));
         }
         // Удаляет модель грядки
         if (_bed is not null) Destroy(_bed);
@@ -85,23 +86,23 @@ public class Herb : Interactable
     private void Grow()
     {
         // Если растение находится в последней стадии роста ...
-        if (InstanceData.growthStage == GrowthStage.Decay)
+        if (SaveData.growthStage == GrowthStage.Decay)
         {
             Destroy();
-            InstanceData.nextStageHour = Int32.MaxValue;
+            SaveData.nextStageHour = Int32.MaxValue;
             return;
         }
         // Если нет, оно растет
-        InstanceData.growthStage++;
+        SaveData.growthStage++;
         
         // TODO: add random hours offset
-        InstanceData.nextStageHour += Data.StageGrowthTime;
-        SetSprite(InstanceData.growthStage);
+        SaveData.nextStageHour += Data.StageGrowthTime;
+        SetSprite(SaveData.growthStage);
     }
     
     private void GrowOnHour(int hour)
     {
-        if (hour == InstanceData.nextStageHour)
+        if (hour == SaveData.nextStageHour)
         {
             Grow();
         }

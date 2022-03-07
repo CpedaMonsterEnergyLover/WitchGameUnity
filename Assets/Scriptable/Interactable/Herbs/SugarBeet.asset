@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: SugarBeet
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: beet
-  prefab: {fileID: 6514641102361596810, guid: 07e06362cbead364f9791b52604e5b57, type: 3}
+  id: beetroot
+  type: 0
   name: "\u0421\u0430\u0445\u0430\u0440\u043D\u0430\u044F \u0441\u0432\u0435\u043A\u043B\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 69629357, guid: afe46cec96a9b3f4c95279775335207b, type: 3}

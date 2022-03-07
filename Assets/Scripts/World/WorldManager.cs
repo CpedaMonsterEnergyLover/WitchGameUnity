@@ -13,7 +13,7 @@ public class WorldManager : MonoBehaviour
     // Public fields
     public Generator generator;
     public Transform playerTransform;
-    public GameObjectsCollection gameObjectsCollection;
+    public GameCollection.Manager gameCollectionManager;
     public int targetFrameRate = 60;
     [Range(1,50)]
     public int viewRangeX;
@@ -37,22 +37,22 @@ public class WorldManager : MonoBehaviour
     public TileBase swampTile;
     public TileBase plainsGrassTile;
 
-    public WorldData WorldData;
+    public WorldData worldData;
 
     
     // Private fields
     [FormerlySerializedAs("_gameObjectsTransform")] [Header("К чему крепить все объекты"), SerializeField]
-    public Transform GameObjectsTransform;
+    public Transform gameObjectsTransform;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;
 
     // Tile cache
     public TileCache tileCache;
-    private List<Vector3Int> loadedTiles;
+    private List<Vector3Int> _loadedTiles;
     
     // Properties
     public int CurrentCacheSize => tileCache?.Size ?? 0;
-    public int CurrentLoadedTilesAmount => loadedTiles?.Count ?? 0;
+    public int CurrentLoadedTilesAmount => _loadedTiles?.Count ?? 0;
     
     #endregion
 
@@ -101,7 +101,7 @@ public class WorldManager : MonoBehaviour
                 if (!CoordsBelongsToWorld(targetX, targetY)) continue;
                 
                 // Если тайл еще не загружен, загружает его
-                WorldTile tile = WorldData.GetTile(targetX, targetY);
+                WorldTile tile = worldData.GetTile(targetX, targetY);
                 if (tile.loaded) continue;
                 LoadTile(targetX, targetY);
             }
@@ -110,7 +110,7 @@ public class WorldManager : MonoBehaviour
         // Составляет список координат тайлов, которы нужно убрать
         // Из поля зрения игрока
         List<Vector3Int> toRemove = new();
-        loadedTiles.ForEach(tile =>
+        _loadedTiles.ForEach(tile =>
         {
             Vector3Int target = playerPosition - tile;
             if (Math.Abs(target.x) > viewRangeX || Math.Abs(target.y) > viewRangeY)
@@ -121,7 +121,7 @@ public class WorldManager : MonoBehaviour
         toRemove.ForEach(tilePosition =>
         {
             RemoveTile(tilePosition.x, tilePosition.y);
-            loadedTiles.Remove(tilePosition);
+            _loadedTiles.Remove(tilePosition);
         });
         toRemove.Clear();
     }
@@ -144,22 +144,22 @@ public class WorldManager : MonoBehaviour
         tileCache = new TileCache(tileCacheSize);
             
         // Инициализация коллекции игровых объектов
-        gameObjectsCollection.InitCollection();
+        gameCollectionManager.Init();
         
         // Инициализация индексов слоев грида и тайлов
         InitTileIndexArrays();
         
-        loadedTiles = new List<Vector3Int>();
+        _loadedTiles = new List<Vector3Int>();
         
         ClearWorld();
-        WorldData = generator.GenerateWorld();
+        worldData = generator.GenerateWorld();
     }
 
     public void DrawAllTiles()
     {
-        for (int x = 0; x < WorldData.MapWidth; x++)
+        for (int x = 0; x < worldData.MapWidth; x++)
         {
-            for (int y = 0; y < WorldData.MapHeight; y++)
+            for (int y = 0; y < worldData.MapHeight; y++)
             {
                 // loadedTiles.Add(new Vector3Int(x, y, 0));
                 LoadTile(x, y);
@@ -169,15 +169,15 @@ public class WorldManager : MonoBehaviour
 
     private void LoadTile(int x, int y)
     {
-        WorldTile tile = WorldData.GetTile(x, y);
+        WorldTile tile = worldData.GetTile(x, y);
         tile.Load(_tilemapByEnumIndex, _tilebaseByEnumIndex);
         tileCache.Remove(tile);
-        loadedTiles.Add(new Vector3Int(x, y, 0));
+        _loadedTiles.Add(new Vector3Int(x, y, 0));
     }
 
     private void RemoveTile(int x, int y)
     {
-        WorldTile tile = WorldData.GetTile(x, y);
+        WorldTile tile = worldData.GetTile(x, y);
         // Очищает грид
         tile.Erase(_tilemapByEnumIndex);
         if (tile.HasInteractable)
@@ -206,20 +206,14 @@ public class WorldManager : MonoBehaviour
 
     private void ClearAllInteractable()
     {
-        while (GameObjectsTransform.childCount > 0)
-            DestroyImmediate(GameObjectsTransform.GetChild(0).gameObject);
+        while (gameObjectsTransform.childCount > 0)
+            DestroyImmediate(gameObjectsTransform.GetChild(0).gameObject);
     }
 
-    public void AddInteractable(WorldTile tile, InteractableIdentifier identifier)
+    public void AddInteractable(WorldTile tile, InteractableSaveData saveData)
     {
-        
-        WorldData.AddInteractableObject(identifier, tile.position);
-        tile.LoadInteractable();
-    }
-
-    public void AddInteractable(WorldTile tile, InteractableSaveData data)
-    {
-        WorldData.AddInteractableObject(data, tile.position);
+        if(saveData is null) return;
+        worldData.AddInteractableObject(tile.position, saveData);
         tile.LoadInteractable();
     }
 
@@ -260,7 +254,7 @@ public class WorldManager : MonoBehaviour
 
     public bool CoordsBelongsToWorld(int x, int y)
     {
-        return x >= 0 && x < WorldData.MapWidth && y > 0 && y < WorldData.MapHeight;
+        return x >= 0 && x < worldData.MapWidth && y > 0 && y < worldData.MapHeight;
     }
 
     #endregion

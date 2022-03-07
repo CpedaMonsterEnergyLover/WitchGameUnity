@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Calendula
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: calendula
-  prefab: {fileID: 7506316042204084976, guid: 344f43f6d690e7346863a76cd816e000, type: 3}
+  id: calendula
+  type: 0
   name: "\u041A\u0430\u043B\u0435\u043D\u0434\u0443\u043B\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 1500734199, guid: 61f759198c3a25648bb954ddaac3fe3a, type: 3}

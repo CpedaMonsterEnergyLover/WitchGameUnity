@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7688668322852766623}
   - component: {fileID: 6834122546959309715}
   - component: {fileID: 7612256753281645446}
+  - component: {fileID: 5611468597358668890}
   m_Layer: 0
   m_Name: CropBed
   m_TagString: Untagged
@@ -111,3 +112,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5611468597358668890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2414370750406087172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7d9ea5a5e7a6f4ca09caf6eca7ecf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 1e9f14386f6bcc8438fd8cda963318be, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

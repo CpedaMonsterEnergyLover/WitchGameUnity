@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Daisies
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: daisies
-  prefab: {fileID: 8554618678380367440, guid: ee2a4533a164e2e4c9904d25c3bab67e, type: 3}
+  id: daisies
+  type: 0
   name: "\u043C\u0438\u043A\u0440\u043E\u0446\u0432\u0435\u0442\u043E\u0447\u0435\u043A"
+  ignoreOffset: 0
   blockGrowth: 1
-  item: {fileID: 11400000, guid: 8461eda98adacd1408273c111b5c6d85, type: 2}
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0

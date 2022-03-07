@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Strawberry
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: strawberry
-  prefab: {fileID: 3114695062824036684, guid: 2cbe93be41844ff4d8eeb552a226c84a, type: 3}
+  id: strawberry
+  type: 0
   name: "\u0417\u0435\u043C\u043B\u044F\u043D\u0438\u043A\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: -306973612, guid: bbdf3f7e5dfe79d429eade3e7c120cc1, type: 3}

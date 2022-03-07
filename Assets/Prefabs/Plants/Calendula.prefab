@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1547425061600842432}
   - component: {fileID: -6501175083451334814}
   - component: {fileID: -642636510060212582}
+  - component: {fileID: -4345294036590629072}
   m_Layer: 0
   m_Name: Calendula
   m_TagString: Untagged
@@ -124,3 +125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4345294036590629072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506316042204084976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 8111da2f648977440b0dc4f45b8b0c8c, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

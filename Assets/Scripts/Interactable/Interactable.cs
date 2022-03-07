@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,13 +10,14 @@ public class Interactable : MonoBehaviour
 
     // Public fields
     public InteractableData Data => data;
-    public InteractableSaveData InstanceData => instanceData;
+
+    public InteractableSaveData SaveData => saveData;
     
     // Private fields
     
     // Содержит сохраняемые поля объекта
     [SerializeReference, Header("Instance data")]
-    protected InteractableSaveData instanceData;
+    protected InteractableSaveData saveData;
     // Содержит общие поля объекта
     [SerializeReference, Header("Data")]
     protected InteractableData data;
@@ -24,7 +26,7 @@ public class Interactable : MonoBehaviour
 
     // Содержит ссылку на тайл в котором находится
     [SerializeReference]
-    protected WorldTile Tile;
+    protected WorldTile tile;
     
     #endregion
 
@@ -48,39 +50,29 @@ public class Interactable : MonoBehaviour
 
     #region ClassMethods
 
-    public static GameObject GetPrefab(InteractableIdentifier identifier)
-    {
-        return GameObjectsCollection.GetInteractable(identifier).prefab;
-    }
-    
+
     public static Interactable Create(InteractableSaveData saveData)
     {
-        GameObject prefab = GameObjectsCollection.GetInteractable(saveData.identifier).prefab;
-        GameObject instantiatedObject = Instantiate(prefab, WorldManager.Instance.GameObjectsTransform);
-        instantiatedObject.transform.rotation = Quaternion.identity;
-        Interactable addedScript = saveData.identifier.type switch
+        GameObject prefab = GameCollection.Interactables.Get(saveData.id);
+        prefab = Instantiate(prefab, WorldManager.Instance.gameObjectsTransform);
+        Interactable interactable = prefab.GetComponent<Interactable>();
+
+        if (saveData.preInitialized)
         {
-            InteractableType.Herb => instantiatedObject.AddComponent<Herb>(),
-            InteractableType.Tree => instantiatedObject.AddComponent<WoodTree>(),
-            InteractableType.Rock => instantiatedObject.AddComponent<WoodTree>(),
-            InteractableType.CropBed => instantiatedObject.AddComponent<CropBed>(),
-            _ => throw new ArgumentOutOfRangeException("Unknown interactable type", new Exception())
-        };
-        addedScript.LoadData(saveData);
-        return addedScript;
-    } 
-
-    private void LoadData(InteractableSaveData saveData)
-    {
-        // Загружает данные, зависящие от типа объекта
-        data = GameObjectsCollection.GetInteractable(saveData.identifier);
-        instanceData = saveData;
-
-        // Если объект был создан пустой, то есть в data отсутствует instanceID
-        // Инициализирует начальные значения
-        if (IsNew()) InitInstanceData(saveData);
+            Debug.Log("Preinit data");
+            interactable.saveData = saveData;
+        }
+        else interactable.InitSaveData(interactable.Data);
+        
+        return interactable;
     }
 
+    
+    protected virtual void InitSaveData(InteractableData origin)
+    {
+        saveData = new InteractableSaveData(origin);
+    }
+    
     public virtual void Interact(float value = 1.0f)
     {
         Debug.Log($"Interacting with {name}");
@@ -90,7 +82,7 @@ public class Interactable : MonoBehaviour
     public virtual void OnTileLoad(WorldTile loadedTile)
     {
         Fader = GetComponentInChildren<Fader>();
-        Tile = loadedTile;
+        tile = loadedTile;
     }
 
     #endregion
@@ -103,8 +95,8 @@ public class Interactable : MonoBehaviour
 
     public virtual void Destroy()
     {
-        Tile.savedData = null;
-        Tile.instantiatedInteractable = null;
+        tile.savedData = null;
+        tile.instantiatedInteractable = null;
         GameObject.Destroy(gameObject);
     }
     
@@ -118,47 +110,7 @@ public class Interactable : MonoBehaviour
         if (Fader is not null && Fader.IsFaded) Fader.FadeOut(0.15f);
     }
     
-    // Должен быть переопределен 
-    protected virtual void InitInstanceData(InteractableSaveData saveData)
-    {
-        instanceData.instanceID = GenerateID();
-    }
 
-    // Проверяет, был ли инициализирован объект
-    private bool IsNew()
-    {
-        return string.IsNullOrEmpty(InstanceData.instanceID);
-    }
-    
-    // Генерирует уникальный айди
-    private string GenerateID()
-    {
-        return new StringBuilder()
-            .Append(DateTime.Now.Date.ToString("MM:dd:yyyy:"))
-            .Append(DateTime.Now.ToLongTimeString())
-            .Append(Random.Range(0, int.MaxValue))
-            .ToString();
-    }
     
     #endregion
-}
-
-
-
-[Serializable]
-public class InteractableIdentifier
-{
-    public InteractableType type;
-    public string id;
-
-    public InteractableIdentifier(InteractableType type, string id)
-    {
-        this.type = type;
-        this.id = id;
-    }
-
-    public override string ToString()
-    {
-        return $"{type}:{id}";
-    }
 }

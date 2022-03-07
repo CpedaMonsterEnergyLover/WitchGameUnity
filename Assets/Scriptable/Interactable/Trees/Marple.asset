@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: Marple
   m_EditorClassIdentifier: 
-  identifier:
-    type: 1
-    id: marple
-  prefab: {fileID: 6255207582732814617, guid: f19f0312802cfa64b8d158f3d23f009a, type: 3}
+  id: marple
+  type: 0
   name: "\u041A\u043B\u0435\u043D"
+  ignoreOffset: 0
   health: 6
   fallOnHealth: 3
   hasFruits: 0

@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c90256806bdd2d4a8dcd2be74bd2f5d, type: 3}
   m_Name: CropBed
   m_EditorClassIdentifier: 
-  identifier:
-    type: 3
-    id: cropbed
-  prefab: {fileID: 2414370750406087172, guid: 8dceb197d91cdc141a3bc9e3e95c157d, type: 3}
+  id: cropbed
+  type: 0
   name: "\u0413\u0440\u044F\u0434\u043A\u0430"
   ignoreOffset: 1

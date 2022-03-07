@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: GrassForest
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: grass_forest
-  prefab: {fileID: 8501037824442680476, guid: 58d762768f123c549a9e66367458eac5, type: 3}
+  id: grassforest
+  type: 0
   name: "\u043B\u0435\u0441\u043D\u0430\u044F \u0442\u0440\u0430\u0432\u0430"
+  ignoreOffset: 0
   blockGrowth: 1
-  item: {fileID: 11400000, guid: d7914d955a605d7448a96a4ced9107e7, type: 2}
   growthSeason: 0
   witherSpeed: 0
   growthSpeed: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2509191252337310992}
   - component: {fileID: 1872562479382629363}
   - component: {fileID: -6261030684341225115}
+  - component: {fileID: 5052165668508979242}
   m_Layer: 0
   m_Name: BigLilyPad
   m_TagString: Untagged
@@ -111,3 +112,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5052165668508979242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817666848549814323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: bb79dd4f450888542bd2e6e326215a56, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

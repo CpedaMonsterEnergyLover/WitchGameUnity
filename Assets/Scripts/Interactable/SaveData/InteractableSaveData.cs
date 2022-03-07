@@ -4,23 +4,26 @@ using UnityEngine;
 // Базовый класс объединяющий общие сохраняемые данные всех игровых объектов
 public class InteractableSaveData
 {
-    [Header("Interactable data")]
-    public string instanceID;
-    public InteractableIdentifier identifier;
-    public int creationHour;
+    [Header("Interactable SaveData")] 
+    [SerializeReference]
+    public string id;
+    public int creationHour = TimelineManager.TotalHours;
+    public bool preInitialized;
 
-    public override string ToString()
+    // Конструктор для создания по айди
+    public InteractableSaveData(string id)
     {
-        return identifier.type + ":" + identifier.id;
+        this.id = id;
     }
     
-    public InteractableSaveData(InteractableIdentifier identifier)
+    // Инициализирует начальные поля SaveData из Data
+    // Такие как айди, здоровье и тд
+    public InteractableSaveData(InteractableData origin)
     {
-        if (string.IsNullOrEmpty(identifier.id)) Debug.LogError("Interactable ID is empty or null");
-        creationHour = TimelineManager.TotalHours;
-        this.identifier = identifier;
+        id = origin.id;
     }
     
+    // Конструктор для клонирования
     protected InteractableSaveData() { }
 
     public virtual InteractableSaveData DeepClone()

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3952084750837728783}
   - component: {fileID: 5657623593217057142}
+  - component: {fileID: 6340820866722701248}
   m_Layer: 0
   m_Name: BigSpruce
   m_TagString: Untagged
@@ -60,6 +61,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6340820866722701248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103907452424057625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5e425c8b117043b175ce360e1781d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
+  tile:
+    rid: -2
+  isFalling: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &5113200453956440004
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,8 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5c29da619a9114b87f78a6ac83b92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFaded: 0
-  IsBlocked: 0
 --- !u!1 &6737466673406245405
 GameObject:
   m_ObjectHideFlags: 0

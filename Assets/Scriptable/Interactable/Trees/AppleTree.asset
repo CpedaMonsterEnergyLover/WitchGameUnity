@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: AppleTree
   m_EditorClassIdentifier: 
-  identifier:
-    type: 1
-    id: apple_tree
-  prefab: {fileID: 6147365948978601889, guid: cc6236e3753d18a4d841f5594db7cfe6, type: 3}
+  id: appletree
+  type: 0
   name: "\u042F\u0431\u043B\u043E\u043D\u044F"
+  ignoreOffset: 0
   health: 6
   fallOnHealth: 3
   hasFruits: 0

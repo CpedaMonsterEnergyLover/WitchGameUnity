@@ -114,8 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5c29da619a9114b87f78a6ac83b92a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFaded: 0
-  IsBlocked: 0
 --- !u!1 &4520446327362571085
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3255275242713161439}
   - component: {fileID: 2227601871449304385}
+  - component: {fileID: 1893411917635812370}
   m_Layer: 0
   m_Name: SmallOak
   m_TagString: Untagged
@@ -277,3 +276,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1893411917635812370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6632383631379209973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5e425c8b117043b175ce360e1781d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: c6d20dbd010b61448bf469d8fad6b2ec, type: 2}
+  tile:
+    rid: -2
+  isFalling: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

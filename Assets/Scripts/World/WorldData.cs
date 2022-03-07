@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-[System.Serializable]
+[Serializable]
 public class WorldData
 {
-    private WorldTile[,] WorldTiles;
+    private WorldTile[,] _worldTiles;
 
-    public WorldTile GetTile(int x, int y) => WorldTiles[x, y];
+    public WorldTile GetTile(int x, int y) => _worldTiles[x, y];
     
     public List<int> Entitites { private set; get; }
     public int MapWidth { private set; get; }
@@ -16,63 +18,53 @@ public class WorldData
     {
         MapWidth = mapWidth;
         MapHeight = mapHeight;
-        WorldTiles = new WorldTile[mapWidth, mapHeight];
+        _worldTiles = new WorldTile[mapWidth, mapHeight];
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                WorldTiles[x, y] = new WorldTile();
+                _worldTiles[x, y] = new WorldTile();
             }
         }
     }
 
     public void SetLayer(int x, int y, GridLayer layer, SoilType soilType)
     {
-        WorldTiles[x, y].AddLayer(layer, soilType);
+        _worldTiles[x, y].AddLayer(layer, soilType);
     }
 
     public SoilType GetLayer(int x, int y, GridLayer layer)
     {
-        return WorldTiles[x, y].GetLayer(layer);
+        return _worldTiles[x, y].GetLayer(layer);
     }
     
     public void SetMoistureLevel(int x, int y, float level)
     {
-        WorldTiles[x, y].moistureLevel = level;
+        _worldTiles[x, y].moistureLevel = level;
     }
 
     public void SetPosition(int x, int y, Vector3Int position)
     {
-        WorldTiles[x, y].position = position;
+        _worldTiles[x, y].position = position;
     }
 
-    public void SetInteractableOffset(int x, int y, Vector2 offset) => WorldTiles[x, y].interactableOffset = offset;
+    public void SetInteractableOffset(int x, int y, Vector2 offset) => _worldTiles[x, y].interactableOffset = offset;
 
-    public InteractableSaveData AddInteractableObject(InteractableIdentifier identifier, Vector3Int position)
+    public InteractableSaveData AddInteractableObject(Vector3Int position, InteractableSaveData saveData)
     {
-        WorldTile tile = WorldTiles[position.x, position.y];
-        // Если идентификатор пришел пустой, значит тайл пустой
-        if (identifier is null) {
-            tile.savedData = null;
-            return null;
-        }
+        WorldTile tile = _worldTiles[position.x, position.y];
+
         if (WorldManager.Instance is not null && WorldManager.Instance.tileCache.Contains(tile))
             WorldManager.Instance.tileCache.Remove(tile);
         
-        // Если не пустой, создает дату объекта 
-        InteractableSaveData saveData = new InteractableSaveData(identifier);
-        WorldTiles[position.x, position.y].savedData = saveData;
+        _worldTiles[position.x, position.y].savedData = saveData;
         return saveData;
     }
-    
-    public void AddInteractableObject(InteractableSaveData data, Vector3Int position)
-    {
-        WorldTiles[position.x, position.y].savedData = data;
-    }
+
 
     public void ClearObjects()
     {
-        foreach (WorldTile worldTile in WorldTiles)
+        foreach (WorldTile worldTile in _worldTiles)
         {
             if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
         }

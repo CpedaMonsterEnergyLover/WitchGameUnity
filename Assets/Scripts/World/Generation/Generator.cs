@@ -124,8 +124,9 @@ public class Generator : MonoBehaviour
                 worldData.SetMoistureLevel(x, y, moistureLevel);
                 worldData.SetPosition(x, y, point);
 
-                InteractableIdentifier interactableIdentifier = GenerateBiomeTile(moistureLevel, soilType);
-                worldData.AddInteractableObject(interactableIdentifier, point);
+                InteractableData interactableData = GenerateBiomeInteractable(moistureLevel, soilType);
+                if(interactableData is not null) 
+                    worldData.AddInteractableObject(point, new InteractableSaveData(interactableData));
                 
                 // Interactable offset
                 Vector2 offset = new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
@@ -136,12 +137,12 @@ public class Generator : MonoBehaviour
         return worldData;
     }
 
-    private InteractableIdentifier GenerateBiomeTile(float moisture, float soilType)
+    private InteractableData GenerateBiomeInteractable(float moisture, float soilType)
     {
         foreach (Biome biome in biomes.list)
         {
-            if (!biome.checkMoisture(moisture) || !biome.checkSoilType(soilType)) continue;
-            InteractableIdentifier identifier = biome.GetRandomTile();
+            if (!biome.CheckMoisture(moisture) || !biome.CheckSoilType(soilType)) continue;
+            InteractableData identifier = biome.GetRandomInteractableData();
             return identifier;
         }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1263448957720591725}
   - component: {fileID: 5326584572215605156}
   - component: {fileID: 7993976278706027096}
+  - component: {fileID: -7426131970096198300}
   m_Layer: 0
   m_Name: Garlic
   m_TagString: Untagged
@@ -124,3 +125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7426131970096198300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751495809491266429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    rid: -2
+  data: {fileID: 11400000, guid: 7f7901a93120eac4ca2bf994df2b8bb9, type: 2}
+  tile:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

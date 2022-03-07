@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca799ebe5b831c64992af261fd18b11a, type: 3}
   m_Name: Pine
   m_EditorClassIdentifier: 
-  identifier:
-    type: 1
-    id: pine
-  prefab: {fileID: 2879167886039669097, guid: 8dd51cec7ded28e49a52ef395f78d894, type: 3}
+  id: pine
+  type: 0
   name: "\u0421\u043E\u0441\u043D\u0430"
+  ignoreOffset: 0
   health: 6
   fallOnHealth: 3
   hasFruits: 0

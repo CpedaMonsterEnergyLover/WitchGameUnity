@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d84d14c56cc274db678ee7fb05d9f1, type: 3}
   m_Name: Garlic
   m_EditorClassIdentifier: 
-  identifier:
-    type: 0
-    id: garlic
-  prefab: {fileID: 8751495809491266429, guid: 750ea601941a8af4d826987e166fdf9f, type: 3}
+  id: garlic
+  type: 0
   name: "\u0427\u0435\u0440\u0435\u043C\u0448\u0430"
+  ignoreOffset: 0
   blockGrowth: 0
   growthSeason: 5
   witherSpeed: 1
@@ -24,14 +23,19 @@ MonoBehaviour:
   lootTable:
   - growthStage: 0
     loot: []
+    item: {fileID: 0}
   - growthStage: 1
     loot: []
+    item: {fileID: 0}
   - growthStage: 2
     loot: []
+    item: {fileID: 0}
   - growthStage: 3
     loot: []
+    item: {fileID: 0}
   - growthStage: 4
     loot: []
+    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 989455692, guid: 7973c313800220947b381bbe89f02d2f, type: 3}
