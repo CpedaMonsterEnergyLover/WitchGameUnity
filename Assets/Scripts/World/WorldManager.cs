@@ -41,7 +41,7 @@ public class WorldManager : MonoBehaviour
 
     
     // Private fields
-    [FormerlySerializedAs("_gameObjectsTransform")] [Header("К чему крепить все объекты"), SerializeField]
+    [Header("К чему крепить все объекты")]
     public Transform gameObjectsTransform;
     private Tilemap[] _tilemapByEnumIndex;
     private TileBase[] _tilebaseByEnumIndex;

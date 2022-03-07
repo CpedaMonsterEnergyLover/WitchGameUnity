@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Birch
   m_EditorClassIdentifier: 
   id: birch
-  type: 0
+  type: 1
   name: "\u0411\u0435\u0440\u0435\u0437\u0430"
   ignoreOffset: 0
   health: 6

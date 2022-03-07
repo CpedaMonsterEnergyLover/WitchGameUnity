@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pine
   m_EditorClassIdentifier: 
   id: pine
-  type: 0
+  type: 1
   name: "\u0421\u043E\u0441\u043D\u0430"
   ignoreOffset: 0
   health: 6

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigSpruce
   m_EditorClassIdentifier: 
   id: bigspruce
-  type: 0
+  type: 1
   name: "\u0415\u043B\u044C"
   ignoreOffset: 0
   health: 6

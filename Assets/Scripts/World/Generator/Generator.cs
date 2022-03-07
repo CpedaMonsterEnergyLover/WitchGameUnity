@@ -17,9 +17,9 @@ public class Generator : MonoBehaviour
     [Header("Биомы")] public Biomes biomes;
 
     [Header("Генераторы")]
-    public GeneratorSettings soilTypeMapGenSettings;
-    public GeneratorSettings riversMapGenSettings;
-    public GeneratorSettings moistureMapGenSettings;
+    public NoiseSettings soilTypeMapGenSettings;
+    public NoiseSettings riversMapGenSettings;
+    public NoiseSettings moistureMapGenSettings;
     
     // Private
     private int _seed;
@@ -34,7 +34,7 @@ public class Generator : MonoBehaviour
 
     #region ClassMethods
 
-    public float[,] GenerateNoiseMap(GeneratorSettings settings, int mapSizeX, int mapSizeY, int seedf, Vector2 offset)
+    public float[,] GenerateNoiseMap(NoiseSettings settings, int mapSizeX, int mapSizeY, int seedf, Vector2 offset)
     {
         return Noise.GenerateNoiseMap
             (mapSizeX, mapSizeY, seedf, settings.scale, 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OrangeTree
   m_EditorClassIdentifier: 
   id: orangetree
-  type: 0
+  type: 1
   name: "\u041E\u0440\u0430\u043D\u0436\u0435\u0432\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E"
   ignoreOffset: 0
   health: 6

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Settings/Generator settings")]
-public class GeneratorSettings : ScriptableObject
+[CreateAssetMenu(menuName = "Settings/Noise settings")]
+public class NoiseSettings : ScriptableObject
 {
     public float scale;
     [Range(0, 1)]

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmallOak
   m_EditorClassIdentifier: 
   id: smalloak
-  type: 0
+  type: 1
   name: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0443\u0431"
   ignoreOffset: 0
   health: 6

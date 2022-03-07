@@ -29,7 +29,7 @@ public class Herb : Interactable
     {
         base.OnTileLoad(loadedTile);
 
-        if(SaveData.nextStageHour == 0) SaveData.nextStageHour += TimelineManager.TotalHours + Data.StageGrowthTime;
+        if(SaveData.nextStageHour == 0) SaveData.nextStageHour += saveData.creationHour + Data.StageGrowthTime;
         
         // Если вырос на грядке, спавнит ее модель
         if (SaveData.hasBed && _bed is null) _bed = Instantiate(GameCollection.Interactables.Get("cropbed"), transform);

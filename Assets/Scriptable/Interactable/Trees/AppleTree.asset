@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AppleTree
   m_EditorClassIdentifier: 
   id: appletree
-  type: 0
+  type: 1
   name: "\u042F\u0431\u043B\u043E\u043D\u044F"
   ignoreOffset: 0
   health: 6

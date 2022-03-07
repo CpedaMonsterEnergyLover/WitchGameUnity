@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Marple
   m_EditorClassIdentifier: 
   id: marple
-  type: 0
+  type: 1
   name: "\u041A\u043B\u0435\u043D"
   ignoreOffset: 0
   health: 6

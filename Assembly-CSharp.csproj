@@ -65,7 +65,7 @@
      <Compile Include="Assets\Scripts\Entities\SaveData\ItemEntitySaveData.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Entities.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
-     <Compile Include="Assets\Scripts\Scriptable\GeneratorSettings.cs" />
+     <Compile Include="Assets\Scripts\Scriptable\NoiseSettings.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
@@ -74,7 +74,7 @@
      <Compile Include="Assets\Scripts\Entities\OldEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
-     <Compile Include="Assets\Scripts\World\Generation\Generator.cs" />
+     <Compile Include="Assets\Scripts\World\Generator\Generator.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\NewItemPicker.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HerbData.cs" />
@@ -112,7 +112,7 @@
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Furniture.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
-     <Compile Include="Assets\Scripts\World\Generation\Noise.cs" />
+     <Compile Include="Assets\Scripts\World\Generator\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
@@ -122,7 +122,7 @@
      <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
      <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
-     <Compile Include="Assets\Scripts\World\Generation\Biome.cs" />
+     <Compile Include="Assets\Scripts\World\Generator\Biome.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Player\InteractionController.cs" />
