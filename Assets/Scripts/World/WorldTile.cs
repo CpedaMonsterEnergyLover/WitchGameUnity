@@ -13,12 +13,23 @@ public class WorldTile
     public InteractableSaveData savedData;
     public bool loaded;
     public bool cached;
-    public Vector3Int position;
+    public Vector2Int position;
     public Vector2 interactableOffset;
     public List<Entity> entities;
 
+    public bool[] Layers { get; private set; }
+    public Vector2Int Position { get; private set; }
+    
     public bool HasInteractable => savedData is not null;
 
+    public WorldTile(){}
+
+    public WorldTile(int x, int y, bool[] tiles)
+    {
+        Position = new Vector2Int(x, y);
+        Layers = tiles;
+    }
+    
     // Загружает данные клетки на сцену
 
     public void Load(Tilemap[] tilemaps, TileBase[] tilebases)
@@ -61,7 +72,7 @@ public class WorldTile
         {
             // Если на слое есть почва, ставит ее на грид
             if (layers[i] != SoilType.None)
-                tilemaps[i].SetTile(position, tilebases[(int) layers[i]]);
+                tilemaps[i].SetTile((Vector3Int) position, tilebases[(int) layers[i]]);
         }
     }
     
@@ -86,7 +97,7 @@ public class WorldTile
         {
             /*// Если на нем есть что-то, чистит тайл
             if (layers[i] != SoilType.None)*/
-                tilemaps[i].SetTile(position, null);
+                tilemaps[i].SetTile((Vector3Int) position, null);
         }
     }
 

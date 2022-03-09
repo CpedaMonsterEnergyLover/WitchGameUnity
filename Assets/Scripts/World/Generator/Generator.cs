@@ -14,9 +14,10 @@ public class Generator : MonoBehaviour
     [Header("Стороны света (1 - юг, 0 - север)")]
     public bool GenerateCardinalityPoints;
     public Vector2Int cardinalPoints;
-    [Header("Биомы")] public Biomes biomes;
+    [Header("Биомы")] 
+    public Biomes biomes;
 
-    [Header("Генераторы")]
+    [Header("Noise settings")]
     public NoiseSettings soilTypeMapGenSettings;
     public NoiseSettings riversMapGenSettings;
     public NoiseSettings moistureMapGenSettings;
@@ -62,7 +63,7 @@ public class Generator : MonoBehaviour
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                Vector3Int point = new Vector3Int(x, y, 0);
+                Vector2Int point = new Vector2Int(x, y);
                 
                 float isRiver = riversMap[x, y];
                 float moistureLevel = moistureMap[x, y];

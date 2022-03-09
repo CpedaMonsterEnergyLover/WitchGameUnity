@@ -28,6 +28,28 @@ public class WorldData
         }
     }
 
+
+    public WorldData(
+        int width, 
+        int height, 
+        List<bool[,]> layers,
+        InteractableSaveData[,] interactables)
+    {
+        MapWidth = width;
+        MapHeight = height;
+        _worldTiles = new WorldTile[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                bool[] tiles = new bool[layers.Count];
+                for (var i = 0; i < layers.Count; i++) tiles[i] = layers[i][x, y];
+                _worldTiles[x, y] = new WorldTile(
+                    x, y, tiles);
+            }
+        }
+    }
+
     public void SetLayer(int x, int y, GridLayer layer, SoilType soilType)
     {
         _worldTiles[x, y].AddLayer(layer, soilType);
@@ -43,14 +65,14 @@ public class WorldData
         _worldTiles[x, y].moistureLevel = level;
     }
 
-    public void SetPosition(int x, int y, Vector3Int position)
+    public void SetPosition(int x, int y, Vector2Int position)
     {
         _worldTiles[x, y].position = position;
     }
 
     public void SetInteractableOffset(int x, int y, Vector2 offset) => _worldTiles[x, y].interactableOffset = offset;
 
-    public InteractableSaveData AddInteractableObject(Vector3Int position, InteractableSaveData saveData)
+    public InteractableSaveData AddInteractableObject(Vector2Int position, InteractableSaveData saveData)
     {
         WorldTile tile = _worldTiles[position.x, position.y];
 
