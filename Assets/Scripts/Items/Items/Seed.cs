@@ -27,7 +27,7 @@ public class Seed : Item, IUsableOnTile
     {
         Vector2 playerPos = WorldManager.Instance.playerTransform.position;
         return tile != null && Vector2.Distance(playerPos, 
-                   new Vector2(tile.position.x + 0.5f, tile.position.y + 0.5f)) <= 1.6f; 
+                   new Vector2(tile.Position.x + 0.5f, tile.Position.y + 0.5f)) <= 1.6f; 
     }
 
     public Seed(ItemIdentifier identifier) : base(identifier)

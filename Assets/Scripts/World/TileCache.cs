@@ -20,7 +20,7 @@ public class TileCache
     {
         _tiles.Add(tile);
         if (Size > _maxSize) DropPeek();
-        tile.SetHidden(true);
+        tile.HideInteractable(true);
         tile.loaded = false;
         tile.cached = true;
     }

@@ -59,7 +59,7 @@ public class Generator : MonoBehaviour
 
         InitBiomesData();
         
-        for (int x = 0; x < mapWidth; x++)
+        /*for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
@@ -134,6 +134,7 @@ public class Generator : MonoBehaviour
                 worldData.SetInteractableOffset(x, y, offset);
             }
         }
+        */
 
         return worldData;
     }

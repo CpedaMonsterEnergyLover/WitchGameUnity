@@ -10,8 +10,9 @@ public class Hoe : Instrument, IUsableOnTile
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        return tile is not null && !tile.HasInteractable && tile.instantiatedInteractable == null &&
-               tile.moistureLevel > 0.1f;
+        return tile is not null && !tile.HasInteractable && tile.instantiatedInteractable == null;
+        /* &&
+               tile.moistureLevel > 0.1f;*/
     }
 
     protected override string GetDescription()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,15 +8,13 @@ namespace NewGen
     [RequireComponent(typeof(Tilemap))]
     public class WorldLayer : MonoBehaviour
     {
+        public Tilemap tilemap;
         public TileBase tileBase;
         public TilemapGenerationRule generationRule;
         public bool isEditable;
-
         public List<GenerationRule> rules = new ();
-        
-       
-        // Properties
-        public Tilemap Tilemap => GetComponent<Tilemap>();
+
+
 
         public bool[,] Generate(
             GeneratorSettings settings, 

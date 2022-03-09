@@ -50,6 +50,7 @@ public class WorldData
         }
     }
 
+    /*
     public void SetLayer(int x, int y, GridLayer layer, SoilType soilType)
     {
         _worldTiles[x, y].AddLayer(layer, soilType);
@@ -68,7 +69,7 @@ public class WorldData
     public void SetPosition(int x, int y, Vector2Int position)
     {
         _worldTiles[x, y].position = position;
-    }
+    }*/
 
     public void SetInteractableOffset(int x, int y, Vector2 offset) => _worldTiles[x, y].interactableOffset = offset;
 

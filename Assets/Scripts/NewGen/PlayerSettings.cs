@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[CreateAssetMenu(menuName = "Settings/Player settings")]
 public class PlayerSettings : ScriptableObject
 {
     [Range(1, 300)]

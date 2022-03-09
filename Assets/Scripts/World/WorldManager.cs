@@ -147,7 +147,7 @@ public class WorldManager : MonoBehaviour
         gameCollectionManager.Init();
         
         // Инициализация индексов слоев грида и тайлов
-        InitTileIndexArrays();
+        // InitTileIndexArrays();
         
         _loadedTiles = new List<Vector3Int>();
         
@@ -170,7 +170,7 @@ public class WorldManager : MonoBehaviour
     private void LoadTile(int x, int y)
     {
         WorldTile tile = worldData.GetTile(x, y);
-        tile.Load(_tilemapByEnumIndex, _tilebaseByEnumIndex);
+        // tile.Load(_tilemapByEnumIndex, _tilebaseByEnumIndex);
         tileCache.Remove(tile);
         _loadedTiles.Add(new Vector3Int(x, y, 0));
     }
@@ -179,7 +179,7 @@ public class WorldManager : MonoBehaviour
     {
         WorldTile tile = worldData.GetTile(x, y);
         // Очищает грид
-        tile.Erase(_tilemapByEnumIndex);
+        // tile.Erase(_tilemapByEnumIndex);
         if (tile.HasInteractable)
         {
             // Кеширует тайл
@@ -213,7 +213,7 @@ public class WorldManager : MonoBehaviour
     public void AddInteractable(WorldTile tile, InteractableSaveData saveData)
     {
         if(saveData is null) return;
-        worldData.AddInteractableObject(tile.position, saveData);
+        worldData.AddInteractableObject(tile.Position, saveData);
         tile.LoadInteractable();
     }
 
@@ -223,13 +223,13 @@ public class WorldManager : MonoBehaviour
 
     #region Utils
 
-    private void InitTileIndexArrays()
+    /*private void InitTileIndexArrays()
     {
         _tilemapByEnumIndex = CreateTilemapByEnumIndexArray();
         _tilebaseByEnumIndex = CreateTilebaseByEnumIndexArray();
-    }
+    }*/
 
-    private Tilemap[] CreateTilemapByEnumIndexArray()
+    /*private Tilemap[] CreateTilemapByEnumIndexArray()
     {
         Tilemap[] tileMaps = new Tilemap[6];
         tileMaps[(int)GridLayer.Ground] = GroundTilemap;
@@ -250,7 +250,7 @@ public class WorldManager : MonoBehaviour
         tileBases[(int)SoilType.PlainsGrass] = plainsGrassTile;
         return tileBases;
 
-    }
+    }*/
 
     public bool CoordsBelongsToWorld(int x, int y)
     {

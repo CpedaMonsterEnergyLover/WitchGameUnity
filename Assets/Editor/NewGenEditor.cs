@@ -12,8 +12,9 @@ public class NewGenEditor : Editor {
         
         if (GUILayout.Button ("Update"))
         {
-            manager.ClearAllTiles();
+            // manager.ClearAllTiles();
             manager.GenerateWorld();
+            manager.DrawAllTiles();
             // manager.DrawAllTiles();
         }
         

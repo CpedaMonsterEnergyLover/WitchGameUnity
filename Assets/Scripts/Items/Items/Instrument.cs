@@ -14,7 +14,7 @@ public class Instrument : Item
     {
         Vector2 playerPos = WorldManager.Instance.playerTransform.position;
         return tile != null && Vector2.Distance(playerPos, 
-                new Vector2(tile.position.x + 0.5f, tile.position.y + 0.5f)) <= 1.6f ||
+                new Vector2(tile.Position.x + 0.5f, tile.Position.y + 0.5f)) <= 1.6f ||
                entity != null && Vector2.Distance(playerPos, entity.transform.position) <= 1.6f ||
                interactable != null && Vector2.Distance(playerPos, interactable.transform.position) <= 1.6f; 
     }
