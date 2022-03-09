@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using NewGen;
 
 public class InteractionController : MonoBehaviour
 {
@@ -48,8 +47,8 @@ public class InteractionController : MonoBehaviour
 
         // Gets tile under cursor
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
-        WorldTile tile = NewGen.WorldManager.Instance.CoordsBelongsToWorld(gridPos.x, gridPos.y) ? 
-            NewGen.WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
+        WorldTile tile = WorldManager.Instance.CoordsBelongsToWorld(gridPos.x, gridPos.y) ? 
+            WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
             null;
 
         return new InteractionControllerData(tile, interactable, entity);

@@ -1,23 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 [CustomEditor (typeof (WorldManager))]
 public class GeneratorEditor : Editor {
 
     public override void OnInspectorGUI() {
-        WorldManager worldManager = target as WorldManager;
-        if (worldManager == null) return;
+        WorldManager manager = target as WorldManager;
+        if (manager == null) return;
 
         DrawDefaultInspector();
         
         if (GUILayout.Button ("Update"))
         {
-            worldManager.Generate();
-            worldManager.DrawAllTiles();
+            manager.ClearAllInteractable();
+            manager.GenerateWorld();
+            manager.DrawAllTiles();
         }
         
         if (GUILayout.Button ("Clear all")) {
-            worldManager.ClearWorld();
+            manager.ClearAllTiles();
         }
     }
 }

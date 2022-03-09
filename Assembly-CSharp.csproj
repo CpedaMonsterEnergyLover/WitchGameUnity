@@ -41,10 +41,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerSettings.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\InventoryKeyManager.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
-     <Compile Include="Assets\Scripts\World\WorldPointer.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
@@ -68,16 +69,14 @@
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\Scriptable\NoiseSettings.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
-     <Compile Include="Assets\Scripts\NewGen\WorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\WorldLayer.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\FOVProvider.cs" />
-     <Compile Include="Assets\Scripts\NewGen\PlayerSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\OldEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
-     <Compile Include="Assets\Scripts\World\Generator\Generator.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\NewItemPicker.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HerbData.cs" />
@@ -106,22 +105,19 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
-     <Compile Include="Assets\Scripts\NewGen\WorldManager.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
-     <Compile Include="Assets\Scripts\NewGen\WorldNoiseData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldNoiseData.cs" />
      <Compile Include="Assets\Scripts\Entities\Data\OldEntityData.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
-     <Compile Include="Assets\Scripts\World\GameObjectsCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Furniture.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
-     <Compile Include="Assets\Scripts\World\Generator\Noise.cs" />
+     <Compile Include="Assets\Scripts\Generator\Noise.cs" />
      <Compile Include="Assets\Scripts\World\TileCache.cs" />
-     <Compile Include="Assets\Scripts\NewGen\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
@@ -131,11 +127,11 @@
      <Compile Include="Assets\Scripts\Util\AlphaThreshold.cs" />
      <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
-     <Compile Include="Assets\Scripts\NewGen\TileLoader.cs" />
-     <Compile Include="Assets\Scripts\NewGen\GenerationRule.cs" />
-     <Compile Include="Assets\Scripts\NewGen\GeneratorSettings.cs" />
-     <Compile Include="Assets\Scripts\World\Generator\Biome.cs" />
-     <Compile Include="Assets\Scripts\NewGen\Generator.cs" />
+     <Compile Include="Assets\Scripts\World\TileLoader.cs" />
+     <Compile Include="Assets\Scripts\Generator\GenerationRule.cs" />
+     <Compile Include="Assets\Scripts\Generator\GeneratorSettings.cs" />
+     <Compile Include="Assets\Scripts\Generator\Biome.cs" />
+     <Compile Include="Assets\Scripts\Generator\Generator.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Player\InteractionController.cs" />
@@ -914,8 +910,6 @@
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>C:\Users\VovaC\WitchGame\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
      </Reference>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

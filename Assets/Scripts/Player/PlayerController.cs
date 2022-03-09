@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Move(float speed)
     {
         // Если перемещается спиной, снижает его скорость вдвое 
-        rigidBody.velocity = MovementInput * (IsLookingToVelocityDirection() ? speed : speed / 2f);
+        rigidBody.velocity = MovementInput.normalized * speed;
     }
 
     private void Attack()

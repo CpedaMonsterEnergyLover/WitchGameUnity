@@ -32,7 +32,7 @@ public class DebugWindow : MonoBehaviour
                 activeHolidays.Append(holiday.name).Append(" ");
             });
             
-            // Update text
+            /*// Update text
             debugText.text = new StringBuilder()
                 // FPS
                 .Append(fps.ToString("0"))
@@ -64,8 +64,8 @@ public class DebugWindow : MonoBehaviour
                 /*.Append("\nPicked Item: ")
                 .Append(ItemPicker.Instance.itemSlot.HasItem ? ItemPicker.Instance.itemSlot.storedAmount : "0").Append(" of ")
                 .Append(ItemPicker.Instance.itemSlot.HasItem ? ItemPicker.Instance.Item.Data.name : "nothing")
-                .Append("\nPicker preview active: ").Append(ItemPicker.Instance._previewActive)*/
-                .ToString();
+                .Append("\nPicker preview active: ").Append(ItemPicker.Instance._previewActive)#1#
+                .ToString();*/
         }
         
     }
