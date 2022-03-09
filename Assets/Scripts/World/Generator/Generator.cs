@@ -141,12 +141,12 @@ public class Generator : MonoBehaviour
 
     private InteractableData GenerateBiomeInteractable(float moisture, float soilType)
     {
-        foreach (Biome biome in biomes.list)
+        /*foreach (Biome biome in biomes.list)
         {
             if (!biome.CheckMoisture(moisture) || !biome.CheckSoilType(soilType)) continue;
             InteractableData identifier = biome.GetRandomInteractableData();
             return identifier;
-        }
+        }*/
 
         return null;
     }
@@ -179,7 +179,7 @@ public class Generator : MonoBehaviour
 
     private void InitBiomesData()
     {
-        biomes.list.ForEach(biome => biome.InitTileChances());
+        // biomes.list.ForEach(biome => biome.InitTileChances());
     }
 
     #endregion

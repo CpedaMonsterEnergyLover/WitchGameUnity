@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using NewGen;
+using UnityEditor.Rendering.BuiltIn.ShaderGraph;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -7,67 +11,70 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class Biome
 {
-    public string signature;
-    // Необходимые значения на карте влажности, между которыми будет находиться этот биом
-    [Range(0, 1)]
-    public float minMoistureLevel;
-    [Range(0, 1)]
-    public float maxMoistureLevel;
-    // Необходимые значения на карте почвы, между которыми будет находиться этот биом
-    [Range(0, 1)]
-    public float minSoilTypeLevel;
-    [Range(0, 1)]
-    public float maxSoilTypeLevel;
-    // Шанс того, что клетка будет не пустая (в %)
-    [FormerlySerializedAs("groundSpawnChance")] 
-    [Range(0, 100)] public float spawnChance;
+    public string name;
+    [Header("Приоритет биома"), Range(0,25)]
+    public int priority;
+    [Header("Правила генерации биома")]
+    public List<GenerationRule> rules = new ();
+
+    [Header("Плотность биома")]
+    [Range(0, 1)] 
+    public float biomeDensity;
     
     // То что генерится в биоме
     public List<BiomeTile> tiles;
 
-    private List<BiomeTile> _groundTilesRndMap;
 
-    public bool CheckMoisture(float value)
+    public bool IsPlug { get; private set; }
+    public static Biome Plug() => new Biome() { IsPlug = true, priority = -1 };
+
+
+    public bool IsAllowed(WorldNoiseData noiseData, int x, int y)
     {
-        return value >= minMoistureLevel && value <= maxMoistureLevel;
+        bool verdict = false;
+        rules.ForEach(rule =>
+        {
+            bool ruleVerdict = rule.ApplyRule(noiseData, x, y);
+            if (ruleVerdict)
+                verdict = !rule.exclude;
+        });
+        return verdict;
     }
 
-    public bool CheckSoilType(float value)
+
+    public InteractableData GetRandomInteractable()
     {
-        return value >= minSoilTypeLevel && value <= maxSoilTypeLevel;
+        if (Random.value > biomeDensity) return null;
+         
+        float rnd = Random.Range(0, GetOddsSum());
+        BiomeTile generatedTile = tiles.FirstOrDefault(tile => rnd >= tile.LeftEdge && rnd < tile.RightEdge);
+
+        return generatedTile is null ? null : generatedTile.data;
     }
 
-    public InteractableData GetRandomInteractableData()
+    public void InitTileSpawnEdges()
     {
-        int chanceRnd = Random.Range(1, 99);
-        int rnd2 = Random.Range(0, _groundTilesRndMap.Count);
-        if (_groundTilesRndMap[rnd2].data is null) return null;
-        InteractableData identifier = _groundTilesRndMap[rnd2].data;
-        return chanceRnd > spawnChance ? null : identifier;
-    }
-    
-    public void InitTileChances()
-    {
-        _groundTilesRndMap = new();
-
+        float oddsSum = 0.0f;
         tiles.ForEach(tile =>
         {
-            for (int i = 0; i < tile.individualSpawnChance; i++)
-                _groundTilesRndMap.Add(tile);
+            tile.LeftEdge = oddsSum;
+            tile.RightEdge = tile.spawnChance + oddsSum;
+            oddsSum = tile.RightEdge;
         });
     }
 
+    private float GetOddsSum() => tiles.Sum(tile => tile.spawnChance);
+
 }
 
-// Класс, описывающий объекты биома, такие как деревья кусты камни яички пенисы и тд
 [Serializable]
 public class BiomeTile
 {
     public InteractableData data;
-    // Индивидуальный шанс спавна объекта
-    // ДЛЯ БИОМА СУММА ВСЕХ ИНДИВИДУАЛЬНЫХ ШАНСОВ СПАВНА ЕГО ОБЪЕКТОВ ДОЛЖНА БЫТЬ РАВНА 100
-    // ИНАЧЕ КАКИЕ-ТО ИЗ НИХ БУДУТ УЩЕМЛЕНЫ ИЛИ ДАЖЕ НЕ ВЛЕЗУТ В РАНДОМ
-    [Range(1,100)]
-    public int individualSpawnChance;
+    [Range(0.0001f,1)]
+    public float spawnChance;
+
+    public float LeftEdge { get; set; }
+    public float RightEdge { get; set; }
 }
 

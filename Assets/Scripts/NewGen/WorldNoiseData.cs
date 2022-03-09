@@ -7,7 +7,6 @@ namespace NewGen
     [Serializable]
     public class WorldNoiseData
     {
-
         private List<float[,]> _noiseMaps;
         
 

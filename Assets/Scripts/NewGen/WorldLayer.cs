@@ -10,7 +10,7 @@ namespace NewGen
     {
         public Tilemap tilemap;
         public TileBase tileBase;
-        public TilemapGenerationRule generationRule;
+        public TilemapGenerationRule tilemapGenerationRule;
         public bool isEditable;
         public List<GenerationRule> rules = new ();
 
@@ -20,7 +20,7 @@ namespace NewGen
             GeneratorSettings settings, 
             WorldNoiseData noiseData)
         {
-            return generationRule == TilemapGenerationRule.Fill ?
+            return tilemapGenerationRule == TilemapGenerationRule.Fill ?
                 Fill(settings) : FillByRule(settings, noiseData);
         }
         
@@ -53,7 +53,6 @@ namespace NewGen
                 {
                     rules.ForEach(rule =>
                     {
-
                         bool ruleVerdict = rule.ApplyRule(noiseData, x, y);
                         if (ruleVerdict)
                             layer[x, y] = !rule.exclude;

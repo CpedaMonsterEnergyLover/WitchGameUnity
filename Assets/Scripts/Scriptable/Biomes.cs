@@ -5,4 +5,9 @@ using UnityEngine;
 public class Biomes : ScriptableObject
 {
     public List<Biome> list;
+
+    public void InitSpawnEdges()
+    {
+        list.ForEach(biome => biome.InitTileSpawnEdges());
+    }
 }

@@ -54,7 +54,7 @@ public class Interactable : MonoBehaviour
     public static Interactable Create(InteractableSaveData saveData)
     {
         GameObject prefab = GameCollection.Interactables.Get(saveData.id);
-        prefab = Instantiate(prefab, WorldManager.Instance.gameObjectsTransform);
+        prefab = Instantiate(prefab, NewGen.WorldManager.Instance.interactableTransform);
         Interactable interactable = prefab.GetComponent<Interactable>();
 
         if (saveData.preInitialized)

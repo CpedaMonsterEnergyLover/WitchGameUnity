@@ -14,6 +14,7 @@ namespace GameCollection
 
         public void Init()
         {
+            Collection.Clear();
             Manager.MapCollection<Herb>(objects, Collection, "entities");
         }
     }

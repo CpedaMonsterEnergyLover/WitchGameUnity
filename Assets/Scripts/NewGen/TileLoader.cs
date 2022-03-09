@@ -17,6 +17,11 @@ public class TileLoader : MonoBehaviour
     private readonly List<Vector2Int> _loadedTiles = new();
     private WorldData _worldData;
 
+    public void Init()
+    {
+        _worldData = worldManager.WorldData;
+    }
+    
     private void Start()
     {
         _tileCache.SetMaxSize(worldManager.playerSettings.tileCacheSize);
@@ -38,7 +43,7 @@ public class TileLoader : MonoBehaviour
                 int targetX = x + playerPosition.x;
                 int targetY = y + playerPosition.y;
                 // Проверка на выход за пределы карты
-                if (!CoordsBelongsToWorld(targetX, targetY)) continue;
+                if (!worldManager.CoordsBelongsToWorld(targetX, targetY)) continue;
                 
                 // Если тайл еще не загружен, загружает его
                 WorldTile tile = _worldData.GetTile(targetX, targetY);
@@ -82,7 +87,7 @@ public class TileLoader : MonoBehaviour
         // Убирать из loadedTiles не надо, тк это происходит в цикле апдейта
     }
 
-    private void LoadTile(int x, int y)
+    public void LoadTile(int x, int y)
     {
         WorldTile tile = _worldData.GetTile(x, y);
         tile.Load();
@@ -91,19 +96,5 @@ public class TileLoader : MonoBehaviour
         _tileCache.Remove(tile);
         _loadedTiles.Add(new Vector2Int(x, y));
     }
-
-    
-    
-    #region Utils
-
-    public bool CoordsBelongsToWorld(int x, int y)
-    {
-        return x >= 0 && x < _worldData.MapWidth && y > 0 && y < _worldData.MapHeight;
-    }
-
-    #endregion
-    
-
-
     
 }

@@ -14,6 +14,7 @@ namespace GameCollection
 
         public void Init()
         {
+            Collection.Clear();
             objects.ForEach(o => Collection.Add(o.identifier.id, o));
         }
     }

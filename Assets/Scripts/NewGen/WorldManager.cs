@@ -5,11 +5,15 @@ namespace NewGen
 {
     public class WorldManager : MonoBehaviour
     {
+        public static WorldManager Instance;
+        
         [SerializeField, Header("Игрок")]
         private Transform playerTransform;
         
         [Header("Игровые настройки")]
         public PlayerSettings playerSettings;
+
+        public GameCollection.Manager gameCollectionManager;
         
         [Header("К чему крепить Interactable")]
         public Transform interactableTransform;
@@ -21,6 +25,8 @@ namespace NewGen
         [Header("Слои грида")]
         public List<WorldLayer> layers;
 
+
+        public TileLoader tileLoader;
         
         
         public WorldData WorldData { get; private set; }
@@ -30,6 +36,7 @@ namespace NewGen
         private void Awake()
         {
             Application.targetFrameRate = playerSettings.targetFrameRate;
+            Instance = this;
             
             if (!generateOnStart) return;
             
@@ -42,8 +49,11 @@ namespace NewGen
         }
         
         public void GenerateWorld()
-        {
-           WorldData = generator.GenerateWorld(layers);
+        { 
+            gameCollectionManager.Init();
+            WorldData = generator.GenerateWorld(layers);
+            Instance = this;
+            tileLoader.Init();
         }
 
         public void DrawAllTiles()
@@ -52,7 +62,7 @@ namespace NewGen
             {
                 for (int y = 0; y < generator.generatorSettings.height; y++)
                 {
-                    DrawTile(x, y);
+                    tileLoader.LoadTile(x, y);
                 }
             }
         }
@@ -60,8 +70,7 @@ namespace NewGen
         public void ClearAllTiles()
         {
             layers.ForEach(layer => layer.tilemap.ClearAllTiles());
-            while (interactableTransform.childCount > 0)
-                DestroyImmediate(interactableTransform.GetChild(0).gameObject);
+            ClearAllInteractable();
         }
         
         public void DrawTile(int x, int y)
@@ -86,5 +95,21 @@ namespace NewGen
                 layer.tilemap.SetTile(position, null); 
             });
         }
+
+        public void ClearAllInteractable()
+        {
+            while (interactableTransform.childCount > 0)
+                DestroyImmediate(interactableTransform.GetChild(0).gameObject);
+        }
+        
+        
+        #region Utils
+
+        public bool CoordsBelongsToWorld(int x, int y)
+        {
+            return x >= 0 && x < WorldData.MapWidth && y > 0 && y < WorldData.MapHeight;
+        }
+
+        #endregion
     }
 }

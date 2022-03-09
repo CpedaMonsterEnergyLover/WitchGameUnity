@@ -12,10 +12,9 @@ public class NewGenEditor : Editor {
         
         if (GUILayout.Button ("Update"))
         {
-            // manager.ClearAllTiles();
+            manager.ClearAllInteractable();
             manager.GenerateWorld();
             manager.DrawAllTiles();
-            // manager.DrawAllTiles();
         }
         
         if (GUILayout.Button ("Clear all")) {

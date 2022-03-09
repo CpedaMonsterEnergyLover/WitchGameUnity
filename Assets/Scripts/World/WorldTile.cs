@@ -9,7 +9,7 @@ public class WorldTile
     public InteractableSaveData savedData;
     public bool loaded;
     public bool cached;
-    public Vector2 interactableOffset = Vector2.zero;
+    public Vector2 interactableOffset = new Vector2(0.5f, 0.5f);
 
     public bool[] Layers { get; private set; }
     public Vector2Int Position { get; private set; }
@@ -18,14 +18,16 @@ public class WorldTile
 
     public WorldTile(){}
 
-    public WorldTile(int x, int y, bool[] tiles)
+    public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData)
     {
         Position = new Vector2Int(x, y);
         Layers = tiles;
+        savedData = interactableData is null ? null : 
+            new InteractableSaveData(interactableData);
     }
     
+    
     // Загружает данные клетки на сцену
-
     public void Load()
     {
         loaded = true;

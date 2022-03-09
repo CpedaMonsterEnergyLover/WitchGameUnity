@@ -19,7 +19,8 @@ namespace NewGen
         public Vector2Int cardinalPoints;
         public AnimationCurve cardinality;
 
-      
+        [Header("Биомы")]
+        public Biomes biomes;
         
 
         private int _seedHash;
@@ -49,11 +50,14 @@ namespace NewGen
                 layerData.Add(layer.Generate(generatorSettings, worldNoiseData))
                 );
 
+            biomes.InitSpawnEdges();
+            InteractableData[,] biomeLayer = GenerateBiomeLayer(worldNoiseData);
+
             WorldData worldData = new WorldData(
                 generatorSettings.width,
                 generatorSettings.height,
                 layerData,
-                null);
+                biomeLayer);
             
             return worldData;
         }
@@ -88,6 +92,35 @@ namespace NewGen
                 else cardinalities.y = cardinality.Evaluate(pointAt);
                 _cardinalMap[x] = Mathf.Lerp(cardinalities.x, cardinalities.y, x / (float) mapWidth);
             }
+        }
+
+        private InteractableData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
+        {
+            InteractableData[,] interactables = 
+                new InteractableData[generatorSettings.width, generatorSettings.height];
+            
+            for (int x = 0; x < generatorSettings.width; x++)
+            {
+                for (int y = 0; y < generatorSettings.height; y++)
+                {
+                    Biome generatedBiome = Biome.Plug();
+                    biomes.list.ForEach(biome =>
+                    {
+                        generatedBiome = biome.priority > generatedBiome.priority ?
+                            biome.IsAllowed(noiseData, x, y) ?
+                                biome : 
+                                generatedBiome 
+                            : generatedBiome;
+                    });
+
+                    if (generatedBiome.IsPlug)
+                        interactables[x, y] = null;
+                    else
+                        interactables[x, y] = generatedBiome.GetRandomInteractable();
+                }
+            }
+
+            return interactables;
         }
     }
 }

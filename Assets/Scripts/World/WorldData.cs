@@ -33,11 +33,12 @@ public class WorldData
         int width, 
         int height, 
         List<bool[,]> layers,
-        InteractableSaveData[,] interactables)
+        InteractableData[,] biomeLayer)
     {
         MapWidth = width;
         MapHeight = height;
         _worldTiles = new WorldTile[width, height];
+        
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -45,7 +46,7 @@ public class WorldData
                 bool[] tiles = new bool[layers.Count];
                 for (var i = 0; i < layers.Count; i++) tiles[i] = layers[i][x, y];
                 _worldTiles[x, y] = new WorldTile(
-                    x, y, tiles);
+                    x, y, tiles, biomeLayer[x, y]);
             }
         }
     }

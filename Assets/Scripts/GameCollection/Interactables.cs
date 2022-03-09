@@ -17,6 +17,7 @@ namespace GameCollection
         
         public void Init()
         {
+            Collection.Clear();
             Manager.MapCollection<Herb>(herbs, Collection, "herbs");
             Manager.MapCollection<WoodTree>(trees, Collection, "trees");
             Manager.MapCollection<Interactable>(other, Collection, "others");
