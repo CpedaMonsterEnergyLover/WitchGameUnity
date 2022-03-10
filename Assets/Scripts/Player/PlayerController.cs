@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     
     // Private
     public Vector2 MovementInput { get; private set; }
-    private int _lookDirection = 1;
+    public int lookDirection = 1;
     private bool _isDashing;
     private bool _isAttacking;
 
@@ -127,15 +127,15 @@ public class PlayerController : MonoBehaviour
     // От положения мыши (слева от него или справа от него)
     public void LookDirectionToMouse()
     {
-        _lookDirection = Input.mousePosition.x <= Screen.width / 2f ? 1 : -1;
+        lookDirection = Input.mousePosition.x <= Screen.width / 2f ? 1 : -1;
     }
 
     // Меняет сторону, в которую смотрит персонаж, в зависимости
     // От направления его движения
     private void LookDirectionToVelocity()
     {
-        if (MovementInput.x <= -1f) _lookDirection = 1;
-        else if (MovementInput.x >= 1) _lookDirection = -1;
+        if (MovementInput.x < 0) lookDirection = 1;
+        else if (MovementInput.x > 0) lookDirection = -1;
     }
 
     #endregion
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
     // Возвращает, смотрит ли персонаж в сторону мыши
     private bool IsLookingToVelocityDirection()
     {
-        return _lookDirection != (int) MovementInput.x;
+        return lookDirection != (int) MovementInput.x;
     }
     
     // Считывает значения осей движения
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
     public void UpdateLookDirection()
     {
         Vector3 scale = new Vector3(
-            _lookDirection, 1, 1);
+            lookDirection, 1, 1);
         gameObject.transform.localScale = scale;
     }
     

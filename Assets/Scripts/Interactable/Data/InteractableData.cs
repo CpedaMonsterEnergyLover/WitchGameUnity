@@ -9,4 +9,6 @@ public class InteractableData : ScriptableObject
     public InteractableType type;
     public new string name;
     public bool ignoreOffset;
+    [Range(0, 10)]
+    public float interactingTime;
 }

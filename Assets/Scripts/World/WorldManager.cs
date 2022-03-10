@@ -14,6 +14,7 @@ public class WorldManager : MonoBehaviour
     
     [Header("К чему крепить Interactable")]
     public Transform interactableTransform;
+    public Transform entitiesTransform;
     
     [SerializeField, Header("Генератор")]
     private Generator generator;
@@ -50,7 +51,7 @@ public class WorldManager : MonoBehaviour
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorld(layers);
         Instance = this;
-        tileLoader.Init();
+        tileLoader.Init(WorldData);
     }
 
     public void DrawAllTiles()
@@ -105,13 +106,30 @@ public class WorldManager : MonoBehaviour
         while (interactableTransform.childCount > 0)
             DestroyImmediate(interactableTransform.GetChild(0).gameObject);
     }
+
+    public WorldLayerEditSettings GetTopLayerEditSettingsOrNull(int x, int y)
+    {
+        WorldLayerEditSettings layerEditSettings = null;
+        var tileLayers = WorldData.GetTile(x, y).Layers;
+        for (var i = 0; i < tileLayers.Length; i++)
+        {
+            if(tileLayers[i]) layerEditSettings = layers[i].layerEditSettings;
+        }
+
+        return layerEditSettings;
+    }
     
     
     #region Utils
 
+    public bool CoordsBelongsToWorld(Vector2Int pos)
+    {
+        return WorldData.CoordsBelongsToWorld(pos.x, pos.y);
+    }
+    
     public bool CoordsBelongsToWorld(int x, int y)
     {
-        return x >= 0 && x < WorldData.MapWidth && y > 0 && y < WorldData.MapHeight;
+        return WorldData.CoordsBelongsToWorld(x, y);
     }
 
     #endregion

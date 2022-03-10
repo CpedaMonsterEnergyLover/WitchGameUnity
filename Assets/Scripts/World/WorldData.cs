@@ -8,7 +8,7 @@ public class WorldData
 {
     private WorldTile[,] _worldTiles;
 
-    public WorldTile GetTile(int x, int y) => _worldTiles[x, y];
+    public WorldTile GetTile(int x, int y) =>  _worldTiles[x, y];
     
     public List<int> Entitites { private set; get; }
     public int MapWidth { private set; get; }
@@ -56,6 +56,11 @@ public class WorldData
         {
             if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
         }
+    }
+    
+    public bool CoordsBelongsToWorld(int x, int y)
+    {
+        return x >= 0 && x < MapWidth && y > 0 && y < MapHeight;
     }
     
 }

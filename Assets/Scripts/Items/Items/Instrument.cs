@@ -3,11 +3,11 @@ using UnityEngine;
 public class Instrument : Item
 {
     public new InstrumentData Data => (InstrumentData) data;
-    public new InstrumentSaveData InstanceData => (InstrumentSaveData) instanceData;
+    public new InstrumentSaveData SaveData => (InstrumentSaveData) saveData;
 
     public virtual void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        InstanceData.Durability--;
+        SaveData.Durability--;
     }
 
     public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
@@ -21,13 +21,13 @@ public class Instrument : Item
     
     public Instrument(ItemIdentifier identifier) : base(identifier)
     {
-        instanceData = new InstrumentSaveData(Data.maxDurability);
+        saveData = new InstrumentSaveData(Data.maxDurability);
     }
     
     protected override string GetDescription()
     {
         return base.GetDescription() + "\n" +
-               $"Эффективность: {Data.damage}\nПрочность: {InstanceData.Durability} / {Data.maxDurability}";
+               $"Эффективность: {Data.damage}\nПрочность: {SaveData.Durability} / {Data.maxDurability}";
     }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -48,17 +49,18 @@ public class Inventory : MonoBehaviour
         });
     }
 
-    public void AddItem(ItemIdentifier identifier, int amount)
+    public int AddItem(ItemIdentifier identifier, int amount, bool isPicked = false)
     {
-        AddItem(Item.Create(identifier), amount);
+        return AddItem(Item.Create(identifier), amount, isPicked);
     }
     
-    private void AddItem(Item item, int amount)
+    private int AddItem(Item item, int amount, bool isPicked)
     {
+        int startingAmount = amount;
+
         while (amount > 0)
         {
             int added = 0;
-            
             // Если такой предмет уже есть в инвентаре и у него неполный стак
             InventorySlot slotWithTheSameItem = FindSlotWithItemAndFreeSpace(item);
             if (slotWithTheSameItem is not null)
@@ -81,12 +83,16 @@ public class Inventory : MonoBehaviour
 
             if (added <= 0)
             {
-                Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
-                break;
+                // Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
+                if(!isPicked) Entity.Create(new ItemEntitySaveData(item, amount, WorldManager.Instance.playerTransform.position));
+                return startingAmount - amount;
             }
         }
+
+        return startingAmount;
     }
 
+    
     public InventorySlot FindSlotWithItem(Item item)
     {
         return slots.Find(slot => item.Compare(slot.storedItem));
@@ -174,7 +180,7 @@ public class Inventory : MonoBehaviour
     {
         Debug.Log("Equip bag");
         BagData bagData = bag.Data;
-        BagSaveData bagSaveData = bag.InstanceData;
+        BagSaveData bagSaveData = bag.SaveData;
         
         for (int i = 0; i < bagData.slotsAmount; i++)
         {
@@ -187,7 +193,7 @@ public class Inventory : MonoBehaviour
     private void UnequipBag(Bag bag)
     {
         Debug.Log("Unequip bag");
-        BagSaveData bagSaveData = bag.InstanceData;
+        BagSaveData bagSaveData = bag.SaveData;
         
         bagSaveData.Slots.ForEach(slot =>
         {
@@ -199,7 +205,7 @@ public class Inventory : MonoBehaviour
 
     private void HighlightBagSlots(Bag bag)
     {
-        bag.InstanceData.Slots.ForEach(slot =>
+        bag.SaveData.Slots.ForEach(slot =>
             slot.Shake()
         );
     }

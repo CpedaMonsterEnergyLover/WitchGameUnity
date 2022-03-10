@@ -45,7 +45,7 @@ public class Biome
         float rnd = Random.Range(0, GetOddsSum());
         BiomeTile generatedTile = tiles.FirstOrDefault(tile => rnd >= tile.LeftEdge && rnd < tile.RightEdge);
 
-        return generatedTile is null ? null : generatedTile.data;
+        return generatedTile?.data;
     }
 
     public void InitTileSpawnEdges()

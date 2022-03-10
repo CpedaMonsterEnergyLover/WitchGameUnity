@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WoodTree : Interactable
 {
@@ -13,8 +14,25 @@ public class WoodTree : Interactable
     // Private fields
     [SerializeField]
     public bool isFalling;
-    
+
+    private Coroutine _fallRoutine;
+    private Coroutine _shakeRoutine;
+    private float _fallDirection;
+
+    private void OnDisable()
+    {
+        if (_fallRoutine is not null)
+        {
+            StopCoroutine(_fallRoutine);
+            OnFallDown();
+        }
+        if(_shakeRoutine is not null) StopCoroutine(_shakeRoutine);
+    }
+
     #endregion
+    
+    
+    
     
     
     
@@ -42,9 +60,9 @@ public class WoodTree : Interactable
         if (SaveData.health > 0)
         {
          if (SaveData.health <= Data.fallOnHealth && !SaveData.isChopped)
-             StartCoroutine(Fall(2.5f, 
+             _fallRoutine = StartCoroutine(Fall(2.5f, 
                  transform.position.x - GameObject.FindWithTag("Player").transform.position.x));
-         else StartCoroutine(Shake(1f, (float) Math.PI * 6f));
+         else _shakeRoutine = StartCoroutine(Shake(1f, (float) Math.PI * 6f));
         }
         else 
         {
@@ -56,6 +74,25 @@ public class WoodTree : Interactable
      {
          if(Fader is not null) Destroy(Fader.gameObject);
      }
+
+     private void OnFallDown()
+     {
+         isFalling = false;
+         RemoveLeaves();
+
+         
+         Vector2 logPosition = transform.position;
+         
+         for (int i = 1; i <= Data.logAmount; i++)
+         {
+             ItemEntity itemEntity = (ItemEntity)Entity.Create(
+                 new ItemEntitySaveData(Item.Create(Data.logItem.identifier), 1, 
+                     logPosition + Vector2.right / 2f * _fallDirection * i));
+             
+             itemEntity.rigidbody.AddForce(Random.insideUnitCircle.normalized * 7.5f);
+             
+         }
+     }
      
      #endregion
 
@@ -65,6 +102,7 @@ public class WoodTree : Interactable
 
      private IEnumerator Fall(float duration, float direction)
      {
+         _fallDirection = direction;
          isFalling = true;
          SaveData.isChopped = true;
          FadeIn();
@@ -80,8 +118,8 @@ public class WoodTree : Interactable
              yield return null;
          }
 
-         isFalling = false;
-         RemoveLeaves();
+         _fallRoutine = null;
+         OnFallDown();
      }
 
      private IEnumerator Shake(float duration, float speed)
@@ -102,6 +140,8 @@ public class WoodTree : Interactable
              }
              yield return null;
          }
+
+         _shakeRoutine = null;
      }
 
      #endregion

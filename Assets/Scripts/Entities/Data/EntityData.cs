@@ -1,8 +1,10 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Entity/Entity")]
 public class EntityData : ScriptableObject
 {
     [Header("Entity data")]
-    public EntityIdentifier identifier;
     public new string name;
+
+    public string id;
 }

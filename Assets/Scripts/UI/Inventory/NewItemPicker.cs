@@ -82,7 +82,7 @@ public class NewItemPicker : MonoBehaviour
 
         if (itemSlot.storedItem is Instrument instrument)
         {
-            if (instrument.InstanceData.Durability <= 0)
+            if (instrument.SaveData.Durability <= 0)
             {
                 itemSlot.Shake();
                 return;
@@ -96,7 +96,7 @@ public class NewItemPicker : MonoBehaviour
                     Hotbar.Instance.currentSelectedSlot.ReferredSlot,
                     interactionController.Data.Entity, 
                     interactionController.Data.Tile, 
-                    interactionController.Data.Interactable));
+                    interactionController.Data.Interactable), false);
     }
 
     public void UseHand()
@@ -107,15 +107,15 @@ public class NewItemPicker : MonoBehaviour
         if(Vector2.Distance(PlayerController.Instance.transform.position,
             interactableUnderCursor.transform.position) > 1.6f) return;
         
-        Interact(1f, () =>
-            interactableUnderCursor.Interact());
+        Interact(interactableUnderCursor.Data.interactingTime, () =>
+            interactableUnderCursor.Interact(), true);
     }
 
-    private void Interact(float useTime, Action action)
+    private void Interact(float useTime, Action action, bool isHand)
     {
         PlayerController.Instance.LookDirectionToMouse();
         PlayerController.Instance.UpdateLookDirection();
-        interactionBar.StartInteraction(useTime, action);
+        interactionBar.StartInteraction(useTime, action, isHand);
     }
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)

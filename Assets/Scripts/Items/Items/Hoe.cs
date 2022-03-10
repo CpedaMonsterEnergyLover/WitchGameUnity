@@ -10,9 +10,9 @@ public class Hoe : Instrument, IUsableOnTile
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        return tile is not null && !tile.HasInteractable && tile.instantiatedInteractable == null;
-        /* &&
-               tile.moistureLevel > 0.1f;*/
+        if (tile is null || tile.HasInteractable) return false;
+        WorldLayerEditSettings layerEditSettings = WorldManager.Instance.GetTopLayerEditSettingsOrNull(tile.Position.x, tile.Position.y);
+        return layerEditSettings is not null && layerEditSettings.canUseHoe;
     }
 
     protected override string GetDescription()

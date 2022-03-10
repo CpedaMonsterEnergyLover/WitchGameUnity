@@ -7,12 +7,12 @@ public class Bag : Item
 {
     // Public Fields
     public new BagData Data => (BagData) data;
-    public new BagSaveData InstanceData => (BagSaveData) instanceData;
+    public new BagSaveData SaveData => (BagSaveData) saveData;
     
     // Constructor
     public Bag(ItemIdentifier identifier) : base(identifier)
     {
-        instanceData = new BagSaveData();
+        saveData = new BagSaveData();
     }
 
     protected override string GetDescription()

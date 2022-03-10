@@ -5,12 +5,13 @@ using UnityEngine;
 public class Item
 {
     public ItemData Data => data;
-    public ItemSaveData InstanceData => instanceData;
+    public ItemSaveData SaveData => saveData;
     
     // Содержит сохраняемые поля объекта
     [SerializeReference, SerializeField]
-    protected ItemSaveData instanceData = new();
+    protected ItemSaveData saveData = new();
     // Содержит общие поля объекта
+    [SerializeReference, SerializeField]
     protected ItemData data;
 
     // Constructor

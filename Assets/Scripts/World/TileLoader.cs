@@ -17,9 +17,9 @@ public class TileLoader : MonoBehaviour
     private readonly List<Vector2Int> _loadedTiles = new();
     private WorldData _worldData;
 
-    public void Init()
+    public void Init(WorldData worldData)
     {
-        _worldData = worldManager.WorldData;
+        _worldData = worldData;
     }
     
     private void Start()

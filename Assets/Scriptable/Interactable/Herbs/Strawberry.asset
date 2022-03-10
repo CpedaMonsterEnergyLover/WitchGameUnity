@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 0
   name: "\u0417\u0435\u043C\u043B\u044F\u043D\u0438\u043A\u0430"
   ignoreOffset: 0
+  interactingTime: 1
   blockGrowth: 0
   growthSeason: 0
   witherSpeed: 1

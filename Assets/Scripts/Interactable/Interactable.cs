@@ -59,7 +59,6 @@ public class Interactable : MonoBehaviour
 
         if (saveData.preInitialized)
         {
-            Debug.Log("Preinit data");
             interactable.saveData = saveData;
         }
         else interactable.InitSaveData(interactable.Data);

@@ -76,6 +76,13 @@ public class InventorySlot : ItemSlot
         UpdateReferredHotbarSlot();
     }
 
+    public void DropItem(int amount)
+    {
+        ItemEntity item = (ItemEntity) Entity.Create(new ItemEntitySaveData(storedItem, amount, WorldManager.Instance.playerTransform.position));
+        item.isDroppedByPlayer = true;
+        RemoveItem(amount);
+    }
+
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
@@ -116,7 +123,7 @@ public class InventorySlot : ItemSlot
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             int amountToRemove = Input.GetKey(KeyCode.LeftShift) ? storedAmount : 1;
-            RemoveItem(amountToRemove);
+            DropItem(amountToRemove);
         } 
         // R сортировка
         else if (Input.GetKeyDown(KeyCode.R))

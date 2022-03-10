@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,14 +10,14 @@ public class WorldTile
     public InteractableSaveData savedData;
     public bool loaded;
     public bool cached;
-    public Vector2 interactableOffset = new Vector2(0.5f, 0.5f);
+    public Vector2 interactableOffset;
+    public List<Entity> entities = new();
 
     public bool[] Layers { get; private set; }
     public Vector2Int Position { get; private set; }
     
     public bool HasInteractable => savedData is not null;
 
-    public WorldTile(){}
 
     public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData)
     {
@@ -24,6 +25,7 @@ public class WorldTile
         Layers = tiles;
         savedData = interactableData is null ? null : 
             new InteractableSaveData(interactableData);
+        interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
     }
     
     
@@ -31,16 +33,16 @@ public class WorldTile
     public void Load()
     {
         loaded = true;
-       
-        if (!HasInteractable) return;
+        LoadEntities();
         LoadInteractable();
     }
 
     public void LoadInteractable()
     {
+        if (!HasInteractable) return;
         if (!GameCollection.Interactables.ContainsID(savedData.id))
         {
-            Debug.LogWarning($"The given key was not present in the Collection of objects: {savedData.id}");
+            Debug.LogWarning($"Попытка загрузки Interactable с несуществующим айди {savedData.id}");
             savedData = null;
             return;
         }
@@ -55,6 +57,12 @@ public class WorldTile
             : new Vector3(Position.x + interactableOffset.x, Position.y + interactableOffset.y, 0);
         instantiatedInteractable.OnTileLoad(this);
 
+    }
+
+    public void LoadEntities()
+    {
+        entities.ForEach(entity => entity.gameObject.SetActive(true));
+        entities.Clear();
     }
 
     

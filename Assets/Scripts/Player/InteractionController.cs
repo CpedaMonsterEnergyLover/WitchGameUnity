@@ -71,6 +71,11 @@ public readonly struct InteractionControllerData
 
     public override string ToString()
     {
-        return $"Tile: {Tile}, Int: {Interactable}, Entity: {Entity}";
+        return $"Tile: {Tile?.Position}, Int: {Interactable?.name}, Entity: {Entity?.name}";
+    }
+
+    public bool Equals(InteractionControllerData data)
+    {
+        return Entity == data.Entity && Tile == data.Tile && Interactable == data.Interactable;
     }
 }

@@ -9,9 +9,8 @@ public class WorldLayer : MonoBehaviour
     public Tilemap tilemap;
     public TileBase tileBase;
     public TilemapGenerationRule tilemapGenerationRule;
-    public bool isEditable;
     public List<GenerationRule> rules = new ();
-
+    public WorldLayerEditSettings layerEditSettings = new();
 
 
     public bool[,] Generate(

@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 0
   name: lilypads
   ignoreOffset: 0
+  interactingTime: 1
   blockGrowth: 1
   growthSeason: 0
   witherSpeed: 0

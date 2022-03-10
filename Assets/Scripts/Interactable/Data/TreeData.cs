@@ -8,6 +8,8 @@ public class TreeData : InteractableData
     [Header("Tree data")] 
     public int health;
     public int fallOnHealth;
+    public ItemData logItem;
+    public int logAmount;
 
     [Tooltip("Имеет ли плоды. Если нет, то данные о цветении и плодоносии не будут использоваться")]
     public bool hasFruits = false;
