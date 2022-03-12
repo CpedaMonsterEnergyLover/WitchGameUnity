@@ -80,16 +80,9 @@ public class NewItemPicker : MonoBehaviour
 
         float useTime = 0.0f;
 
-        if (itemSlot.storedItem is Instrument instrument)
-        {
-            if (instrument.SaveData.Durability <= 0)
-            {
-                itemSlot.Shake();
-                return;
-            }
+        if (itemSlot.storedItem is Instrument instrument) 
             useTime = instrument.Data.useTime;
-        }
-        
+
         Interact(useTime, 
             () => ((IUsable) itemSlot.storedItem).
                 Use(

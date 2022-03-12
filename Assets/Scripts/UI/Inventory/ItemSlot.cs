@@ -11,27 +11,29 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public Image itemIcon;
     public Text itemText;
+    public DurabilityBar durabilityBar;
+    
     public bool HasItem => storedItem is not null && storedAmount > 0;
 
-    private Image _image;
+    protected Image Image;
 
     #region UnityMethods
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        _image.color = new Color(0.87f, 0.87f, 0.87f);
+        Image.color = new Color(0.87f, 0.87f, 0.87f);
         InventoryKeyManager.Instance.slotUnderCursor = this;
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
-        _image.color = Color.white;
+        Image.color = Color.white;
         InventoryKeyManager.Instance.slotUnderCursor = null;
     }
 
     private void Start()
     {
-        _image = GetComponent<Image>();
+        Image = GetComponent<Image>();
     }
 
     #endregion
@@ -75,6 +77,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public virtual void UpdateUI()
     {
+        if (storedItem is Instrument instrument)
+        {
+            if(durabilityBar is not null) durabilityBar.UpdateDurability(instrument);
+        }
+        else
+        {
+            if(durabilityBar is not null) durabilityBar.SetActive(false);
+        }
         // Если предмет был последний
         if (storedItem == null || storedAmount <= 0)
         {

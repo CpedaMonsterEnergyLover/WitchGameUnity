@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6747884696855438539}
   - component: {fileID: 8240147175409794377}
   - component: {fileID: -907134770394193555}
+  - component: {fileID: -9105540000646379992}
   m_Layer: 0
   m_Name: BigOak
   m_TagString: Untagged
@@ -84,6 +85,17 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!210 &-9105540000646379992
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666572998755079261}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5598058143790818031
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,9 +168,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1546205325
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1442661226, guid: f17e09d031fbd5046b48ffc2a5ff871e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

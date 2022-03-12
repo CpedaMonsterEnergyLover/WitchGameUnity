@@ -44,7 +44,6 @@
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\InventoryKeyManager.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
-     <Compile Include="Assets\Scripts\World\WorldLayerType.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
@@ -67,6 +66,7 @@
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\World\WorldLayer.cs" />
+     <Compile Include="Assets\Scripts\UI\DurabilityBar.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
@@ -156,6 +156,8 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

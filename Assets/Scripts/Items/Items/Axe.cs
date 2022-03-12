@@ -9,8 +9,8 @@ public class Axe : Instrument, IUsableOnInteractable
         }
     }
 
-    public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
-        => interactable is WoodTree {isFalling: false};
+    public override bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+        => base.AllowUse(entity, tile, interactable) && interactable is WoodTree {isFalling: false};
     
     
     protected override string GetDescription()

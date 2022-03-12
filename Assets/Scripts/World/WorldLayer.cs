@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Tilemap))]
 public class WorldLayer : MonoBehaviour
 {
+    [Range(0, 10), Header("Порядковый индекс слоя (с 0)")]
+    public int index;
     public Tilemap tilemap;
     public TileBase tileBase;
     public TilemapGenerationRule tilemapGenerationRule;
@@ -58,5 +59,14 @@ public class WorldLayer : MonoBehaviour
         }
 
         return layer;
+    }
+
+    public void Dig(Vector2Int position)
+    {
+        ItemEntity itemEntity = (ItemEntity) Entity.Create(new ItemEntitySaveData(layerEditSettings.dropItem, 1, 
+            position + new Vector2(0.5f, 0.5f)));
+        itemEntity.rigidbody.AddForce(Random.insideUnitCircle.normalized * 7.5f);
+        tilemap.SetTile((Vector3Int) position, null);
+        WorldManager.Instance.WorldData.GetTile(position.x, position.y).Layers[index] = false;
     }
 }

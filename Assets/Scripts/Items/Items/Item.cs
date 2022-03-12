@@ -34,6 +34,7 @@ public class Item
             ItemType.Axe => new Axe(identifier),
             ItemType.Hoe => new Hoe(identifier),
             ItemType.Seed => new Seed(identifier),
+            ItemType.Shovel => new Shovel(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };
         return created;

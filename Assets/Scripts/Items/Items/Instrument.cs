@@ -8,6 +8,12 @@ public class Instrument : Item
     public virtual void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         SaveData.Durability--;
+        slot.UpdateUI();
+    }
+
+    public virtual bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+    {
+        return SaveData.Durability > 0;
     }
 
     public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null)

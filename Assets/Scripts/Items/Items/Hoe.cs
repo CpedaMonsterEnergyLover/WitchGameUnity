@@ -8,11 +8,12 @@ public class Hoe : Instrument, IUsableOnTile
         base.Use(slot, entity, tile, interactable);
     }
 
-    public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
+    public override bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (tile is null || tile.HasInteractable) return false;
-        WorldLayerEditSettings layerEditSettings = WorldManager.Instance.GetTopLayerEditSettingsOrNull(tile.Position.x, tile.Position.y);
-        return layerEditSettings is not null && layerEditSettings.canUseHoe;
+        if (!base.AllowUse(entity, tile, interactable) || tile is null || tile.HasInteractable) return false;
+        
+        return WorldManager.Instance.TryGetTopLayer(tile.Position.x, tile.Position.y, out WorldLayer topLayer) && 
+               topLayer.layerEditSettings.canUseHoe;
     }
 
     protected override string GetDescription()

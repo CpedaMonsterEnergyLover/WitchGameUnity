@@ -15,4 +15,13 @@ public class ItemEntitySaveData : EntitySaveData
         preInitialised = true;
         this.position = position;
     }
+
+    public ItemEntitySaveData(ItemData itemData, int amount, Vector2 position)
+    {
+        Item = Item.Create(itemData.identifier);
+        Amount = amount;
+        id = "itemEntity";
+        preInitialised = true;
+        this.position = position;
+    }
 }

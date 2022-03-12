@@ -107,19 +107,26 @@ public class WorldManager : MonoBehaviour
             DestroyImmediate(interactableTransform.GetChild(0).gameObject);
     }
 
-    public WorldLayerEditSettings GetTopLayerEditSettingsOrNull(int x, int y)
+    public bool TryGetTopLayer(int x, int y, out WorldLayer topLayer)
     {
-        WorldLayerEditSettings layerEditSettings = null;
+        topLayer = null;
         var tileLayers = WorldData.GetTile(x, y).Layers;
         for (var i = 0; i < tileLayers.Length; i++)
-        {
-            if(tileLayers[i]) layerEditSettings = layers[i].layerEditSettings;
-        }
-
-        return layerEditSettings;
+            if (tileLayers[i])
+                topLayer = layers[i];
+        return topLayer is not null;
     }
     
-    
+    public WorldLayer GetTopLayer(int x, int y)
+    {
+        WorldLayer topLayer = null;
+        var tileLayers = WorldData.GetTile(x, y).Layers;
+        for (var i = 0; i < tileLayers.Length; i++)
+            if (tileLayers[i])
+                topLayer = layers[i];
+        return topLayer;
+    }
+
     #region Utils
 
     public bool CoordsBelongsToWorld(Vector2Int pos)
