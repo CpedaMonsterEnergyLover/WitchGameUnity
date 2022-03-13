@@ -51,10 +51,12 @@
      <Compile Include="Assets\Scripts\Items\Items\Food.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
+     <Compile Include="Assets\Bonfire.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\ItemPicker.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineManager.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCurve.cs" />
@@ -64,6 +66,7 @@
      <Compile Include="Assets\Scripts\Entities\SaveData\ItemEntitySaveData.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Entities.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
      <Compile Include="Assets\Scripts\World\WorldLayer.cs" />
      <Compile Include="Assets\Scripts\UI\DurabilityBar.cs" />
@@ -156,8 +159,12 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
-     <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
+     <Compile Include="Assets\Scripts\Crafting\CraftingRecipe.cs" />
+     <Compile Include="Assets\Scripts\Crafting\SkillCategory.cs" />
+     <Compile Include="Assets\Scripts\GameCollection\CraftingRecipies.cs" />
+     <Compile Include="Assets\Scripts\Crafting\CraftingList.cs" />
+     <Compile Include="Assets\Scripts\Crafting\CraftingWindow.cs" />
+     <Compile Include="Assets\Scripts\Crafting\CraftingTab.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

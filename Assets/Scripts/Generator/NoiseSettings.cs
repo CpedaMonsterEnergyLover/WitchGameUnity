@@ -4,8 +4,6 @@ using UnityEngine;
 public class NoiseSettings : ScriptableObject
 {
     public float scale;
-    [Range(0, 1)]
-    public float[] levels;
     [Range(0,5)]
     public int octaves;
     [Range(0,1)]

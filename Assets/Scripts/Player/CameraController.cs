@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    // public GameObject bulletPrefab;
 
     public Transform playerTransform;
     public bool following;
     
+    /*
     [Header("Bullet settings")]
     public float radius;
     public float duration;
@@ -14,7 +15,7 @@ public class CameraController : MonoBehaviour
     public int countOfTurns;
     public int angleStart;
     public int angleEnd;
-    public bool moveSimultaniously;
+    public bool moveSimultaniously;*/
 
     // Update is called once per frame
     void Update()

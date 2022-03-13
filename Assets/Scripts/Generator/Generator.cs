@@ -48,8 +48,13 @@ public class Generator : MonoBehaviour
             layerData.Add(layer.Generate(generatorSettings, worldNoiseData))
             );
 
-        biomes.InitSpawnEdges();
-        InteractableData[,] biomeLayer = GenerateBiomeLayer(worldNoiseData);
+        InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
+
+        if (biomes is not null)
+        {
+            biomes.InitSpawnEdges();
+            biomeLayer = GenerateBiomeLayer(worldNoiseData);
+        }
 
         WorldData worldData = new WorldData(
             generatorSettings.width,
