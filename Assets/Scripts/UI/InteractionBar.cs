@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class InteractionBar : MonoBehaviour
 {
-    public InteractionController interactionController;
+    public InteractionDataProvider interactionDataProvider;
     public Image barImage;
 
     private float _duration;
     private Action _actionOnComplete;
-    private InteractionControllerData _dataOnStart;
+    private InteractionEventData _dataOnStart;
     private bool _isHand;
     
     private void Update()
@@ -51,7 +51,7 @@ public class InteractionBar : MonoBehaviour
         }
         else
         {
-            _dataOnStart = interactionController.Data;
+            _dataOnStart = interactionDataProvider.Data;
             _duration = duration;
             _actionOnComplete = actionOnComplete;
             gameObject.SetActive(true);
@@ -62,7 +62,7 @@ public class InteractionBar : MonoBehaviour
 
     private void ContinueInteraction()
     {
-        if (!_dataOnStart.Equals(interactionController.ForceUpdateData()))
+        if (!_dataOnStart.Equals(interactionDataProvider.ForceUpdateData()))
         {
             StopInteraction();
         }
@@ -72,14 +72,20 @@ public class InteractionBar : MonoBehaviour
         }
     }
 
+    private void OnWindowOpened(WindowIdentifier window)
+    {
+        if (window == WindowIdentifier.Inventory)
+            StopInteraction();
+    }
+    
     private void SubEvents()
     {
-        Inventory.ONInventoryOpened += StopInteraction;
+        BaseWindow.ONWindowOpened += OnWindowOpened;
     }
 
     private void UnsubEvents()
     {
-        Inventory.ONInventoryOpened -= StopInteraction;
+        BaseWindow.ONWindowOpened -= OnWindowOpened;
     }
     
     private IEnumerator FillRoutine(float duration, Action actionOnComplete)
@@ -90,7 +96,7 @@ public class InteractionBar : MonoBehaviour
         {
             if (PlayerController.Instance.MovementInput != Vector2.zero ||
                 Input.GetMouseButtonUp(0) ||
-                !_dataOnStart.Equals(interactionController.Data) || !_isHand && !NewItemPicker.Instance.UseAllowed)
+                !_dataOnStart.Equals(interactionDataProvider.Data) || !_isHand && !NewItemPicker.Instance.UseAllowed)
             {
                 StopInteraction();
                 yield break;

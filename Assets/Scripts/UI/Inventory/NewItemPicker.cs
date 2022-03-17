@@ -14,12 +14,14 @@ public class NewItemPicker : MonoBehaviour
 
     #endregion
 
-    public InteractionController interactionController;
+    public InteractionDataProvider interactionDataProvider;
     public GameObject itemSlotGO;
     public InteractionBar interactionBar;
     
     [SerializeField]
     private ItemSlot itemSlot;
+
+    private static InventoryWindow _inventoryWindow;
 
 
     public bool UseAllowed { get; private set; }
@@ -27,6 +29,8 @@ public class NewItemPicker : MonoBehaviour
 
     private void Start()
     {
+        _inventoryWindow = WindowManager
+            .Get<InventoryWindow>(WindowIdentifier.Inventory);
         SubEvents();
     }
 
@@ -54,7 +58,7 @@ public class NewItemPicker : MonoBehaviour
     private void UpdateVisibility()
     {
         if (itemSlot.storedItem is not IUsable usable) return;
-        if (!usable.AllowUse(interactionController.Data.Entity, interactionController.Data.Tile, interactionController.Data.Interactable))
+        if (!usable.AllowUse(interactionDataProvider.Data.Entity, interactionDataProvider.Data.Tile, interactionDataProvider.Data.Interactable))
         {
             itemSlotGO.SetActive(false);
             UseAllowed = false;
@@ -62,7 +66,7 @@ public class NewItemPicker : MonoBehaviour
         else
         { 
             itemSlotGO.SetActive(!HideWhileInteracting);
-            bool inDistance = usable.IsInDistance(interactionController.Data.Entity, interactionController.Data.Tile, interactionController.Data.Interactable);
+            bool inDistance = usable.IsInDistance(interactionDataProvider.Data.Entity, interactionDataProvider.Data.Tile, interactionDataProvider.Data.Interactable);
             UseAllowed = inDistance;
             FadeVisibility(!inDistance);
         }
@@ -86,15 +90,15 @@ public class NewItemPicker : MonoBehaviour
         Interact(useTime, 
             () => ((IUsable) itemSlot.storedItem).
                 Use(
-                    Hotbar.Instance.currentSelectedSlot.ReferredSlot,
-                    interactionController.Data.Entity, 
-                    interactionController.Data.Tile, 
-                    interactionController.Data.Interactable), false);
+                    WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar).currentSelectedSlot.ReferredSlot,
+                    interactionDataProvider.Data.Entity, 
+                    interactionDataProvider.Data.Tile, 
+                    interactionDataProvider.Data.Interactable), false);
     }
 
     public void UseHand()
     {
-        Interactable interactableUnderCursor = interactionController.Data.Interactable;
+        Interactable interactableUnderCursor = interactionDataProvider.Data.Interactable;
         if(interactableUnderCursor is null) return;
         
         if(Vector2.Distance(PlayerController.Instance.transform.position,
@@ -113,7 +117,7 @@ public class NewItemPicker : MonoBehaviour
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)
     {
-        if(Inventory.Instance.IsActive) return;
+        if(_inventoryWindow.IsActive) return;
         // Если в выбранном слоте хотбара есть предмет
         if (slot.HasItem && slot.storedItem is IUsable)
         {
@@ -135,41 +139,45 @@ public class NewItemPicker : MonoBehaviour
     }
     
     
-    private void OnInventoryClosed()
+    private void OnWindowClosed(WindowIdentifier window)
     {
-        OnSelectedHotbarSlotChanged(Hotbar.Instance.currentSelectedSlot);
+        if(window == WindowIdentifier.Inventory)
+            OnSelectedHotbarSlotChanged(
+                WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar)
+                    .currentSelectedSlot);
     }
-    private void OnInventoryOpened()
+    private void OnWindowOpened(WindowIdentifier window)
     {
-        gameObject.SetActive(false);
+        if(window == WindowIdentifier.Inventory)
+            gameObject.SetActive(false);
     }
 
     private void OnCursorEnterUI()
     {
-        if(Inventory.Instance.IsActive) return;
+        if(_inventoryWindow.IsActive) return;
         gameObject.SetActive(false);
     }
 
     private void OnCursorLeaveUI()
     {
-        if (Inventory.Instance.IsActive) return;
+        if (_inventoryWindow.IsActive) return;
         gameObject.SetActive(true);
     }
 
     private void SubEvents()
     {
-        Hotbar.ONSelectedSlotChanged += OnSelectedHotbarSlotChanged;
-        Inventory.ONInventoryOpened += OnInventoryOpened;
-        Inventory.ONInventoryClosed += OnInventoryClosed;
+        HotbarWindow.ONSelectedSlotChanged += OnSelectedHotbarSlotChanged;
+        BaseWindow.ONWindowOpened += OnWindowOpened;
+        BaseWindow.ONWindowClosed += OnWindowClosed;
         CursorHoverCheck.ONCursorEnterUI += OnCursorEnterUI;
         CursorHoverCheck.ONCursorLeaveUI += OnCursorLeaveUI;
     }
 
     private void UnsubEvents()
     {
-        Hotbar.ONSelectedSlotChanged -= OnSelectedHotbarSlotChanged;
-        Inventory.ONInventoryOpened -= OnInventoryOpened;
-        Inventory.ONInventoryClosed -= OnInventoryClosed;
+        HotbarWindow.ONSelectedSlotChanged -= OnSelectedHotbarSlotChanged;
+        BaseWindow.ONWindowOpened -= OnWindowOpened;
+        BaseWindow.ONWindowClosed -= OnWindowClosed;
         CursorHoverCheck.ONCursorEnterUI -= OnCursorEnterUI;
         CursorHoverCheck.ONCursorLeaveUI -= OnCursorLeaveUI;
     }

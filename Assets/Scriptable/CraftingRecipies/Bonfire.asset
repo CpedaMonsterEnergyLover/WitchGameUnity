@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c42de4727f2b24c97091c8699839a9, type: 3}
   m_Name: Bonfire
   m_EditorClassIdentifier: 
-  category: 0
+  category: {fileID: 11400000, guid: 77d07ac71e7dc524786c30c741e8d6a3, type: 2}
   result:
-    item: {fileID: 11400000, guid: 8461eda98adacd1408273c111b5c6d85, type: 2}
+    item: {fileID: 11400000, guid: aa38bdb0b71602a4b8d45ff51dc1134f, type: 2}
     amount: 1
+    havingAmount: 0
+  instruments: []
+  craftStations: []
   components:
   - item: {fileID: 11400000, guid: 399fa4465475a3a43b3c07a58068a18b, type: 2}
     amount: 3
+    havingAmount: 0

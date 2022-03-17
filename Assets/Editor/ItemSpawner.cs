@@ -1,4 +1,3 @@
-using Codice.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,7 +27,8 @@ class ItemSpawner : EditorWindow
                 if (item is not null && !added)
                 {
                     added = true;
-                    Inventory.Instance.AddItem(item.identifier, amount);
+                    WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
+                        .AddItem(item.identifier, amount);
                 }
             }
         }

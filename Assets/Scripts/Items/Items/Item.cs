@@ -30,7 +30,7 @@ public class Item
             ItemType.Mineral => new Item(identifier),
             ItemType.Bag => new Bag(identifier),
             ItemType.Instrument => new Instrument(identifier),
-            ItemType.Furniture => new Furniture(identifier),
+            ItemType.Furniture => new PlaceableItem(identifier),
             ItemType.Axe => new Axe(identifier),
             ItemType.Hoe => new Hoe(identifier),
             ItemType.Seed => new Seed(identifier),

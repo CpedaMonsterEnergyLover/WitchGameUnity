@@ -11,6 +11,7 @@ public class WorldTile
     public bool loaded;
     public bool cached;
     public Vector2 interactableOffset;
+    // public bool mirrored;
     public List<Entity> entities = new();
 
     public bool[] Layers { get; private set; }
@@ -26,6 +27,7 @@ public class WorldTile
         savedData = interactableData is null ? null : 
             new InteractableSaveData(interactableData);
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
+        // mirrored = Random.Range(0, 2) == 1;
     }
     
     
@@ -50,11 +52,16 @@ public class WorldTile
         if (cached)
             HideInteractable(false);
         else
-            instantiatedInteractable = Interactable.Create(saveData: savedData);
+            instantiatedInteractable = Interactable.Create(savedData);
+        bool ignoreRandomisation = instantiatedInteractable is IIgnoreTileRandomisation;
 
-        instantiatedInteractable.transform.position = instantiatedInteractable.Data.ignoreOffset ?
+        var transform = instantiatedInteractable.transform;
+        transform.position = ignoreRandomisation ?
             new Vector3(Position.x + 0.5f, Position.y + 0.5f, 0)
             : new Vector3(Position.x + interactableOffset.x, Position.y + interactableOffset.y, 0);
+        /*transform.localScale = new Vector3(
+            !ignoreRandomisation && mirrored ? -1 : 1, 1, 1);*/
+
         instantiatedInteractable.OnTileLoad(this);
 
     }

@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    #region Instance
+    #region Singleton
 
     public static PlayerController Instance;
 
@@ -16,22 +15,17 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     
-    #region Vars
-    
-    // Public
     public float movementSpeed;
     public Rigidbody2D rigidBody;
 
     public float dashSpeed = 5;
     public float dashDuration;
     
-    // Private
     public Vector2 MovementInput { get; private set; }
     public int lookDirection = 1;
     private bool _isDashing;
     private bool _isAttacking;
 
-    #endregion
 
 
 
@@ -39,11 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Inventory.Instance.ToggleInventory();
-        }
-        
+
         UpdateMovementInput();
 
         if (!_isDashing)

@@ -68,7 +68,8 @@ public class ItemEntity : Entity
     {
         if (other.gameObject.CompareTag("Player") && isPickable)
         {
-            SaveData.Amount -= Inventory.Instance.AddItem(SaveData.Item.Data.identifier, SaveData.Amount, true);
+            SaveData.Amount -= WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
+                .AddItem(SaveData.Item.Data.identifier, SaveData.Amount, true);
             if(SaveData.Amount == 0) Kill();
         } 
         else if (other.gameObject.TryGetComponent(out ItemEntity itemEntity)) 

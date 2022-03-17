@@ -1,30 +1,31 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragButton : MonoBehaviour, IDragHandler, IEndDragHandler
+public class DragButton : MonoBehaviour, IDragHandler
 {
-    public Vector2 offset;
-    
-    private RectTransform _parentRectTransform;
-    
+    public RectTransform targetRectTransform;
+
+    private RectTransform _selfRectTransform;
+    private Vector2 _offset;
+
+    private void Start()
+    {
+        _selfRectTransform = GetComponent<RectTransform>();
+        _offset = _selfRectTransform.sizeDelta / 2;
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.dragging)
-            CursorManager.Instance.Mode = CursorMode.HoverUI;
         {
-            if (_parentRectTransform is null) 
-                _parentRectTransform = transform.parent.GetComponent<RectTransform>();
-            
             var position = eventData.position;
-            var sizeDelta = _parentRectTransform.sizeDelta;
-            position.x -= sizeDelta.x / 2 + offset.x;
-            position.y -= sizeDelta.y / 2 + offset.y;
-            transform.parent.position = position;
+            position -= (Vector2) _selfRectTransform.localPosition;
+            targetRectTransform.position = position;
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    /*public void OnEndDrag(PointerEventData eventData)
     { 
         CursorManager.Instance.ResetMode();
-    }
+    }*/
 }

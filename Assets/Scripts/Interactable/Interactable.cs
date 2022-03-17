@@ -1,8 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
-using System.Text;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Interactable : MonoBehaviour
 {

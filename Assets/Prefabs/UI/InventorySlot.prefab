@@ -401,6 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404976d5b3722c547b8ad4b8c090a212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltip: 0
+  slotImage: {fileID: 5515889221891405617}
   storedItem:
     saveData:
       rid: -2
