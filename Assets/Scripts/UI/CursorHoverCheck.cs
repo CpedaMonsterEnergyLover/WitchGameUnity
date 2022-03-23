@@ -18,7 +18,6 @@ public class CursorHoverCheck : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         ONCursorLeaveUI?.Invoke();
-
     }
 
 }

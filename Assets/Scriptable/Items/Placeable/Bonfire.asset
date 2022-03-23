@@ -18,5 +18,5 @@ MonoBehaviour:
   name: "\u041A\u043E\u0441\u0442\u0435\u0440"
   icon: {fileID: 21300000, guid: 4c615d33d4b292442abea88a5eb5e9f4, type: 3}
   maxStack: 1
-  prefab: {fileID: 5487202183819345936, guid: de5fbe9f1e1917146b1a2daab4b68ab9, type: 3}
-  interactable: {fileID: 11400000, guid: 6cc5f0712a99e9546825816519e434ec, type: 2}
+  prefab: {fileID: 2689441627284404940, guid: 373f48f11f8d4e14d92e8a6c72c06113, type: 3}
+  interactable: {fileID: 11400000, guid: dd142e805675a34449d13bfaa40787b7, type: 2}

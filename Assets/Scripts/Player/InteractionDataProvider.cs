@@ -1,20 +1,26 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class InteractionDataProvider : MonoBehaviour
 {
-    public Camera playerCamera;
+    private static Camera _playerCamera;
 
-    public InteractionEventData Data { get; private set;  }
+    public static InteractionEventData Data { get; private set;  }
+
+    private void Awake()
+    {
+        _playerCamera = GetComponent<Camera>();
+    }
 
     private void Update()
     {
         Data = ForceUpdateData();
     }
 
-    public InteractionEventData ForceUpdateData()
+    public static InteractionEventData ForceUpdateData()
     {
-        Vector3 mouseWorldPos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseWorldPos = _playerCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
 
         Entity entity = null;

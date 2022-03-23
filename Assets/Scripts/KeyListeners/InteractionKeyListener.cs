@@ -1,65 +1,70 @@
 ﻿using UnityEngine;
 
-public class InteractionKeyListener : MonoBehaviour
+public class InteractionKeyListener : KeyListener
 {
     public NewItemPicker newItemPicker;
 
-
-    private void OnEnable()
+    private void Update()
     {
-        SubToEvents();
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            newItemPicker.Use();
+        }
     }
 
-    private void OnDisable()
+    private void Start()
     {
-        UnsubFromEvents();
+        SubToEvents();
     }
 
     private void OnDestroy()
     {
         UnsubFromEvents();
     }
-
-    private void Update()
-    {
-        ListenToKeyboard();
-    }
     
-    private void ListenToKeyboard()
+    private void OnPlacingMenuOpened(WindowIdentifier window)
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (window is WindowIdentifier.Placeable or WindowIdentifier.Inventory)
         {
-            if (newItemPicker.gameObject.activeInHierarchy)
-                if (newItemPicker.itemSlotGO.activeInHierarchy)
-                    newItemPicker.UseItem();
-                else
-                    newItemPicker.UseHand();
-            else
-                newItemPicker.UseHand();
+            enabled = false;
+            // UnsubFromCursorEvents();
         }
     }
 
-    private void OnInventoryOpened(WindowIdentifier window)
+    private void OnPlacingMenuClosed(WindowIdentifier window)
     {
-        if(window == WindowIdentifier.Inventory)
-            enabled = false;
+        if (window is WindowIdentifier.Placeable or WindowIdentifier.Inventory)
+        {
+            enabled = true;
+            // SubCursorEvents();
+        }
     }
 
-    private void OnInventoryClosed(WindowIdentifier window)
-    {
-        if(window == WindowIdentifier.Inventory)
-            enabled = true;
-    }
-    
+    private void OnCursorEnterUI() => enabled = false;
+    private void OnCursorLeaveUI() => enabled = true;
+
     private void SubToEvents()
     {
-        BaseWindow.ONWindowOpened += OnInventoryOpened;
-        BaseWindow.ONWindowClosed += OnInventoryClosed;
+        BaseWindow.ONWindowOpened += OnPlacingMenuOpened;
+        BaseWindow.ONWindowClosed += OnPlacingMenuClosed;
     }
 
     private void UnsubFromEvents()
     {
-        BaseWindow.ONWindowOpened -= OnInventoryOpened;
-        BaseWindow.ONWindowClosed -= OnInventoryOpened;
+        BaseWindow.ONWindowOpened -= OnPlacingMenuOpened;
+        BaseWindow.ONWindowClosed -= OnPlacingMenuClosed;
+        // UnsubFromCursorEvents();
     }
+
+    /*private void SubCursorEvents()
+    {
+        CursorHoverCheck.ONCursorEnterUI += OnCursorEnterUI;
+        CursorHoverCheck.ONCursorLeaveUI += OnCursorLeaveUI;
+    } 
+    
+    private void UnsubFromCursorEvents()
+    {
+        CursorHoverCheck.ONCursorEnterUI -= OnCursorEnterUI;
+        CursorHoverCheck.ONCursorLeaveUI -= OnCursorLeaveUI;
+    }*/
 }

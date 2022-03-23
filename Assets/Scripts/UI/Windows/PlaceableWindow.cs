@@ -1,71 +1,84 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlaceableWindow : BaseWindow
 {
-    public GameObject closeButton;
-    public Image itemIcon;
-    public Text itemText;
-    public Text itemAmount;
+    public List<Component> toDismiss = new();
+    public Transform slotTransform;
+    public Text titleText;
 
     private GameObject _instantiatedPrefab;
-    private ItemSlot _referredSlot;
 
-    private bool _wasInventoryClosed;
-    private bool _wasCraftingWindowClosed;
-    private bool _wasHotbarClosed;
+    private TemporaryDismissData _dismissData;
+    private Transform _slotParent;
+    private ItemSlot _slot;
+    private PlaceableItem _placeableItem;
 
-    public void ShowMenu(CraftingSlot slot)
+    public void Show(ItemSlot slot)
     {
-        if(slot.recipe.result.item is not PlaceableData placeableData) return;
-        _instantiatedPrefab = Instantiate(placeableData.prefab);
-        
-        
-        /*CloseInventory();
-        CloseHotbar();
-        CloseCraftingMenu();*/
-        closeButton.SetActive(true);
-        gameObject.SetActive(true);
-    }
+        if(slot is CraftingSlot craftingSlot)
+            slot.storedItem = Item.Create(craftingSlot.recipe.result.item.identifier);
 
-    /*private void CloseInventory()
-    {
-        if (InventoryWindow.Instance.isActiveAndEnabled)
+        if (slot.storedItem is not PlaceableItem placeableItem)
         {
-            _wasInventoryClosed = true;
-            InventoryWindow.Instance.SetActive(false);
+            gameObject.SetActive(false);
+            _placeableItem = null;
+            return;
         }
+        
+        // EnablePreview
+        
+
+        _placeableItem = placeableItem;
+        
+        _dismissData = new TemporaryDismissData()
+            .Add(toDismiss).HideAll();
+        _slot = slot;
+        var currentSlotTransform = slot.transform;
+        // Save previous parent
+        _slotParent = currentSlotTransform.parent;
+        // Set new parent
+        currentSlotTransform.SetParent(slotTransform, false);
+        currentSlotTransform.localPosition = Vector3.zero;
+
+        titleText.text = _slot.storedItem.Data.name;
+        
+        InteractablePreview.Instance.Show(_placeableItem);
+        
+        SetActive(true);
     }
 
-    private void CloseHotbar()
+    protected override void OnDisable()
     {
-        if (WindowManager.Instance.IsActive(WindowIdentifier.Hotbar))
-        {
-            _wasHotbarClosed = true;
-            HotbarWindow.Instance.SetActive(false);
-        }
+        // Disable preview
+        _dismissData = _dismissData.ShowAll();
+        _slot.transform.SetParent(_slotParent, false);
+        if (_slot is CraftingSlot)
+            _slot.storedItem = null;
+        _slot = null;
+        _slotParent = null;
+        
+        InteractablePreview.Instance.Hide();
+        base.OnDisable();
     }
 
-    private void CloseCraftingMenu()
-    {
-        if (CraftingWindow.Instance.isActiveAndEnabled)
-        {
-            _wasCraftingWindowClosed = true;
-            CraftingWindow.Instance.SetActive(false);
-        }
-    }
-    
-    public void Close()
-    {
-        gameObject.SetActive(false);
-        // if(_wasHotbarClosed) HotbarWindow.Instance.SetActive(true);
-        if(_wasCraftingWindowClosed) CraftingWindow.Instance.SetActive(true);
-        if(_wasInventoryClosed) InventoryWindow.Instance.SetActive(true);
-    }
-
-    private void HideOtherWindows()
+    public void Place()
     {
         
+        var data = InteractionDataProvider.Data;
+        if (!_placeableItem.AllowUse(data.Entity, data.Tile, data.Interactable)) return;
+        
+        _placeableItem.Use(_slot, null, data.Tile);
+
+        if (_slot is CraftingSlot craftingSlot)
+        {
+            craftingSlot.ConsumeRecipeItems(1);
+        }
+        
+        _slot.UpdateUI();
+        // Close window if item is over
+        if(_slot.storedAmount <= 0) gameObject.SetActive(false);
     }
-    */
+
 }

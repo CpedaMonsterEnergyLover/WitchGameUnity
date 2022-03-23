@@ -15,23 +15,9 @@ public class Tooltip : MonoBehaviour, ITemporaryDismissable
 
     protected virtual void OnEnable()
     {
-        UpdatePosition();
-    }
-    
-    private void Update()
-    {
-        UpdatePosition();
+        ItemSlot slotUnderCursor = InventoryKeyListener.Instance.slotUnderCursor;
+        if(slotUnderCursor is not null && slotUnderCursor.tooltip != tooltipIdentifier)
+            gameObject.SetActive(false);
     }
 
-    protected virtual void UpdatePosition()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0;
-        var sizeDelta = panelRect.sizeDelta;
-        
-        mousePos.x += sizeDelta.x * position.x;
-        mousePos.y += sizeDelta.y * position.y;
-
-        transform.position = mousePos;
-    }
 }

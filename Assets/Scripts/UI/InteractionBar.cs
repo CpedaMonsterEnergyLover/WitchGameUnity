@@ -12,21 +12,10 @@ public class InteractionBar : MonoBehaviour
     private Action _actionOnComplete;
     private InteractionEventData _dataOnStart;
     private bool _isHand;
-    
-    private void Update()
-    {
-        UpdatePosition();
-    }
-
-    private void UpdatePosition()
-    {
-        transform.position = Input.mousePosition;
-    }
 
     private void OnEnable()
     {
         SubEvents();
-        UpdatePosition();
     }
 
     private void OnDisable()
@@ -51,7 +40,7 @@ public class InteractionBar : MonoBehaviour
         }
         else
         {
-            _dataOnStart = interactionDataProvider.Data;
+            _dataOnStart = InteractionDataProvider.Data;
             _duration = duration;
             _actionOnComplete = actionOnComplete;
             gameObject.SetActive(true);
@@ -62,7 +51,7 @@ public class InteractionBar : MonoBehaviour
 
     private void ContinueInteraction()
     {
-        if (!_dataOnStart.Equals(interactionDataProvider.ForceUpdateData()))
+        if (!_dataOnStart.Equals(InteractionDataProvider.ForceUpdateData()))
         {
             StopInteraction();
         }
@@ -96,7 +85,7 @@ public class InteractionBar : MonoBehaviour
         {
             if (PlayerController.Instance.MovementInput != Vector2.zero ||
                 Input.GetMouseButtonUp(0) ||
-                !_dataOnStart.Equals(interactionDataProvider.Data) || !_isHand && !NewItemPicker.Instance.UseAllowed)
+                !_dataOnStart.Equals(InteractionDataProvider.Data) || !_isHand && !NewItemPicker.Instance.UseAllowed)
             {
                 StopInteraction();
                 yield break;

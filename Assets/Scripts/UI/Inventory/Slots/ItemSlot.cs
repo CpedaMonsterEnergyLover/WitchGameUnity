@@ -116,7 +116,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             itemIcon.enabled = true;
         
             itemText.text = storedAmount.ToString();
-            itemText.enabled = storedAmount > 1;
+            itemText.gameObject.SetActive(storedAmount > 1);
         }
         
     }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TooltipManager : MonoBehaviour
+public class TooltipManager : MonoBehaviour, ITemporaryDismissable
 {
     [SerializeField]
     private List<Tooltip> toolTips;
@@ -24,7 +24,7 @@ public class TooltipManager : MonoBehaviour
     
     
     
-    public static bool IsActive(TooltipIdentifier id) => Tooltips[(int)id].IsActive;
+    // public static bool IsActive(TooltipIdentifier id) => Tooltips[(int)id].IsActive;
 
     public static T Get<T>(TooltipIdentifier id) where T : Tooltip
         => (T)Tooltips[(int) id];
@@ -51,7 +51,14 @@ public class TooltipManager : MonoBehaviour
         }
         BaseWindow.ONWindowClosed += OnWindowClosed;
     }
+
+    public virtual void SetActive(bool isActive)
+    {
+        if(IsActive != isActive)
+            gameObject.SetActive(isActive); 
+    }
     
+    public bool IsActive => gameObject.activeInHierarchy;
 }
 
 public enum TooltipIdentifier

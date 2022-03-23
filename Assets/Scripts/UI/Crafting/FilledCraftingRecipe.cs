@@ -5,10 +5,12 @@ using System.Linq;
 public class FilledCraftingRecipe
 {
     public List<ItemStack> components = new();
+
+    public int maxCount;
     
-    public int CountMaxAmount()
+    public void CountMaxAmount()
     {
-        return components.Min(stack => stack.CountMaxAmount);
+        maxCount = components.Min(stack => stack.CountMaxAmount);
     }
     
     public bool IsFilled()

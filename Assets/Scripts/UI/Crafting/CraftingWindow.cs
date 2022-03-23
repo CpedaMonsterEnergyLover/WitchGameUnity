@@ -10,10 +10,9 @@ public class CraftingWindow : BaseWindow
 
    
     
-    
     private Dictionary<byte, CraftingTab> _tabs = new();
 
-    private void Start()
+    public override void Init()
     {
         GameCollection.CraftingRecipies.Collection.ForEach(AddRecipe);
     }

@@ -69,15 +69,15 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: c32753e0412e8d94c8494b32e3ad8dfc, type: 3}
-    m_FontSize: 30
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0412\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u0435"
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 34
+  m_MinHeight: 14
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 3624765606107374379}
   - component: {fileID: 1674436597838005392}
   m_Layer: 5
-  m_Name: GridLayout
+  m_Name: Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,15 +188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 4
-    m_Right: 4
-    m_Top: 4
-    m_Bottom: 4
+    m_Left: 2
+    m_Right: 2
+    m_Top: 2
+    m_Bottom: 2
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 68, y: 68}
-  m_Spacing: {x: 8, y: 8}
+  m_CellSize: {x: 24, y: 24}
+  m_Spacing: {x: 1, y: 1}
   m_Constraint: 0
   m_ConstraintCount: 8
 --- !u!1 &8829947871107098213
@@ -279,4 +279,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleText: {fileID: 2267251322605600940}
   itemsTransform: {fileID: 1509850888469487466}
-  slotPrefab: {fileID: 3853699392861343840, guid: d0a80334a10689e41b380f3cb49e1e4d, type: 3}
+  slotPrefab: {fileID: 2165490313022783321, guid: d0a80334a10689e41b380f3cb49e1e4d, type: 3}

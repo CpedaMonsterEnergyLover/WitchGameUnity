@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HotbarWindow : BaseWindow
 {
     public GameObject arrow;
-    public Color selectionColor;
     public HotbarSlot currentSelectedSlot;
     [ShowOnly]
     public int selectedSlotIndex;
@@ -18,40 +16,8 @@ public class HotbarWindow : BaseWindow
 
     private void Start()
     {
-        /*Inventory.ONInventoryOpened += HideSelection;
-        Inventory.ONInventoryClosed += ShowSelection;*/
-
         selectedSlotIndex = -1;
         SelectSlot(0);
-    }
-
-    private void Update()
-    {
-        SelectFromWheel();
-        SelectFromKeyboard();
-    }
-
-
-    private void SelectFromWheel()
-    {
-        // Mouse wheel
-        float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
-        if (wheel < 0)
-        {
-            SelectSlot(selectedSlotIndex + 1);
-        }
-        else if (wheel > 0)
-        {
-            SelectSlot(selectedSlotIndex - 1);
-        }
-    }
-
-    private void SelectFromKeyboard()
-    {
-        // Keyboard
-        for (int i = 0; i < 8; i++)
-            if (Input.GetKeyDown((i + 1).ToString()))
-                SelectSlot(i);
     }
     
     public void SelectSlot(int index)
@@ -60,16 +26,11 @@ public class HotbarWindow : BaseWindow
         
         if (index > 7) index = 0;
         if (index < 0) index = 7;
-        // Reset previous slot color
-        if (currentSelectedSlot is not null) currentSelectedSlot.GetComponent<Image>().color = Color.white;
         selectedSlotIndex = index;
         currentSelectedSlot = slots[index];
-        // Apply new color
-        currentSelectedSlot.GetComponent<Image>().color = selectionColor;
 
         ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
         
-        // Arrow position
         arrow.transform.SetParent(currentSelectedSlot.transform, false);
     }
     

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class TemporaryDismissData
 {
@@ -20,6 +21,15 @@ public class TemporaryDismissData
         return this;
     }
 
+    public TemporaryDismissData Add(List<Component> components)
+    {
+        components.ForEach(component =>
+        {
+            if (component is ITemporaryDismissable {IsActive: true} dismissable) _dismissedObjects.Add(dismissable);
+        });
+        return this;
+    }
+    
     public TemporaryDismissData Exclude(ITemporaryDismissable dismissable)
     {
         if (_dismissedObjects.Contains(dismissable))
@@ -37,7 +47,7 @@ public class TemporaryDismissData
 
     public TemporaryDismissData ShowAll()
     {
-        _dismissedObjects.ForEach(dismissable => dismissable.SetActive(true));
+        _dismissedObjects.ForEach(dismissable => dismissable?.SetActive(true));
         return null;
     }
 

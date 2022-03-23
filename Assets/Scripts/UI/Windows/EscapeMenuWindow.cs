@@ -7,15 +7,15 @@ public class EscapeMenuWindow : BaseWindow
     protected override void OnEnable()
     {
         base.OnEnable();
-        _dismissData = new TemporaryDismissData()
+        /*_dismissData = new TemporaryDismissData()
             .Add(WindowManager.All.ToList<ITemporaryDismissable>())
             .Exclude(this)
-            .HideAll();
+            .HideAll();*/
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _dismissData.ShowAll();
+        // _dismissData.ShowAll();
     }
 }

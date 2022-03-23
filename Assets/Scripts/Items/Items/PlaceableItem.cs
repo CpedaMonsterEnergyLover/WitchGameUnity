@@ -12,7 +12,7 @@ public class PlaceableItem : Item, IPlaceable
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (tile is null || tile.instantiatedInteractable) return false;
+        if (tile is null || tile.instantiatedInteractable || !IsInDistance(entity, tile, interactable)) return false;
         return WorldManager.Instance.TryGetTopLayer(tile.Position.x, tile.Position.y, out WorldLayer layer) &&
                layer.layerEditSettings.canPlace;
     }

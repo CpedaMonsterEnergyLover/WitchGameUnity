@@ -11,7 +11,7 @@ public abstract class BaseWindow : MonoBehaviour, ITemporaryDismissable
     public static event WindowEvent ONWindowClosed;
     public static event WindowEvent ONWindowOpened;
     
-    
+    public virtual void Init() { }
     
     protected virtual void OnEnable()
     {

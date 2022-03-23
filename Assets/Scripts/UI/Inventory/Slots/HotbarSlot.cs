@@ -15,8 +15,8 @@ public class HotbarSlot : ItemSlot
         // ПКМ - очистить слот
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Clear();
             ShowTooltip(false);
+            Clear();
         }
     }
 

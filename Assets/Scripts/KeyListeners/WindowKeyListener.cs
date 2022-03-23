@@ -2,7 +2,7 @@
 
 namespace KeyListeners
 {
-    public class WindowKeyListener : MonoBehaviour
+    public class WindowKeyListener : KeyListener
     {
         private void Update()
         {

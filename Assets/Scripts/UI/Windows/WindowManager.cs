@@ -17,6 +17,7 @@ public class WindowManager : MonoBehaviour
         windows.ForEach(window =>
         {
             Windows[window.Identifier] = window;
+            window.Init();
         });        
     }
 

@@ -13,8 +13,7 @@ public class CraftingList : MonoBehaviour
     public void AddRecipe(CraftingRecipe recipe)
     {
         CraftingSlot slot = Instantiate(slotPrefab, itemsTransform).GetComponent<CraftingSlot>();
-        slot.recipe = recipe;
-        slot.UpdateUI();
+        slot.SetRecipe(recipe);
         _slots.Add(slot);
     }
 }

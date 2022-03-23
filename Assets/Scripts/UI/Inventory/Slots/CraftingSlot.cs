@@ -14,25 +14,41 @@ public class CraftingSlot : ItemSlot
     {
         return new CraftingTooltipData(recipe, _filledRecipe);
     }
-    
-    
 
+    public void SetRecipe(CraftingRecipe craftingRecipe)
+    {
+        recipe = craftingRecipe;
+        itemIcon.sprite = craftingRecipe.result.item.icon;
+        itemIcon.enabled = true;
+    }
+
+    public override int AddItem(Item item, int amount) 
+        => 0;
+
+    public override void RemoveItem(int amount)
+    {
+        storedAmount -= amount;
+    }
+
+    public override void Clear() { }
+
+
+    
     #region UnityMethods
 
     public override void UpdateUI()
     {
-        itemIcon.sprite = recipe.result.item.icon;
-        itemIcon.enabled = true;
-        itemText.text = recipe.result.amount > 1 ? 
-            recipe.result.amount.ToString() : 
-            string.Empty;
+        storedAmount = _filledRecipe.maxCount;
+        itemText.text = storedAmount.ToString();
+        itemText.gameObject.SetActive(_filledRecipe.maxCount > 1);
+        itemIcon.color = Verdict ? Color.white : new Color(1f, 0.96f, 1f, 0.6f);
         gameObject.SetActive(true);
     }
     
     private void OnEnable()
     {
         FillRecipe();
-        UpdateVisibility();
+        UpdateUI();
         InventoryWindow.ONItemAdded += OnItemAdded;
         InventoryWindow.ONItemRemoved += OnItemRemoved;
     }
@@ -49,7 +65,6 @@ public class CraftingSlot : ItemSlot
     
     public override void OnKeyDown()
     {
-        // FillRecipe();
         if(!Verdict) return;
 
         bool leftCLick = Input.GetKeyDown(KeyCode.Mouse0);
@@ -57,23 +72,23 @@ public class CraftingSlot : ItemSlot
 
         if (leftCLick || rightClick)
         {
-            int amount = leftCLick ? 1 : _filledRecipe.CountMaxAmount();
             if (recipe.result.item is PlaceableData)
             {
-                // Show placable window
-                //PlaceableMenu.Instance.ShowMenu(this);
+                WindowManager.Get<PlaceableWindow>(WindowIdentifier.Placeable)
+                    .Show(this);
             }
             else
             {
+                int amount = leftCLick ? 1 : _filledRecipe.maxCount;
                 ConsumeRecipeItems(amount);
                 InventoryWindow.
-                    AddItem(recipe.result.item.identifier, amount);
+                    AddItem(recipe.result.item.identifier, amount * recipe.result.amount);
             }
             
         }
     }
 
-    private void ConsumeRecipeItems(int amount)
+    public void ConsumeRecipeItems(int amount)
     {
         for(int i = 0; i < amount; i++)
             foreach (var stack in _filledRecipe.components)
@@ -97,15 +112,10 @@ public class CraftingSlot : ItemSlot
                 InventoryWindow.GetAmountOfItem(stack.item.identifier));
             _filledRecipe.components.Add(filledStack);
         });
-         /*if(TooltipManager.Instance.IsActive(tooltip))
-            TooltipManager.Instance.SetData(tooltip, GetTooltipData());*/
+        _filledRecipe.CountMaxAmount();
+        /*if(TooltipManager.Instance.IsActive(tooltip))
+           TooltipManager.Instance.SetData(tooltip, GetTooltipData());*/
     }
-
-    private void UpdateVisibility()
-    {
-        itemIcon.color = Verdict ? Color.white : new Color(1f, 0.96f, 1f, 0.6f);
-    }
-
 
     #region Events
 
@@ -113,22 +123,22 @@ public class CraftingSlot : ItemSlot
     {
         ItemStack stack = _filledRecipe.components.FirstOrDefault(stack => 
             stack.item.identifier == identifier);
-        if (stack is not null)
-        {
-            stack.havingAmount += value;
-            UpdateVisibility();
-        }
+        if (stack is null) return;
+        
+        stack.havingAmount += value;
+        _filledRecipe.CountMaxAmount();
+        UpdateUI();
     }
 
     private void OnItemRemoved(ItemIdentifier identifier, int value)
     {
         ItemStack stack = _filledRecipe.components.FirstOrDefault(stack => 
             stack.item.identifier == identifier);
-        if (stack is not null)
-        {
-            stack.havingAmount -= value;
-            UpdateVisibility();
-        }
+        if (stack is null) return;
+        
+        stack.havingAmount -= value;
+        _filledRecipe.CountMaxAmount();
+        UpdateUI();
     }
 
     private void UnsubFromEvents()

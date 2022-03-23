@@ -21,5 +21,5 @@ MonoBehaviour:
   craftStations: []
   components:
   - item: {fileID: 11400000, guid: 399fa4465475a3a43b3c07a58068a18b, type: 2}
-    amount: 3
+    amount: 1
     havingAmount: 0

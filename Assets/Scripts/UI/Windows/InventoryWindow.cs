@@ -13,6 +13,7 @@ public class InventoryWindow : BaseWindow
     public GameObject slotPrefab;
     public Transform inventoryTransform;
     
+    
     [SerializeReference]
     public List<InventorySlot> slots = new();
 
@@ -22,8 +23,10 @@ public class InventoryWindow : BaseWindow
     public delegate void ItemRemovedEvent(ItemIdentifier identifier, int amount);
     public static event ItemRemovedEvent ONItemRemoved;
 
+    
+    
     private bool _needsUpdate;
-
+    
 
     private void Awake()
     {
@@ -37,9 +40,10 @@ public class InventoryWindow : BaseWindow
             _needsUpdate = false;
             UpdateUI();
         }
+
         base.OnEnable();
     }
-    
+
     private void Start()
     {
         itemsOnStart.ForEach(i =>
