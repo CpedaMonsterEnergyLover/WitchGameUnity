@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class Noise {
@@ -10,7 +11,7 @@ public static class Noise {
         int octaves, 
         float persistance, 
         float lacunarity, 
-        Vector2 offset) {
+        Vector2 offset, bool hasCircleBounds) {
         
         float[,] noiseMap = new float[mapWidth,mapHeight];
 
@@ -36,6 +37,7 @@ public static class Noise {
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
 		
+                
                 float amplitude = 1;
                 float frequency = 1;
                 float noiseHeight = 0;
@@ -61,8 +63,13 @@ public static class Noise {
         }
 
         for (int y = 0; y < mapHeight; y++) {
-            for (int x = 0; x < mapWidth; x++) {
-                noiseMap [x, y] = Mathf.InverseLerp (minNoiseHeight, maxNoiseHeight, noiseMap [x, y]);
+            for (int x = 0; x < mapWidth; x++)
+            {
+                
+                if (hasCircleBounds && Vector2.Distance(new Vector2(x, y), new Vector2(halfWidth, halfHeight)) >= halfWidth - 4)
+                    noiseMap[x, y] = 0;
+                else 
+                    noiseMap [x, y] = Mathf.InverseLerp (minNoiseHeight, maxNoiseHeight, noiseMap [x, y]);
             }
         }
 

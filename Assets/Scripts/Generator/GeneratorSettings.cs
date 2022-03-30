@@ -8,4 +8,6 @@ public struct GeneratorSettings
     public int width;
     [Range(50, 100)]
     public int height;
+
+    public bool circleBounds;
 }

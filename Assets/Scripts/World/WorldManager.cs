@@ -41,12 +41,17 @@ public class WorldManager : MonoBehaviour
         ClearAllTiles();
         GenerateWorld();
         
+        SpawnPlayer();
+    }
+
+    protected virtual void SpawnPlayer()
+    {
         int mapCenterX = generator.generatorSettings.width / 2;
         int mapCenterY = generator.generatorSettings.height / 2;
         playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
     }
     
-    public void GenerateWorld()
+    public virtual void GenerateWorld()
     { 
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorld(layers);

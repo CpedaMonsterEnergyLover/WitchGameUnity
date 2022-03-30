@@ -32,6 +32,7 @@ public class WorldNoiseData
         float[,] smap = GenerateNoiseMap(seedHash, settings, ssettings, new Vector2(settings.width * 5, 0));
         float[,] amap = GenerateNoiseMap(seedHash, settings, asettings, new Vector2(settings.width * 10, 0));
         if(applyCardinality) ApplyCardinality(pmap, cardinalMap);
+        // if(applyCircleBounds) ApplyCircleBounds();
         return new WorldNoiseData(pmap, smap, amap);
     }
     
@@ -39,7 +40,7 @@ public class WorldNoiseData
     {
         return Noise.GenerateNoiseMap
         (genSettings.width, genSettings.height, seedHash, noiseSettings.scale, 
-            noiseSettings.octaves, noiseSettings.persistance, noiseSettings.lacunarity, offset);
+            noiseSettings.octaves, noiseSettings.persistance, noiseSettings.lacunarity, offset, genSettings.circleBounds);
     }
 
     private static void ApplyCardinality(float[,] map, float[] cardinalMap)
@@ -48,6 +49,15 @@ public class WorldNoiseData
             for (int y = 0; y < map.GetLength(1); y++)
                 map[x, y] *= cardinalMap[x];
     }
+
+    /*private static void ApplyCircleBounds(List<float[,]> noiseMaps)
+    {
+        for (int x = 0; x < noiseMaps[0].GetLength(0); x++)
+            for (int y = 0; y < noiseMaps[0].GetLength(1); y++)
+            {
+                noi
+            }
+    }*/
 }
 
 public enum WorldNoiseMapIndex

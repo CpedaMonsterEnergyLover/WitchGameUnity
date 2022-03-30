@@ -12,15 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b2ddaea5dc4c838cdf0f3657c4d217, type: 3}
   m_Name: LayerTestBiomes
   m_EditorClassIdentifier: 
-  list:
-  - name: Test
-    priority: 25
-    rules:
-    - mapIndex: 2
-      fromValue: 0
-      untilValue: 0.5
-      exclude: 0
-    biomeDensity: 1
-    tiles:
-    - data: {fileID: 11400000, guid: 28e1375d4f6922640ae99b5fed2a09bc, type: 2}
-      spawnChance: 1
+  list: []

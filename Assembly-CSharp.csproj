@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
+     <Compile Include="Assets\Scripts\Util\ShadowCaster2DTilemap.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\SkillCategory.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
@@ -54,6 +55,7 @@
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\KeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
+     <Compile Include="Assets\Scripts\UI\InteractablePreview.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\CraftingTooltip.cs" />
      <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
@@ -97,17 +99,21 @@
      <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interactable.cs" />
      <Compile Include="Assets\Scripts\Entities\Data\OldGhostData.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuCamera.cs" />
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\InventoryTooltip.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Items.cs" />
+     <Compile Include="Assets\Scripts\World\CaveManager.cs" />
      <Compile Include="Assets\Scripts\Generator\NoiseSettings.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Instrument.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCycleManager.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Manager.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuSubScene.cs" />
      <Compile Include="Assets\Scripts\Interactable\CropBed.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Hoe.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\Moon.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\HotbarWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\Data\EntityData.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\EscapeKeyListener.cs" />
@@ -120,10 +126,12 @@
      <Compile Include="Assets\Scripts\UI\Windows\PlaceableWindow.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxPanel.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxController.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
@@ -166,10 +174,13 @@
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowManager.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\InventoryWindow.cs" />
+     <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnTile.cs" />
+     <Compile Include="Assets\Scripts\KeyListeners\PlacingKeyListener.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
+     <Compile Include="Assets\Scripts\World\CavePolisher.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingComponent.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingWindow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
@@ -186,9 +197,6 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
-     <Compile Include="Assets\Scripts\KeyListeners\PlacingKeyListener.cs" />
-     <Compile Include="Assets\Scripts\UI\InteractablePreview.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
