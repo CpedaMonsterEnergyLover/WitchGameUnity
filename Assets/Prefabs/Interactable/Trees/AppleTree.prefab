@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3445512274724012372}
   - component: {fileID: 1429786961609154741}
   - component: {fileID: 4780506203738975953}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}

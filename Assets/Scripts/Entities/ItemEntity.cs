@@ -41,7 +41,7 @@ public class ItemEntity : Entity
     {
         Collider2D[] results = new Collider2D[8];
         int size = Physics2D.OverlapCircleNonAlloc(transform.position, radius, 
-             results, 1 << LayerMask.NameToLayer("DroppedItems"));
+             results, 1 << LayerMask.NameToLayer("ItemTrigger"));
         
         sameItemEntity = null;
         

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3139844809891199880}
   - component: {fileID: 4624911134468274957}
   - component: {fileID: 2219800912430230215}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 341933263246560863}
   - component: {fileID: -6380499920962318949}
   - component: {fileID: 6454648468894731039}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Birch
   m_TagString: Untagged
   m_Icon: {fileID: 0}

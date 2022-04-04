@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5885589173498969664}
   - component: {fileID: -1618489488766941413}
   - component: {fileID: -611958934427258643}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Daisies
   m_TagString: Untagged
   m_Icon: {fileID: 0}

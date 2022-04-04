@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5487202183543752812
 Transform:
   m_ObjectHideFlags: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
-  m_Color: {r: 1, g: 0.4291208, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.7104846, b: 0.4943396, a: 1}
   m_Intensity: 1.09
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 5487202183819345937}
   - component: {fileID: 5487202183819346030}
   - component: {fileID: 8149979634692533146}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bonfire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

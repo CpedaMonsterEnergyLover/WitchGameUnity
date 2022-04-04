@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8240147175409794377}
   - component: {fileID: -907134770394193555}
   - component: {fileID: -9105540000646379992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BigOak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 790044425626230427}
   - component: {fileID: 540751750981883661}
   - component: {fileID: 7468039267317541571}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}

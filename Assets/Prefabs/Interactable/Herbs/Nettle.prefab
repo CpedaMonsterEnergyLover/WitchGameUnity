@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 37202818547746548}
   - component: {fileID: 6252087856383603996}
   - component: {fileID: -7509101858961451826}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nettle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

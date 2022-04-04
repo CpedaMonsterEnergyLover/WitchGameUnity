@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4944447521056135950}
   - component: {fileID: 5185197231583854119}
   - component: {fileID: 7322456366577946721}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4820209954560817676}
   - component: {fileID: -6803368313353169163}
   - component: {fileID: 8606078821824393497}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: YellowTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3121440089729248532}
   - component: {fileID: -8854615065710797347}
   - component: {fileID: 483547364329226942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Poppy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

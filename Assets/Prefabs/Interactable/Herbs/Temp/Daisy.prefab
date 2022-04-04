@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7531954277355471655}
   - component: {fileID: 8331033205921872094}
   - component: {fileID: 3689590045965497417}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Daisy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8768363979881384333}
   - component: {fileID: 5275995621542085295}
   - component: {fileID: 4833181170065557277}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Paporotnik
   m_TagString: Untagged
   m_Icon: {fileID: 0}

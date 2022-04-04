@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5657623593217057142}
   - component: {fileID: 6340820866722701248}
   - component: {fileID: 5611410741225864388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BigSpruce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8468576782212561152}
   - component: {fileID: 6298305623351112442}
   - component: {fileID: 1225209471323698258}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}

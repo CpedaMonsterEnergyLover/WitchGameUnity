@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -4555808471479665609}
   - component: {fileID: 4274403703559429548}
   - component: {fileID: -5653240919322236085}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tropical
   m_TagString: Untagged
   m_Icon: {fileID: 0}

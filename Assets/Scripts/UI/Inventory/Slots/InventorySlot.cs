@@ -4,8 +4,6 @@ public class InventorySlot : ItemSlot
 {
 
     public HotbarSlot ReferredHotbarSlot { set; get; }
-    
-    #region ClassMethods
 
     public void DropItem(int amount)
     {
@@ -46,6 +44,7 @@ public class InventorySlot : ItemSlot
         // Q выбросить
         else if (Input.GetKeyDown(KeyCode.Q))
         {
+            if(!HasItem) return;
             int amountToRemove = Input.GetKey(KeyCode.LeftShift) ? storedAmount : 1;
             DropItem(amountToRemove);
             if(storedAmount == 0) slotImage.color = Color.white;
@@ -73,6 +72,4 @@ public class InventorySlot : ItemSlot
             ReferredHotbarSlot.UpdateUI();
         }
     }
-    
-    #endregion
 }

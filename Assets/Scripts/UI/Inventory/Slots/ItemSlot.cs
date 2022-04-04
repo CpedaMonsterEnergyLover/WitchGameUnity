@@ -82,7 +82,8 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         storedAmount -= amount;
         itemText.text = storedAmount.ToString();
-        itemText.enabled = storedAmount > 1;
+        itemText.gameObject.SetActive(storedAmount > 1);
+        
         if (storedAmount <= 0)
         {
             Clear();
@@ -94,6 +95,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public virtual void UpdateUI()
     {
+        //TODO: BreakableItem
         if (storedItem is Instrument instrument)
         {
             if(durabilityBar is not null) durabilityBar.UpdateDurability(instrument);
@@ -106,7 +108,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (storedItem == null || storedAmount <= 0)
         {
             itemIcon.enabled = false;
-            itemText.enabled = false;
+            itemText.gameObject.SetActive(false);
             if(InventoryKeyListener.Instance.slotUnderCursor == this) 
                 TooltipManager.SetActive(TooltipIdentifier.Inventory, false);
         }

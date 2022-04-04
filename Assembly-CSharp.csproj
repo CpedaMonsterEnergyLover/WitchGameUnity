@@ -149,6 +149,7 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Vein.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\HotbarSlot.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysList.cs" />
@@ -166,9 +167,11 @@
      <Compile Include="Assets\Scripts\Generator\Generator.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Data\VeinData.cs" />
      <Compile Include="Assets\Scripts\Player\InteractionDataProvider.cs" />
      <Compile Include="Assets\Scripts\UI\SingletonInitiator.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityType.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\VeinSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Shaker.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowIdentifier.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />

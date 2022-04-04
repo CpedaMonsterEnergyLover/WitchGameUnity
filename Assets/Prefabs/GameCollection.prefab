@@ -97,6 +97,7 @@ MonoBehaviour:
   items: {fileID: 86840692449200188}
   entities: {fileID: 86840691554782155}
   interactables: {fileID: 86840692563252718}
+  recipies: {fileID: 1340255188353376842}
 --- !u!1 &86840692449200190
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,6 +165,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a1fb76fcb90bdb439ca7bbdd921ebe6, type: 2}
   - {fileID: 11400000, guid: 399fa4465475a3a43b3c07a58068a18b, type: 2}
   - {fileID: 11400000, guid: 1ba7090da803aa94087c2445c81faa36, type: 2}
+  - {fileID: 11400000, guid: aa38bdb0b71602a4b8d45ff51dc1134f, type: 2}
 --- !u!1 &86840692563252721
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +243,12 @@ MonoBehaviour:
   - {fileID: 4966746972911411930, guid: 21dbb3b48323d5b4ebc89b41419fbadf, type: 3}
   other:
   - {fileID: 2414370750406087172, guid: 8dceb197d91cdc141a3bc9e3e95c157d, type: 3}
+  - {fileID: 5487202183819345936, guid: de5fbe9f1e1917146b1a2daab4b68ab9, type: 3}
+  - {fileID: 1392234063504567002, guid: 8b735fc44ca2a5c4e928856ca263dc72, type: 3}
+  - {fileID: 1392234063504567002, guid: 33e56509ff8c386418052bfad05f9ba2, type: 3}
+  - {fileID: 1392234063504567002, guid: 7eace9936945ab549b7f59f208101514, type: 3}
+  - {fileID: 1392234063504567002, guid: b4aaf0d1455a5544fb43fdc2353461dd, type: 3}
+  - {fileID: 1392234063504567002, guid: 09668c3173f164947976591e48ebe8c5, type: 3}
 --- !u!1 &6814453906342980958
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,3 +295,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 11400000, guid: dad2d18fcd2d8d345b8d653f36d2a7ab, type: 2}
+  - {fileID: 11400000, guid: 780618ae9109ceb48b1697e7d6c6461a, type: 2}

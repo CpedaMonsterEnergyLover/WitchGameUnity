@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6486699156929693466}
   - component: {fileID: 4664929073679073628}
   - component: {fileID: 5408791156202763602}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 1335699100673161883}
   - component: {fileID: -3785172536331362977}
   - component: {fileID: 2384039166186203388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pine
   m_TagString: Untagged
   m_Icon: {fileID: 0}

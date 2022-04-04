@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2340700073408022506}
   - component: {fileID: 5882576363306730835}
   - component: {fileID: 5988013418676080435}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 2227601871449304385}
   - component: {fileID: 1893411917635812370}
   - component: {fileID: 1456112026893308152}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SmallOak
   m_TagString: Untagged
   m_Icon: {fileID: 0}

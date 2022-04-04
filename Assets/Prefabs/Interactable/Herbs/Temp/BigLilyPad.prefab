@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1872562479382629363}
   - component: {fileID: -6261030684341225115}
   - component: {fileID: 5052165668508979242}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BigLilyPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

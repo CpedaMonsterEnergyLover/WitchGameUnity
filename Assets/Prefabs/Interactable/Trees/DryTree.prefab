@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 541094942169185239}
   - component: {fileID: -5507640235171606349}
   - component: {fileID: 6276631672322271740}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DryTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 3183954499342156324}
   - component: {fileID: 8196088857023589966}
   - component: {fileID: 6492488418302494925}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: roots
   m_TagString: ObstacleHitBox
   m_Icon: {fileID: 0}

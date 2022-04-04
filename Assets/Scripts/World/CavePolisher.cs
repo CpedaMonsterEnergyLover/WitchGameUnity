@@ -105,7 +105,6 @@ public class CavePolisher : MonoBehaviour
         int layerIndex = polishingLayer.index;
         var polishingLayerTilemap = polishingLayer.tilemap;
 
-        int counter = 1;
         
         while (hollowZones.Count > 1)
         {
@@ -116,12 +115,9 @@ public class CavePolisher : MonoBehaviour
                 polishingLayerTilemap.SetTile(i, wallTileBase);
                 worldData.GetTile(i.x, i.y).Layers[layerIndex] = false;
             }
-            Debug.Log("Removed zone " + counter + " with S=" + zoneToRemove.Count);
-            counter++;
             hollowZones.RemoveAt(1);
         }
 
-        Debug.Log("Located main hollow with S=" + maxHollow.Count);
         
         return maxHollow;
     }
