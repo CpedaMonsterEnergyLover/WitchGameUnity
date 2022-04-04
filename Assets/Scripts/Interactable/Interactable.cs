@@ -92,7 +92,8 @@ public class Interactable : MonoBehaviour
     {
         tile.savedData = null;
         tile.instantiatedInteractable = null;
-        GameObject.Destroy(gameObject);
+        if(Application.isPlaying) GameObject.Destroy(gameObject);
+        else DestroyImmediate(gameObject);
     }
     
     protected void FadeIn()

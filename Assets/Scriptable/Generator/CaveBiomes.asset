@@ -51,3 +51,24 @@ MonoBehaviour:
       spawnChance: 0.043
     - data: {fileID: 11400000, guid: 54a60f6b91758544e8f5be999b2a7647, type: 2}
       spawnChance: 0.063
+    - data: {fileID: 11400000, guid: 34262ee9d9502d1409e7a46db5d2a087, type: 2}
+      spawnChance: 0.063
+    - data: {fileID: 11400000, guid: 394d67ec714440049a16cbd4ebc54355, type: 2}
+      spawnChance: 0.063
+    - data: {fileID: 11400000, guid: d8fc33d6a75baae49bb0182d7c1b360b, type: 2}
+      spawnChance: 0.063
+    - data: {fileID: 11400000, guid: 01cd555ab049f444189a97491be30572, type: 2}
+      spawnChance: 0.063
+    - data: {fileID: 11400000, guid: 28a75c22c040c2540a09a5da3780f77e, type: 2}
+      spawnChance: 0.063
+  - name: "\u0421\u0432\u0435\u0442"
+    priority: 1
+    rules:
+    - mapIndex: 1
+      fromValue: 0.4
+      untilValue: 0.53
+      exclude: 0
+    biomeDensity: 0.042
+    tiles:
+    - data: {fileID: 11400000, guid: 86b38d8e5e8054f4db24bc5c6f06878a, type: 2}
+      spawnChance: 1

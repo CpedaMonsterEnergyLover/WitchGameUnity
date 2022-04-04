@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cee96bcd76d48a49840b0b12aa0a63e, type: 3}
+  m_Name: SphaleriteVein
+  m_EditorClassIdentifier: 
+  id: sphalerite_vein
+  name: "\u0417\u0430\u043B\u0435\u0436\u0438 \u0441\u0444\u0430\u043B\u0435\u0440\u0438\u0442\u0430"
+  interactingTime: 1.35
+  sprites:
+  - {fileID: -1997939086, guid: ed835419cf78cbc43bf196613779c7f2, type: 3}
+  - {fileID: -226937971, guid: ed835419cf78cbc43bf196613779c7f2, type: 3}
+  - {fileID: 1790913295, guid: ed835419cf78cbc43bf196613779c7f2, type: 3}
+  drop: {fileID: 11400000, guid: 8461eda98adacd1408273c111b5c6d85, type: 2}

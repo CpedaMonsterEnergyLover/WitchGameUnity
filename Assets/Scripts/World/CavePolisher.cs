@@ -17,7 +17,8 @@ public class CavePolisher : MonoBehaviour
 
     private GameObject _hollowsTileMapGO;
     private CaveEntrance _caveEntrance;
-    
+    private List<Vector3Int> _removedTiles = new();
+
     /*
     private class Hollow
     {
@@ -97,6 +98,11 @@ public class CavePolisher : MonoBehaviour
         return hollowZones;
     }
 
+    private void ClearHollows(WorldData worldData)
+    {
+        _removedTiles.ForEach(i => worldData.GetTile(i.x, i.y).ClearInteractable());
+    }
+    
     public List<Vector3Int> GetMainHollow(WorldData worldData)
     {
         var hollowZones = GetHollowZones(worldData).OrderByDescending(ints => ints.Count).ToList();
@@ -104,7 +110,7 @@ public class CavePolisher : MonoBehaviour
 
         int layerIndex = polishingLayer.index;
         var polishingLayerTilemap = polishingLayer.tilemap;
-
+        
         
         while (hollowZones.Count > 1)
         {
@@ -114,10 +120,12 @@ public class CavePolisher : MonoBehaviour
             {
                 polishingLayerTilemap.SetTile(i, wallTileBase);
                 worldData.GetTile(i.x, i.y).Layers[layerIndex] = false;
+                _removedTiles.Add(i);
             }
             hollowZones.RemoveAt(1);
         }
 
+        ClearHollows(worldData);
         
         return maxHollow;
     }

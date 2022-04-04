@@ -7,7 +7,7 @@ public class Seed : Item, IUsableOnTile
     
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        tile?.DestroyInteractable();
+        tile?.DestroyInstantiated();
         WorldManager.Instance.AddInteractable(tile, new HerbSaveData()
             {
                 preInitialized = true,

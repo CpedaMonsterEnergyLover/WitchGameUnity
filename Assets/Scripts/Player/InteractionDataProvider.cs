@@ -5,12 +5,14 @@ using UnityEngine;
 public class InteractionDataProvider : MonoBehaviour
 {
     private static Camera _playerCamera;
+    private static int _layerMask;
 
     public static InteractionEventData Data { get; private set;  }
 
     private void Awake()
     {
         _playerCamera = GetComponent<Camera>();
+        _layerMask = LayerMask.GetMask("InteractionCollider");
     }
 
     private void Update()
@@ -26,8 +28,9 @@ public class InteractionDataProvider : MonoBehaviour
         Entity entity = null;
         Interactable interactable = null;
         
+        
         // Gets interactable and entity under cursor
-        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 100, _layerMask);
         if (hit.collider is not null)
         {
             interactable = hit.collider.gameObject.GetComponent<Interactable>();

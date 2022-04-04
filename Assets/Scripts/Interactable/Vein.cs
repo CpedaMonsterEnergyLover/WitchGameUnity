@@ -25,7 +25,7 @@ public class Vein : Interactable
     {
         SaveData.health--;
         ChangeSpriteOnHealth();
-        if(Data.drop is not null) Debug.Log($"Dropping {Data.drop.name}");
+        Debug.Log($"{SaveData.health}");
         if (SaveData.health <= 0)
         {
             Destroy();
@@ -35,7 +35,6 @@ public class Vein : Interactable
     private void ChangeSpriteOnHealth()
     {
         int spriteIndex = (SaveData.health - 1) / 2;
-        Debug.Log($"{SaveData.health} = {spriteIndex}");
         _renderer.sprite = Data.sprites[spriteIndex];
     }
 }

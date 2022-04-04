@@ -8,6 +8,7 @@ namespace GameCollection
         public List<GameObject> herbs;
         public List<GameObject> trees;
         public List<GameObject> other;
+        public List<GameObject> veins;
 
         private static readonly Dictionary<string, GameObject> Collection = new();
 
@@ -20,6 +21,7 @@ namespace GameCollection
             Manager.MapCollection<Herb>(herbs, Collection, "herbs");
             Manager.MapCollection<WoodTree>(trees, Collection, "trees");
             Manager.MapCollection<Interactable>(other, Collection, "others");
+            Manager.MapCollection<Interactable>(veins, Collection, "veins");
         }
     }
 }

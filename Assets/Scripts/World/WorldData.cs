@@ -57,6 +57,16 @@ public class WorldData
             if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
         }
     }
+
+    public void ClearZone(int minX, int minY, int maxX, int maxY)
+    {
+        for(int x = minX; x <= maxX; x++)
+        for (int y = minY; y <= maxY; y++)
+        {
+            if(!CoordsBelongsToWorld(x, y)) return;
+            _worldTiles[x,y].ClearInteractable();
+        }
+    }
     
     public bool CoordsBelongsToWorld(int x, int y)
     {

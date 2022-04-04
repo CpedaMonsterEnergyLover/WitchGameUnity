@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 
@@ -72,6 +73,11 @@ public class WorldTile
         entities.Clear();
     }
 
+    public void ClearInteractable()
+    {
+        if(instantiatedInteractable is not null) DestroyInstantiated();
+        savedData = null;
+    }
     
     // Убирает объект interactable этого тайла из мира
     public void UnloadInteractable()
@@ -81,7 +87,7 @@ public class WorldTile
         instantiatedInteractable = null;
     }
 
-    public void DestroyInteractable()
+    public void DestroyInstantiated()
     {
         instantiatedInteractable.Destroy();
     }
