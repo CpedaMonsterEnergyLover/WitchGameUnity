@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 
@@ -29,6 +30,11 @@ public class WorldTile
             new InteractableSaveData(interactableData);
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
         // mirrored = Random.Range(0, 2) == 1;
+    }
+
+    public void SetLayer(int layerIndex, bool value)
+    {
+        Layers[layerIndex] = value;
     }
     
     

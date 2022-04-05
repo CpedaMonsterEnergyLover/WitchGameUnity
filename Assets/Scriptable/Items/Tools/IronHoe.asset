@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 8
     id: ironhoe
   name: "\u0416\u0435\u043B\u0435\u0437\u043D\u0430\u044F \u043C\u043E\u0442\u044B\u0433\u0430"
-  icon: {fileID: -1144952857, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
+  icon: {fileID: -581971326, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
   maxStack: 1
   maxDurability: 168
   damage: 2

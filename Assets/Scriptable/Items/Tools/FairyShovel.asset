@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 9
     id: fairyshovel
   name: "\u041B\u043E\u043F\u0430\u0442\u0430 \u0444\u0435\u0439"
-  icon: {fileID: 1621905859, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
+  icon: {fileID: -581971326, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
   maxStack: 1
   maxDurability: 275
   damage: 2

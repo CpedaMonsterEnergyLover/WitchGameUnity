@@ -11,7 +11,10 @@ public class CaveManager : WorldManager
     
     public override void GenerateWorld()
     {
-        base.GenerateWorld();
+        gameCollectionManager.Init();
+        WorldData = generator.GenerateWorld(layers);
+        Instance = this;
+        
         DrawAllTiles();
 
         polisher.PolishWalls(WorldData);
@@ -23,7 +26,10 @@ public class CaveManager : WorldManager
             _caveEntrance.y - 2,
             _caveEntrance.x + 1,
             _caveEntrance.y);
+
         
+        ClearAllTiles();
+ 
         // Add cave Entrance Interactable
         //shadowCaster2DTilemap.Generate();
     }

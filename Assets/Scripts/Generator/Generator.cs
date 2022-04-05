@@ -42,10 +42,10 @@ public class Generator : MonoBehaviour
             secondaryMapNoiseSettings, 
             additionalMapNoiseSettings);
         
-        List<bool[,]> layerData = new List<bool[,]>();
+        bool[][,] layerData = new bool[layers.Count][,];
         layers.ForEach(
             layer => 
-            layerData.Add(layer.Generate(generatorSettings, worldNoiseData))
+            layerData[layer.index] = layer.Generate(generatorSettings, worldNoiseData)
             );
 
         InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];

@@ -4,31 +4,52 @@ using UnityEngine;
 
 public class TileLoader : MonoBehaviour
 {
+    public static TileLoader Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
     [SerializeField]
     private Transform playerTransform;
-    [SerializeField]
-    private WorldManager worldManager;
     [Range(1,50)]
     public int viewRangeX;
     [Range(1,50)]
     public int viewRangeY;
 
+    public TileLoadingMode mode;
+
+    public enum TileLoadingMode
+    {
+        Everything,
+        OnlyInteractables
+    }
+    
     public TileCache TileCache { get; } = new TileCache(0);
     private readonly List<Vector2Int> _loadedTiles = new();
     private WorldData _worldData;
+    private WorldManager _worldManager;
 
-    public void Init(WorldData worldData)
-    {
-        _worldData = worldData;
-    }
     
     private void Start()
     {
-        TileCache.SetMaxSize(worldManager.playerSettings.tileCacheSize);
-        _worldData = worldManager.WorldData;
+        _worldManager = WorldManager.Instance;
+        _worldData = _worldManager.WorldData;
+
+        
+        TileCache.SetMaxSize(_worldManager.playerSettings.tileCacheSize);
         if (_worldData is null)
         {
             Debug.LogError("TileLoader активен, но мир не сгенерирован");
+            return;
+        }
+        
+        // Если мод стоит только на конроль прогрузки объектов, рисует весь мир полностью
+        if (mode is TileLoadingMode.OnlyInteractables)
+        {
+            _worldManager.DrawAllTiles();
         }
     }
     
@@ -43,7 +64,7 @@ public class TileLoader : MonoBehaviour
                 int targetX = x + playerPosition.x;
                 int targetY = y + playerPosition.y;
                 // Проверка на выход за пределы карты
-                if (!worldManager.CoordsBelongsToWorld(targetX, targetY)) continue;
+                if (!_worldManager.CoordsBelongsToWorld(targetX, targetY)) continue;
                 
                 // Если тайл еще не загружен, загружает его
                 WorldTile tile = _worldData.GetTile(targetX, targetY);
@@ -73,26 +94,21 @@ public class TileLoader : MonoBehaviour
 
     private void RemoveTile(int x, int y)
     {
-        WorldTile tile = _worldData.GetTile(x, y);
-        
-        worldManager.EraseTile(x, y);
-        
-        if (tile.HasInteractable)
-        {
-            // Кеширует тайл
-            TileCache.Add(tile);
-        }
+        if(mode is TileLoadingMode.Everything) _worldManager.EraseTile(x, y);
 
+        WorldTile tile = _worldData.GetTile(x, y);
+        if (tile.HasInteractable)
+            TileCache.Add(tile);
         tile.loaded = false;
         // Убирать из loadedTiles не надо, тк это происходит в цикле апдейта
     }
 
     public void LoadTile(int x, int y)
     {
+        if(mode is TileLoadingMode.Everything) _worldManager.DrawTile(x, y);
+        
         WorldTile tile = _worldData.GetTile(x, y);
         tile.Load();
-        worldManager.DrawTile(x, y);
-        
         TileCache.Remove(tile);
         _loadedTiles.Add(new Vector2Int(x, y));
     }

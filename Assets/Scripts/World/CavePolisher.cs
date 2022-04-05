@@ -119,7 +119,8 @@ public class CavePolisher : MonoBehaviour
             foreach (Vector3Int i in zoneToRemove)
             {
                 polishingLayerTilemap.SetTile(i, wallTileBase);
-                worldData.GetTile(i.x, i.y).Layers[layerIndex] = false;
+                worldData.GetTile(i.x, i.y).SetLayer(layerIndex, true);
+
                 _removedTiles.Add(i);
             }
             hollowZones.RemoveAt(1);
@@ -190,7 +191,8 @@ public class CavePolisher : MonoBehaviour
             {
                 polishingLayerTilemap.SetTile(pos, null);
 
-                worldData.GetTile(x, y).Layers[layerIndex] = false;
+                worldData.GetTile(x, y).SetLayer(layerIndex, false);
+
                 counter++;
             }
         }

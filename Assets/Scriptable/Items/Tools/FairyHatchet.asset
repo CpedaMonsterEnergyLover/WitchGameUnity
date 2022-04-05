@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 7
     id: fairyhatchet
   name: "\u0422\u043E\u043F\u043E\u0440\u0438\u043A \u0444\u0435\u0439"
-  icon: {fileID: -1440432661, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
+  icon: {fileID: -581971326, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
   maxStack: 1
   maxDurability: 295
   damage: 3

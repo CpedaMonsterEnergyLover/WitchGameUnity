@@ -17,7 +17,7 @@ public class WorldData
     public WorldData(
         int width, 
         int height, 
-        List<bool[,]> layers,
+        bool[][,] layers,
         InteractableData[,] biomeLayer)
     {
         MapWidth = width;
@@ -28,12 +28,18 @@ public class WorldData
         {
             for (int y = 0; y < height; y++)
             {
-                bool[] tiles = new bool[layers.Count];
-                for (var i = 0; i < layers.Count; i++) tiles[i] = layers[i][x, y];
+                bool[] tiles = new bool[layers.Length];
+                for (var i = 0; i < layers.Length; i++) 
+                    tiles[i] = layers[i][x, y];
                 _worldTiles[x, y] = new WorldTile(
                     x, y, tiles, biomeLayer[x, y]);
             }
         }
+    }
+
+    public void CropOutside(int startX, int startY, int endX, int endY)
+    {
+        
     }
 
     public void SetInteractableOffset(int x, int y, Vector2 offset) => _worldTiles[x, y].interactableOffset = offset;
@@ -42,8 +48,8 @@ public class WorldData
     {
         WorldTile tile = _worldTiles[position.x, position.y];
 
-        if (WorldManager.Instance.tileLoader.TileCache.Contains(tile))
-            WorldManager.Instance.tileLoader.TileCache.Remove(tile);
+        if (TileLoader.Instance.TileCache.Contains(tile))
+            TileLoader.Instance.TileCache.Remove(tile);
         
         _worldTiles[position.x, position.y].savedData = saveData;
         return saveData;

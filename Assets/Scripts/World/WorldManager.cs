@@ -17,17 +17,16 @@ public class WorldManager : MonoBehaviour
     public Transform entitiesTransform;
     
     [SerializeField, Header("Генератор")]
-    private Generator generator;
+    protected Generator generator;
     public bool generateOnStart = true;
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
 
 
-    public TileLoader tileLoader;
     
     
-    public WorldData WorldData { get; private set; }
+    public WorldData WorldData { get; protected set; }
 
 
     
@@ -40,8 +39,8 @@ public class WorldManager : MonoBehaviour
         
         ClearAllTiles();
         GenerateWorld();
-        
         SpawnPlayer();
+        
     }
 
     protected virtual void SpawnPlayer()
@@ -56,20 +55,23 @@ public class WorldManager : MonoBehaviour
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorld(layers);
         Instance = this;
-        tileLoader.Init(WorldData);
     }
 
     public void DrawAllTiles()
     {
         for (int x = 0; x < generator.generatorSettings.width; x++)
-        {
-            for (int y = 0; y < generator.generatorSettings.height; y++)
-            {
-                tileLoader.LoadTile(x, y);
-            }
-        }
+        for (int y = 0; y < generator.generatorSettings.height; y++)
+            DrawTile(x, y);
     }
 
+    public void DrawAllInteractable()
+    {
+        for (int x = 0; x < generator.generatorSettings.width; x++)
+        for (int y = 0; y < generator.generatorSettings.height; y++)
+            WorldData.GetTile(x, y).LoadInteractable();
+    }
+
+    // Runtime only
     public void AddInteractable(WorldTile tile, InteractableSaveData saveData)
     {
         if(saveData is null) return;

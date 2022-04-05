@@ -61,14 +61,3 @@ MonoBehaviour:
       spawnChance: 0.063
     - data: {fileID: 11400000, guid: 28a75c22c040c2540a09a5da3780f77e, type: 2}
       spawnChance: 0.063
-  - name: "\u0421\u0432\u0435\u0442"
-    priority: 1
-    rules:
-    - mapIndex: 1
-      fromValue: 0.4
-      untilValue: 0.53
-      exclude: 0
-    biomeDensity: 0.042
-    tiles:
-    - data: {fileID: 11400000, guid: 86b38d8e5e8054f4db24bc5c6f06878a, type: 2}
-      spawnChance: 1
