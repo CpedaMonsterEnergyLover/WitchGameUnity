@@ -79,4 +79,25 @@ public class WorldData
         return x >= 0 && x < MapWidth && y > 0 && y < MapHeight;
     }
     
+    public void ClampInto(int minX, int minY, int maxX, int maxY)
+    {
+        minX = Math.Clamp(minX, 0, MapWidth);
+        minY = Math.Clamp(minY, 0, MapHeight);
+        maxX = Math.Clamp(maxX, 0, MapWidth);
+        maxY = Math.Clamp(maxY, 0, MapHeight);
+        MapWidth = maxX - minX;
+        MapHeight = maxY - minY;
+        Debug.Log($"({minX}, {minY}) : ({maxX}, {maxY}), w: {MapWidth}, h: {MapHeight})");
+        WorldTile[,] newData = new WorldTile[MapWidth,MapHeight];
+
+        for(int x = 0; x < MapWidth; x++)
+        for (int y = 0; y < MapHeight; y++)
+        {
+            newData[x, y] = _worldTiles[x + minX, y + minY];
+            newData[x, y].Position = new Vector2Int(x, y);
+        }
+
+        _worldTiles = newData;
+    }
+    
 }

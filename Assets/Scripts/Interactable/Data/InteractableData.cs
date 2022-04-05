@@ -9,4 +9,6 @@ public class InteractableData : ScriptableObject
     public new string name;
     [Range(0, 10)]
     public float interactingTime;
+
+    public bool ignoreRandomisation;
 }

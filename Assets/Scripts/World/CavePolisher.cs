@@ -17,25 +17,8 @@ public class CavePolisher : MonoBehaviour
 
     private GameObject _hollowsTileMapGO;
     private CaveEntrance _caveEntrance;
-    private List<Vector3Int> _removedTiles = new();
+    private readonly List<Vector3Int> _removedTiles = new();
 
-    /*
-    private class Hollow
-    {
-        public List<Vector2Int> tiles = new();
-
-        public Hollow(Vector2Int startingPoint)
-        {
-            
-        }
-
-        private List<Vector2Int> GetEmptyNeighboursRecursive()
-        {
-            List<Vector2Int> neighbors = new();
-        }
-    }
-    */
-    
     public class CaveEntrance
     {
         public enum EntranceType

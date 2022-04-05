@@ -45,8 +45,8 @@ public class WorldManager : MonoBehaviour
 
     protected virtual void SpawnPlayer()
     {
-        int mapCenterX = generator.generatorSettings.width / 2;
-        int mapCenterY = generator.generatorSettings.height / 2;
+        int mapCenterX = WorldData.MapWidth / 2;
+        int mapCenterY = WorldData.MapHeight / 2;
         playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
     }
     
@@ -59,15 +59,15 @@ public class WorldManager : MonoBehaviour
 
     public void DrawAllTiles()
     {
-        for (int x = 0; x < generator.generatorSettings.width; x++)
-        for (int y = 0; y < generator.generatorSettings.height; y++)
+        for (int x = 0; x < WorldData.MapWidth; x++)
+        for (int y = 0; y < WorldData.MapHeight; y++)
             DrawTile(x, y);
     }
 
     public void DrawAllInteractable()
     {
-        for (int x = 0; x < generator.generatorSettings.width; x++)
-        for (int y = 0; y < generator.generatorSettings.height; y++)
+        for (int x = 0; x < WorldData.MapWidth; x++)
+        for (int y = 0; y < WorldData.MapHeight; y++)
             WorldData.GetTile(x, y).LoadInteractable();
     }
 

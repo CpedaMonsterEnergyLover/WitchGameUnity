@@ -17,7 +17,7 @@ public class WorldTile
     public List<Entity> entities = new();
 
     public bool[] Layers { get; private set; }
-    public Vector2Int Position { get; private set; }
+    public Vector2Int Position { get; set; }
     
     public bool HasInteractable => savedData is not null;
 
@@ -60,7 +60,8 @@ public class WorldTile
             HideInteractable(false);
         else
             instantiatedInteractable = Interactable.Create(savedData);
-        bool ignoreRandomisation = instantiatedInteractable is IIgnoreTileRandomisation;
+        // bool ignoreRandomisation = instantiatedInteractable is IIgnoreTileRandomisation;
+        bool ignoreRandomisation = instantiatedInteractable.Data.ignoreRandomisation;
 
         var transform = instantiatedInteractable.transform;
         transform.position = ignoreRandomisation ?
