@@ -28,7 +28,7 @@ public class Instrument : Item, IUsable, IDamageableItem
     protected override string GetDescription()
     {
         return base.GetDescription() + "\n" +
-               $"Эффективность: {Data.damage}\nПрочность: {SaveData.durability} / {Data.maxDurability}";
+               $"Эффективность: {Data.tier}\nПрочность: {SaveData.durability} / {Data.maxDurability}";
     }
 
 }

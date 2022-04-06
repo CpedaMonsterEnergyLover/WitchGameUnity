@@ -1,7 +1,5 @@
-﻿using System;
-
-    public interface IBurnableItem
-    {
-        float BurningDuration { get; }
-    }
+﻿public interface IBurnableItem
+{
+    float BurningDuration { get; }
+}
 

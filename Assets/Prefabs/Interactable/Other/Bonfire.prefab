@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af14a8204e2248aca911863656b6fae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  receiverComponent: {fileID: 2553122788845778541}
 --- !u!1 &5487202183313069823
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,12 +5104,11 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: dd142e805675a34449d13bfaa40787b7, type: 2}
   tile:
     rid: -2
-  maxBurningDuration: 300
+  maxBurningDuration: 100
   fireLight: {fileID: 5487202183543752810}
   fireParticles: {fileID: 8514860948540071666}
   sparklesParticles: {fileID: 8514860948508149354}
   smokeParticles: {fileID: 5487202183998946784}
-  fireCollider: {fileID: 7226588218860524694}
   updateDifferenceStep: 0.1
   fireEmissionOverBurningTime:
     m_Mode: 1

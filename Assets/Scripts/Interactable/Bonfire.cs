@@ -1,8 +1,10 @@
 ﻿using System;
+using EntityInterfaces;
+using InteractableInterfaces;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Bonfire : Interactable
+public class Bonfire : Interactable, IItemEntityReceiver
 {
     public new BonfireSaveData SaveData => (BonfireSaveData) saveData;
 
@@ -12,7 +14,6 @@ public class Bonfire : Interactable
     public ParticleSystem fireParticles;
     public ParticleSystem sparklesParticles;
     public ParticleSystem smokeParticles;
-    public FireCollider fireCollider;
     // public float lightMinRadius;
     // public float lightMaxRadius;
 
@@ -24,31 +25,25 @@ public class Bonfire : Interactable
 
     private float BurningValue => SaveData.burningDuration / maxBurningDuration;
     private float _previousUpdateValue;
-    
-    public override void OnTileLoad(WorldTile loadedTile)
+
+    // IItemReceiver Implementation
+    public void OnReceiveItemEntity(ItemEntity entity)
+    {
+        if(entity.SaveData.Item is IBurnableItem burnableItem) 
+            while(SaveData.burningDuration < maxBurningDuration && entity.SaveData.Amount > 0)
+                BurnItem(entity, burnableItem);
+    }
+
+    public override void OnTileLoad(WorldTile loadedTile) 
     {
         base.OnTileLoad(loadedTile);
         sparklesParticles.Stop();
         UpdateParticlesAndLights();
         
         //TODO: обновлять burningTime в зависимости от прошедшего времени
-        
-        
-        fireCollider.ONBurnableItemEnter += OnBurnableItemReceived;
     }
 
-    private void OnDisable()
-    {
-        fireCollider.ONBurnableItemEnter -= OnBurnableItemReceived;
-    }
-
-    private void OnBurnableItemReceived(ItemEntity entity, IBurnableItem item)
-    {
-        while(BurningValue < maxBurningDuration && entity.SaveData.Amount > 0)
-            AddBurnableItem(entity, item);
-    }
-
-    public void AddBurnableItem(ItemEntity entity, IBurnableItem item)
+    public void BurnItem(ItemEntity entity, IBurnableItem item)
     {
         SaveData.burningDuration += item.BurningDuration;
         sparklesParticles.Play();
@@ -96,4 +91,5 @@ public class Bonfire : Interactable
             yield return new WaitForSeconds(0.2f);
         }
     }*/
+
 }

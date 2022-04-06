@@ -4,7 +4,7 @@ public class Axe : Instrument, IUsableOnInteractable
     {
         if (interactable is WoodTree woodTree)
         {
-            woodTree.Chop(Data.damage);
+            woodTree.Chop(Data.tier);
             base.Use(slot, entity, tile, interactable);
         }
     }

@@ -9,7 +9,7 @@
     {
         if (interactable is Bonfire bonfire)
         {
-            bonfire.AddBurnableItem(null, this);
+            bonfire.BurnItem(null, this);
             slot.RemoveItem(1);
         }
     }
