@@ -2,16 +2,8 @@ using UnityEngine;
 
 public class InventorySlot : ItemSlot
 {
-
     public HotbarSlot ReferredHotbarSlot { set; get; }
-
-    public void DropItem(int amount)
-    {
-        ItemEntity item = (ItemEntity) Entity.Create(new ItemEntitySaveData(storedItem, amount, WorldManager.Instance.playerTransform.position));
-        item.isDroppedByPlayer = true;
-        RemoveItem(amount);
-    }
-
+    
     public override void RemoveItem(int amount)
     {
         InventoryWindow.InvokeItemRemoved(storedItem.Data.identifier, amount);
@@ -44,10 +36,7 @@ public class InventorySlot : ItemSlot
         // Q выбросить
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(!HasItem) return;
-            int amountToRemove = Input.GetKey(KeyCode.LeftShift) ? storedAmount : 1;
-            DropItem(amountToRemove);
-            if(storedAmount == 0) slotImage.color = Color.white;
+            OnDropItemButton(this);
         } 
         // R сортировка
         else if (Input.GetKeyDown(KeyCode.R))

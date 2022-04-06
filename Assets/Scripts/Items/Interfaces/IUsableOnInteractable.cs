@@ -1,5 +1,5 @@
 ﻿
-public interface IUsableOnInteractable : IUsable
-{
+using UnityEngine;
 
-}
+public interface IUsableOnInteractable : IUsable
+{ }

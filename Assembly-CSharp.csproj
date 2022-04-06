@@ -64,7 +64,6 @@
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
-     <Compile Include="Assets\Bonfire.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\ItemPicker.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\ITemporaryDismissable.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineManager.cs" />
@@ -200,6 +199,12 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Bonfire.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\BonfireSaveData.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\FireCollider.cs" />
+     <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagableEntity.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\BurnableItemData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

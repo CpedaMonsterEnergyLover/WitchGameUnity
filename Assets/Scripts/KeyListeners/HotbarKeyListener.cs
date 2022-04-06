@@ -8,21 +8,34 @@ namespace KeyListeners
         
         private void Update()
         {
-            SelectFromWheel();
-            SelectFromKeyboard();
+            float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if(WindowManager.IsActive(WindowIdentifier.Inventory)) return;
+                ItemSlot.OnDropItemButton(hotbarWindow.currentSelectedSlot.ReferredSlot);
+            }
+            else if(wheel != 0)
+            {
+                SelectFromWheel(wheel);
+            }
+            else
+            {
+                SelectFromKeyboard();
+            }
+
         }
 
-        private void SelectFromWheel()
+        private void SelectFromWheel(float wheel)
         {
-            // Mouse wheel
-            float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
-            if (wheel < 0)
+            switch (wheel)
             {
-                hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex + 1);
-            }
-            else if (wheel > 0)
-            {
-                hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex - 1);
+                case < 0:
+                    hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex + 1);
+                    break;
+                case > 0:
+                    hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex - 1);
+                    break;
             }
         }
 
@@ -33,5 +46,7 @@ namespace KeyListeners
                 if (Input.GetKeyDown((i + 1).ToString()))
                     hotbarWindow.SelectSlot(i);
         }
+        
+        
     }
 }

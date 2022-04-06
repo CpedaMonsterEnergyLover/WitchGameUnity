@@ -35,6 +35,7 @@ public class Item
             ItemType.Hoe => new Hoe(identifier),
             ItemType.Seed => new Seed(identifier),
             ItemType.Shovel => new Shovel(identifier),
+            ItemType.Burnable => new BurnableItem(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };
         return created;

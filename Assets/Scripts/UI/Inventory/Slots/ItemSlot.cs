@@ -49,6 +49,21 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     #region ClassMethods
 
+    private void DropItem(int amount)
+    {
+        ItemEntity item = (ItemEntity) Entity.Create(new ItemEntitySaveData(storedItem, amount, WorldManager.Instance.playerTransform.position));
+        item.isDroppedByPlayer = true;
+        RemoveItem(amount);
+    }
+    
+    public static void OnDropItemButton(ItemSlot slot)
+    {
+        if(!slot.HasItem) return;
+        int amountToRemove = Input.GetKey(KeyCode.LeftShift) ? slot.storedAmount : 1;
+        slot.DropItem(amountToRemove);
+        if(slot.storedAmount == 0) slot.slotImage.color = Color.white;
+    }
+    
     protected virtual void ShowTooltip(bool isActive)
     {
         if(!HasItem) return;

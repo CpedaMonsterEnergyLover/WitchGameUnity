@@ -15,8 +15,6 @@ public class NewItemPicker : MonoBehaviour, ITemporaryDismissable
     #endregion
 
 
-    
-    public InteractionDataProvider interactionDataProvider;
     public GameObject itemSlotGO;
     public InteractionBar interactionBar;
     

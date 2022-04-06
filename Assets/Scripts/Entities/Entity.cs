@@ -53,7 +53,6 @@ public abstract class Entity : MonoBehaviour
             if (!WorldManager.Instance.CoordsBelongsToWorld(tilePosition))
             {
                 Kill();
-                Debug.Log($"Сущность {data.name} вышла за пределы мира");
             }
             else
             {
@@ -62,9 +61,7 @@ public abstract class Entity : MonoBehaviour
                     Despawn();
                 }            
             }
-
-            Debug.Log($"Despawn tick, tile loeaded: {isTileLoaded}");
-        
+            
             yield return new WaitForSeconds(_worldManager.playerSettings.entityDespawnRate);
         }
 
@@ -102,7 +99,7 @@ public abstract class Entity : MonoBehaviour
         return interactable;
     }
 
-    protected virtual void Kill()
+    public virtual void Kill()
     {
         Destroy(gameObject);
     }

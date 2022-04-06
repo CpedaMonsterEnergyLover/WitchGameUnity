@@ -22,5 +22,6 @@ public enum ItemType
     Axe,
     Hoe,
     Shovel,
-    Seed
+    Seed,
+    Burnable
 }

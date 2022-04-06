@@ -43,6 +43,8 @@ public class InteractionDataProvider : MonoBehaviour
             WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
             null;
 
+        // Debug.Log($"entity: {entity?.name}, interactable: {interactable?.name}, tile: {tile?.Position}");
+        
         return new InteractionEventData(tile, interactable, entity);
     }
 }

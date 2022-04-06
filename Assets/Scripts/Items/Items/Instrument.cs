@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Instrument : Item
+public class Instrument : Item, IUsable
 {
     public new InstrumentData Data => (InstrumentData) data;
     public new InstrumentSaveData SaveData => (InstrumentSaveData) saveData;
@@ -16,6 +16,7 @@ public class Instrument : Item
         return SaveData.Durability > 0;
     }
 
+    /*
     public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         Vector2 playerPos = WorldManager.Instance.playerTransform.position;
@@ -23,7 +24,7 @@ public class Instrument : Item
                 new Vector2(tile.Position.x + 0.5f, tile.Position.y + 0.5f)) <= 1.6f ||
                entity != null && Vector2.Distance(playerPos, entity.transform.position) <= 1.6f ||
                interactable != null && Vector2.Distance(playerPos, interactable.transform.position) <= 1.6f; 
-    }
+    }*/
     
     public Instrument(ItemIdentifier identifier) : base(identifier)
     {

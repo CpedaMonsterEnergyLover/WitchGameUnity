@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: AppleTree
   m_EditorClassIdentifier: 
   id: appletree
-  type: 1
   name: "\u042F\u0431\u043B\u043E\u043D\u044F"
-  ignoreOffset: 0
   interactingTime: 0
+  ignoreRandomisation: 0
   health: 6
   fallOnHealth: 3
-  logItem: {fileID: 11400000, guid: 399fa4465475a3a43b3c07a58068a18b, type: 2}
+  logItem: {fileID: 11400000, guid: 4e304ea024b311144b51d014eadd0ba5, type: 2}
   logAmount: 6
   hasFruits: 0
   bloomDuration: 1
