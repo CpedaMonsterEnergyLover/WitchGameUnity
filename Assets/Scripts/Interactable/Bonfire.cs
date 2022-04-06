@@ -1,10 +1,8 @@
 ﻿using System;
-using EntityInterfaces;
-using InteractableInterfaces;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Bonfire : Interactable, IItemEntityReceiver
+public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
 {
     public new BonfireSaveData SaveData => (BonfireSaveData) saveData;
 
@@ -33,6 +31,18 @@ public class Bonfire : Interactable, IItemEntityReceiver
             while(SaveData.burningDuration < maxBurningDuration && entity.SaveData.Amount > 0)
                 BurnItem(entity, burnableItem);
     }
+
+    public void OnItemEntityExitReceiver(ItemEntity entity)
+    { }
+
+    // IPlayerReceiver Implementation
+    public void OnReceivePlayer()
+    {
+        Debug.Log("Ouch! Player's hit by fire!!! come on!");
+    }
+
+    public void OnPlayerExitReceiver()
+    { }
 
     public override void OnTileLoad(WorldTile loadedTile) 
     {
@@ -91,5 +101,6 @@ public class Bonfire : Interactable, IItemEntityReceiver
             yield return new WaitForSeconds(0.2f);
         }
     }*/
+
 
 }

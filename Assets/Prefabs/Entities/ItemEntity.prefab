@@ -99,7 +99,6 @@ MonoBehaviour:
   saveData:
     rid: -2
   data: {fileID: 11400000, guid: cc5312a954324194591e5f88e420854f, type: 2}
-  distanceFromPlayer: 0
   rigidbody: {fileID: 1074354961662291489}
   spriteRenderer: {fileID: 5623957438944261388}
   isMergeTarget: 0
@@ -197,4 +196,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.38

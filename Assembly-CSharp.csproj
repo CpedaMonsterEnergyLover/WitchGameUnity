@@ -201,14 +201,17 @@
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
      <Compile Include="Assets\Scripts\Interactable\Bonfire.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\BonfireSaveData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Miscs\ItemEntityReceiverCollider.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagable.cs" />
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BurnableItemData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IBurnableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IDamageableItem.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Interfaces\IItemEntityReceiver.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Interfaces\IHasFireCollider.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\ReceiverCollider.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\IReceiver.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\PlayerReceiverCollider.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\BulletReceiverCollider.cs" />
+     <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
