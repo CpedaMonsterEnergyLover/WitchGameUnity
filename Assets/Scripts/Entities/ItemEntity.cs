@@ -51,7 +51,7 @@ public class ItemEntity : Entity
                 itemEntity.SaveData.Item.Compare(SaveData.Item) && itemEntity.IsStackable())
             {
                 sameItemEntity = sameItemEntity is null ? itemEntity :
-                    itemEntity.distanceFromPlayer < sameItemEntity.distanceFromPlayer ? itemEntity : 
+                    itemEntity.DistanceFromPlayer < sameItemEntity.DistanceFromPlayer ? itemEntity : 
                     sameItemEntity;
             }
         }

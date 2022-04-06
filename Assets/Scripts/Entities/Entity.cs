@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
@@ -5,47 +7,78 @@ public abstract class Entity : MonoBehaviour
     // Public fields
     public EntityData Data => data;
     public EntitySaveData SaveData => saveData;
-    
+
     // Private fields
-    
+
     // Содержит сохраняемые поля объекта
     [SerializeReference, Header("Instance data")]
     protected EntitySaveData saveData;
+
     // Содержит общие поля объекта
-    [SerializeReference, Header("Data")]
-    protected EntityData data;
+    [SerializeReference, Header("Data")] protected EntityData data;
 
-    protected Transform PlayerTransform;
+    private Transform _playerTransform;
+    private WorldManager _worldManager;
 
-    [SerializeField]
-    protected float distanceFromPlayer;
+    protected float DistanceFromPlayer => 
+        ((Vector2)(_playerTransform.position - transform.position)).sqrMagnitude;
 
-    private void Update()
-    {
-        Vector2Int tilePosition = TilePosition();
-
-        if (!WorldManager.Instance.CoordsBelongsToWorld(tilePosition))
-        {
-            Kill();
-            Debug.Log($"Сущность {data.name} вышла за пределы мира");
-            return;
-        }
-        
-        distanceFromPlayer = ((Vector2)(PlayerTransform.position - transform.position)).sqrMagnitude;
-        
-        if (distanceFromPlayer > 16.0f * 16.0f)
-        {
-            WorldTile tile = WorldManager.Instance.WorldData.GetTile(tilePosition.x, tilePosition.y);
-            tile.entities.Add(this);
-            gameObject.SetActive(false);
-        }
-    }
-
+    
     protected virtual void Start()
     {
-        PlayerTransform = WorldManager.Instance.playerTransform;
+        _worldManager = WorldManager.Instance;
+        _playerTransform = _worldManager.playerTransform;
         transform.position = saveData.position;
+        Load();
     }
+    
+    public void Load()
+    {
+        StartCoroutine(DespawnCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator DespawnCoroutine()
+    {
+        while (gameObject.activeInHierarchy)
+        {
+            Vector2Int tilePosition = TilePosition();
+            bool isTileLoaded = _worldManager.WorldData.GetTile(tilePosition.x, tilePosition.y).loaded;
+        
+        
+            if (!WorldManager.Instance.CoordsBelongsToWorld(tilePosition))
+            {
+                Kill();
+                Debug.Log($"Сущность {data.name} вышла за пределы мира");
+            }
+            else
+            {
+                if (!isTileLoaded)
+                {
+                    Despawn();
+                }            
+            }
+
+            Debug.Log($"Despawn tick, tile loeaded: {isTileLoaded}");
+        
+            yield return new WaitForSeconds(_worldManager.playerSettings.entityDespawnRate);
+        }
+
+    }
+
+    public void Despawn()
+    {
+        Vector2Int tilePosition = TilePosition();
+        WorldTile tile = WorldManager.Instance.WorldData.GetTile(tilePosition.x, tilePosition.y);
+        tile.entities.Add(this);
+        gameObject.SetActive(false); 
+    }
+
+
 
     public Vector2Int TilePosition()
     {
@@ -68,12 +101,13 @@ public abstract class Entity : MonoBehaviour
         
         return interactable;
     }
-    
-    public virtual void Kill()
+
+    protected virtual void Kill()
     {
         Destroy(gameObject);
     }
     
     protected virtual void InitSaveData(EntityData origin)
     { }
+    
 }

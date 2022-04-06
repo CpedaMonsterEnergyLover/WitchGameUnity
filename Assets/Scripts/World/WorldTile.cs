@@ -76,7 +76,11 @@ public class WorldTile
 
     public void LoadEntities()
     {
-        entities.ForEach(entity => entity.gameObject.SetActive(true));
+        entities.ForEach(entity =>
+        {
+            entity.gameObject.SetActive(true);
+            entity.Load();
+        });
         entities.Clear();
     }
 

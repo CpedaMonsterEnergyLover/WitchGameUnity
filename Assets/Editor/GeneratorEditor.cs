@@ -15,6 +15,7 @@ public class GeneratorEditor : Editor {
             manager.ClearAllInteractable();
             manager.GenerateWorld();
             manager.DrawAllTiles();
+            manager.DrawAllInteractable();
         }
         
         if (GUILayout.Button ("Clear all")) {
