@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class FireCollider : MonoBehaviour
 {
-    public delegate void OnBurnableItemEnter(ItemEntity entity, BurnableItem item);
+    public delegate void OnBurnableItemEnter(ItemEntity entity, IBurnableItem burnableItem);
     public event OnBurnableItemEnter ONBurnableItemEnter;
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -13,9 +12,9 @@ public class FireCollider : MonoBehaviour
         
         if (entity is ItemEntity itemEntity)
         {
-            if (itemEntity.SaveData.Item is BurnableItem item)
+            if (itemEntity.SaveData.Item is IBurnableItem burnableItem)
             {
-                ONBurnableItemEnter?.Invoke(itemEntity, item);
+                ONBurnableItemEnter?.Invoke(itemEntity, burnableItem);
             }
         }
         

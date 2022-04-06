@@ -42,18 +42,22 @@ public class Bonfire : Interactable
         fireCollider.ONBurnableItemEnter -= OnBurnableItemReceived;
     }
 
-    private void OnBurnableItemReceived(ItemEntity entity, BurnableItem item)
+    private void OnBurnableItemReceived(ItemEntity entity, IBurnableItem item)
     {
-        entity.Kill();
-        AddBurnableItem(item);
+        while(BurningValue < maxBurningDuration && entity.SaveData.Amount > 0)
+            AddBurnableItem(entity, item);
     }
 
-    public void AddBurnableItem(BurnableItem item)
+    public void AddBurnableItem(ItemEntity entity, IBurnableItem item)
     {
+        SaveData.burningDuration += item.BurningDuration;
         sparklesParticles.Play();
-        SaveData.burningDuration += item.Data.burningDuration;
         if(Math.Abs(BurningValue - _previousUpdateValue) > updateDifferenceStep)
             UpdateParticlesAndLights();
+        
+        if(entity is null) return;
+        entity.SaveData.Amount--;
+        if(entity.SaveData.Amount <= 0) entity.Kill();
     }
 
     private void UpdateParticlesAndLights()

@@ -1,14 +1,15 @@
-﻿using UnityEngine;
-
-public class BurnableItem : Item, IUsableOnInteractable
+﻿public class BurnableItem : Item, IUsableOnInteractable, IBurnableItem
 {
     public new BurnableItemData Data => (BurnableItemData) data;
+    
+    public float BurningDuration => Data.burningDuration;
+
 
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         if (interactable is Bonfire bonfire)
         {
-            bonfire.AddBurnableItem(this);
+            bonfire.AddBurnableItem(null, this);
             slot.RemoveItem(1);
         }
     }
@@ -19,4 +20,5 @@ public class BurnableItem : Item, IUsableOnInteractable
     public BurnableItem(ItemIdentifier identifier) : base(identifier)
     {
     }
+
 }

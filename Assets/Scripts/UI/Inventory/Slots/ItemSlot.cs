@@ -110,15 +110,12 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public virtual void UpdateUI()
     {
-        //TODO: BreakableItem
-        if (storedItem is Instrument instrument)
-        {
-            if(durabilityBar is not null) durabilityBar.UpdateDurability(instrument);
-        }
-        else
-        {
-            if(durabilityBar is not null) durabilityBar.SetActive(false);
-        }
+        if(durabilityBar is not null)
+            if (storedItem is IDamageableItem damageableItem)
+                durabilityBar.UpdateDurability(damageableItem);
+            else 
+                durabilityBar.SetActive(false);
+        
         // Если предмет был последний
         if (storedItem == null || storedAmount <= 0)
         {

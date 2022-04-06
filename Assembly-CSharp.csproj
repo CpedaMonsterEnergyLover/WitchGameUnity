@@ -205,6 +205,8 @@
      <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagableEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BurnableItemData.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IBurnableItem.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IDamageableItem.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
