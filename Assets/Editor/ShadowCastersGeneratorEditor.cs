@@ -2,7 +2,7 @@
 using UnityEditor;
 
 [CustomEditor(typeof(ShadowCaster2DTilemap))]
-public class ShadowCastersGeneratorEditor : Editor
+public class ShadowCastersGeneratorEditor : UnityEditor.Editor
 {
 
     public override void OnInspectorGUI()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using WorldScenes;
 
 public class Generator : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Generator : MonoBehaviour
     private float[] _cardinalMap;
 
 
-    public WorldData GenerateWorld(List<WorldLayer> layers)
+    public WorldData GenerateWorld(List<WorldLayer> layers, Base worldScene)
     { 
         HashSeed();
         InitRandom();
@@ -60,7 +61,9 @@ public class Generator : MonoBehaviour
             generatorSettings.width,
             generatorSettings.height,
             layerData,
-            biomeLayer);
+            biomeLayer,
+            worldScene
+            );
         
         return worldData;
     }

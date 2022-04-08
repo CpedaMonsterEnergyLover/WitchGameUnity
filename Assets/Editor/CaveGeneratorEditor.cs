@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CustomEditor (typeof (CaveManager))]
-public class CaveGeneratorEditor : Editor {
+public class CaveGeneratorEditor : UnityEditor.Editor {
 
     public override void OnInspectorGUI() {
         CaveManager manager = target as CaveManager;

@@ -108,5 +108,5 @@ public class WorldTile
     {
         if(instantiatedInteractable is not null) instantiatedInteractable.SetActive(!isHidden);
     }
-    
+
 }

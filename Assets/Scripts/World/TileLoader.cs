@@ -26,6 +26,8 @@ public class TileLoader : MonoBehaviour
         Everything,
         OnlyInteractables
     }
+
+    public List<WorldTile> TilesBeenEverLoaded { get; } = new();
     
     public TileCache TileCache { get; } = new TileCache(0);
     private readonly List<Vector2Int> _loadedTiles = new();
@@ -111,6 +113,7 @@ public class TileLoader : MonoBehaviour
         tile.Load();
         TileCache.Remove(tile);
         _loadedTiles.Add(new Vector2Int(x, y));
+        if(!TilesBeenEverLoaded.Contains(tile)) TilesBeenEverLoaded.Add(tile);
     }
     
 }

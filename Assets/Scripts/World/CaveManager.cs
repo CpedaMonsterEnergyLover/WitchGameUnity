@@ -14,7 +14,7 @@ public class CaveManager : WorldManager
     public override void GenerateWorld()
     {
         gameCollectionManager.Init();
-        WorldData = generator.GenerateWorld(layers);
+        WorldData = generator.GenerateWorld(layers, worldScene);
         Instance = this;
         
         DrawAllTiles();

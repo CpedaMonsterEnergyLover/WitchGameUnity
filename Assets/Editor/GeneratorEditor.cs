@@ -2,7 +2,7 @@
 using UnityEditor;
 
 [CustomEditor (typeof (WorldManager))]
-public class GeneratorEditor : Editor {
+public class GeneratorEditor : UnityEditor.Editor {
 
     public override void OnInspectorGUI() {
         WorldManager manager = target as WorldManager;

@@ -4,8 +4,12 @@ using UnityEngine;
 public class WorldManager : MonoBehaviour
 {
     public static WorldManager Instance;
+
+    [SerializeField, Header("WorldScene")]
+    public WorldScenes.Base worldScene;
     
-    [SerializeField, Header("Игрок")] public Transform playerTransform;
+    [SerializeField, Header("Игрок")] 
+    public Transform playerTransform;
     
     [Header("Игровые настройки")]
     public PlayerSettings playerSettings;
@@ -22,13 +26,31 @@ public class WorldManager : MonoBehaviour
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
+    
+    
 
 
     
     
     public WorldData WorldData { get; protected set; }
 
+    /*
+     
+     private void Start()
+     {
+         // Load WorldData from main file
+         if (!GameDataManager.Instance.WasGameSaved)
+         {
+             // Load WorldData changes from temp file
+             // Apply temp data to WorldData
+         }
+     }
+     
+     */
 
+    public GameDataManager.TemporaryWorldData BuildTemporaryData()
+        => new GameDataManager.TemporaryWorldData(TileLoader.Instance.TilesBeenEverLoaded, worldScene);
+    
     
     private void Awake()
     {
@@ -53,7 +75,7 @@ public class WorldManager : MonoBehaviour
     public virtual void GenerateWorld()
     { 
         gameCollectionManager.Init();
-        WorldData = generator.GenerateWorld(layers);
+        WorldData = generator.GenerateWorld(layers, worldScene);
         Instance = this;
     }
 

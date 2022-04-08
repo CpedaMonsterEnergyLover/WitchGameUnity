@@ -1,16 +1,17 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using WorldScenes;
 using Object = UnityEngine.Object;
 
 [Serializable]
 public class WorldData
 {
-    private WorldTile[,] _worldTiles;
+    public WorldTile[,] WorldTiles { get; private set; }
+    public Base WorldScene { get; private set; }
 
-    public WorldTile GetTile(int x, int y) =>  _worldTiles[x, y];
+    public WorldTile GetTile(int x, int y) =>  WorldTiles[x, y];
+    public WorldTile SetTile(WorldTile tile) =>  WorldTiles[tile.Position.x, tile.Position.y] = tile;
     
-    public List<int> Entitites { private set; get; }
     public int MapWidth { private set; get; }
     public int MapHeight { private set; get; }
 
@@ -18,11 +19,13 @@ public class WorldData
         int width, 
         int height, 
         bool[][,] layers,
-        InteractableData[,] biomeLayer)
+        InteractableData[,] biomeLayer, 
+        Base worldScene)
     {
         MapWidth = width;
         MapHeight = height;
-        _worldTiles = new WorldTile[width, height];
+        WorldScene = worldScene;
+        WorldTiles = new WorldTile[width, height];
         
         for (int x = 0; x < width; x++)
         {
@@ -31,7 +34,7 @@ public class WorldData
                 bool[] tiles = new bool[layers.Length];
                 for (var i = 0; i < layers.Length; i++) 
                     tiles[i] = layers[i][x, y];
-                _worldTiles[x, y] = new WorldTile(
+                WorldTiles[x, y] = new WorldTile(
                     x, y, tiles, biomeLayer[x, y]);
             }
         }
@@ -42,23 +45,23 @@ public class WorldData
         
     }
 
-    public void SetInteractableOffset(int x, int y, Vector2 offset) => _worldTiles[x, y].interactableOffset = offset;
+    public void SetInteractableOffset(int x, int y, Vector2 offset) => WorldTiles[x, y].interactableOffset = offset;
 
     public InteractableSaveData AddInteractableObject(Vector2Int position, InteractableSaveData saveData)
     {
-        WorldTile tile = _worldTiles[position.x, position.y];
+        WorldTile tile = WorldTiles[position.x, position.y];
 
         if (TileLoader.Instance.TileCache.Contains(tile))
             TileLoader.Instance.TileCache.Remove(tile);
         
-        _worldTiles[position.x, position.y].savedData = saveData;
+        WorldTiles[position.x, position.y].savedData = saveData;
         return saveData;
     }
 
 
     public void ClearObjects()
     {
-        foreach (WorldTile worldTile in _worldTiles)
+        foreach (WorldTile worldTile in WorldTiles)
         {
             if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
         }
@@ -70,7 +73,7 @@ public class WorldData
         for (int y = minY; y <= maxY; y++)
         {
             if(!CoordsBelongsToWorld(x, y)) return;
-            _worldTiles[x,y].ClearInteractable();
+            WorldTiles[x,y].ClearInteractable();
         }
     }
     
@@ -93,11 +96,13 @@ public class WorldData
         for(int x = 0; x < MapWidth; x++)
         for (int y = 0; y < MapHeight; y++)
         {
-            newData[x, y] = _worldTiles[x + minX, y + minY];
+            newData[x, y] = WorldTiles[x + minX, y + minY];
             newData[x, y].Position = new Vector2Int(x, y);
         }
 
-        _worldTiles = newData;
+        WorldTiles = newData;
     }
+    
+    
     
 }
