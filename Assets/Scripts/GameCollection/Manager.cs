@@ -11,11 +11,6 @@ namespace GameCollection
         public Interactables interactables;
         public CraftingRecipies recipies;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         public void Init()
         {
             items.Init();

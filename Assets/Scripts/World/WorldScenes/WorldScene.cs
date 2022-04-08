@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace WorldScenes
 {
-    public abstract class Base : ScriptableObject
+    public abstract class BaseWorldScene : ScriptableObject
     {
         [Header("Name of the scene, which this world loads")]
         public string sceneName;

@@ -5035,7 +5035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57e07541c5371a4584a08f29a2a85e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDataProvider: {fileID: 0}
   itemSlotGO: {fileID: 8336243488512570978}
   interactionBar: {fileID: 8336243490255661247}
   itemSlot: {fileID: 8336243488512570980}

@@ -17,13 +17,13 @@ public class GameDataManager : MonoBehaviour
 
     public class TemporaryWorldData
     {
-        public TemporaryWorldData(List<WorldTile> data, Base worldScene)
+        public TemporaryWorldData(List<WorldTile> data, BaseWorldScene worldScene)
         {
             Data = data;
             WorldScene = worldScene;
         }
 
-        public Base WorldScene { get; }
+        public BaseWorldScene WorldScene { get; }
         public List<WorldTile> Data { get; }
     }
 
@@ -43,8 +43,8 @@ public class GameDataManager : MonoBehaviour
     private void MergeTemporaryData()
     {
         // Get all worldscenes/temporary/... files, iterate over them
-        Base[] scenes = new Base[10];
-        foreach (Base scene in scenes)
+        BaseWorldScene[] scenes = new BaseWorldScene[10];
+        foreach (BaseWorldScene scene in scenes)
         {
             WorldData persistentData = LoadPersistentWorldData(scene);
             TemporaryWorldData temporaryData = LoadTemporaryWorldData(scene);
@@ -55,7 +55,7 @@ public class GameDataManager : MonoBehaviour
     }
     
     
-    private WorldData LoadPersistentWorldData(Base worldScene)
+    private WorldData LoadPersistentWorldData(BaseWorldScene worldScene)
     {
         string dataPath = worldScene.GetPersistantPath();
         // WorldData loadedData = null;
@@ -70,7 +70,7 @@ public class GameDataManager : MonoBehaviour
         // Save data into file
     }
     
-    private TemporaryWorldData LoadTemporaryWorldData(Base worldScene)
+    private TemporaryWorldData LoadTemporaryWorldData(BaseWorldScene worldScene)
     {
         string dataPath = worldScene.GetTemporaryPath();
         // TemporaryWorldData loadedData = null;
@@ -85,7 +85,7 @@ public class GameDataManager : MonoBehaviour
         // Save data into file
     }
 
-    private void DestroyTemporaryWorldData(Base worldScene)
+    private void DestroyTemporaryWorldData(BaseWorldScene worldScene)
     {
         string dataPath = worldScene.GetTemporaryPath();
         // Destroy file with data

@@ -6,9 +6,9 @@ public class WorldManager : MonoBehaviour
     public static WorldManager Instance;
 
     [SerializeField, Header("WorldScene")]
-    public WorldScenes.Base worldScene;
+    public WorldScenes.BaseWorldScene worldScene;
     
-    [SerializeField, Header("Игрок")] 
+    // [SerializeField, Header("Игрок")] 
     public Transform playerTransform;
     
     [Header("Игровые настройки")]
@@ -54,6 +54,7 @@ public class WorldManager : MonoBehaviour
     
     private void Awake()
     {
+        playerTransform = FindObjectOfType<PlayerController>().transform;
         Application.targetFrameRate = playerSettings.targetFrameRate;
         Instance = this;
         

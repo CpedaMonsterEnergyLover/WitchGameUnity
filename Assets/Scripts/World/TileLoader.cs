@@ -37,6 +37,7 @@ public class TileLoader : MonoBehaviour
     
     private void Start()
     {
+        playerTransform = FindObjectOfType<PlayerController>().transform;
         _worldManager = WorldManager.Instance;
         _worldData = _worldManager.WorldData;
 

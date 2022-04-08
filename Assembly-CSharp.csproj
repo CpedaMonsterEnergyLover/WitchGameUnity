@@ -134,7 +134,6 @@
      <Compile Include="Assets\Scripts\ReceiverColliders\BulletReceiverCollider.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\PlaceableWindow.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
-     <Compile Include="Assets\ParticleSystemIndividualSortingOrder.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxPanel.cs" />
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
@@ -213,10 +212,14 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\Solid.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\Multipart.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\SolidWorldScene.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\WorldScene.cs" />
      <Compile Include="Assets\Scripts\GameDataManager\GameDataManager.cs" />
+     <Compile Include="Assets\Scripts\Bullet\ParticleSystemIndividualSortingOrder.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
+     <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
+     <Compile Include="Assets\Scripts\GameSystem.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

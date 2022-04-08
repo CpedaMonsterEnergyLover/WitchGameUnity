@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 public class WorldData
 {
     public WorldTile[,] WorldTiles { get; private set; }
-    public Base WorldScene { get; private set; }
+    public BaseWorldScene WorldScene { get; private set; }
 
     public WorldTile GetTile(int x, int y) =>  WorldTiles[x, y];
     public WorldTile SetTile(WorldTile tile) =>  WorldTiles[tile.Position.x, tile.Position.y] = tile;
@@ -20,7 +20,7 @@ public class WorldData
         int height, 
         bool[][,] layers,
         InteractableData[,] biomeLayer, 
-        Base worldScene)
+        BaseWorldScene worldScene)
     {
         MapWidth = width;
         MapHeight = height;

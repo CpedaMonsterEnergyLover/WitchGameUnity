@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 8855655365878287582}
   - component: {fileID: 3063658522872053841}
   - component: {fileID: 2805525460596030826}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FOVFader
   m_TagString: Untagged
   m_Icon: {fileID: 0}

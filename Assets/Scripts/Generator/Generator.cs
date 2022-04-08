@@ -27,7 +27,7 @@ public class Generator : MonoBehaviour
     private float[] _cardinalMap;
 
 
-    public WorldData GenerateWorld(List<WorldLayer> layers, Base worldScene)
+    public WorldData GenerateWorld(List<WorldLayer> layers, BaseWorldScene worldScene)
     { 
         HashSeed();
         InitRandom();
