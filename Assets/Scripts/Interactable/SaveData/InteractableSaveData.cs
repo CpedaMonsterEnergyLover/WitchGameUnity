@@ -1,11 +1,11 @@
 using UnityEngine;
+using System;
 
-[System.Serializable]
-// Базовый класс объединяющий общие сохраняемые данные всех игровых объектов
-public class InteractableSaveData
+// [Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Base")]
+[Serializable]
+public class InteractableSaveData /*: ScriptableObject*/
 {
     [Header("Interactable SaveData")] 
-    [SerializeReference]
     public string id;
     public int creationHour = TimelineManager.TotalHours;
     public bool preInitialized;

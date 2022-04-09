@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using WorldScenes;
 
 namespace GameCollection
 {
@@ -10,6 +11,7 @@ namespace GameCollection
         public Entities entities;
         public Interactables interactables;
         public CraftingRecipies recipies;
+        public WorldScenesCollection scenesCollection;
 
         public void Init()
         {
@@ -17,6 +19,7 @@ namespace GameCollection
             entities.Init();
             interactables.Init();
             recipies.Init();
+            scenesCollection.Init();
         }
 
         public static void MapCollection<T>(List<GameObject> objects, Dictionary<string, GameObject> dictionary, string collectionName) where T : Interactable
@@ -48,6 +51,5 @@ namespace GameCollection
             });
         }
     }
-    
-    
+
 }

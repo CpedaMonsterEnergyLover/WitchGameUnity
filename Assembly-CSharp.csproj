@@ -42,12 +42,15 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
      <Compile Include="Assets\Scripts\Util\ShadowCaster2DTilemap.cs" />
      <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagable.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\SkillCategory.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
@@ -98,6 +101,7 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\TooltipManager.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\WorldScene.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\NewItemPicker.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IBurnableItem.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\InventorySlot.cs" />
@@ -135,6 +139,7 @@
      <Compile Include="Assets\Scripts\UI\Windows\PlaceableWindow.cs" />
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\SolidWorldScene.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxPanel.cs" />
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
@@ -151,6 +156,7 @@
      <Compile Include="Assets\Scripts\Entities\Data\OldEntityData.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingRecipe.cs" />
+     <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\PlaceableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
@@ -182,12 +188,14 @@
      <Compile Include="Assets\Scripts\Interactable\Data\VeinData.cs" />
      <Compile Include="Assets\Scripts\Player\InteractionDataProvider.cs" />
      <Compile Include="Assets\Scripts\UI\SingletonInitiator.cs" />
+     <Compile Include="Assets\Scripts\Bullet\ParticleSystemIndividualSortingOrder.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityType.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\VeinSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Shaker.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowIdentifier.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowManager.cs" />
+     <Compile Include="Assets\Scripts\GameSystem.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\InventoryWindow.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
@@ -212,14 +220,9 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\SolidWorldScene.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\WorldScene.cs" />
-     <Compile Include="Assets\Scripts\GameDataManager\GameDataManager.cs" />
-     <Compile Include="Assets\Scripts\Bullet\ParticleSystemIndividualSortingOrder.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
-     <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
-     <Compile Include="Assets\Scripts\GameSystem.cs" />
+     <Compile Include="Assets\Scripts\GameCollection\WorldScenesCollection.cs" />
+     <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
+     <Compile Include="Assets\Scripts\GameData\SerializeableVector2.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

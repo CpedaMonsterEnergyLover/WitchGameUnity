@@ -7,10 +7,11 @@ namespace GameCollection
     {
         public List<CraftingRecipe> objects;
         
-        public static List<CraftingRecipe> Collection;
+        public static List<CraftingRecipe> Collection = new();
 
         public void Init()
         {
+            Collection.Clear();
             Collection = objects;
         }
     }

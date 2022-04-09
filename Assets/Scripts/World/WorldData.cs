@@ -6,14 +6,15 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class WorldData
 {
-    public WorldTile[,] WorldTiles { get; private set; }
-    public BaseWorldScene WorldScene { get; private set; }
-
-    public WorldTile GetTile(int x, int y) =>  WorldTiles[x, y];
-    public WorldTile SetTile(WorldTile tile) =>  WorldTiles[tile.Position.x, tile.Position.y] = tile;
+    [SerializeField] private BaseWorldScene worldScene;
+    [SerializeField] private SerializeableQuadArray<WorldTile> worldTiles;
     
-    public int MapWidth { private set; get; }
-    public int MapHeight { private set; get; }
+    public BaseWorldScene WorldScene => worldScene;
+    public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
+    public void SetTile(WorldTile tile) => worldTiles.Set(tile.Position.x, tile.Position.y, tile);
+    public int MapWidth => worldTiles.Width;
+    public int MapHeight => worldTiles.Height;
+
 
     public WorldData(
         int width, 
@@ -22,10 +23,9 @@ public class WorldData
         InteractableData[,] biomeLayer, 
         BaseWorldScene worldScene)
     {
-        MapWidth = width;
-        MapHeight = height;
-        WorldScene = worldScene;
-        WorldTiles = new WorldTile[width, height];
+        this.worldScene = worldScene;
+        worldTiles = new SerializeableQuadArray<WorldTile>(width, height);
+
         
         for (int x = 0; x < width; x++)
         {
@@ -34,37 +34,31 @@ public class WorldData
                 bool[] tiles = new bool[layers.Length];
                 for (var i = 0; i < layers.Length; i++) 
                     tiles[i] = layers[i][x, y];
-                WorldTiles[x, y] = new WorldTile(
-                    x, y, tiles, biomeLayer[x, y]);
+                worldTiles.Set(x, y, new WorldTile(
+                    x, y, tiles, biomeLayer[x, y]));
             }
         }
+
     }
 
-    public void CropOutside(int startX, int startY, int endX, int endY)
-    {
-        
-    }
-
-    public void SetInteractableOffset(int x, int y, Vector2 offset) => WorldTiles[x, y].interactableOffset = offset;
+    public void SetInteractableOffset(int x, int y, Vector2 offset) => worldTiles.Get(x, y).interactableOffset = offset;
 
     public InteractableSaveData AddInteractableObject(Vector2Int position, InteractableSaveData saveData)
     {
-        WorldTile tile = WorldTiles[position.x, position.y];
+        WorldTile tile = worldTiles.Get(position.x, position.y);
 
         if (TileLoader.Instance.TileCache.Contains(tile))
             TileLoader.Instance.TileCache.Remove(tile);
         
-        WorldTiles[position.x, position.y].savedData = saveData;
+        worldTiles.Get(position.x, position.y).savedData = saveData;
         return saveData;
     }
 
 
     public void ClearObjects()
     {
-        foreach (WorldTile worldTile in WorldTiles)
-        {
-            if (worldTile.instantiatedInteractable is not null) Object.DestroyImmediate(worldTile.instantiatedInteractable);
-        }
+        foreach (WorldTile worldTile in worldTiles)
+            Object.DestroyImmediate(worldTile.instantiatedInteractable);
     }
 
     public void ClearZone(int minX, int minY, int maxX, int maxY)
@@ -73,7 +67,7 @@ public class WorldData
         for (int y = minY; y <= maxY; y++)
         {
             if(!CoordsBelongsToWorld(x, y)) return;
-            WorldTiles[x,y].ClearInteractable();
+            worldTiles.Get(x, y).ClearInteractable();
         }
     }
     
@@ -88,21 +82,19 @@ public class WorldData
         minY = Math.Clamp(minY, 0, MapHeight);
         maxX = Math.Clamp(maxX, 0, MapWidth);
         maxY = Math.Clamp(maxY, 0, MapHeight);
-        MapWidth = maxX - minX;
-        MapHeight = maxY - minY;
-        Debug.Log($"({minX}, {minY}) : ({maxX}, {maxY}), w: {MapWidth}, h: {MapHeight})");
-        WorldTile[,] newData = new WorldTile[MapWidth,MapHeight];
+        int mapWidth = maxX - minX;
+        int mapHeight = maxY - minY;
+        SerializeableQuadArray<WorldTile> newData = new SerializeableQuadArray<WorldTile>(mapWidth, mapHeight);
 
-        for(int x = 0; x < MapWidth; x++)
-        for (int y = 0; y < MapHeight; y++)
+        for(int x = 0; x < mapWidth; x++)
+        for (int y = 0; y < mapHeight; y++)
         {
-            newData[x, y] = WorldTiles[x + minX, y + minY];
-            newData[x, y].Position = new Vector2Int(x, y);
+            WorldTile newTile = worldTiles.Get(x, y);
+            newTile.Position = new Vector2Int(x, y);
+            newData.Set(x,y, newTile);
         }
 
-        WorldTiles = newData;
+        worldTiles = newData;
     }
-    
-    
     
 }

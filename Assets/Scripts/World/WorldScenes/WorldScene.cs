@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace WorldScenes
 {
+    [System.Serializable]
     public abstract class BaseWorldScene : ScriptableObject
     {
         [Header("Name of the scene, which this world loads")]

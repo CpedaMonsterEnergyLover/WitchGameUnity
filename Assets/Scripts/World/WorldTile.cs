@@ -1,31 +1,38 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 
-// Хранит информацию о тайле мира
-[System.Serializable]
+[Serializable]
 public class WorldTile
 {
-    public Interactable instantiatedInteractable;
-    public InteractableSaveData savedData;
-    public bool loaded;
-    public bool cached;
-    public Vector2 interactableOffset;
-    // public bool mirrored;
-    public List<Entity> entities = new();
+    [SerializeField] public Vector2 interactableOffset;
+    [SerializeField] public InteractableSaveData savedData;
+    [SerializeField] private bool[] layers;
+    [SerializeField] private Vector2Int position;
+    [SerializeField] private List<EntitySaveData> entitySaveDatas = new ();
 
-    public bool[] Layers { get; private set; }
-    public Vector2Int Position { get; set; }
-    
+    [NonSerialized] public Interactable instantiatedInteractable;
+    [NonSerialized] public bool loaded;
+    [NonSerialized] public bool cached;
+    // TODO: manage this 
+    [NonSerialized] public List<Entity> entities = new();
+
+    public bool[] Layers => layers;
+    public Vector2Int Position
+    {
+        get => position;
+        set => position = value;
+    }
     public bool HasInteractable => savedData is not null;
 
 
     public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData)
     {
         Position = new Vector2Int(x, y);
-        Layers = tiles;
+        layers = tiles;
         savedData = interactableData is null ? null : 
             new InteractableSaveData(interactableData);
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);

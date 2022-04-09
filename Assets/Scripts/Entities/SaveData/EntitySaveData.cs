@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public abstract class EntitySaveData
+public class EntitySaveData
 {
     [Header("Entity data")] 
     public string id;

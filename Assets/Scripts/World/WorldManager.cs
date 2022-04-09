@@ -77,6 +77,7 @@ public class WorldManager : MonoBehaviour
     { 
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorld(layers, worldScene);
+        Debug.Log(JsonUtility.ToJson(WorldData, true));
         Instance = this;
     }
 
