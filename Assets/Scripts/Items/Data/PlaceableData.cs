@@ -3,6 +3,6 @@
 [CreateAssetMenu(menuName = "Items/Furniture")]
 public class PlaceableData : ItemData
 {
-    public GameObject prefab;
+    public Sprite preview;
     public InteractableData interactable;
 }

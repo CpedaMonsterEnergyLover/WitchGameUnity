@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Interactable : MonoBehaviour
 {
     #region Vars
@@ -15,7 +17,7 @@ public class Interactable : MonoBehaviour
     [SerializeReference, Header("Instance data")]
     protected InteractableSaveData saveData;
     // Содержит общие поля объекта
-    [SerializeReference, Header("Data")]
+    [SerializeField, Header("Data")]
     protected InteractableData data;
 
     protected Fader Fader;
@@ -53,7 +55,7 @@ public class Interactable : MonoBehaviour
         prefab = Instantiate(prefab, WorldManager.Instance.interactableTransform);
         Interactable interactable = prefab.GetComponent<Interactable>();
 
-        if (saveData.preInitialized)
+        if (saveData.initialized)
         {
             interactable.saveData = saveData;
         }
@@ -65,7 +67,10 @@ public class Interactable : MonoBehaviour
     
     protected virtual void InitSaveData(InteractableData origin)
     {
-        saveData = new InteractableSaveData(origin);
+        saveData = new InteractableSaveData(origin)
+        {
+            initialized = true
+        };
     }
     
     public virtual void Interact(float value = 1.0f)

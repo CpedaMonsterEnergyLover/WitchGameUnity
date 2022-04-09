@@ -11,14 +11,11 @@ namespace WorldScenes
         [Header("Name of the world, which appears in the game")]
         public string worldName;
         
-        public string GetPersistantPath() => $"worldscenes/persistant/{worldName}"; 
-        public string GetTemporaryPath() => $"worldscenes/temporary/{worldName}";
+        public string FileName => $"{sceneName}.json"; 
 
         public virtual void Load(int subworldIndex = -1)
         {
-            // Save current world temporary data
-            GameDataManager.Instance.SaveTemporaryWorldData(WorldManager.Instance.BuildTemporaryData());
-            // Load new scene
+            GameDataManager.SaveTemporaryWorldData();
             SceneManager.LoadScene(sceneName);
         }
     }

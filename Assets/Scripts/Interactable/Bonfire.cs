@@ -89,7 +89,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new BonfireSaveData(origin);
+        saveData = new BonfireSaveData(origin) { initialized = true };
     }
 
 

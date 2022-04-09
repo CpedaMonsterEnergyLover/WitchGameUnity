@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
@@ -22,34 +23,11 @@ public class WorldManager : MonoBehaviour
     
     [SerializeField, Header("Генератор")]
     protected Generator generator;
-    public bool generateOnStart = true;
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
     
-    
-
-
-    
-    
     public WorldData WorldData { get; protected set; }
-
-    /*
-     
-     private void Start()
-     {
-         // Load WorldData from main file
-         if (!GameDataManager.Instance.WasGameSaved)
-         {
-             // Load WorldData changes from temp file
-             // Apply temp data to WorldData
-         }
-     }
-     
-     */
-
-    public GameDataManager.TemporaryWorldData BuildTemporaryData()
-        => new GameDataManager.TemporaryWorldData(TileLoader.Instance.TilesBeenEverLoaded, worldScene);
     
     
     private void Awake()
@@ -57,14 +35,56 @@ public class WorldManager : MonoBehaviour
         playerTransform = FindObjectOfType<PlayerController>().transform;
         Application.targetFrameRate = playerSettings.targetFrameRate;
         Instance = this;
-        
-        if (!generateOnStart) return;
-        
-        ClearAllTiles();
-        GenerateWorld();
-        SpawnPlayer();
-        
     }
+
+ 
+    private void Start()
+    {
+        ClearAllTiles();
+        ClearAllInteractable();
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        WorldData loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
+
+        // Если файла мира еще нет, генерирует его
+        if (loadedData is null)
+        {
+            Debug.Log($"Generating world {worldScene.sceneName}");
+            GameDataManager.DeleteTemporaryData(worldScene);
+            GenerateWorld();
+        }
+        // Если он уже есть
+        else
+        {
+            var tempData = GameDataManager.LoadTemporaryWorldData(worldScene);
+            // Если найден временный файл, мержит его
+            if (tempData is not null)
+            {
+                Debug.Log($"Found temp file for {worldScene.sceneName}. Merging files...");
+                var mergedTiles = tempData
+                    .Select(tile => loadedData
+                        .GetTile(tile.Position.x, tile.Position.y)
+                            .SetData(tile))
+                                .ToList();
+
+                TileLoader.Instance.temporaryData = mergedTiles;
+                Debug.Log($"{mergedTiles.Count} merged;");
+            }
+            else
+            {
+                Debug.Log($"Temp file for {worldScene.sceneName} not found");
+
+            }
+
+            WorldData = loadedData;
+        }
+        
+        SpawnPlayer();
+    }
+ 
 
     protected virtual void SpawnPlayer()
     {
@@ -74,11 +94,14 @@ public class WorldManager : MonoBehaviour
     }
     
     public virtual void GenerateWorld()
-    { 
-        gameCollectionManager.Init();
+    {
+        if (Application.isEditor)
+        {
+            gameCollectionManager.Init();
+            Instance = this;
+        }
         WorldData = generator.GenerateWorld(layers, worldScene);
-        Debug.Log(JsonUtility.ToJson(WorldData, true));
-        Instance = this;
+        GameDataManager.SavePersistentWorldData(WorldData);
     }
 
     public void DrawAllTiles()

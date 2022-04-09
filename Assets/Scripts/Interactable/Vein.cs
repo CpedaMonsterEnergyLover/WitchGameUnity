@@ -18,7 +18,7 @@ public class Vein : Interactable
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new VeinSaveData(origin);
+        saveData = new VeinSaveData(origin) { initialized = true };
     }
 
     public override void Interact(float value = 1)

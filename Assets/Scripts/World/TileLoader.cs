@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class TileLoader : MonoBehaviour
 {
+    #region Singleton
+
     public static TileLoader Instance;
 
     private void Awake()
     {
         Instance = this;
     }
+
+    #endregion
 
 
     [SerializeField]
@@ -18,6 +22,12 @@ public class TileLoader : MonoBehaviour
     public int viewRangeX;
     [Range(1,50)]
     public int viewRangeY;
+    
+    public TileCache TileCache { get; } = new TileCache(0);
+    private readonly List<Vector2Int> _loadedTiles = new();
+    private WorldData _worldData;
+    private WorldManager _worldManager;
+    public List<WorldTile> temporaryData = new();
 
     public TileLoadingMode mode;
 
@@ -26,14 +36,6 @@ public class TileLoader : MonoBehaviour
         Everything,
         OnlyInteractables
     }
-
-    public List<WorldTile> TilesBeenEverLoaded { get; } = new();
-    
-    public TileCache TileCache { get; } = new TileCache(0);
-    private readonly List<Vector2Int> _loadedTiles = new();
-    private WorldData _worldData;
-    private WorldManager _worldManager;
-
     
     private void Start()
     {
@@ -114,7 +116,7 @@ public class TileLoader : MonoBehaviour
         tile.Load();
         TileCache.Remove(tile);
         _loadedTiles.Add(new Vector2Int(x, y));
-        if(!TilesBeenEverLoaded.Contains(tile)) TilesBeenEverLoaded.Add(tile);
+        if(!temporaryData.Contains(tile)) temporaryData.Add(tile);
     }
     
 }

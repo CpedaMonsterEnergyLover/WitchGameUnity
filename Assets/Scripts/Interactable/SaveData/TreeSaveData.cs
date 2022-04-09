@@ -5,29 +5,21 @@ using UnityEngine;
 public class TreeSaveData : InteractableSaveData
 {
     [Header("Tree data")] 
-    public int barkLeft = 10;
-    public int resinLeft = 10;
-    public bool signed;
-    public bool isChopped;
+    [SerializeField] public int barkLeft = 10;
+    [SerializeField] public int resinLeft = 10;
+    [SerializeField] public bool signed;
+    [SerializeField] public bool isChopped;
+    [SerializeField] public int health;
 
-    // Инициализируемые из Data поля
-    public int health;
-
-    // Конструктор для инициализации значеий
-    public TreeSaveData(InteractableData origin) : base(origin)
-    {
-    }
-    
-    // Конструктор для копирования
-    protected TreeSaveData() { }
-
+    public TreeSaveData(InteractableData origin) : base(origin) { }
+    private TreeSaveData() { }
     public override InteractableSaveData DeepClone()
     {
         return new TreeSaveData
         {
             id = id,
             creationHour = creationHour,
-            
+            initialized = initialized,
             barkLeft = barkLeft,
             health = health,
             isChopped = isChopped,

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractablePreview : MonoBehaviour
 {
-    private GameObject _preview;
+    public Image preview;
     private PlaceableItem _currentItem;
     private PlaceableData Data => _currentItem?.Data;
-    private SpriteRenderer[] _cachedRenderers;
 
     public static InteractablePreview Instance;
 
@@ -15,6 +15,7 @@ public class InteractablePreview : MonoBehaviour
     {
         Instance = this;
         gameObject.SetActive(false);
+        preview.enabled = true;
     }
 
     private void Update()
@@ -27,15 +28,10 @@ public class InteractablePreview : MonoBehaviour
     {
         if (item.Data != Data)
         {
-            if(_preview is not null)
-                Destroy(_preview);
             _currentItem = item;
-            _preview = Instantiate(Data.prefab);
-            CacheRenderers();
-            _preview.name = "InteractablePreview";
+            preview.sprite = Data.preview;
         }
         UpdatePreview();
-        _preview.SetActive(true);
         gameObject.SetActive(true);
     }
 
@@ -47,14 +43,15 @@ public class InteractablePreview : MonoBehaviour
 
     public void Hide()
     {
-        _preview.SetActive(false);
         gameObject.SetActive(false);
     }
 
     private void UpdatePreviewPosition()
     {
-        _preview.transform.position =
-            InteractionDataProvider.Data.Tile.Position + new Vector2(0.5f, 0.5f);
+        Vector3 newPos = (Vector2)InteractionDataProvider.Data.Tile.Position;
+        newPos += new Vector3(0.5f, 0.5f, 0);
+        newPos.z = 0;
+        transform.position = newPos;
     }
 
     private void UpdatePreviewColor()
@@ -62,16 +59,10 @@ public class InteractablePreview : MonoBehaviour
         InteractionEventData eventData = InteractionDataProvider.Data;
         Color finalColor = _currentItem.IsInDistance(null, eventData.Tile, null) ? 
             _currentItem.AllowUse(eventData.Entity, eventData.Tile, eventData.Interactable) ? 
-                new Color(0.49f, 1f, 0.46f, 0.7f) : new Color(1f, 0.25f, 0.27f, 0.7f)
+                new Color(0.49f, 1f, 0.46f, 0.7f) : 
+                new Color(1f, 0.25f, 0.27f, 0.7f)
             : new Color(1f, 1f, 1f, 0.4f);
-        foreach (SpriteRenderer spriteRenderer in _cachedRenderers)
-        {
-            spriteRenderer.color = finalColor;
-        }
+            preview.color = finalColor;
     }
 
-    private void CacheRenderers()
-    {
-        _cachedRenderers = _preview.GetComponentsInChildren<SpriteRenderer>();
-    }
 }

@@ -21,7 +21,7 @@ public class Herb : Interactable
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new HerbSaveData(origin);
+        saveData = new HerbSaveData(origin) { initialized = true };
     }
 
     public override void OnTileLoad(WorldTile loadedTile)

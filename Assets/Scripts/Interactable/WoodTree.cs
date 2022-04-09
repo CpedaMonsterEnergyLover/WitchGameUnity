@@ -5,8 +5,6 @@ using Random = UnityEngine.Random;
 
 public class WoodTree : Interactable
 {
-    #region Vars
-
     // Public fields
     public new TreeData Data => (TreeData) data;
     public new TreeSaveData SaveData => (TreeSaveData) saveData;
@@ -29,25 +27,27 @@ public class WoodTree : Interactable
         if(_shakeRoutine is not null) StopCoroutine(_shakeRoutine);
     }
 
-    #endregion
     
-    
-    
-    
-    
-    
+
     #region ClassMethods
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new TreeSaveData(origin);
-        SaveData.health = Data.health;
+        saveData = new TreeSaveData(origin)
+        {
+            initialized = true,
+            health = Data.health,
+        };
     }
 
     public override void OnTileLoad(WorldTile loadedTile)
     {
         base.OnTileLoad(loadedTile);
-        if(SaveData.health <= Data.fallOnHealth) RemoveLeaves();
+        if (SaveData.health <= Data.fallOnHealth)
+        {
+            Debug.Log($"Remove leaves at {tile.Position} on {SaveData.health} hp");
+            RemoveLeaves();
+        }
     }
 
     public void Chop(int dmg)

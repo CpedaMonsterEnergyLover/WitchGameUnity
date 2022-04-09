@@ -11,7 +11,6 @@ public class WorldData
     
     public BaseWorldScene WorldScene => worldScene;
     public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
-    public void SetTile(WorldTile tile) => worldTiles.Set(tile.Position.x, tile.Position.y, tile);
     public int MapWidth => worldTiles.Width;
     public int MapHeight => worldTiles.Height;
 

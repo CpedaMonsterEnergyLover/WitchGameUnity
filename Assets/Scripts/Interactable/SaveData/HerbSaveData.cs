@@ -1,39 +1,28 @@
 using System;
 using UnityEngine;
 
-// Класс сохраняемых данных всех объектов типа Herb
 [Serializable]
 public class HerbSaveData : InteractableSaveData
 {
     [Header("Herb data")] 
-    public float fertility = 1f;
-    public float growthSpeed = 1f;
-    public float frostResistance = 1f;
+    [SerializeField] public float fertility = 1f;
+    [SerializeField] public float growthSpeed = 1f;
+    [SerializeField] public float frostResistance = 1f;
+    [SerializeField] public GrowthStage growthStage = GrowthStage.Sprout;
+    [SerializeField] public int nextStageHour;
+    [SerializeField] public bool withering;
+    [SerializeField] public bool decaying;
+    [SerializeField] public bool hasBed;
     
-    public GrowthStage growthStage = GrowthStage.Sprout;
-    public int nextStageHour;
-    public bool withering;
-    public bool decaying;
-
-    public bool hasBed;
-    
-    // Конструктор для начальной инициализации значений
-    public HerbSaveData(InteractableData origin) : base(origin)
-    {
-
-    }
-    
-    
-    // Конструктор для клонирования
+    public HerbSaveData(InteractableData origin) : base(origin) { }
     public HerbSaveData() { }
-    
     public override InteractableSaveData DeepClone()
     {
         return new HerbSaveData
         {
             id = id,
             creationHour = creationHour,
-            
+            initialized = initialized,
             fertility = fertility,
             growthStage = growthStage,
             growthSpeed = growthSpeed,

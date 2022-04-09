@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using WorldScenes;
 
@@ -12,6 +13,11 @@ namespace GameCollection
         public Interactables interactables;
         public CraftingRecipies recipies;
         public WorldScenesCollection scenesCollection;
+
+        private void Awake()
+        {
+            Init();
+        }
 
         public void Init()
         {

@@ -4,7 +4,8 @@ namespace DefaultNamespace
 {
     public class GameSystem : MonoBehaviour
     {
-
+        public GameCollection.Manager collectionManager;
+        
         private static GameSystem Instance;
 
         private void Awake()

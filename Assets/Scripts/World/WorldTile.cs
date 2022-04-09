@@ -9,10 +9,9 @@ using Random = UnityEngine.Random;
 public class WorldTile
 {
     [SerializeField] public Vector2 interactableOffset;
-    [SerializeField] public InteractableSaveData savedData;
+    [SerializeReference] public InteractableSaveData savedData;
     [SerializeField] private bool[] layers;
     [SerializeField] private Vector2Int position;
-    [SerializeField] private List<EntitySaveData> entitySaveDatas = new ();
 
     [NonSerialized] public Interactable instantiatedInteractable;
     [NonSerialized] public bool loaded;
@@ -43,13 +42,22 @@ public class WorldTile
     {
         Layers[layerIndex] = value;
     }
+
+    public WorldTile SetData(WorldTile from)
+    {
+        interactableOffset = from.interactableOffset;
+        savedData = from.savedData;
+        layers = from.Layers;
+        position = from.Position;
+        return this;
+    }
     
     
     // Загружает данные клетки на сцену
     public void Load()
     {
         loaded = true;
-        LoadEntities();
+        // LoadEntities();
         LoadInteractable();
     }
 
@@ -78,7 +86,7 @@ public class WorldTile
             !ignoreRandomisation && mirrored ? -1 : 1, 1, 1);*/
 
         instantiatedInteractable.OnTileLoad(this);
-
+        savedData = instantiatedInteractable.SaveData;
     }
 
     public void LoadEntities()

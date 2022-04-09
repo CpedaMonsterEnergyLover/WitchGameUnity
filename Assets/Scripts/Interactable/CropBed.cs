@@ -4,28 +4,10 @@ public class CropBed : Interactable, IIgnoreTileRandomisation
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new CropBedSaveData(origin);
+        saveData = new CropBedSaveData(origin) { initialized = true };
     }
 
 }
 
-public class CropBedSaveData : InteractableSaveData
-{
-    // Для начальной инициализации
-    public CropBedSaveData(InteractableData origin) : base(origin)
-    { }
 
-    // Конструктор для клонирования
-    private CropBedSaveData()
-    { }
-
-    public override InteractableSaveData DeepClone()
-    {
-        return new CropBedSaveData
-        {
-            id = id,
-            creationHour = creationHour
-        };
-    }
-}
 

@@ -19,10 +19,8 @@ public class CraftingWindow : BaseWindow
 
     private void AddRecipe(CraftingRecipe recipe)
     {
-        if (!_tabs.ContainsKey(recipe.category.value))
-        {
+        if (!_tabs.ContainsKey(recipe.category.value)) 
             CreateTab(recipe.category);
-        }
         _tabs[recipe.category.value].AddRecipe(recipe);
 
     }
