@@ -32,6 +32,12 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
                 BurnItem(entity, burnableItem);
     }
 
+    protected override void InitSaveData(InteractableData origin)
+    {
+        saveData = ScriptableObject.CreateInstance<BonfireSaveData>();
+        saveData.id = origin.id;
+    }
+    
     public void OnItemEntityExitReceiver(ItemEntity entity)
     { }
 
@@ -85,11 +91,6 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         }
         
         _previousUpdateValue = BurningValue;
-    }
-
-    protected override void InitSaveData(InteractableData origin)
-    {
-        saveData = new BonfireSaveData(origin);
     }
 
 

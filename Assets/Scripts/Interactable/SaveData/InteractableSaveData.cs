@@ -1,34 +1,30 @@
 using UnityEngine;
 using System;
 
-// [Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Base")]
-[Serializable]
-public class InteractableSaveData /*: ScriptableObject*/
+// Only use primitive types in this class
+[Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Base")]
+public class InteractableSaveData : ScriptableObject
 {
     [Header("Interactable SaveData")] 
     public string id;
     public int creationHour = TimelineManager.TotalHours;
-    public bool preInitialized;
-
-    // Конструктор для создания по айди
-    public InteractableSaveData(string id)
-    {
-        this.id = id;
-    }
+    public bool initialized;
     
-    // Инициализирует начальные поля SaveData из Data
-    // Такие как айди, здоровье и тд
-    public InteractableSaveData(InteractableData origin)
+    public static InteractableSaveData FromID(string id)
     {
-        id = origin.id;
+        InteractableSaveData data = CreateInstance<InteractableSaveData>();
+        data.id = id;
+        return data;
     }
-    
-    // Конструктор для клонирования
-    protected InteractableSaveData() { }
 
-    public virtual InteractableSaveData DeepClone()
+    public InteractableSaveData DeepClone()
     {
-        Debug.LogError("Tried to clone interactable data base class.");
-        return null;
+        InteractableSaveData saveData = CreateInstance<InteractableSaveData>();
+
+        saveData.id = id;
+        saveData.creationHour = creationHour;
+        saveData.initialized = initialized;
+
+        return saveData;
     }
 }

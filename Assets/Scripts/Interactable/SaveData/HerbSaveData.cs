@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-// Класс сохраняемых данных всех объектов типа Herb
-[Serializable]
+[Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Herb")]
 public class HerbSaveData : InteractableSaveData
 {
     [Header("Herb data")] 
@@ -17,32 +16,24 @@ public class HerbSaveData : InteractableSaveData
 
     public bool hasBed;
     
-    // Конструктор для начальной инициализации значений
-    public HerbSaveData(InteractableData origin) : base(origin)
+    
+    
+    public new HerbSaveData DeepClone()
     {
+        HerbSaveData saveData = CreateInstance<HerbSaveData>();
 
-    }
-    
-    
-    // Конструктор для клонирования
-    public HerbSaveData() { }
-    
-    public override InteractableSaveData DeepClone()
-    {
-        return new HerbSaveData
-        {
-            id = id,
-            creationHour = creationHour,
-            
-            fertility = fertility,
-            growthStage = growthStage,
-            growthSpeed = growthSpeed,
-            frostResistance = frostResistance,
-            nextStageHour = nextStageHour,
-            withering = withering,
-            decaying = decaying,
-            hasBed = hasBed
-        };
+        saveData.id = id;
+        saveData.creationHour = creationHour;
+        saveData.initialized = initialized;
+        saveData.fertility = fertility;
+        saveData.growthStage = growthStage;
+        saveData.growthSpeed = growthSpeed;
+        saveData.frostResistance = frostResistance;
+        saveData.nextStageHour = nextStageHour;
+        saveData.withering = withering;
+        saveData.decaying = decaying;
+        saveData.hasBed = hasBed;
 
+        return saveData;
     }
 }

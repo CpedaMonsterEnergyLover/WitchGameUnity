@@ -34,7 +34,7 @@ public class WorldTile
         Position = new Vector2Int(x, y);
         layers = tiles;
         savedData = interactableData is null ? null : 
-            new InteractableSaveData(interactableData);
+            InteractableSaveData.FromID(interactableData.id);
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
         // mirrored = Random.Range(0, 2) == 1;
     }

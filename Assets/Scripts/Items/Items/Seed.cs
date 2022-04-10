@@ -10,7 +10,7 @@ public class Seed : Item, IUsableOnInteractable
         tile?.DestroyInstantiated();
         WorldManager.Instance.AddInteractable(tile, new HerbSaveData()
             {
-                preInitialized = true,
+                initialized = true,
                 id = Data.herb.id,
                 hasBed = true,
                 creationHour = TimelineManager.TotalHours

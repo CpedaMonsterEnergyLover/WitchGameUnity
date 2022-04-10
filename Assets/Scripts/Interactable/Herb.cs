@@ -19,10 +19,13 @@ public class Herb : Interactable
 
     #region OverrideMethods
 
+    
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new HerbSaveData(origin);
+        saveData = ScriptableObject.CreateInstance<HerbSaveData>();
+        saveData.id = origin.id;
     }
+
 
     public override void OnTileLoad(WorldTile loadedTile)
     {
@@ -55,7 +58,7 @@ public class Herb : Interactable
         // Если вырос на грядке, возвращает ее в мир
         if (SaveData.hasBed)
         {
-            WorldManager.Instance.AddInteractable(tile, new InteractableSaveData("cropbed"));
+            WorldManager.Instance.AddInteractable(tile, InteractableSaveData.FromID("cropbed"));
         }
         // Удаляет модель грядки
         if (_bed is not null) Destroy(_bed);

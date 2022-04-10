@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]
+[Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Tree")]
 public class TreeSaveData : InteractableSaveData
 {
     [Header("Tree data")] 
@@ -9,30 +9,22 @@ public class TreeSaveData : InteractableSaveData
     public int resinLeft = 10;
     public bool signed;
     public bool isChopped;
-
-    // Инициализируемые из Data поля
     public int health;
-
-    // Конструктор для инициализации значеий
-    public TreeSaveData(InteractableData origin) : base(origin)
-    {
-    }
     
-    // Конструктор для копирования
-    protected TreeSaveData() { }
-
-    public override InteractableSaveData DeepClone()
+    public new TreeSaveData DeepClone()
     {
-        return new TreeSaveData
-        {
-            id = id,
-            creationHour = creationHour,
-            
-            barkLeft = barkLeft,
-            health = health,
-            isChopped = isChopped,
-            resinLeft = resinLeft,
-            signed = signed
-        };
+        TreeSaveData saveData = CreateInstance<TreeSaveData>();
+
+        saveData.id = id;
+        saveData.creationHour = creationHour;
+        saveData.initialized = initialized;
+
+        saveData.barkLeft = barkLeft;
+        saveData.resinLeft = resinLeft;
+        saveData.signed = signed;
+        saveData.isChopped = isChopped;
+        saveData.health = health;
+
+        return saveData;
     }
 }

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    #region Vars
-
     // Public fields
     public InteractableData Data => data;
 
@@ -23,12 +21,9 @@ public class Interactable : MonoBehaviour
     // Содержит ссылку на тайл в котором находится
     [SerializeReference]
     protected WorldTile tile;
+
+
     
-    #endregion
-
-
-
-    #region UnityMethods
     
     private void OnMouseEnter()
     {
@@ -40,12 +35,6 @@ public class Interactable : MonoBehaviour
         FadeOut();
     }
 
-    #endregion
-
-
-
-    #region ClassMethods
-
 
     public static Interactable Create(InteractableSaveData saveData)
     {
@@ -53,7 +42,7 @@ public class Interactable : MonoBehaviour
         prefab = Instantiate(prefab, WorldManager.Instance.interactableTransform);
         Interactable interactable = prefab.GetComponent<Interactable>();
 
-        if (saveData.preInitialized)
+        if (saveData.initialized)
         {
             interactable.saveData = saveData;
         }
@@ -65,7 +54,7 @@ public class Interactable : MonoBehaviour
     
     protected virtual void InitSaveData(InteractableData origin)
     {
-        saveData = new InteractableSaveData(origin);
+        saveData = InteractableSaveData.FromID(origin.id);
     }
     
     public virtual void Interact(float value = 1.0f)
@@ -79,9 +68,6 @@ public class Interactable : MonoBehaviour
         Fader = GetComponentInChildren<Fader>();
         tile = loadedTile;
     }
-
-    #endregion
-
 
 
     #region Utils

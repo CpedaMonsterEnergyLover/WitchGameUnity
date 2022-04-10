@@ -6,7 +6,7 @@ public class PlaceableItem : Item, IPlaceable
     
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        WorldManager.Instance.AddInteractable(tile, new InteractableSaveData(Data.interactable));
+        WorldManager.Instance.AddInteractable(tile, InteractableSaveData.FromID(Data.interactable.id));
         slot.RemoveItem(1);
     }
 

@@ -31,7 +31,7 @@ public class CaveManager : WorldManager
             _caveEntrance.y);
 
         WorldData.GetTile(_caveEntrance.x, _caveEntrance.y).savedData =
-            new InteractableSaveData("cave_entrance");
+            InteractableSaveData.FromID("cave_entrance");
         
         ClampWorldData(mainHollow);
         

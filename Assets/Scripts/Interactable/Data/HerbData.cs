@@ -42,6 +42,7 @@ public class HerbData : InteractableData
         new GrowthStageSprite(GrowthStage.Grown),
         new GrowthStageSprite(GrowthStage.Decay),
     };
+    
 
 
     #region ClassMethods

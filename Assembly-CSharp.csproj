@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\GameCollection\Entities.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingList.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\CropBedSaveData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
@@ -92,7 +93,7 @@
      <Compile Include="Assets\Scripts\UI\DurabilityBar.cs" />
      <Compile Include="Assets\Scripts\UI\DebugWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
-     <Compile Include="Assets\Scripts\Interactable\IIgnoreTileRandomisation.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\IIgnoreTileRandomisation.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\FOVProvider.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InteractionKeyListener.cs" />
@@ -120,6 +121,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Instrument.cs" />
      <Compile Include="Assets\Scripts\Timeline\SeasonEnum.cs" />
+     <Compile Include="Assets\Scripts\GameCollection\WorldScenesCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCycleManager.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Manager.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuSubScene.cs" />
@@ -145,6 +147,7 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
+     <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxController.cs" />
@@ -156,6 +159,7 @@
      <Compile Include="Assets\Scripts\Entities\Data\OldEntityData.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingRecipe.cs" />
+     <Compile Include="Assets\Scripts\GameData\SerializeableVector2.cs" />
      <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\PlaceableItem.cs" />
@@ -220,9 +224,6 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\GameCollection\WorldScenesCollection.cs" />
-     <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
-     <Compile Include="Assets\Scripts\GameData\SerializeableVector2.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

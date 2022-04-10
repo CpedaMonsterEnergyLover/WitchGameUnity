@@ -35,4 +35,5 @@ public class TreeData : InteractableData
     [SerializeField] private string resinItem;
     [SerializeField] private string logItem;
     */
+
 }

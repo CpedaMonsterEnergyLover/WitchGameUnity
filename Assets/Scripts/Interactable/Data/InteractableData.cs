@@ -11,4 +11,11 @@ public class InteractableData : ScriptableObject
     public float interactingTime;
 
     public bool ignoreRandomisation;
+
+
+
+    protected virtual T Test<T>() where T : InteractableSaveData
+    {
+        return CreateInstance<T>();
+    }
 }
