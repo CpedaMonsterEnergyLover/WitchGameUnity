@@ -28,7 +28,7 @@ public class Vein : Interactable
         Debug.Log($"{SaveData.health}");
         if (SaveData.health <= 0)
         {
-            Destroy();
+            Kill();
         }
     }
 

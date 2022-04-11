@@ -2,7 +2,8 @@ public class Hoe : Instrument, IUsableOnTile
 {
     public override void Use(ItemSlot slot,Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        WorldManager.Instance.AddInteractable(tile, new InteractableSaveData("cropbed"));
+        if(tile is null) return;
+        tile.SetInteractable(new InteractableSaveData("cropbed"));
         base.Use(slot, entity, tile, interactable);
     }
 

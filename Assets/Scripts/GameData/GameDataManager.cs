@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using WorldScenes;
 
@@ -34,8 +35,8 @@ public class GameDataManager : MonoBehaviour
     public static void SaveAll()
     {
         MergeAllWorldData();
-        if(Application.isPlaying) SavePersistentWorldData(WorldManager.Instance.WorldData);
-        TileLoader.Instance.temporaryData.Clear(); 
+        if(Application.isPlaying) 
+            SavePersistentWorldData(WorldManager.Instance.WorldData);
     }
 
 
@@ -73,8 +74,9 @@ public class GameDataManager : MonoBehaviour
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
 
-        string json = JsonUtility.ToJson(
-            new TemporaryWorldData(TileLoader.Instance.temporaryData), false);
+        var changedTiles = 
+            WorldManager.Instance.WorldData.Changes;
+        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), false);
         File.WriteAllText(dir + WorldManager.Instance.worldScene.FileName, json);
     }
 
@@ -107,10 +109,13 @@ public class GameDataManager : MonoBehaviour
             string sceneName = fileName.Split('.')[0];
             var scene = WorldScenesCollection.Get(sceneName);
             
+            
             if (scene is null) 
                 throw new Exception(
                     $"Undefined worldscene name: \"{sceneName}\".");
             
+            if(scene == WorldManager.Instance.worldScene) return;
+
             var temporaryData = LoadTemporaryWorldData(scene);
             if (temporaryData is null)
                 throw new Exception(
@@ -125,7 +130,8 @@ public class GameDataManager : MonoBehaviour
 
             foreach (WorldTile tile in temporaryData)
             {
-                persistentData.GetTile(tile.Position.x, tile.Position.y).SetData(tile);
+                persistentData.GetTile(tile.Position.x, tile.Position.y)
+                    .MergeData(tile, false);
             }
          
             SavePersistentWorldData(persistentData);

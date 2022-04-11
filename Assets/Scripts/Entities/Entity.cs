@@ -1,28 +1,51 @@
 using System;
 using System.Collections;
+using TileLoading;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public abstract class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour, ICacheable
 {
-    // Public fields
     public EntityData Data => data;
     public EntitySaveData SaveData => saveData;
 
-    // Private fields
-
-    // Содержит сохраняемые поля объекта
     [SerializeReference, Header("Instance data")]
     protected EntitySaveData saveData;
 
-    // Содержит общие поля объекта
-    [SerializeReference, Header("Data")] protected EntityData data;
+    [SerializeReference, Header("Data")] 
+    protected EntityData data;
 
     private Transform _playerTransform;
     private WorldManager _worldManager;
 
+    private bool GetWorldTilePosition(out WorldTile tile)
+    {
+        var floorPos =  Vector2Int.FloorToInt(transform.position);
+        tile = WorldManager.Instance.WorldData.GetTile(floorPos.x, floorPos.y);
+        return tile is not null;
+    } 
+    
     protected float DistanceFromPlayer => 
-        ((Vector2)(_playerTransform.position - transform.position)).sqrMagnitude;
+        Vector2.Distance(_playerTransform.position, transform.position);
 
+    
+    #region ICacheable
+
+    public bool IsLoaded { get; set; }
+    public bool IsCached { get; set; }
+    public GameObject GetCacheableItem => gameObject;
+
+    public void LeaveCache()
+    {
+        if(GetWorldTilePosition(out WorldTile tile))
+        {
+            tile.savedEntities.Add(saveData.DeepClone());
+        } 
+        DestroyImmediate(gameObject);
+    }
+    
+    #endregion
+    
     
     protected virtual void Start()
     {
@@ -46,17 +69,16 @@ public abstract class Entity : MonoBehaviour
     {
         while (gameObject.activeInHierarchy)
         {
-            Vector2Int tilePosition = TilePosition();
-            bool isTileLoaded = _worldManager.WorldData.GetTile(tilePosition.x, tilePosition.y).loaded;
+
+
         
-        
-            if (!WorldManager.Instance.CoordsBelongsToWorld(tilePosition))
+            if (!GetWorldTilePosition(out WorldTile tile))
             {
                 Kill();
             }
             else
             {
-                if (!isTileLoaded)
+                if (!tile.IsLoaded)
                 {
                     Despawn();
                 }            
@@ -69,19 +91,17 @@ public abstract class Entity : MonoBehaviour
 
     public void Despawn()
     {
-        Vector2Int tilePosition = TilePosition();
-        WorldTile tile = WorldManager.Instance.WorldData.GetTile(tilePosition.x, tilePosition.y);
-        tile.entities.Add(this);
-        gameObject.SetActive(false); 
+        if (!GetWorldTilePosition(out WorldTile tile))
+        {
+            DestroyImmediate(gameObject);
+        }
+        else
+        {
+            tile.CachedEntities.Add(this);
+            gameObject.SetActive(false);
+        }
     }
-
-
-
-    public Vector2Int TilePosition()
-    {
-        return Vector2Int.FloorToInt(transform.position);
-    }
-
+    
     
     // Creates a new entity
     public static Entity Create(EntitySaveData saveData)

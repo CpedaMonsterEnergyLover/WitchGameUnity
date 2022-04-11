@@ -93,12 +93,9 @@ public class Interactable : MonoBehaviour
 
     public virtual void SetActive(bool isHidden) => gameObject.SetActive(isHidden);
 
-    public virtual void Destroy()
+    public virtual void Kill()
     {
-        tile.savedData = null;
-        tile.instantiatedInteractable = null;
-        if(Application.isPlaying) GameObject.Destroy(gameObject);
-        else DestroyImmediate(gameObject);
+        tile.SetInteractable(null);
     }
     
     protected void FadeIn()

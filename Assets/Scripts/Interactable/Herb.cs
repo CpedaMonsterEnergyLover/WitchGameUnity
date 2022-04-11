@@ -48,14 +48,14 @@ public class Herb : Interactable
         TimelineManager.ONTotalHourPassed += GrowOnHour;
     }
 
-    public override void Destroy()
+    public override void Kill()
     {
-        base.Destroy();
+        base.Kill();
 
         // Если вырос на грядке, возвращает ее в мир
         if (SaveData.hasBed)
         {
-            WorldManager.Instance.AddInteractable(tile, new InteractableSaveData("cropbed"));
+            tile.SetInteractable(new InteractableSaveData("cropbed"));
         }
         // Удаляет модель грядки
         if (_bed is not null) Destroy(_bed);
@@ -71,7 +71,7 @@ public class Herb : Interactable
     public override void Interact(float value = 1.0f)
     {
         base.Interact(value);
-        Destroy();
+        Kill();
     }
 
     #endregion
@@ -87,7 +87,7 @@ public class Herb : Interactable
         // Если растение находится в последней стадии роста ...
         if (SaveData.growthStage == GrowthStage.Decay)
         {
-            Destroy();
+            Kill();
             SaveData.nextStageHour = Int32.MaxValue;
             return;
         }

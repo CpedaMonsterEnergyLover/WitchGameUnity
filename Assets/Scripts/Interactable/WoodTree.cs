@@ -66,7 +66,7 @@ public class WoodTree : Interactable
         }
         else 
         {
-         Destroy();
+         Kill();
         }
     }
 

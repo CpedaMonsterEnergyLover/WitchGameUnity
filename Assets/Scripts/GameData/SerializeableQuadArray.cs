@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SerializeableQuadArray<T> : IEnumerable
+public class SerializeableQuadArray<T> : IEnumerable 
 {
     [SerializeField]
     private T[] items;
@@ -11,8 +12,23 @@ public class SerializeableQuadArray<T> : IEnumerable
     [SerializeField]
     private int height;
 
-    public T Get(int x, int y) => items[x + y * height];
-    public void Set(int x, int y, T item) => items[x + y * height] = item;
+    public IEnumerable<T> Items => items;
+    
+    public bool IsValid(int x, int y) => x >= 0 && x < width && y >= 0 && y < height;
+    
+    public T Get(int x, int y) => 
+        !IsValid(x, y) ? default : items[x + y * height];
+    
+    public void Set(int x, int y, T item)
+    {
+        if (!IsValid(x, y))
+        {
+            Debug.Log($"{x}, {y} is not valid");
+            return;
+        }
+        items[x + y * height] = item;
+    }
+
     public int Width => width;
     public int Height => height;
 

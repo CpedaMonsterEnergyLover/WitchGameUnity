@@ -43,11 +43,11 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\CaveGeneratorEditor.cs" />
      <Compile Include="Assets\Editor\ShowOnlyDrawer.cs" />
+     <Compile Include="Assets\Editor\GameSystemEditor.cs" />
      <Compile Include="Assets\Editor\ItemSpawner.cs" />
      <Compile Include="Assets\Editor\GeneratorEditor.cs" />
      <Compile Include="Assets\Editor\ShadowCastersGeneratorEditor.cs" />
      <Compile Include="Assets\Editor\ParticleSystemIndividualSortingOrderEditor.cs" />
-     <Compile Include="Assets\Editor\GameSystemEditor.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

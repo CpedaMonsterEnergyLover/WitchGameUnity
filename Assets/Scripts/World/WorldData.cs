@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using WorldScenes;
 using Object = UnityEngine.Object;
@@ -14,6 +16,7 @@ public class WorldData
     public int MapWidth => worldTiles.Width;
     public int MapHeight => worldTiles.Height;
 
+    public List<WorldTile> Changes => worldTiles.Items.Where(tile => tile.WasChanged).ToList();
 
     public WorldData(
         int width, 
@@ -40,24 +43,10 @@ public class WorldData
 
     }
 
-    public void SetInteractableOffset(int x, int y, Vector2 offset) => worldTiles.Get(x, y).interactableOffset = offset;
-
-    public InteractableSaveData AddInteractableObject(Vector2Int position, InteractableSaveData saveData)
-    {
-        WorldTile tile = worldTiles.Get(position.x, position.y);
-
-        if (TileLoader.Instance.TileCache.Contains(tile))
-            TileLoader.Instance.TileCache.Remove(tile);
-        
-        worldTiles.Get(position.x, position.y).savedData = saveData;
-        return saveData;
-    }
-
-
     public void ClearObjects()
     {
         foreach (WorldTile worldTile in worldTiles)
-            Object.DestroyImmediate(worldTile.instantiatedInteractable);
+            Object.DestroyImmediate(worldTile.InstantiatedInteractable);
     }
 
     public void ClearZone(int minX, int minY, int maxX, int maxY)
@@ -65,8 +54,7 @@ public class WorldData
         for(int x = minX; x <= maxX; x++)
         for (int y = minY; y <= maxY; y++)
         {
-            if(!CoordsBelongsToWorld(x, y)) return;
-            worldTiles.Get(x, y).ClearInteractable();
+            worldTiles.Get(x, y)?.SetInteractable(null);
         }
     }
     

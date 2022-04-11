@@ -6,13 +6,14 @@ public class PlaceableItem : Item, IPlaceable
     
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        WorldManager.Instance.AddInteractable(tile, new InteractableSaveData(Data.interactable));
+        if(tile is null) return;
+        tile.SetInteractable(new InteractableSaveData(Data.interactable));
         slot.RemoveItem(1);
     }
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (tile is null || tile.instantiatedInteractable || !IsInDistance(entity, tile, interactable)) return false;
+        if (tile is null || tile.InstantiatedInteractable || !IsInDistance(entity, tile, interactable)) return false;
         return WorldManager.Instance.TryGetTopLayer(tile.Position.x, tile.Position.y, out WorldLayer layer) &&
                layer.layerEditSettings.canPlace;
     }

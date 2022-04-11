@@ -28,6 +28,8 @@ public class WorldManager : MonoBehaviour
     public List<WorldLayer> layers;
     
     public WorldData WorldData { get; protected set; }
+
+    public List<Entity> Entities { get; private set; } = new();
     
     
     private void Awake()
@@ -63,15 +65,10 @@ public class WorldManager : MonoBehaviour
             // Если найден временный файл, мержит его
             if (tempData is not null)
             {
-                Debug.Log($"Found temp file for {worldScene.sceneName}. Merging files...");
-                var mergedTiles = tempData
-                    .Select(tile => loadedData
-                        .GetTile(tile.Position.x, tile.Position.y)
-                            .SetData(tile))
-                                .ToList();
-
-                TileLoader.Instance.temporaryData = mergedTiles;
-                Debug.Log($"{mergedTiles.Count} merged;");
+                Debug.Log($"Found temp file for {worldScene.sceneName}. Merging data...");
+                foreach (WorldTile tile in tempData)
+                    loadedData.GetTile(tile.Position.x, tile.Position.y).MergeData(tile, true);
+                Debug.Log($"{tempData.Count} merged;");
             }
             else
             {
@@ -117,15 +114,15 @@ public class WorldManager : MonoBehaviour
         for (int y = 0; y < WorldData.MapHeight; y++)
             WorldData.GetTile(x, y).LoadInteractable();
     }
-
-    // Runtime only
-    public void AddInteractable(WorldTile tile, InteractableSaveData saveData)
+    
+    public void AddEntity(WorldTile tile, EntitySaveData saveData)
     {
         if(saveData is null) return;
-        WorldData.AddInteractableObject(tile.Position, saveData);
-        tile.LoadInteractable();
+        
+        if(tile.IsLoaded) tile.LoadEntities();
+
     }
-    
+
     public void ClearAllTiles()
     {
         layers.ForEach(layer => layer.tilemap.ClearAllTiles());

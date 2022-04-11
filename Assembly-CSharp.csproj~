@@ -165,6 +165,7 @@
      <Compile Include="Assets\Scripts\Items\Items\PlaceableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\Generator\Noise.cs" />
+     <Compile Include="Assets\Scripts\World\TileLoader\TileCache.cs" />
      <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />

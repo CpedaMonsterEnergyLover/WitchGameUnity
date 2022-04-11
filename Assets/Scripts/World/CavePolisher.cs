@@ -83,7 +83,7 @@ public class CavePolisher : MonoBehaviour
 
     private void ClearHollows(WorldData worldData)
     {
-        _removedTiles.ForEach(i => worldData.GetTile(i.x, i.y).ClearInteractable());
+        _removedTiles.ForEach(i => worldData.GetTile(i.x, i.y).SetInteractable(null));
     }
     
     public List<Vector3Int> GetMainHollow(WorldData worldData)
