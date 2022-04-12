@@ -1,9 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MainMenuSubScene : MonoBehaviour
 {
-    public void GoHere()
+    public TransferAxis transferAxis;
+    
+    public enum TransferAxis
     {
-        MainMenuCamera.Instance.TransferTo(transform.position);
+        Horizontal,
+        Vertical
+    }
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
+
+    public void GoHere(bool vertical)
+    {
+        MainMenuCamera.Instance.TransferTo(this, vertical);
+        /*if(transferAxis is TransferAxis.Horizontal)
+            MainMenuCamera.Instance.TransferHorizontal(transform.position);
+        else
+            MainMenuCamera.Instance.TransferVertical(transform.position);*/
     }    
 }

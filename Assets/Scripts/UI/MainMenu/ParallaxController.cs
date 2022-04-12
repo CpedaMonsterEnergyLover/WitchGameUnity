@@ -13,19 +13,19 @@ public class ParallaxController : MonoBehaviour
     [Range(0, 100)]
     public int yvalue;
 
-
-
-
+    
     private void Update()
     {
         Vector3 pos = transform.position;
         foreach (ParallaxPanel panel in panels)
         {
-            panel.SetWidth(leftBound.position.x, rightBound.position.x);
-            Vector3 panelPosition = panel.transform.position;
+            var position = leftBound.position;
+            panel.SetWidth(position.x, rightBound.position.x);
+            var transform1 = panel.transform;
+            Vector3 panelPosition = transform1.position;
             panelPosition.x = pos.x - (pos.x / panel.Width * xvalue * 1 / panel.speedX);
-            panelPosition.y = pos.y - (pos.y / leftBound.position.y * yvalue * 1 / panel.speedY) + panel.offsetY;
-            panel.transform.position = panelPosition;
+            panelPosition.y = pos.y - (pos.y / position.y * yvalue * 1 / panel.speedY) + panel.offsetY;
+            transform1.position = panelPosition;
         }
     }
 
