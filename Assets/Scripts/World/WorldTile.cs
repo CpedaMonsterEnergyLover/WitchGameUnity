@@ -11,15 +11,15 @@ using Random = UnityEngine.Random;
 public class WorldTile : ICacheable
 {
     [SerializeField] public Vector2 interactableOffset;
-    [SerializeReference] public InteractableSaveData savedData;
     [SerializeField] private bool[] layers;
     [SerializeField] private Vector2Int position;
+    [SerializeReference] public InteractableSaveData savedData;
+    [SerializeReference] private List<EntitySaveData> savedEntities = new();
 
-    [NonSerialized] public List<EntitySaveData> savedEntities = new();
+    [NonSerialized] private List<Entity> _cachedEntities = new();
 
-    // TODO: manage this 
-    public Interactable InstantiatedInteractable { get; private set; }
-    public List<Entity> CachedEntities { get; private set; } = new();
+    private List<Entity> CachedEntities { get; set; } = new();
+    private Interactable InstantiatedInteractable { get; set; }
 
     public bool[] Layers => layers;
     public Vector2Int Position
@@ -37,14 +37,20 @@ public class WorldTile : ICacheable
     public bool IsLoaded { get; set; }
     public bool IsCached { get; set; }
     public GameObject GetCacheableItem => InstantiatedInteractable.gameObject;
-    public void LeaveCache()
+    public void OnPopped()
     {
+        if(InstantiatedInteractable is null) return;
         savedData = InstantiatedInteractable.SaveData.DeepClone();
         Object.DestroyImmediate(InstantiatedInteractable.gameObject);
         InstantiatedInteractable = null;
     }
 
     #endregion
+
+    public void InitAfterLoading()
+    {
+        _cachedEntities = new List<Entity>();
+    }
     
     public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData)
     {
@@ -66,15 +72,16 @@ public class WorldTile : ICacheable
         savedData = from.savedData;
         layers = from.Layers;
         position = from.Position;
+        savedEntities = from.savedEntities;
         if(!keepChanges) WasChanged = false;
     }
     
     public void Load()
     {
         IsLoaded = true;
-        // LoadEntities();
         LoadInteractable();
         WasChanged = true;
+        LoadEntities();
     }
 
     public void LoadInteractable()
@@ -106,35 +113,58 @@ public class WorldTile : ICacheable
 
     public void LoadEntities()
     {
-        CachedEntities.ForEach(entity =>
-        {
-            entity.gameObject.SetActive(true);
-            entity.Load();
-        });
-        CachedEntities.Clear();
+        if(_cachedEntities.Count > 0)
+            foreach (Entity entity in _cachedEntities) 
+                entity.Load();
+        _cachedEntities.Clear();
+        
+        foreach (EntitySaveData entitySaveData in savedEntities) 
+            Entity.Create(entitySaveData);
+        savedEntities.Clear();
     }
 
     // Runtime only
     public void SetInteractable(InteractableSaveData interactableSaveData)
     {
+        WasChanged = true;
         DestroyInstantiated();
         savedData = interactableSaveData;
-        WasChanged = true;
+        Debug.Log($"SaveData: {savedData}, has interactable: {HasInteractable}" );
         if(IsLoaded) LoadInteractable();
     }
 
-    // Runtime only
-    public void AddEntity([NotNull] EntitySaveData entitySaveData)
+    public void CacheEntity([NotNull] Entity entity)
     {
-        
+        if (_cachedEntities.Contains(entity)) return;
+        _cachedEntities.Add(entity);
+    }
+
+    public void RemoveEntityFromCache([NotNull] Entity entity)
+    {
+        if (!_cachedEntities.Contains(entity)) return;
+        _cachedEntities.Remove(entity);
     }
     
+    public void AddEntitySaveData([NotNull] EntitySaveData entitySaveData)
+    {
+        if (savedEntities.Contains(entitySaveData)) return;
+        savedEntities.Add(entitySaveData);
+        WasChanged = true;
+    }
+
+    public void RemoveEntitySaveData([NotNull] EntitySaveData entitySaveData)
+    {
+        if (!savedEntities.Contains(entitySaveData)) return;
+        savedEntities.Remove(entitySaveData);
+        WasChanged = true;
+    }
     
     public void DestroyInstantiated()
     {
         if(InstantiatedInteractable is null) return;
-        if(Application.isPlaying) Object.Destroy(InstantiatedInteractable);
-        else Object.DestroyImmediate(InstantiatedInteractable);
+        Object.DestroyImmediate(InstantiatedInteractable.gameObject);
+        InstantiatedInteractable = null;
     }
 
+    
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TileLoading
 {
-    public class Cache <T> where T : ICacheable
+    public class Cache <T> where T : class, ICacheable
     {
         private readonly List<T> _items = new();
         private readonly int _maxSize;
@@ -11,12 +11,12 @@ namespace TileLoading
         
         public Cache(int maxSize)
         {
-            _maxSize = Size;
+            _maxSize = maxSize;
         }
 
         public void Add(T item)
         {
-            if(Size > _maxSize) Pop();
+            if(Size >= _maxSize) Pop();
             item.GetCacheableItem.SetActive(false);
             item.IsLoaded = false;
             item.IsCached = true;
@@ -28,6 +28,7 @@ namespace TileLoading
             if(!_items.Contains(item)) return;
             _items.Remove(item);
             item.IsCached = false;
+            item.IsLoaded = true;
         }
 
         private void Pop()
@@ -35,8 +36,19 @@ namespace TileLoading
             T popped = _items.First();
             popped.IsCached = false;
             popped.IsLoaded = false;
-            popped.LeaveCache();
+            popped.OnPopped();
             _items.Remove(popped);
+        }
+
+        public void Clear()
+        {
+            foreach (T cacheable in _items)
+            {
+                cacheable.IsCached = false;
+                cacheable.IsLoaded = false;
+                cacheable.OnPopped();
+            }
+            _items.Clear();
         }
     }
 }

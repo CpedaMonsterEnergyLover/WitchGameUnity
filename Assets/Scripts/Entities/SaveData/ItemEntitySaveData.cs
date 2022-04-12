@@ -1,14 +1,16 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class ItemEntitySaveData : EntitySaveData
 {
-    public Item Item;
-    public int Amount;
-
+    [SerializeReference] public Item item;
+    [SerializeField] public int amount;
+    
     public ItemEntitySaveData(Item item, int amount, Vector2 position)
     {
-        Item = item;
-        Amount = amount;
+        this.item = item;
+        this.amount = amount;
         id = "itemEntity";
         preInitialised = true;
         this.position = position;
@@ -16,10 +18,26 @@ public class ItemEntitySaveData : EntitySaveData
 
     public ItemEntitySaveData(ItemData itemData, int amount, Vector2 position)
     {
-        Item = Item.Create(itemData.identifier);
-        Amount = amount;
+        item = Item.Create(itemData.identifier);
+        this.amount = amount;
         id = "itemEntity";
         preInitialised = true;
         this.position = position;
+    }
+
+    private ItemEntitySaveData()
+    {
+    }
+
+    public override EntitySaveData DeepClone()
+    {
+        return new ItemEntitySaveData
+        {
+            id = id,
+            position = position,
+            preInitialised = preInitialised,
+            item = item,
+            amount = amount
+        };
     }
 }

@@ -27,8 +27,8 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     // IItemReceiver Implementation
     public void OnReceiveItemEntity(ItemEntity entity)
     {
-        if(entity.SaveData.Item is IBurnableItem burnableItem) 
-            while(SaveData.burningDuration < maxBurningDuration && entity.SaveData.Amount > 0)
+        if(entity.SaveData.item is IBurnableItem burnableItem) 
+            while(SaveData.burningDuration < maxBurningDuration && entity.SaveData.amount > 0)
                 BurnItem(entity, burnableItem);
     }
 
@@ -61,8 +61,8 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
             UpdateParticlesAndLights();
         
         if(entity is null) return;
-        entity.SaveData.Amount--;
-        if(entity.SaveData.Amount <= 0) entity.Kill();
+        entity.SaveData.amount--;
+        if(entity.SaveData.amount <= 0) entity.Kill();
     }
 
     private void UpdateParticlesAndLights()

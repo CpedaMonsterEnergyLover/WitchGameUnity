@@ -97,7 +97,7 @@ public class InventoryWindow : BaseWindow
 
             if (added <= 0)
             {
-                // Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
+                Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
                 if(!isPicked) Entity.Create(new ItemEntitySaveData(item, amount, WorldManager.Instance.playerTransform.position));
                 return startingAmount - amount;
             }

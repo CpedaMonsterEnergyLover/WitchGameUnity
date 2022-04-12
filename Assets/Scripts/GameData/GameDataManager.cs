@@ -35,8 +35,9 @@ public class GameDataManager : MonoBehaviour
     public static void SaveAll()
     {
         MergeAllWorldData();
-        if(Application.isPlaying) 
-            SavePersistentWorldData(WorldManager.Instance.WorldData);
+        WorldManager.Instance.UnloadAllEntities();
+        TileLoader.Instance.Reload();
+        SavePersistentWorldData(WorldManager.Instance.WorldData);
     }
 
 
@@ -61,6 +62,7 @@ public class GameDataManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             loadedData = JsonUtility.FromJson<WorldData>(json);
+            loadedData.Init();
         }
         
         return loadedData;
@@ -74,9 +76,10 @@ public class GameDataManager : MonoBehaviour
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
 
+        WorldManager.Instance.UnloadAllEntities();
         var changedTiles = 
             WorldManager.Instance.WorldData.Changes;
-        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), false);
+        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);
         File.WriteAllText(dir + WorldManager.Instance.worldScene.FileName, json);
     }
 

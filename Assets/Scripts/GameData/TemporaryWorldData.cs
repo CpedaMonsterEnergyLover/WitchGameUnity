@@ -12,6 +12,12 @@ public class TemporaryWorldData : IEnumerable
     public TemporaryWorldData(List<WorldTile> items)
     {
         this.items = items;
+        Init();
+    }
+
+    private void Init()
+    {
+
     }
 
     IEnumerator IEnumerable.GetEnumerator()

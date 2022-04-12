@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using JetBrains.Annotations;
 using TileLoading;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -7,7 +8,7 @@ using Object = UnityEngine.Object;
 public abstract class Entity : MonoBehaviour, ICacheable
 {
     public EntityData Data => data;
-    public EntitySaveData SaveData => saveData;
+    public EntitySaveData SaveData =>  (ItemEntitySaveData) saveData;
 
     [SerializeReference, Header("Instance data")]
     protected EntitySaveData saveData;
@@ -16,14 +17,9 @@ public abstract class Entity : MonoBehaviour, ICacheable
     protected EntityData data;
 
     private Transform _playerTransform;
-    private WorldManager _worldManager;
+    private static WorldManager WorldManager => WorldManager.Instance;
+    private WorldTile _dataHandlerTile;
 
-    private bool GetWorldTilePosition(out WorldTile tile)
-    {
-        var floorPos =  Vector2Int.FloorToInt(transform.position);
-        tile = WorldManager.Instance.WorldData.GetTile(floorPos.x, floorPos.y);
-        return tile is not null;
-    } 
     
     protected float DistanceFromPlayer => 
         Vector2.Distance(_playerTransform.position, transform.position);
@@ -35,28 +31,45 @@ public abstract class Entity : MonoBehaviour, ICacheable
     public bool IsCached { get; set; }
     public GameObject GetCacheableItem => gameObject;
 
-    public void LeaveCache()
+    public void OnPopped()
     {
-        if(GetWorldTilePosition(out WorldTile tile))
-        {
-            tile.savedEntities.Add(saveData.DeepClone());
-        } 
-        DestroyImmediate(gameObject);
+        if(SaveOnTile(out WorldTile tile))   
+            tile.RemoveEntityFromCache(this);
+        else DestroyImmediate(gameObject);
     }
     
     #endregion
-    
+
+    public bool SaveOnTile(out WorldTile tile)
+    {
+        if(GetWorldTilePosition(out WorldTile _tile))
+        {
+            saveData.position = transform.position;
+            _tile.AddEntitySaveData(saveData.DeepClone()); 
+        }
+        tile = _tile;
+        return tile is not null;
+    }
     
     protected virtual void Start()
     {
-        _worldManager = WorldManager.Instance;
-        _playerTransform = _worldManager.playerTransform;
-        transform.position = saveData.position;
+        _playerTransform = WorldManager.playerTransform;
         Load();
     }
-    
+
+    private void OnDestroy()
+    {
+        WorldManager.RemoveEntity(this);
+        _dataHandlerTile?.RemoveEntitySaveData(saveData);
+        WorldManager.RemoveEntityFromCache(this);
+    }
+
     public void Load()
     {
+        WorldManager.AddEntity(this);
+        WorldManager.RemoveEntityFromCache(this);
+        transform.position = saveData.position;
+        gameObject.SetActive(true);
         StartCoroutine(DespawnCoroutine());
     }
 
@@ -69,9 +82,6 @@ public abstract class Entity : MonoBehaviour, ICacheable
     {
         while (gameObject.activeInHierarchy)
         {
-
-
-        
             if (!GetWorldTilePosition(out WorldTile tile))
             {
                 Kill();
@@ -84,12 +94,12 @@ public abstract class Entity : MonoBehaviour, ICacheable
                 }            
             }
             
-            yield return new WaitForSeconds(_worldManager.playerSettings.entityDespawnRate);
+            yield return new WaitForSeconds(WorldManager.playerSettings.entityDespawnRate);
         }
 
     }
 
-    public void Despawn()
+    private void Despawn()
     {
         if (!GetWorldTilePosition(out WorldTile tile))
         {
@@ -97,10 +107,14 @@ public abstract class Entity : MonoBehaviour, ICacheable
         }
         else
         {
-            tile.CachedEntities.Add(this);
-            gameObject.SetActive(false);
+            saveData.position = transform.position;
+            WorldManager.CacheEntity(this);
+            tile.CacheEntity(this);
+            _dataHandlerTile = tile;
         }
     }
+    
+    
     
     
     // Creates a new entity
@@ -126,5 +140,12 @@ public abstract class Entity : MonoBehaviour, ICacheable
     
     protected virtual void InitSaveData(EntityData origin)
     { }
+    
+    private bool GetWorldTilePosition(out WorldTile tile)
+    {
+        var floorPos =  Vector2Int.FloorToInt(transform.position);
+        tile = WorldManager.Instance.WorldData.GetTile(floorPos.x, floorPos.y);
+        return tile is not null;
+    } 
     
 }

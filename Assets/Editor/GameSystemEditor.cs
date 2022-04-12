@@ -11,7 +11,7 @@ public class GameSystemEditor : UnityEditor.Editor {
 
         DrawDefaultInspector();
         
-        if (GUILayout.Button ("Save all"))
+        if (GUILayout.Button ("Save all") && Application.isPlaying)
         {
             manager.collectionManager.Init();
             GameDataManager.SaveAll();

@@ -1,18 +1,21 @@
-﻿public class Shovel : Instrument, IUsableOnTile
+﻿using UnityEngine;
+
+public class Shovel : Instrument, IUsableOnTile
 {
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         if (tile is null) return;
         
-        WorldManager.Instance.GetTopLayer(tile.Position.x, tile.Position.y).Dig(tile.Position);
+        WorldManager.Instance.GetTopLayer(tile).Dig(tile.Position);
         base.Use(slot, entity, tile, interactable);
     }
 
     public override bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
+        Debug.Log($"tile: {tile?.Position}, hasInt: {tile?.HasInteractable}");
         if (!base.AllowUse(entity, tile, interactable) || tile is null || tile.HasInteractable) return false;
         
-        return WorldManager.Instance.TryGetTopLayer(tile.Position.x, tile.Position.y, out WorldLayer topLayer) && 
+        return WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer topLayer) && 
                topLayer.layerEditSettings.canUseShovel;
     }
 

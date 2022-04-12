@@ -57,6 +57,7 @@ namespace Receivers
         {
             while (true)
             {
+                if (otherGameObject is null) yield break;
                 OnStayOrEnter(otherGameObject);
                 yield return new WaitForSecondsRealtime(onStayTickDelay);
             }

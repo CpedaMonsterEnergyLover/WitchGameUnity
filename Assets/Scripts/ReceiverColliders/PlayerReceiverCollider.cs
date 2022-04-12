@@ -11,7 +11,7 @@ namespace Receivers
         // On the same GO with "PlayerController" script
         protected override void OnStayOrEnter(GameObject otherGameObject)
         {
-            if (otherGameObject is not null && otherGameObject.TryGetComponent(out PlayerController _)) 
+            if (otherGameObject.TryGetComponent(out PlayerController _)) 
                 receiver.OnReceivePlayer();
         }
 

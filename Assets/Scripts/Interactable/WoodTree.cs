@@ -45,7 +45,6 @@ public class WoodTree : Interactable
         base.OnTileLoad(loadedTile);
         if (SaveData.health <= Data.fallOnHealth)
         {
-            Debug.Log($"Remove leaves at {tile.Position} on {SaveData.health} hp");
             RemoveLeaves();
         }
     }

@@ -2,17 +2,13 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Item
+public class  Item
 {
     public ItemData Data => data;
     public ItemSaveData SaveData => saveData;
     
-    // Содержит сохраняемые поля объекта
-    [SerializeReference, SerializeField]
-    protected ItemSaveData saveData = new();
-    // Содержит общие поля объекта
-    [SerializeReference, SerializeField]
-    protected ItemData data;
+    [SerializeReference] protected ItemSaveData saveData = new();
+    [SerializeReference] protected ItemData data;
 
     // Constructor
     public Item(ItemIdentifier identifier)

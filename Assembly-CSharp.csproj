@@ -45,11 +45,13 @@
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
+     <Compile Include="Assets\Scripts\World\TileLoader\Cache.cs" />
      <Compile Include="Assets\Scripts\Util\ShadowCaster2DTilemap.cs" />
      <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagable.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\SkillCategory.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
+     <Compile Include="Assets\Scripts\World\TileLoader\ICacheable.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
@@ -223,8 +225,6 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\World\TileLoader\Cache.cs" />
-     <Compile Include="Assets\Scripts\World\TileLoader\ICacheable.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -7,6 +7,6 @@ namespace TileLoading
         public bool IsLoaded { get; set; }
         public bool IsCached { get; set; }
         public GameObject GetCacheableItem { get; }
-        public void LeaveCache();
+        public void OnPopped();
     }
 }

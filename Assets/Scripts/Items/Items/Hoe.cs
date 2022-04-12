@@ -11,7 +11,7 @@ public class Hoe : Instrument, IUsableOnTile
     {
         if (!base.AllowUse(entity, tile, interactable) || tile is null || tile.HasInteractable) return false;
         
-        return WorldManager.Instance.TryGetTopLayer(tile.Position.x, tile.Position.y, out WorldLayer topLayer) && 
+        return WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer topLayer) && 
                topLayer.layerEditSettings.canUseHoe;
     }
 

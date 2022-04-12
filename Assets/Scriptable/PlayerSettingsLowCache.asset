@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3f5096426e544c780c773911c5851da, type: 3}
-  m_Name: PlayerSettings
+  m_Name: PlayerSettingsLowCache
   m_EditorClassIdentifier: 
   targetFrameRate: 60
   tileCacheSize: 10
-  entitiesCacheSize: 10
+  entitiesCacheSize: 1
   entityDespawnRate: 1

@@ -6,10 +6,11 @@ public class InteractionDataProvider : MonoBehaviour
 {
     private static Camera _playerCamera;
     private static int _layerMask;
+    private static WorldManager WorldManager => WorldManager.Instance;
 
     public static InteractionEventData Data { get; private set;  }
 
-    private void Awake()
+    private void Start()
     {
         _playerCamera = GetComponent<Camera>();
         _layerMask = LayerMask.GetMask("InteractionCollider");
@@ -39,9 +40,7 @@ public class InteractionDataProvider : MonoBehaviour
 
         // Gets tile under cursor
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
-        WorldTile tile = WorldManager.Instance.CoordsBelongsToWorld(gridPos.x, gridPos.y) ? 
-            WorldManager.Instance.WorldData.GetTile(gridPos.x, gridPos.y) : 
-            null;
+        WorldTile tile = WorldManager.WorldData.GetTile(gridPos.x, gridPos.y);
 
         // Debug.Log($"entity: {entity?.name}, interactable: {interactable?.name}, tile: {tile?.Position}");
         

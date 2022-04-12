@@ -18,6 +18,15 @@ public class WorldData
 
     public List<WorldTile> Changes => worldTiles.Items.Where(tile => tile.WasChanged).ToList();
 
+    public void Init()
+    {
+        foreach (WorldTile tile in worldTiles.Items)
+        {
+            tile.InitAfterLoading();
+            tile.IsLoaded = false;
+        }
+    }
+    
     public WorldData(
         int width, 
         int height, 
@@ -45,8 +54,8 @@ public class WorldData
 
     public void ClearObjects()
     {
-        foreach (WorldTile worldTile in worldTiles)
-            Object.DestroyImmediate(worldTile.InstantiatedInteractable);
+        foreach (WorldTile tile in worldTiles)
+            tile.DestroyInstantiated();
     }
 
     public void ClearZone(int minX, int minY, int maxX, int maxY)

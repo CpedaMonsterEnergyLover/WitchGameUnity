@@ -14,8 +14,12 @@ public class EntitySaveData
     
     public virtual EntitySaveData DeepClone()
     {
-        Debug.LogError("Tried to clone entity data base class.");
-        return null;
+        return new EntitySaveData
+        {
+            id = id,
+            position = position,
+            preInitialised = preInitialised,
+        };
     }
     
     public EntitySaveData(EntityData origin)

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using TileLoading;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
@@ -29,14 +31,28 @@ public class WorldManager : MonoBehaviour
     
     public WorldData WorldData { get; protected set; }
 
-    public List<Entity> Entities { get; private set; } = new();
+    private List<Entity> Entities { get; } = new();
+    private Cache<Entity> EntityCache { get; set; }
+
     
     
     private void Awake()
     {
         playerTransform = FindObjectOfType<PlayerController>().transform;
         Application.targetFrameRate = playerSettings.targetFrameRate;
+        EntityCache = new Cache<Entity>(playerSettings.entitiesCacheSize);
         Instance = this;
+        
+    }
+
+    public void UnloadAllEntities()
+    {
+        foreach (Entity entity in Entities)
+        {
+            entity.SaveOnTile(out _);
+            Destroy(entity.gameObject);
+        }
+        EntityCache.Clear();
     }
 
  
@@ -56,8 +72,11 @@ public class WorldManager : MonoBehaviour
         {
             Debug.Log($"Generating world {worldScene.sceneName}");
             GameDataManager.DeleteTemporaryData(worldScene);
-            GenerateWorld();
+            // GenerateWorld();
+            WorldData = TestGenerateWorld();
+            GameDataManager.SavePersistentWorldData(WorldData);
         }
+        
         // Если он уже есть
         else
         {
@@ -83,11 +102,24 @@ public class WorldManager : MonoBehaviour
     }
  
 
+
+    
+    
     protected virtual void SpawnPlayer()
     {
         int mapCenterX = WorldData.MapWidth / 2;
         int mapCenterY = WorldData.MapHeight / 2;
         playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
+    }
+    
+    public WorldData TestGenerateWorld()
+    {
+        if (Application.isEditor)
+        {
+            gameCollectionManager.Init();
+            Instance = this;
+        }
+        return generator.GenerateWorld(layers, worldScene);
     }
     
     public virtual void GenerateWorld()
@@ -114,14 +146,6 @@ public class WorldManager : MonoBehaviour
         for (int y = 0; y < WorldData.MapHeight; y++)
             WorldData.GetTile(x, y).LoadInteractable();
     }
-    
-    public void AddEntity(WorldTile tile, EntitySaveData saveData)
-    {
-        if(saveData is null) return;
-        
-        if(tile.IsLoaded) tile.LoadEntities();
-
-    }
 
     public void ClearAllTiles()
     {
@@ -143,9 +167,8 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    public void EraseTile(int x, int y)
+    public void EraseTile(Vector3Int position)
     {
-        Vector3Int position = new Vector3Int(x, y, 0);
         layers.ForEach(layer =>
         {
             layer.tilemap.SetTile(position, null); 
@@ -158,26 +181,51 @@ public class WorldManager : MonoBehaviour
             DestroyImmediate(interactableTransform.GetChild(0).gameObject);
     }
 
-    public bool TryGetTopLayer(int x, int y, out WorldLayer topLayer)
+    public bool TryGetTopLayer(WorldTile tile, out WorldLayer topLayer)
     {
         topLayer = null;
-        var tileLayers = WorldData.GetTile(x, y).Layers;
+        var tileLayers = tile.Layers;
         for (var i = 0; i < tileLayers.Length; i++)
             if (tileLayers[i])
                 topLayer = layers[i];
         return topLayer is not null;
     }
     
-    public WorldLayer GetTopLayer(int x, int y)
+    public WorldLayer GetTopLayer(WorldTile tile)
     {
         WorldLayer topLayer = null;
-        var tileLayers = WorldData.GetTile(x, y).Layers;
+        var tileLayers = tile.Layers;
         for (var i = 0; i < tileLayers.Length; i++)
             if (tileLayers[i])
                 topLayer = layers[i];
         return topLayer;
     }
 
+    public void CacheEntity([CanBeNull] Entity entity)
+    {
+        RemoveEntity(entity);
+        EntityCache.Add(entity);
+    }
+
+    public void RemoveEntityFromCache([CanBeNull] Entity entity)
+    {
+        EntityCache.Remove(entity);
+    }
+    
+    public void AddEntity(Entity entity)
+    {
+        if(!Entities.Contains(entity))
+            Entities.Add(entity);
+    }
+
+    public void RemoveEntity(Entity entity)
+    {
+        if(Entities.Contains(entity))
+            Entities.Remove(entity);
+    }
+
+    
+    
     #region Utils
 
     public bool CoordsBelongsToWorld(Vector2Int pos)

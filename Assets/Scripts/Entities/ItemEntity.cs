@@ -12,13 +12,18 @@ public class ItemEntity : Entity
     // Public fields
     public new ItemEntitySaveData SaveData => (ItemEntitySaveData) saveData;
 
+    protected override void InitSaveData(EntityData origin)
+    {
+        base.InitSaveData(origin);
+    }
+
     protected override void Start()
     {
         base.Start();
-        spriteRenderer.sprite = SaveData.Item.Data.icon;
+        spriteRenderer.sprite = SaveData.item.Data.icon;
         isPickable = false;
 
-        Invoke(nameof(AllowPick), 1f);
+        Invoke(nameof(AllowPick), 0.5f);
         
         if(!isDroppedByPlayer) return;
         if(GetSameItemInRadius(0.8f, out ItemEntity sameItem))
@@ -48,7 +53,7 @@ public class ItemEntity : Entity
         for(int i = 0; i < size; i++)
         {
             if (results[i].gameObject.TryGetComponent(out ItemEntity itemEntity) && 
-                itemEntity.SaveData.Item.Compare(SaveData.Item) && itemEntity.IsStackable())
+                itemEntity.SaveData.item.Compare(SaveData.item) && itemEntity.IsStackable())
             {
                 sameItemEntity = sameItemEntity is null ? itemEntity :
                     itemEntity.DistanceFromPlayer < sameItemEntity.DistanceFromPlayer ? itemEntity : 
@@ -61,24 +66,26 @@ public class ItemEntity : Entity
     
     private bool IsStackable()
     {
-        return SaveData.Item.Data.maxStack > 1;
+        return SaveData.item.Data.maxStack > 1;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("OnTriggerEnter");
         if (other.gameObject.CompareTag("Player") && isPickable)
         {
-            SaveData.Amount -= WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
-                .AddItem(SaveData.Item.Data.identifier, SaveData.Amount, true);
-            if(SaveData.Amount == 0) Kill();
+            Debug.Log("Player");
+            SaveData.amount -= WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
+                .AddItem(SaveData.item.Data.identifier, SaveData.amount, true);
+            if(SaveData.amount == 0) Kill();
         } 
         else if (other.gameObject.TryGetComponent(out ItemEntity itemEntity)) 
         {
             if(isMergeTarget || 
-               !itemEntity.SaveData.Item.Compare(SaveData.Item) || 
+               !itemEntity.SaveData.item.Compare(SaveData.item) || 
                !itemEntity.IsStackable()) return;
             
-            itemEntity.SaveData.Amount += SaveData.Amount;
+            itemEntity.SaveData.amount += SaveData.amount;
             Kill();
         }
     }
