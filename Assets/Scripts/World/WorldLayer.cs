@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,50 +15,58 @@ public class WorldLayer : MonoBehaviour
     public WorldLayerEditSettings layerEditSettings = new();
 
 
-    public bool[,] Generate(
+    public async Task<bool[,]> Generate(
         GeneratorSettings settings, 
         WorldNoiseData noiseData)
     {
         return tilemapGenerationRule == TilemapGenerationRule.Fill ?
-            Fill(settings) : FillByRule(settings, noiseData);
+           await Fill(settings) : await FillByRule(settings, noiseData);
     }
     
-    private bool[,] Fill(
+    private async Task<bool[,]> Fill(
         GeneratorSettings settings)
     {
         bool[,] layer = new bool[settings.width, settings.height];
-        
-        for (int x = 0; x < settings.width; x++)
+
+        await Task.Run(() =>
         {
-            for (int y = 0; y < settings.height; y++)
+            for (int x = 0; x < settings.width; x++)
             {
-                layer[x, y] = true;
+                for (int y = 0; y < settings.height; y++)
+                {
+                    layer[x, y] = true;
+                }
             }
-        }
+        });
+        await Task.Delay(500);
 
         return layer;
     }
 
-    private bool[,]  FillByRule(
+    private async Task<bool[,]>  FillByRule(
         GeneratorSettings settings, 
         WorldNoiseData noiseData) 
     {
         bool[,] layer = new bool[settings.width, settings.height];
 
-        
-        for (int x = 0; x < settings.width; x++)
+        await Task.Run(() =>
         {
-            for (int y = 0; y < settings.height; y++)
+            for (int x = 0; x < settings.width; x++)
             {
-                rules.ForEach(rule =>
+                for (int y = 0; y < settings.height; y++)
                 {
-                    bool ruleVerdict = rule.ApplyRule(noiseData, x, y);
-                    if (ruleVerdict)
-                        layer[x, y] = !rule.exclude;
-                });
+                    rules.ForEach(rule =>
+                    {
+                        bool ruleVerdict = rule.ApplyRule(noiseData, x, y);
+                        if (ruleVerdict)
+                            layer[x, y] = !rule.exclude;
+                    });
+                }
             }
-        }
+        });
+        await Task.Delay(500);
 
+        
         return layer;
     }
 

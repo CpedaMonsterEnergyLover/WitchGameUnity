@@ -162,7 +162,8 @@ public class WorldTile : ICacheable
     public void DestroyInstantiated()
     {
         if(InstantiatedInteractable is null) return;
-        Object.DestroyImmediate(InstantiatedInteractable.gameObject);
+        if (Application.isPlaying) Object.Destroy(InstantiatedInteractable.gameObject);
+        else Object.DestroyImmediate(InstantiatedInteractable.gameObject);
         InstantiatedInteractable = null;
     }
 

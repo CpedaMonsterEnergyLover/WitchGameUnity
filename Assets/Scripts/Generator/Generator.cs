@@ -1,11 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using WorldScenes;
+using Random = UnityEngine.Random;
 
 public class Generator : MonoBehaviour
 {
+    [Header("Коллекция игровых объектов")] 
+    public GameCollection.Manager gameObjectsCollection;
+
+    [Header("WorldManager")] 
+    public WorldManager worldManager;
+    
     [Header("Настройки генератора")]
     public GeneratorSettings generatorSettings;
+    
+    [Header("Размеры мира")]
+    public List<Vector2Int> worldSizes = new();
     
     [Header("Noise settings")]
     public NoiseSettings primaryMapNoiseSettings;
@@ -25,16 +36,41 @@ public class Generator : MonoBehaviour
     private int _seedHash;
     private WorldNoiseData _noiseData;
     private float[] _cardinalMap;
+    private SceneLoadingBar _bar;
 
 
-    public WorldData GenerateWorld(List<WorldLayer> layers, BaseWorldScene worldScene)
+    public async Task Generate(SelectedGeneratorSettings newSettings, SceneLoadingBar bar)
+    {
+        gameObjectsCollection.Init();
+        _bar = bar;
+        generatorSettings.width = worldSizes[(int)newSettings.size].x;
+        generatorSettings.height = worldSizes[(int)newSettings.size].y;
+        generatorSettings.seed = newSettings.seed;
+        WorldData data = await GenerateWorldData(
+            worldManager.layers, worldManager.worldScene);
+        
+        bar.SetPhase("Сохранение данных");
+        // await Task.Run(() =>
+        // {
+            GameDataManager.SavePersistentWorldData(data);
+        // });
+        await Task.Delay(500);
+        // Destroy(gameObject);
+    }
+
+    public async Task<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
     { 
+        _bar.SetPhase("Инициализация генератора");
+
+        await Task.Delay(500);
+
         HashSeed();
         InitRandom();
         GetCardinalPoints();
         GenerateCardinalMap();
         
-        WorldNoiseData worldNoiseData = WorldNoiseData.GenerateData(
+        _bar.SetPhase("Создание шума");
+        WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
             _cardinalMap,
             hasCardinality,
             generatorSettings, 
@@ -43,18 +79,20 @@ public class Generator : MonoBehaviour
             secondaryMapNoiseSettings, 
             additionalMapNoiseSettings);
         
+        _bar.SetPhase("Раскраска мира");
         bool[][,] layerData = new bool[layers.Count][,];
-        layers.ForEach(
-            layer => 
-            layerData[layer.index] = layer.Generate(generatorSettings, worldNoiseData)
-            );
+        foreach (var layer in layers)
+        {
+            layerData[layer.index] = await layer.Generate(generatorSettings, worldNoiseData);
+        }
 
+
+        _bar.SetPhase("Выращивание лесов");
         InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
-
         if (biomes is not null)
         {
             biomes.InitSpawnEdges();
-            biomeLayer = GenerateBiomeLayer(worldNoiseData);
+            biomeLayer = await GenerateBiomeLayer(worldNoiseData);
         }
 
         WorldData worldData = new WorldData(
@@ -100,31 +138,35 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private InteractableData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
+    private async Task<InteractableData[,]> GenerateBiomeLayer(WorldNoiseData noiseData)
     {
+
         InteractableData[,] interactables = 
             new InteractableData[generatorSettings.width, generatorSettings.height];
         
-        for (int x = 0; x < generatorSettings.width; x++)
-        {
-            for (int y = 0; y < generatorSettings.height; y++)
+        // await Task.Run(() =>
+        // {
+            for (int x = 0; x < generatorSettings.width; x++)
             {
-                Biome generatedBiome = Biome.Plug();
-                biomes.list.ForEach(biome =>
+                for (int y = 0; y < generatorSettings.height; y++)
                 {
-                    generatedBiome = biome.priority > generatedBiome.priority ?
-                        biome.IsAllowed(noiseData, x, y) ?
-                            biome : 
-                            generatedBiome 
-                        : generatedBiome;
-                });
+                    Biome generatedBiome = Biome.Plug();
+                    biomes.list.ForEach(biome =>
+                    {
+                        generatedBiome = biome.priority > generatedBiome.priority
+                            ? biome.IsAllowed(noiseData, x, y) ? biome :
+                            generatedBiome
+                            : generatedBiome;
+                    });
 
-                if (generatedBiome.IsPlug)
-                    interactables[x, y] = null;
-                else
-                    interactables[x, y] = generatedBiome.GetRandomInteractable();
+                    if (generatedBiome.IsPlug)
+                        interactables[x, y] = null;
+                    else
+                        interactables[x, y] = generatedBiome.GetRandomInteractable();
+                }
             }
-        }
+        // });
+        await Task.Delay(500);
 
         return interactables;
     }

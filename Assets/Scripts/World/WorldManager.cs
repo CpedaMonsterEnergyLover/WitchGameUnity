@@ -60,19 +60,21 @@ public class WorldManager : MonoBehaviour
     {
         ClearAllTiles();
         ClearAllInteractable();
+        GameDataManager.DeleteTemporaryData(worldScene);
+        Debug.Log("WorldManagerStart");
         LoadData();
+        SpawnPlayer();
     }
-
+    
     private void LoadData()
     {
-        WorldData loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
+        var loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
 
         // Если файла мира еще нет, генерирует его
         if (loadedData is null)
         {
             Debug.Log($"Generating world {worldScene.sceneName}");
             GameDataManager.DeleteTemporaryData(worldScene);
-            // GenerateWorld();
             WorldData = TestGenerateWorld();
             GameDataManager.SavePersistentWorldData(WorldData);
         }
@@ -86,19 +88,18 @@ public class WorldManager : MonoBehaviour
             {
                 Debug.Log($"Found temp file for {worldScene.sceneName}. Merging data...");
                 foreach (WorldTile tile in tempData)
-                    loadedData.GetTile(tile.Position.x, tile.Position.y).MergeData(tile, true);
+                    loadedData.GetTile(tile.Position.x, tile.Position.y)
+                        .MergeData(tile, true);
                 Debug.Log($"{tempData.Count} merged;");
             }
             else
             {
-                Debug.Log($"Temp file for {worldScene.sceneName} not found");
-
+                Debug.Log($"Temp file for {worldScene.sceneName} not found, no merge needed");
             }
 
             WorldData = loadedData;
         }
         
-        SpawnPlayer();
     }
  
 
@@ -111,15 +112,15 @@ public class WorldManager : MonoBehaviour
         int mapCenterY = WorldData.MapHeight / 2;
         playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
     }
-    
-    public WorldData TestGenerateWorld()
+
+    private WorldData TestGenerateWorld()
     {
         if (Application.isEditor)
         {
             gameCollectionManager.Init();
             Instance = this;
         }
-        return generator.GenerateWorld(layers, worldScene);
+        return generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
     }
     
     public virtual void GenerateWorld()
@@ -129,7 +130,7 @@ public class WorldManager : MonoBehaviour
             gameCollectionManager.Init();
             Instance = this;
         }
-        WorldData = generator.GenerateWorld(layers, worldScene);
+        WorldData = generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
         GameDataManager.SavePersistentWorldData(WorldData);
     }
 

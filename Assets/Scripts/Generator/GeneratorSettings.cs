@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public struct GeneratorSettings
@@ -10,4 +11,5 @@ public struct GeneratorSettings
     public int height;
 
     public bool circleBounds;
+
 }

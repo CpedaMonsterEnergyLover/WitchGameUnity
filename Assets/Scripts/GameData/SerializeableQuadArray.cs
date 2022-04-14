@@ -29,6 +29,11 @@ public class SerializeableQuadArray<T> : IEnumerable
         items[x + y * height] = item;
     }
 
+    public static void Test(int abc)
+    {
+        return;
+    }
+
     public int Width => width;
     public int Height => height;
 

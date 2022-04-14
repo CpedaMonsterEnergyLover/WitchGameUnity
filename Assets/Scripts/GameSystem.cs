@@ -10,7 +10,7 @@ namespace DefaultNamespace
 
         private void Awake()
         {
-            if (Instance is null)
+            if (Instance != this)
             {
                 Instance = this;
             }

@@ -13,9 +13,14 @@ namespace WorldScenes
         
         public string FileName => $"{sceneName}.json"; 
 
-        public virtual void Load(int subworldIndex = -1)
+        public virtual void LoadFromAnotherWorld(int subworldIndex = -1)
         {
             GameDataManager.SaveTemporaryWorldData();
+            SceneManager.LoadScene(sceneName);
+        }
+
+        public virtual void LoadFromMainMenu()
+        {
             SceneManager.LoadScene(sceneName);
         }
     }

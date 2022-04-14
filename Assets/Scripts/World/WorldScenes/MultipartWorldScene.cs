@@ -5,7 +5,7 @@ namespace WorldScenes
     [CreateAssetMenu(menuName = "WorldScenes/Multipart")]
     public class MultipartWorldScene : BaseWorldScene
     {
-        public override void Load(int subworldIndex = -1)
+        public override void LoadFromAnotherWorld(int subworldIndex = -1)
         {
             if (subworldIndex == -1)
             {
@@ -14,7 +14,7 @@ namespace WorldScenes
             }
 
             GameDataManager.Instance.CurrentSubWorldIndex = subworldIndex;
-            base.Load(subworldIndex);
+            base.LoadFromAnotherWorld(subworldIndex);
         }
     }
 }

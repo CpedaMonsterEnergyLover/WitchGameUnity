@@ -24,6 +24,7 @@ public class GameDataManager : MonoBehaviour
     private const string TempDir = "/Save/Temporary/";
 
     public int CurrentSubWorldIndex { get; set; } = -1;
+    public static bool WasGameSaved { get; set; }
 
 
     private static void FirstGameStart()
@@ -34,13 +35,20 @@ public class GameDataManager : MonoBehaviour
 
     public static void SaveAll()
     {
+        WasGameSaved = true;
         MergeAllWorldData();
         WorldManager.Instance.UnloadAllEntities();
         TileLoader.Instance.Reload();
         SavePersistentWorldData(WorldManager.Instance.WorldData);
     }
 
-
+    public static bool HasSavedOverWorld()
+    {
+        string dir = Application.persistentDataPath + PersDir;
+        string path = dir + "OverWorld.json";
+        return Directory.Exists(dir) && File.Exists(path);
+    }
+    
     
     public static void SavePersistentWorldData(WorldData data)
     {

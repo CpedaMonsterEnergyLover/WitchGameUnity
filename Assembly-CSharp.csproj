@@ -43,6 +43,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\SelectedGeneratorSettings.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
      <Compile Include="Assets\Scripts\World\TileLoader\Cache.cs" />
@@ -50,6 +51,7 @@
      <Compile Include="Assets\Scripts\Entities\Interfaces\IFireDamagable.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\SkillCategory.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
+     <Compile Include="Assets\Scripts\UI\SceneLoadingBar.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\World\TileLoader\ICacheable.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
@@ -128,6 +130,7 @@
      <Compile Include="Assets\Scripts\GameCollection\Manager.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuSubScene.cs" />
      <Compile Include="Assets\Scripts\Interactable\CropBed.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\WorldSizeToggleGroup.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Hoe.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\Moon.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\HotbarWindow.cs" />
@@ -144,15 +147,18 @@
      <Compile Include="Assets\Scripts\World\WorldTile.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\InteractableSaveData.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\SolidWorldScene.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\CustomToggleButton.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxPanel.cs" />
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\SliderController.cs" />
      <Compile Include="Assets\Scripts\UI\CloseButton.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\ParallaxController.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
@@ -172,6 +178,7 @@
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Interactable\Vein.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\CustomToggleGroup.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\HotbarSlot.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysList.cs" />
@@ -197,10 +204,12 @@
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityType.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\VeinSaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Shaker.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\MainMenu.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowIdentifier.cs" />
      <Compile Include="Assets\Scripts\Entities\Banshee.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowManager.cs" />
      <Compile Include="Assets\Scripts\GameSystem.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuBonFire.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\InventoryWindow.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
@@ -213,9 +222,11 @@
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingWindow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\ItemSlot.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\DifficultyToggleGroup.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
      <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\BaseWindow.cs" />
+     <Compile Include="Assets\Scripts\UI\MainMenu\CustomButtonLightSticker.cs" />
      <Compile Include="Assets\Scripts\Generator\Biomes.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnInteractable.cs" />
@@ -876,9 +887,6 @@
      <Reference Include="Unity.2D.Tilemap.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.VisualStudio.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
      </Reference>
@@ -887,9 +895,6 @@
      </Reference>
      <Reference Include="Unity.Timeline">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>

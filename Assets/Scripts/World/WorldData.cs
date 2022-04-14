@@ -27,7 +27,7 @@ public class WorldData
         }
     }
     
-    public WorldData(
+    public  WorldData(
         int width, 
         int height, 
         bool[][,] layers,

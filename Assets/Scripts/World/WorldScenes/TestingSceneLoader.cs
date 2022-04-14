@@ -8,7 +8,7 @@ namespace WorldScenes
         
         public void OnReceivePlayer()
         {
-            sceneToLoad.Load();
+            sceneToLoad.LoadFromAnotherWorld();
         }
 
         public void OnPlayerExitReceiver()
