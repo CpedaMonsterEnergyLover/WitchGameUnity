@@ -46,30 +46,24 @@ public class Generator : MonoBehaviour
         generatorSettings.width = worldSizes[(int)newSettings.size].x;
         generatorSettings.height = worldSizes[(int)newSettings.size].y;
         generatorSettings.seed = newSettings.seed;
+        
         WorldData data = await GenerateWorldData(
             worldManager.layers, worldManager.worldScene);
         
-        bar.SetPhase("Сохранение данных");
-        // await Task.Run(() =>
-        // {
-            GameDataManager.SavePersistentWorldData(data);
-        // });
-        await Task.Delay(500);
-        // Destroy(gameObject);
+        bar.SetPhase("Сжигание мусора");
+        GameDataManager.SavePersistentWorldData(data);
+        Destroy(gameObject);
     }
 
     public async Task<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
     { 
-        _bar.SetPhase("Инициализация генератора");
-
-        await Task.Delay(500);
-
+        if(_bar is not null) _bar.SetPhase("Инициализация");
         HashSeed();
         InitRandom();
         GetCardinalPoints();
         GenerateCardinalMap();
         
-        _bar.SetPhase("Создание шума");
+        if(_bar is not null) _bar.SetPhase("Создание шума");
         WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
             _cardinalMap,
             hasCardinality,
@@ -79,7 +73,7 @@ public class Generator : MonoBehaviour
             secondaryMapNoiseSettings, 
             additionalMapNoiseSettings);
         
-        _bar.SetPhase("Раскраска мира");
+        if(_bar is not null) _bar.SetPhase("Раскраска мира");
         bool[][,] layerData = new bool[layers.Count][,];
         foreach (var layer in layers)
         {
@@ -87,7 +81,7 @@ public class Generator : MonoBehaviour
         }
 
 
-        _bar.SetPhase("Выращивание лесов");
+        if(_bar is not null) _bar.SetPhase("Выращивание лесов");
         InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
         if (biomes is not null)
         {
@@ -102,6 +96,8 @@ public class Generator : MonoBehaviour
             biomeLayer,
             worldScene
             );
+        
+        if(Application.isPlaying) GameDataManager.SavePersistentWorldData(worldData);
         
         return worldData;
     }
@@ -144,30 +140,29 @@ public class Generator : MonoBehaviour
         InteractableData[,] interactables = 
             new InteractableData[generatorSettings.width, generatorSettings.height];
         
-        // await Task.Run(() =>
-        // {
-            for (int x = 0; x < generatorSettings.width; x++)
+        //TODO: разбить побиомно
+        for (int x = 0; x < generatorSettings.width; x++)
+        {
+            for (int y = 0; y < generatorSettings.height; y++)
             {
-                for (int y = 0; y < generatorSettings.height; y++)
+                Biome generatedBiome = Biome.Plug();
+                biomes.list.ForEach(biome =>
                 {
-                    Biome generatedBiome = Biome.Plug();
-                    biomes.list.ForEach(biome =>
-                    {
-                        generatedBiome = biome.priority > generatedBiome.priority
-                            ? biome.IsAllowed(noiseData, x, y) ? biome :
-                            generatedBiome
-                            : generatedBiome;
-                    });
+                    generatedBiome = biome.priority > generatedBiome.priority
+                        ? biome.IsAllowed(noiseData, x, y) ? biome :
+                        generatedBiome
+                        : generatedBiome;
+                });
 
-                    if (generatedBiome.IsPlug)
-                        interactables[x, y] = null;
-                    else
-                        interactables[x, y] = generatedBiome.GetRandomInteractable();
-                }
+                if (generatedBiome.IsPlug)
+                    interactables[x, y] = null;
+                else
+                    interactables[x, y] = generatedBiome.GetRandomInteractable();
             }
-        // });
-        await Task.Delay(500);
+        }
 
+        await Task.Delay(500);
+    
         return interactables;
     }
 }

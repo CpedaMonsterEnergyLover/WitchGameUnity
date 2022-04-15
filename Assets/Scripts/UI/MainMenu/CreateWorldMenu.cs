@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using DefaultNamespace;
 using UnityEngine;
@@ -70,33 +69,42 @@ public class CreateWorldMenu : MonoBehaviour
     private void LoadNewWorldScene()
     {
         _needsConfirm = false;
-        loadingBar.Activate(5);
-        loadingBar.SetPhase("Выращивание лесов");
+        loadingBar.Activate(6);
+        loadingBar.SetPhase("Clearing data");
         GameDataManager.ClearPers();
         GameDataManager.ClearTemp();
         var scene = SceneManager.LoadSceneAsync(sceneToLoad.sceneName, LoadSceneMode.Additive);
         scene.completed += AfterSceneLoading;
     }
 
+    private WorldManager wm;
+    private GameSystem gs;
+    private bool _startFade;
+    
     private void AfterSceneLoading(AsyncOperation ao)
     {
-        WorldManager wm = FindObjectOfType<WorldManager>(true);
-        GameSystem gs = FindObjectOfType<GameSystem>(true);
+        wm = FindObjectOfType<WorldManager>(true);
+        gs = FindObjectOfType<GameSystem>(true);
         gs.gameObject.SetActive(false);
         wm.gameObject.SetActive(false);
         Generator generator = FindObjectOfType<Generator>(true);
         
-        generator.Generate(
+         generator.Generate(
             new SelectedGeneratorSettings(
                 difficultyToggleGroup.value, 
                 worldSizeToggleGroup.value, 
                 seedInput.text, 
                 seasonSliderController.Value),
             loadingBar).GetAwaiter().OnCompleted(() =>
-        {
-            gs.gameObject.SetActive(true);
-            wm.gameObject.SetActive(true);
-            // SceneManager.UnloadSceneAsync(2); 
-        });
+         {
+             ScreenFader.Instance.FadeUnscaled(true).GetAwaiter().OnCompleted(() =>
+             {
+                 gs.gameObject.SetActive(true);
+                 wm.gameObject.SetActive(true);
+                 SceneManager.UnloadSceneAsync(2);
+             });
+         });
     }
+
+
 }

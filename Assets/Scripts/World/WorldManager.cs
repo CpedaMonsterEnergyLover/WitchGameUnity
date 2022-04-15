@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using TileLoading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorldManager : MonoBehaviour
 {
@@ -64,6 +66,7 @@ public class WorldManager : MonoBehaviour
         Debug.Log("WorldManagerStart");
         LoadData();
         SpawnPlayer();
+        ScreenFader.Instance.FadeScaled(false).GetAwaiter();
     }
     
     private void LoadData()
@@ -123,15 +126,14 @@ public class WorldManager : MonoBehaviour
         return generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
     }
     
-    public virtual void GenerateWorld()
+    public virtual async Task GenerateWorld()
     {
         if (Application.isEditor)
         {
             gameCollectionManager.Init();
             Instance = this;
         }
-        WorldData = generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
-        GameDataManager.SavePersistentWorldData(WorldData);
+        WorldData = await generator.GenerateWorldData(layers, worldScene);
     }
 
     public void DrawAllTiles()

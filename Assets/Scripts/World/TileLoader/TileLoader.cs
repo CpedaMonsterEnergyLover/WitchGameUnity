@@ -1,10 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using TileLoading;
 using UnityEngine;
 
 public class TileLoader : MonoBehaviour
 {
+    #region Singleton
+
+    public static TileLoader Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    #endregion
+    
+    
+    
     public enum TileLoadingMode
     {
         Everything,
@@ -107,15 +122,17 @@ public class TileLoader : MonoBehaviour
         }
         _loadedTiles = new();
     }
-    
-    #region Singleton
 
-    public static TileLoader Instance;
-
-    private void Awake()
+    public async Task<bool> AwaitAllTilesLoaded()
     {
-        Instance = this;
-    }
+        int tilesToAwait = viewRangeX * viewRangeY;
+        while (_loadedTiles.Count < tilesToAwait)
+        {
+            await Task.Delay((int) Time.deltaTime * 1000);
+        }
 
-    #endregion
+        return true;
+    }
+    
+
 }

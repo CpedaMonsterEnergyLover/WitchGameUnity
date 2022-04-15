@@ -4,5 +4,6 @@
     Hotbar = 1,
     Crafting = 2,
     Placeable = 3,
-    EscapeMenu = 4
+    EscapeMenu = 4,
+    DialogWindow = 5,
 }

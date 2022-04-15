@@ -38,7 +38,6 @@ public class WorldLayer : MonoBehaviour
                 }
             }
         });
-        await Task.Delay(500);
 
         return layer;
     }
@@ -64,8 +63,6 @@ public class WorldLayer : MonoBehaviour
                 }
             }
         });
-        await Task.Delay(500);
-
         
         return layer;
     }

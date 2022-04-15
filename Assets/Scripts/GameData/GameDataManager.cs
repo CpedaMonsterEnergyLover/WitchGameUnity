@@ -1,50 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using WorldScenes;
 
 public class GameDataManager : MonoBehaviour
 {
-
-    #region Singleton
-
-    public static GameDataManager Instance;
-    
     private void Awake()
     {
-        Instance = this;
-        FirstGameStart();
+        _tempDir = Application.persistentDataPath + TempDir;
+        _persDir = Application.persistentDataPath + PersDir;
+        ClearTemp();
     }
 
-    #endregion
 
     private const string PersDir = "/Save/Persistent/";
     private const string TempDir = "/Save/Temporary/";
+    private static string _tempDir;
+    private static string _persDir;
 
     public int CurrentSubWorldIndex { get; set; } = -1;
-    public static bool WasGameSaved { get; set; }
-
-
-    private static void FirstGameStart()
-    {
-        ClearTemp();
-    }
     
 
-    public static void SaveAll()
+    public static async Task SaveAll(SceneLoadingBar bar)
     {
-        WasGameSaved = true;
-        MergeAllWorldData();
-        WorldManager.Instance.UnloadAllEntities();
+        await Task.Run(MergeAllWorldData);
+        if(bar is not null) bar.SetPhase("Сбор сущностей");
+        await Task.Run(WorldManager.Instance.UnloadAllEntities);
         TileLoader.Instance.Reload();
         SavePersistentWorldData(WorldManager.Instance.WorldData);
+        if(bar is not null) bar.SetPhase("Сохранение завершено!");
+        await Task.Delay(500);
     }
 
     public static bool HasSavedOverWorld()
     {
-        string dir = Application.persistentDataPath + PersDir;
+        string dir = _persDir;
         string path = dir + "OverWorld.json";
         return Directory.Exists(dir) && File.Exists(path);
     }
@@ -52,7 +44,7 @@ public class GameDataManager : MonoBehaviour
     
     public static void SavePersistentWorldData(WorldData data)
     {
-        string dir = Application.persistentDataPath + PersDir;
+        string dir = _persDir;
 
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
@@ -63,7 +55,7 @@ public class GameDataManager : MonoBehaviour
 
     public static WorldData LoadPersistentWorldData(BaseWorldScene worldScene)
     {
-        string path = Application.persistentDataPath + PersDir + worldScene.FileName;
+        string path = _persDir + worldScene.FileName;
         WorldData loadedData = null;
 
         if (File.Exists(path))
@@ -79,7 +71,7 @@ public class GameDataManager : MonoBehaviour
     public static void SaveTemporaryWorldData()
     {
         // Save data into file
-        string dir = Application.persistentDataPath + TempDir;
+        string dir = _tempDir;
 
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
@@ -89,11 +81,12 @@ public class GameDataManager : MonoBehaviour
             WorldManager.Instance.WorldData.Changes;
         string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);
         File.WriteAllText(dir + WorldManager.Instance.worldScene.FileName, json);
+        
     }
 
     public static List<WorldTile> LoadTemporaryWorldData(BaseWorldScene worldScene)
     {
-        string path = Application.persistentDataPath + TempDir + worldScene.FileName;
+        string path = _tempDir + worldScene.FileName;
         if (!File.Exists(path)) return null;
         
         string json = File.ReadAllText(path);
@@ -105,7 +98,7 @@ public class GameDataManager : MonoBehaviour
     private static void MergeAllWorldData()
     {
         // Get all Worldscenes/Temporary/... files, iterate over them
-        string dir = Application.persistentDataPath + TempDir;
+        string dir = _tempDir;
 
         if (!Directory.Exists(dir))
         {
@@ -114,6 +107,7 @@ public class GameDataManager : MonoBehaviour
         }
 
         DirectoryInfo dirInfo = new DirectoryInfo(dir);
+
         foreach (FileInfo file in dirInfo.GetFiles())
         {
             string fileName = file.Name;
@@ -147,16 +141,18 @@ public class GameDataManager : MonoBehaviour
          
             SavePersistentWorldData(persistentData);
         }
+        
+        
     }
 
     public static void DeleteTemporaryData(BaseWorldScene worldScene)
     {
-        string path = Application.persistentDataPath + TempDir + worldScene.FileName;
+        string path = _tempDir + worldScene.FileName;
         if (File.Exists(path)) File.Delete(path);
     }
     
-    public static void ClearTemp() => DeleteAllInDir(Application.persistentDataPath + TempDir);
-    public static void ClearPers() => DeleteAllInDir(Application.persistentDataPath + PersDir);
+    public static void ClearTemp() => DeleteAllInDir(_tempDir);
+    public static void ClearPers() => DeleteAllInDir(_persDir);
     
     private static void DeleteAllInDir(string directory)
     {

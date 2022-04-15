@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,34 +9,38 @@ public class SceneLoadingBar : MonoBehaviour
     public Image loadingBar;
     public Text loadingText;
     private float _phaseLen;
-    private float _phasesAmount;
     private string _dots = "";    
     private float _target;
     private float _current;
+    private string _phaseName;
     private static int _phaseCounter;
-    
-    
-    public void Activate(int phasesAmouns)
+
+    private Coroutine _routine;
+
+    public void Activate(int phases)
     {
         toDisable.SetActive(false);
-        _phasesAmount = phasesAmouns;
-        _phaseLen = 1f / phasesAmouns;
-        loadingText.text = "";
+        _phaseLen = 1f / phases;
+        loadingText.text = "Сбор данных";
+        loadingBar.fillAmount = 0;
         _current = 0;
         _target = 0;
-        gameObject.SetActive(true);
         _phaseCounter = 1;
-        StartCoroutine(NameDotsRoutine());
+        gameObject.SetActive(true);
     }
 
     public void SetPhase(string phaseName)
     {
         _target = _phaseLen * _phaseCounter;
         _phaseCounter++;
-        SetName(phaseName);
+        _phaseName = phaseName;
+        UpdateName();
+        Debug.Log($"Phase {phaseName} begins...");
+        if(_routine is null) _routine = StartCoroutine(NameDotsRoutine());
     }
-    
-    private void SetName(string phaseName) => loadingText.text = phaseName + _dots;
+
+
+    private void UpdateName() => loadingText.text = _phaseName + _dots;
 
     private void OnDisable()
     {
@@ -44,25 +49,21 @@ public class SceneLoadingBar : MonoBehaviour
         _current = 0;
         _target = 0;
     }
-
-
-
-    private void Update()
+    
+    private void FixedUpdate()
     {
-        _current = Mathf.MoveTowards(_current, _target, Time.deltaTime);
+        _current = Mathf.MoveTowards(_current, _target,   Time.deltaTime);
         loadingBar.fillAmount = _current;
     }
 
     private IEnumerator NameDotsRoutine()
     {
-        string phaseText = loadingText.text;
-        
         while (gameObject.activeSelf)
         {
             if (_dots.Length > 3) _dots = "";
-            else _dots += ". ";
-            loadingText.text = phaseText + _dots;
-            yield return new WaitForSeconds(1f);
+            else _dots += ".";
+            UpdateName();
+            yield return new WaitForSecondsRealtime(0.6f);
         }
     }
 }

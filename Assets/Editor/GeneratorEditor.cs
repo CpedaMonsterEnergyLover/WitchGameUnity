@@ -4,7 +4,7 @@ using UnityEditor;
 [CustomEditor (typeof (WorldManager))]
 public class GeneratorEditor : UnityEditor.Editor {
 
-    public override void OnInspectorGUI() {
+    public override async void OnInspectorGUI() {
         WorldManager manager = target as WorldManager;
         if (manager == null) return;
 
@@ -13,7 +13,7 @@ public class GeneratorEditor : UnityEditor.Editor {
         if (GUILayout.Button ("Update"))
         {
             manager.ClearAllInteractable();
-            manager.GenerateWorld();
+            await manager.GenerateWorld();
             manager.DrawAllTiles();
             manager.DrawAllInteractable();
         }

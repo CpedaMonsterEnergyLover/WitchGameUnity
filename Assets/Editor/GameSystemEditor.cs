@@ -14,7 +14,7 @@ public class GameSystemEditor : UnityEditor.Editor {
         if (GUILayout.Button ("Save all") && Application.isPlaying)
         {
             manager.collectionManager.Init();
-            GameDataManager.SaveAll();
+            GameDataManager.SaveAll(null);
         }
         
         if (GUILayout.Button ("Delete all data")) {

@@ -13,7 +13,6 @@ namespace WorldScenes
                 return;
             }
 
-            GameDataManager.Instance.CurrentSubWorldIndex = subworldIndex;
             base.LoadFromAnotherWorld(subworldIndex);
         }
     }

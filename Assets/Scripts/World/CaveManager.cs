@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CaveManager : WorldManager
@@ -11,7 +12,7 @@ public class CaveManager : WorldManager
 
     private Vector3Int _caveEntrance;
     
-    public override void GenerateWorld()
+    public override async Task GenerateWorld()
     {
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
@@ -40,6 +41,8 @@ public class CaveManager : WorldManager
         // 8,21 43,48
         // Add cave Entrance Interactable
         //shadowCaster2DTilemap.Generate();
+        await Task.Delay(100);
+
     }
 
     private void ClampWorldData(List<Vector3Int> mainHollow)
