@@ -10,16 +10,17 @@ public class GeneratorEditor : UnityEditor.Editor {
 
         DrawDefaultInspector();
         
+        
+        if (GUILayout.Button ("Clear all")) {
+            manager.ClearAllTiles();
+        }
+        
         if (GUILayout.Button ("Update"))
         {
             manager.ClearAllInteractable();
             await manager.GenerateWorld();
             manager.DrawAllTiles();
             manager.DrawAllInteractable();
-        }
-        
-        if (GUILayout.Button ("Clear all")) {
-            manager.ClearAllTiles();
         }
     }
 }

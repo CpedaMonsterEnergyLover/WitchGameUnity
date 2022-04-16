@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class DialogWindow : BaseWindow
         };
     }
 
+    [Header("ITemporaryDismissable")] 
+    public List<Component> toDismiss = new();
     public Color selectionColor;
     public DialogPortrait leftPortrait;
     public DialogPortrait rightPortrait;
@@ -37,17 +40,19 @@ public class DialogWindow : BaseWindow
     private DialogMember[] _members;
     // private int _currentElement = 0;
     private Coroutine _textRoutine;
+    private bool _spaceBlocked;
     private string _finalText;
+    private TemporaryDismissData _dismissData;
 
     protected override void OnEnable()
     {
-        // Hide ITemporaryDismissable
+        _dismissData = new TemporaryDismissData().Add(toDismiss).HideAll();
         base.OnEnable();
     }
 
     private void Update()
     {
-        if(_dialogTree is null) return;
+        if(_dialogTree is null || _spaceBlocked) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Next();
@@ -62,16 +67,20 @@ public class DialogWindow : BaseWindow
             animator.Animate(animationDuration, false);
         }
         volumeAnimator.Animate(animationDuration, false);
+        _spaceBlocked = true;
+        Invoke(nameof(AllowSpace), animationDuration);
     }
+    
+    private void AllowSpace() => _spaceBlocked = false;
 
     public void StartDialog(DialogTree dialogTree)
     {
         if(isActiveAndEnabled) return;
+        PlayerController.Instance.Stop();
         _dialogTree = dialogTree;
         gameObject.SetActive(true);
         _members = new[] {_dialogTree.leftSide, _dialogTree.rightSide};
         AnimateAll();
-
         if(dialogTree.leftSide is null) leftPortrait.SetMember(player);
         leftPortrait.SetMember(dialogTree.leftSide);
         rightPortrait.SetMember(dialogTree.rightSide);
@@ -82,6 +91,7 @@ public class DialogWindow : BaseWindow
 
     private void EndDialog()
     {
+        _dismissData = _dismissData.ShowAll();
         _dialogTree = null;
         foreach (VerticalScrollAnimator animator in animators) 
             animator.Animate(animationDuration, true);

@@ -245,6 +245,9 @@
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog\VerticalScrollAnimator.cs" />
      <Compile Include="Assets\Scripts\Util\VolumeAnimator.cs" />
+     <Compile Include="Assets\Scripts\Interactable\House.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Data\HouseData.cs" />
+     <Compile Include="Assets\Scripts\World\WorldBounds.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ITemporaryDismissable
 {
     #region Singleton
 
@@ -61,6 +61,12 @@ public class PlayerController : MonoBehaviour
             PlayerAnimationManager.AnimateMovement(MovementInput.sqrMagnitude);
             Move(movementSpeed);
         }
+    }
+
+    public void Stop()
+    {
+        rigidBody.velocity = Vector2.zero;
+        PlayerAnimationManager.AnimateMovement(0);
     }
 
     #endregion
@@ -158,4 +164,7 @@ public class PlayerController : MonoBehaviour
     }
     
     #endregion
+
+    public bool IsActive => enabled;
+    public void SetActive(bool isActive) => enabled = isActive;
 }

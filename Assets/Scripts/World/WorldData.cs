@@ -10,12 +10,16 @@ public class WorldData
 {
     [SerializeField] private BaseWorldScene worldScene;
     [SerializeField] private SerializeableQuadArray<WorldTile> worldTiles;
-    
+    [SerializeField] private Vector2 spawnPoint;
     public BaseWorldScene WorldScene => worldScene;
     public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
     public int MapWidth => worldTiles.Width;
     public int MapHeight => worldTiles.Height;
-
+    public Vector2 SpawnPoint
+    {
+        get => spawnPoint;
+        set => spawnPoint = value;
+    }
     public List<WorldTile> Changes => worldTiles.Items.Where(tile => tile.WasChanged).ToList();
 
     public void Init()

@@ -9,6 +9,8 @@ public class Generator : MonoBehaviour
     [Header("Коллекция игровых объектов")] 
     public GameCollection.Manager gameObjectsCollection;
 
+    public HouseData house;
+
     [Header("WorldManager")] 
     public WorldManager worldManager;
     
@@ -32,7 +34,6 @@ public class Generator : MonoBehaviour
     [Header("Биомы")]
     public Biomes biomes;
     
-
     private int _seedHash;
     private WorldNoiseData _noiseData;
     private float[] _cardinalMap;
@@ -97,9 +98,49 @@ public class Generator : MonoBehaviour
             worldScene
             );
         
+        PlaceHouse(worldData);
+        
         if(Application.isPlaying) GameDataManager.SavePersistentWorldData(worldData);
         
         return worldData;
+    }
+
+    private void PlaceHouse(WorldData worldData)
+    {
+        bool placeNotFound = true;
+        int r = 3;
+        Vector2Int mapCenter = new Vector2Int(worldData.MapWidth / 2, worldData.MapHeight / 2);
+        while (placeNotFound)
+        {
+            var newPosF = Random.insideUnitCircle * r;
+            int x = (int) newPosF.x + mapCenter.x;
+            int y = (int) newPosF.y + mapCenter.y;
+            if (IsAreaPlaceable(worldData, x, y, 3, 4))
+            {
+                placeNotFound = false;
+                worldData.GetTile(x + 1, y + 1).SetInteractable(new InteractableSaveData(house));
+                worldData.SpawnPoint = new Vector2(x + 1, y);
+            }
+            else
+            {
+                r++;
+                if (r >= 30) r = 3;
+            }
+        }
+    }
+
+    private bool IsAreaPlaceable(WorldData data, int centerX, int centerY, int width, int height)
+    {
+        bool isPlaceable = true;
+        for (int x = centerX; x < centerX + width; x++)
+        for (int y = centerY; y < centerY + height; y++)
+            if (WorldManager.Instance.TryGetTopLayer(data.GetTile(x, y), out WorldLayer layer) &&
+                !layer.layerEditSettings.canPlace) isPlaceable = false;
+        if(isPlaceable)
+            for (int x = centerX; x < centerX + width; x++)
+            for (int y = centerY; y < centerY + height; y++)
+                data.GetTile(x,y).SetInteractable(null);
+        return isPlaceable;
     }
 
     private void HashSeed()

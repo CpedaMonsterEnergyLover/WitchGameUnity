@@ -118,7 +118,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowIdentifier: 5
-  selectionColor: {r: 1, g: 0, b: 0.88069534, a: 0}
+  toDismiss:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  selectionColor: {r: 1, g: 0, b: 0.88069534, a: 1}
   leftPortrait: {fileID: 1341617037729189943}
   rightPortrait: {fileID: 6067855562324667581}
   dialogText: {fileID: 2918066377972993962}
@@ -127,10 +134,10 @@ MonoBehaviour:
   - {fileID: 2257762073737308967}
   - {fileID: 2018323206759835404}
   - {fileID: 7198931294749328667}
-  animationDuration: 3
+  animationDuration: 2
   volumeAnimator: {fileID: 4140852670676659934}
   testDialog: {fileID: 11400000, guid: b7cdf1d679c5ff6428f68c520bc00847, type: 2}
-  textPrintSpeed: 0.1
+  textPrintSpeed: 0.075
 --- !u!1 &211130993198212761
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,7 +935,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
+  m_SizeDelta: {x: -20, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9112884779353668639
 CanvasRenderer:

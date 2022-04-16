@@ -26,11 +26,15 @@ public class InventoryWindow : BaseWindow
     
     
     private bool _needsUpdate;
-    
 
-    private void Awake()
+
+    public override void Init()
     {
         slots.AddRange(CreateSlots(slotAmountOnStart));
+        itemsOnStart.ForEach(i =>
+        {
+            AddItem(i.item.identifier, i.amount);
+        });
     }
     
     protected override void OnEnable()
@@ -43,14 +47,7 @@ public class InventoryWindow : BaseWindow
 
         base.OnEnable();
     }
-
-    private void Start()
-    {
-        itemsOnStart.ForEach(i =>
-        {
-            AddItem(i.item.identifier, i.amount);
-        });
-    }
+    
 
     public void RemoveItem(ItemIdentifier identifier, int amount)
     {

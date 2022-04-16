@@ -9,9 +9,14 @@ public class GameDataManager : MonoBehaviour
 {
     private void Awake()
     {
+        InitDirPaths();
+        ClearTemp();
+    }
+
+    public static void InitDirPaths()
+    {
         _tempDir = Application.persistentDataPath + TempDir;
         _persDir = Application.persistentDataPath + PersDir;
-        ClearTemp();
     }
 
 
@@ -27,7 +32,7 @@ public class GameDataManager : MonoBehaviour
     {
         await Task.Run(MergeAllWorldData);
         if(bar is not null) bar.SetPhase("Сбор сущностей");
-        await Task.Run(WorldManager.Instance.UnloadAllEntities);
+        WorldManager.Instance.UnloadAllEntities();
         TileLoader.Instance.Reload();
         SavePersistentWorldData(WorldManager.Instance.WorldData);
         if(bar is not null) bar.SetPhase("Сохранение завершено!");

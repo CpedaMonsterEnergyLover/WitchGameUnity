@@ -111,9 +111,8 @@ public class WorldManager : MonoBehaviour
     
     protected virtual void SpawnPlayer()
     {
-        int mapCenterX = WorldData.MapWidth / 2;
-        int mapCenterY = WorldData.MapHeight / 2;
-        playerTransform.position = new Vector3(mapCenterX, mapCenterY, 0f);
+        var spawnPoint = WorldData.SpawnPoint;
+        playerTransform.position = new Vector3(spawnPoint.x, spawnPoint.y, 0f);
     }
 
     private WorldData TestGenerateWorld()
@@ -226,20 +225,5 @@ public class WorldManager : MonoBehaviour
         if(Entities.Contains(entity))
             Entities.Remove(entity);
     }
-
     
-    
-    #region Utils
-
-    public bool CoordsBelongsToWorld(Vector2Int pos)
-    {
-        return WorldData.CoordsBelongsToWorld(pos.x, pos.y);
-    }
-    
-    public bool CoordsBelongsToWorld(int x, int y)
-    {
-        return WorldData.CoordsBelongsToWorld(x, y);
-    }
-
-    #endregion
 }

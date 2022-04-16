@@ -1,9 +1,8 @@
 using UnityEngine;
 using System;
 
-// [Serializable, CreateAssetMenu(menuName = "InteractableSaveData/Base")]
 [Serializable]
-public class InteractableSaveData /*: ScriptableObject*/
+public class InteractableSaveData
 {
     [Header("Interactable SaveData")] 
     [SerializeField] public string id;
@@ -23,6 +22,11 @@ public class InteractableSaveData /*: ScriptableObject*/
     protected InteractableSaveData() { }
     public virtual InteractableSaveData DeepClone()
     {
-        throw new Exception("Tried to clone interactable data base class");
+        return new InteractableSaveData
+        {
+            id = id,
+            creationHour = creationHour,
+            initialized = initialized
+        };
     }
 }

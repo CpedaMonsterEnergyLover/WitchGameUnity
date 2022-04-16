@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07042f83914d4eb8d961a6a9287a21, type: 3}
+  m_Name: PlayerHouse
+  m_EditorClassIdentifier: 
+  id: house
+  name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0434\u043E\u043C"
+  interactingTime: 0
+  ignoreRandomisation: 1
+  test: 1
