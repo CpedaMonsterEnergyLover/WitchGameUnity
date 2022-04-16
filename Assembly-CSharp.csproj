@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\DialogMember.cs" />
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SelectedGeneratorSettings.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
@@ -62,6 +63,8 @@
      <Compile Include="Assets\Scripts\UI\Windows\EscapeMenuWindow.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\KeyListener.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\DialogSide.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\DialogPortrait.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\UI\InteractablePreview.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\CraftingTooltip.cs" />
@@ -172,6 +175,7 @@
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\PlaceableItem.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\DialogWindow.cs" />
      <Compile Include="Assets\Scripts\Generator\Noise.cs" />
      <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
@@ -221,6 +225,7 @@
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingComponent.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingWindow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\DialogTree.cs" />
      <Compile Include="Assets\Scripts\UI\ScreenFader.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\ItemSlot.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\DifficultyToggleGroup.cs" />
@@ -236,13 +241,10 @@
      <Compile Include="Assets\Scripts\AnimationBehaviour\GhostBehaviour.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
-     <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\UI\Dialog\DialogWindow.cs" />
-     <Compile Include="Assets\Scripts\UI\Dialog\DialogPortrait.cs" />
-     <Compile Include="Assets\Scripts\UI\Dialog\DialogMember.cs" />
-     <Compile Include="Assets\Scripts\UI\Dialog\DialogTree.cs" />
-     <Compile Include="Assets\Scripts\UI\Dialog\DialogSide.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog\DialogElement.cs" />
+     <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\UI\Dialog\VerticalScrollAnimator.cs" />
+     <Compile Include="Assets\Scripts\Util\VolumeAnimator.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

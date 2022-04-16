@@ -1,6 +1,11 @@
-﻿public class DialogElement
+﻿using System;
+using System.Collections.Generic;
+
+[Serializable]
+public class DialogElement
 {
     public DialogSide speakingSide;
     public string text;
-    public DialogElement nextElement;
+
+    public string SpeakerName(DialogMember[] members) => members[(int) speakingSide].name;
 }
