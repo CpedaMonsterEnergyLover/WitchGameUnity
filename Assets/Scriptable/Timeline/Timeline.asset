@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564b9ea40cc4d5a41884ed0515de32ce, type: 3}
   m_Name: Timeline
   m_EditorClassIdentifier: 
-  startSeason: 5
+  startSeason: 4
   seasonLength: 5
   startYear: 1526
-  startHour: 9
-  startDay: 1
+  startHour: 21
+  startDay: 6

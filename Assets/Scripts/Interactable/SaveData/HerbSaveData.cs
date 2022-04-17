@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class HerbSaveData : InteractableSaveData
@@ -8,7 +9,7 @@ public class HerbSaveData : InteractableSaveData
     [SerializeField] public float fertility = 1f;
     [SerializeField] public float growthSpeed = 1f;
     [SerializeField] public float frostResistance = 1f;
-    [SerializeField] public GrowthStage growthStage = GrowthStage.Sprout;
+    [SerializeField] public GrowthStage growthStage = (GrowthStage) Random.Range(2, 4);
     [SerializeField] public int nextStageHour;
     [SerializeField] public bool withering;
     [SerializeField] public bool decaying;

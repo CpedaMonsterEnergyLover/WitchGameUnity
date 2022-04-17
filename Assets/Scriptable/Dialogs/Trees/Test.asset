@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   leftSide: {fileID: 11400000, guid: 31d8625a5febaa64fa00fbd0b09fb945, type: 2}
-  rightSide: {fileID: 11400000, guid: ed10a4827ec18934db92917a52b525d2, type: 2}
+  rightSide: {fileID: 11400000, guid: 4fc1c4745c1b00e428d059f7a0d8d8c3, type: 2}
   elements:
   - speakingSide: 1
     text: "\u043A\u0432\u0430! \u041A\u0432\u0430! \u041A\u0432\u0430! \u041A\u0432\u0430!"

@@ -1,20 +1,15 @@
 using System;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Herb : Interactable
 {
-    #region Vars
-
-    // Public Fields
     public new HerbData Data => (HerbData) data;
     public new HerbSaveData SaveData => (HerbSaveData) saveData;
 
-    // Private Fields
     private SpriteRenderer _renderer;
     private GameObject _bed;
-    
-    #endregion
-    
 
 
     #region OverrideMethods
@@ -28,7 +23,10 @@ public class Herb : Interactable
     {
         base.OnTileLoad(loadedTile);
 
-        if(SaveData.nextStageHour == 0) SaveData.nextStageHour += saveData.creationHour + Data.StageGrowthTime;
+        if (SaveData.nextStageHour == 0)
+        {
+            SaveData.nextStageHour += saveData.creationHour + Data.StageGrowthTime;
+        }
         
         // Если вырос на грядке, спавнит ее модель
         if (SaveData.hasBed && _bed is null) _bed = Instantiate(GameCollection.Interactables.Get("cropbed"), transform);
@@ -71,6 +69,11 @@ public class Herb : Interactable
     public override void Interact(float value = 1.0f)
     {
         base.Interact(value);
+        Item dropItem = Data.hasDrop ? Item.Create(Data.itemDrop.identifier) : Item.Create("dry_grass");
+        Entity.Create(
+            new ItemEntitySaveData(dropItem,
+                (int) SaveData.growthStage,
+                transform.position));
         Kill();
     }
 
@@ -80,14 +83,18 @@ public class Herb : Interactable
     
     #region ClassMethods
 
-    private void SetSprite(GrowthStage stage) => _renderer.sprite = Data.SpriteOfGrowthStage(stage);
-    
+    private void SetSprite(GrowthStage stage)
+    {
+        if (_renderer is not null) 
+            _renderer.sprite = Data.SpriteOfGrowthStage(stage);
+    }
+
     private void Grow()
     {
         // Если растение находится в последней стадии роста ...
         if (SaveData.growthStage == GrowthStage.Decay)
         {
-            Kill();
+            // Kill();
             SaveData.nextStageHour = Int32.MaxValue;
             return;
         }

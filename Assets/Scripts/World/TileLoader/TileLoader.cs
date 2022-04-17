@@ -91,19 +91,30 @@ public class TileLoader : MonoBehaviour
         toRemove.Clear();
     }
 
+    public void UnloadAndBlock(int x, int y)
+    {
+        WorldTile tile = _worldManager.WorldData.GetTile(x, y);
+        if(tile is null || tile.IsBlockedForLoading) return;
+        RemoveTile(tile);
+        tile.IsBlockedForLoading = true;
+    }
+    
     private void RemoveTile(WorldTile tile)
     {
+        if(tile.IsBlockedForLoading || !tile.IsLoaded) return;
         if (mode is TileLoadingMode.Everything) 
             _worldManager.EraseTile(new Vector3Int(tile.Position.x, tile.Position.y, 0));
 
         if (tile.HasInteractable)
             TileCache.Add(tile);
         tile.IsLoaded = false;
+        tile.lastLoadedMinute = TimelineManager.MinutesPassed;
         // Убирать из loadedTiles не надо, тк это происходит в цикле апдейта
     }
 
     private void LoadTile(WorldTile tile)
     {
+        if(tile.IsBlockedForLoading) return;
         if (mode is TileLoadingMode.Everything) 
             _worldManager.DrawTile(tile.Position.x, tile.Position.y);
 

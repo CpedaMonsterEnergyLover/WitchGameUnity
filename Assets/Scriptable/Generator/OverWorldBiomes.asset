@@ -28,6 +28,8 @@ MonoBehaviour:
       spawnChance: 1
     - data: {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
       spawnChance: 0.035
+    - data: {fileID: 11400000, guid: 8111da2f648977440b0dc4f45b8b0c8c, type: 2}
+      spawnChance: 0.056
   - name: "\u0415\u043B\u044C\u043D\u0438\u043A"
     priority: 0
     rules:
@@ -81,6 +83,8 @@ MonoBehaviour:
       spawnChance: 0.679
     - data: {fileID: 11400000, guid: da35ccc9c0e203c4c9b3472fa3cfc008, type: 2}
       spawnChance: 0.071
+    - data: {fileID: 11400000, guid: a2d1e98c19587bc43bc157563154cbad, type: 2}
+      spawnChance: 0.099
   - name: "\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\u0438"
     priority: 0
     rules:
@@ -108,6 +112,21 @@ MonoBehaviour:
     biomeDensity: 0.837
     tiles:
     - data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
+      spawnChance: 1
+  - name: "\u041C\u0430\u043A"
+    priority: 1
+    rules:
+    - mapIndex: 0
+      fromValue: 0.657
+      untilValue: 1
+      exclude: 0
+    - mapIndex: 2
+      fromValue: 0.197
+      untilValue: 0.819
+      exclude: 1
+    biomeDensity: 1
+    tiles:
+    - data: {fileID: 11400000, guid: 50b8e149c67662d428b51f2bfac0b26a, type: 2}
       spawnChance: 1
   - name: "\u0420\u0435\u043A\u0430 (\u043E\u0447\u0438\u0441\u0442\u043A\u0430)"
     priority: 20

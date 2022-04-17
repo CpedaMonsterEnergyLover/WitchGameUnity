@@ -2,15 +2,16 @@
 {
     public new BurnableItemData Data => (BurnableItemData) data;
     
-    public float BurningDuration => Data.burningDuration;
+    public int BurningDuration => Data.burningDuration;
 
 
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (interactable is Bonfire bonfire)
+        if (interactable is Bonfire bonfire && 
+            bonfire.SaveData.burningDuration > 0 && bonfire.SaveData.burningDuration < bonfire.maxBurningDuration)
         {
-            bonfire.BurnItem(null, this);
-            slot.RemoveItem(1);
+            if(bonfire.AddBurningTime(BurningDuration))
+                slot.RemoveItem(1);
         }
     }
 

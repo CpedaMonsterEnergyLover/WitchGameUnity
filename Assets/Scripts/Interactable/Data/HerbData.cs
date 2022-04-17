@@ -9,6 +9,10 @@ public class HerbData : InteractableData
     [Header("Herb data")]
     public bool blockGrowth = true;
 
+    public bool hasDrop;
+    public ItemData itemDrop;
+
+    /*
     [SerializeField] 
     [Tooltip("Сезон, в который появляются ростки растения")]
     public Season growthSeason;
@@ -16,11 +20,13 @@ public class HerbData : InteractableData
     [Range(0.5f,3)]
     [Tooltip("Скорость увядания растения в количестве сезонов")]
     public float witherSpeed;
+    */
     
     [SerializeField] [Tooltip("Сколько сезонов нужно растению чтобы полностью вырасти.")]
     [Range(0,6)]
     public float growthSpeed;
     
+    /*
     [SerializeField] 
     [Tooltip("Какой лут падает с определенной стадии роста")]
     public HerbLootTable[] lootTable =
@@ -31,6 +37,7 @@ public class HerbData : InteractableData
         new HerbLootTable(GrowthStage.Grown),
         new HerbLootTable(GrowthStage.Decay),
     };
+    */
     
     [SerializeField] 
     [Tooltip("Модельки")]
@@ -44,20 +51,21 @@ public class HerbData : InteractableData
     };
 
 
-    #region ClassMethods
 
+    /*
     public string[] GetLoot(GrowthStage stage) => 
         (int)stage < lootTable.Length ? lootTable[(int)stage].loot : Array.Empty<string>();
 
     public HerbLootTable GetLootTable(GrowthStage stage) => lootTable[(int) stage];
+    */
 
     public int StageGrowthTime => (int) (growthSpeed * TimelineManager.SeasonLength / 4);
 
     public Sprite SpriteOfGrowthStage(GrowthStage stage) => growthSprites[(int) stage].sprite;
 
-    #endregion
     
     
+    /*
     #region Util
 
     private void OnValidate()
@@ -76,7 +84,7 @@ public class HerbData : InteractableData
     }
 
 
-    #endregion
+    #endregion*/
 }
 
 [Serializable]

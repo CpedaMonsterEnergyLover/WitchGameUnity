@@ -4,6 +4,6 @@
     public int MaxDamage { get; }
     public int CurrentDamage { get; }
 
-    public void Damage();
+    public void Damage(ItemSlot slot);
 
 }

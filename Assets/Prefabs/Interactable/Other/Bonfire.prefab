@@ -4914,13 +4914,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5487202183543752812}
   - component: {fileID: 5487202183543752810}
+  - component: {fileID: 163166498190986978}
   m_Layer: 0
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5487202183543752812
 Transform:
   m_ObjectHideFlags: 0
@@ -4951,9 +4952,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 1
-  m_Color: {r: 1, g: 0.7104846, b: 0.4943396, a: 1}
-  m_Intensity: 1.09
+  m_FalloffIntensity: 0.763
+  m_Color: {r: 1, g: 0.5692262, b: 0.24905658, a: 1}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 97365620000000008d38295c
@@ -5002,8 +5003,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.69
-  m_PointLightOuterRadius: 4.83
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -5014,6 +5015,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &163166498190986978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487202183543752815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22dd3944b7c4f7ca60e20fbfb44ba45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light2D: {fileID: 5487202183543752810}
 --- !u!1 &5487202183819345936
 GameObject:
   m_ObjectHideFlags: 0
@@ -5127,7 +5141,59 @@ MonoBehaviour:
   fireParticles: {fileID: 8514860948540071666}
   sparklesParticles: {fileID: 8514860948508149354}
   smokeParticles: {fileID: 5487202183998946784}
-  updateDifferenceStep: 0.1
+  lightCurve:
+    m_Mode: 2
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 3
+        inSlope: 0.9101936
+        outSlope: 0.9101936
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.175
+      - serializedVersion: 3
+        time: 1
+        value: 7
+        inSlope: -0.48870796
+        outSlope: -0.48870796
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33749998
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0.23810789
+        outSlope: 0.23810789
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.326183
+      - serializedVersion: 3
+        time: 0.9708252
+        value: 6
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
   fireEmissionOverBurningTime:
     m_Mode: 1
     m_CurveMultiplier: 1

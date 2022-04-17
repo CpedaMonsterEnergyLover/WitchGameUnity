@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2830960428544853569}
   - component: {fileID: 2830960428544853568}
   m_Layer: 0
-  m_Name: Blvck
+  m_Name: TheCreature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

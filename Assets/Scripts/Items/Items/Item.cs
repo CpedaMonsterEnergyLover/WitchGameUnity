@@ -16,6 +16,11 @@ public class  Item
         data = GameCollection.Items.Get(identifier.id);
     }
 
+    public static Item Create(string id)
+    {
+        return Create(GameCollection.Items.Get(id).identifier);
+    }
+    
     public static Item Create(ItemIdentifier identifier)
     {
         var created = identifier.type switch
@@ -32,6 +37,7 @@ public class  Item
             ItemType.Seed => new Seed(identifier),
             ItemType.Shovel => new Shovel(identifier),
             ItemType.Burnable => new BurnableItem(identifier),
+            ItemType.FireStarter => new Firestarter(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };
         return created;

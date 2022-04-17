@@ -10,11 +10,7 @@ public class BulletSpawner : MonoBehaviour
 
     public static BulletSpawner Instance;
 
-    private void Awake()
-    {
-        if(Instance is null) Instance = this;
-        else Debug.LogError("Found instance of BulletSpawner. You did something wrong.");
-    }
+    private void Awake() => Instance = this;
 
     #endregion
     

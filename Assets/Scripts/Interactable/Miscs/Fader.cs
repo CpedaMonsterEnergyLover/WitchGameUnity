@@ -5,7 +5,7 @@ public class Fader : MonoBehaviour
 {
     public SpriteRenderer SpriteRenderer { get; private set; }
     private Color _color;
-    private IEnumerator _routine;
+    private Coroutine _routine;
     public bool IsFaded { get; set; }
     public bool IsBlocked { get; set; }
     public float Speed { get; set; } = 0.05f;
@@ -21,15 +21,15 @@ public class Fader : MonoBehaviour
     {
         if (IsBlocked) return;
         if(_routine is not null) StopCoroutine(_routine);
-        _routine = Fade(_color.a, amount, - Speed);
-        StartCoroutine(_routine);
+        if(!gameObject.activeInHierarchy) return;
+        _routine = StartCoroutine(Fade(_color.a, amount, - Speed));
     }
 
     public void FadeIn()
     {
         if(_routine is not null) StopCoroutine(_routine);
-        _routine = Fade(_color.a, 1f, Speed);
-        StartCoroutine(_routine);
+        if(!gameObject.activeInHierarchy) return;
+        _routine = StartCoroutine(Fade(_color.a, 1f, Speed));
     }
 
     private IEnumerator Fade(float from, float to, float direction)

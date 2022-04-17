@@ -36,18 +36,8 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
 
         UpdateMovementInput();
 
-        if (!_isDashing)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StartDash();
-            } else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-            {
-                if (EventSystem.current.IsPointerOverGameObject()) return;
-                //Attack();
-            }
-        }
-        
+        if (!_isDashing && Input.GetKeyDown(KeyCode.Space)) StartDash();
+
         if(_isAttacking) LookDirectionToMouse();
         else LookDirectionToVelocity();
 

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
 {
@@ -12,23 +14,23 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     public ParticleSystem fireParticles;
     public ParticleSystem sparklesParticles;
     public ParticleSystem smokeParticles;
+
+    [Header("Light minmaxcurve")] 
+    public ParticleSystem.MinMaxCurve lightCurve;
     // public float lightMinRadius;
     // public float lightMaxRadius;
 
     [Space] [Header("Настройки партиклов")]
-    public float updateDifferenceStep;
     public ParticleSystem.MinMaxCurve fireEmissionOverBurningTime;
     public ParticleSystem.MinMaxCurve fireSpeedOverBurningTime;
     public ParticleSystem.MinMaxCurve smokeEmissionOverBurningTime;
 
     private float BurningValue => SaveData.burningDuration / maxBurningDuration;
-    private float _previousUpdateValue;
 
     // IItemReceiver Implementation
     public void OnReceiveItemEntity(ItemEntity entity)
     {
         if(entity.SaveData.item is IBurnableItem burnableItem) 
-            while(SaveData.burningDuration < maxBurningDuration && entity.SaveData.amount > 0)
                 BurnItem(entity, burnableItem);
     }
 
@@ -47,22 +49,35 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     public override void OnTileLoad(WorldTile loadedTile) 
     {
         base.OnTileLoad(loadedTile);
+        RemoveBurningTime(TimelineManager.MinutesPassed - loadedTile.lastLoadedMinute);
         sparklesParticles.Stop();
+        TryStartFireControlCoroutines();
         UpdateParticlesAndLights();
-        
-        //TODO: обновлять burningTime в зависимости от прошедшего времени
     }
 
-    public void BurnItem(ItemEntity entity, IBurnableItem item)
+    private void TryStartFireControlCoroutines()
     {
-        SaveData.burningDuration += item.BurningDuration;
-        sparklesParticles.Play();
-        if(Math.Abs(BurningValue - _previousUpdateValue) > updateDifferenceStep)
-            UpdateParticlesAndLights();
-        
-        if(entity is null) return;
-        entity.SaveData.amount--;
-        if(entity.SaveData.amount <= 0) entity.Kill();
+        if (SaveData.burningDuration <= 0)
+        {
+            StartCoroutine(ParticlesAndLightsUpdateRoutine());
+            StartCoroutine(BurningRoutine());
+            StartCoroutine(LightChatoimentRoutine());
+        }
+    }
+    
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+
+    private void BurnItem(ItemEntity entity, IBurnableItem item)
+    {
+        if(SaveData.burningDuration <= 0) return;
+        if (AddBurningTime(item.BurningDuration * entity.SaveData.amount))
+        {
+            entity.Kill();
+        };
     }
 
     private void UpdateParticlesAndLights()
@@ -75,7 +90,8 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         else
         {
             float value = BurningValue;
-            
+            fireParticles.Play();
+            smokeParticles.Play();
             ParticleSystem.EmissionModule fireEmissionModule = fireParticles.emission;
             fireEmissionModule.rateOverTime = fireEmissionOverBurningTime.Evaluate(value);
             ParticleSystem.MainModule fireMainModule = fireParticles.main;
@@ -84,7 +100,6 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
             smokeEmissionModule.rateOverTime = smokeEmissionOverBurningTime.Evaluate(value);
         }
         
-        _previousUpdateValue = BurningValue;
     }
 
     protected override void InitSaveData(InteractableData origin)
@@ -92,15 +107,57 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         saveData = new BonfireSaveData(origin) { initialized = true };
     }
 
+    public bool AddBurningTime(int minute)
+    {
+        if(SaveData.burningDuration > maxBurningDuration) return false;
+        TryStartFireControlCoroutines();
+        SaveData.burningDuration += minute;
+        sparklesParticles.Play();
 
-    /*
-    private IEnumerator LightChatoiment () {
-        while(gameObject.activeSelf)
+        return true;
+    }
+    
+    private void RemoveBurningTime(int minute)
+    {
+        SaveData.burningDuration -= minute;
+        if (SaveData.burningDuration <= 0)
         {
-            fireLight.pointLightOuterRadius = Random.Range(lightMinRadius, lightMaxRadius);
-            yield return new WaitForSeconds(0.2f);
+            SaveData.burningDuration = 0;
+            fireParticles.Stop();
+            smokeParticles.Stop();
+            StopAllCoroutines();
         }
-    }*/
+    }
 
+    private IEnumerator BurningRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        while (gameObject.activeInHierarchy && SaveData.burningDuration > 0)
+        {
+            RemoveBurningTime(1);
+            yield return new WaitForSeconds(TimelineManager.MinuteDuration);
+        }
+    }
 
+    private IEnumerator ParticlesAndLightsUpdateRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        while (gameObject.activeInHierarchy && SaveData.burningDuration > 0)
+        {
+            UpdateParticlesAndLights();
+            yield return new WaitForSeconds(2.5f);  
+        }
+    }
+    
+    private IEnumerator LightChatoimentRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        while (gameObject.activeInHierarchy && SaveData.burningDuration > 0)
+        {
+            if(fireLight.intensity >= 0)
+                fireLight.pointLightOuterRadius = lightCurve.Evaluate(BurningValue, Random.value);
+            yield return new WaitForSeconds(0.2f);  
+        }
+    }
+    
 }

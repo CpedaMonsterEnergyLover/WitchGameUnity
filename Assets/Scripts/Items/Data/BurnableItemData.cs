@@ -5,5 +5,5 @@ public class BurnableItemData : ItemData
 {
     [Header("BurnableItemData")]
     [Header("Длительность горения (в игровых минутах)")]
-    public float burningDuration = 30;
+    public int burningDuration = 30;
 }

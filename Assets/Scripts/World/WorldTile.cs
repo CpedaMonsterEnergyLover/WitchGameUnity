@@ -13,6 +13,7 @@ public class WorldTile : ICacheable
     [SerializeField] public Vector2 interactableOffset;
     [SerializeField] private bool[] layers;
     [SerializeField] private Vector2Int position;
+    [SerializeField] public int lastLoadedMinute;
     [SerializeReference] public InteractableSaveData savedData;
     [SerializeReference] private List<EntitySaveData> savedEntities = new();
 
@@ -20,6 +21,7 @@ public class WorldTile : ICacheable
 
     private List<Entity> CachedEntities { get; set; } = new();
     private Interactable InstantiatedInteractable { get; set; }
+    public bool IsBlockedForLoading { get; set; }
 
     public bool[] Layers => layers;
     public Vector2Int Position
@@ -166,6 +168,5 @@ public class WorldTile : ICacheable
         else Object.DestroyImmediate(InstantiatedInteractable.gameObject);
         InstantiatedInteractable = null;
     }
-
     
 }

@@ -30,6 +30,7 @@ public class WorldManager : MonoBehaviour
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
+    public WorldBounds worldBounds;
     
     public WorldData WorldData { get; protected set; }
 
@@ -67,6 +68,7 @@ public class WorldManager : MonoBehaviour
         LoadData();
         SpawnPlayer();
         ScreenFader.Instance.FadeScaled(false).GetAwaiter();
+        worldBounds.Init(WorldData);
     }
     
     private void LoadData()

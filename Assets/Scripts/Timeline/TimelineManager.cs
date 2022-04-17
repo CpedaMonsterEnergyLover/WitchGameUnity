@@ -8,8 +8,9 @@ public class TimelineManager : MonoBehaviour
     [SerializeField]
     private TimelineSettings timelineSettings;
     
-    private const int DayDuration = 1; // Real Minutes
-    private const int TimeMultiplier = 1440 / DayDuration /* * 5 */;
+    private const float DayDuration = 20f; // Real Minutes
+    private const float TimeMultiplier = 1440 / DayDuration /* * 5 */;
+    public const float MinuteDuration = DayDuration / 24 /* * 5 */;
     
     private static bool Paused = false;
 
@@ -24,6 +25,7 @@ public class TimelineManager : MonoBehaviour
     public static TimelineStamp time;
 
     public static int TotalHours;
+    public static int MinutesPassed;
 
     public static int SeasonLength;
 
@@ -68,6 +70,7 @@ public class TimelineManager : MonoBehaviour
             timelineSettings.startHour, 0);
         
         TotalHours = 0;
+        MinutesPassed = 0;
         
         SubscribeToEvents();
 
@@ -78,6 +81,7 @@ public class TimelineManager : MonoBehaviour
         if (!Paused)
         {
             UpdateTimeOfDay();
+            // Debug.Log($"Time is: {time}, sunset: {SunCycleManager.TodaysSunCurve.Sunset}, sunrise: {SunCycleManager.TodaysSunCurve.Sunrise}");
         }
     }
 
@@ -98,6 +102,7 @@ public class TimelineManager : MonoBehaviour
     {
         // Сколько игровых секунд прошло с последнего fixedUpdate
         float seconds = Time.fixedDeltaTime * TimeMultiplier;
+        
 
         if (CheckTimelineContinuity(seconds, 60)) time.AddSeconds(seconds);
         else time.AddSeconds(1);
@@ -111,6 +116,7 @@ public class TimelineManager : MonoBehaviour
         // Контролирует единичное срабатывание
         if (_passedMinute == minute) return;
         _passedMinute = minute;
+        MinutesPassed++;
         
         SunData curve = SunCycleManager.TodaysSunCurve;
         // Если солнце зашло, ждет рассвета

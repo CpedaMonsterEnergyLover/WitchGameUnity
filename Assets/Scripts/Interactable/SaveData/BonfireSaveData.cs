@@ -5,7 +5,7 @@ using UnityEngine;
 public class BonfireSaveData : InteractableSaveData
 {
     [Header("BonfireSaveData")]
-    [SerializeField] public float burningDuration = 10.0f;
+    [SerializeField] public float burningDuration = 0.0f;
 
     public BonfireSaveData(InteractableData origin) : base (origin) { }
     private BonfireSaveData() { }

@@ -10,7 +10,9 @@ namespace WorldScenes
         public string sceneName;
         [Header("Name of the world, which appears in the game")]
         public string worldName;
-        
+        [Header("Does this world has sun?")]
+        public bool hasGlobalIllumination;
+
         public string FileName => $"{sceneName}.json"; 
 
         public virtual void LoadFromAnotherWorld(int subworldIndex = -1)

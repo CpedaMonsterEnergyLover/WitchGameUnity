@@ -10,9 +10,8 @@ public class WorldBounds : MonoBehaviour
     public float x;
     public float y;
     
-    private void Start()
+    public void Init(WorldData world)
     {
-        WorldData world = WorldManager.Instance.WorldData;
         float w = world.MapWidth;
         float h = world.MapHeight;
         left.size = new Vector2(x, h);

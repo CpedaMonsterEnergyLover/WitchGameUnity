@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: OverWorld
   worldName: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u043C\u0438\u0440"
+  hasGlobalIllumination: 1

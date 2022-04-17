@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class SunCycleManager : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class SunCycleManager : MonoBehaviour
     [SerializeField]
     private SunCurve sunCurve;
 
+    public Sun sun;
+
     // Public fields
     public static bool IsSunDownCached;
     public static SunData TodaysSunCurve;
     public static SunCurve SunCurve;
+    public static Sun Sun;
+
 
     
     // Delegates
@@ -32,6 +37,7 @@ public class SunCycleManager : MonoBehaviour
     private void Awake()
     {
         SunCurve = sunCurve;
+        Sun = sun;
         SubscribeToEvents();
     }
 
@@ -39,6 +45,7 @@ public class SunCycleManager : MonoBehaviour
     {
         TodaysSunCurve = GetSunCurveForToday();
         IsSunDownCached = IsSunDown();
+        UpdateSunLight();
     }
 
     private void OnDestroy()
@@ -91,10 +98,17 @@ public class SunCycleManager : MonoBehaviour
         return ! (minutes > sunriseMinutes && minutes < sunsetMinutes);
     }
 
+    private static void UpdateSunLight()
+    {
+        Sun.SetCurrent(IsSunDownCached ? 0f : 1f);
+    }
+    
     #endregion
 
 
 
+    
+    
     #region Events
 
     private static void OnDayPassed(int day)
@@ -104,12 +118,22 @@ public class SunCycleManager : MonoBehaviour
     
     private static void OnSunset()
     {
-        if(!IsSunDownCached) IsSunDownCached = true;
+        if (!IsSunDownCached)
+        {
+            IsSunDownCached = true;
+            Debug.Log("----------------------SUNSET----------------------");
+            Sun.StartTransition(0);
+        }
     }
     
     private static void OnSunrise()
     {
-        if(IsSunDownCached) IsSunDownCached = false;
+        if (IsSunDownCached)
+        {
+            Debug.Log("----------------------SUNRISE----------------------");
+            IsSunDownCached = false;
+            Sun.StartTransition(1);
+        }
     }
     
     public static void InvokeOnSunriseEvent()

@@ -23,5 +23,6 @@ public enum ItemType
     Hoe,
     Shovel,
     Seed,
-    Burnable
+    Burnable,
+    FireStarter
 }

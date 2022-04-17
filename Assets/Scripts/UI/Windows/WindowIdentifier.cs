@@ -6,4 +6,5 @@
     Placeable = 3,
     EscapeMenu = 4,
     DialogWindow = 5,
+    BossBar = 6
 }

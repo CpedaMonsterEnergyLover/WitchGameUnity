@@ -7,12 +7,16 @@ public class Instrument : Item, IUsable, IDamageableItem
     
     public int MaxDamage => Data.maxDurability;
     public int CurrentDamage => SaveData.durability;
-    public void Damage() => SaveData.durability--;
-    
+    public void Damage(ItemSlot slot)
+    {
+        SaveData.durability--;
+        if(SaveData.durability <= 0) slot.RemoveItem(1);
+        else slot.UpdateUI();
+    }
+
     public virtual void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        Damage();
-        slot.UpdateUI();
+        Damage(slot);
     }
 
     public virtual bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)

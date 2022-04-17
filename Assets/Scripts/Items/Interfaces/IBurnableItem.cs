@@ -1,5 +1,5 @@
 ﻿public interface IBurnableItem
 {
-    float BurningDuration { get; }
+    int BurningDuration { get; }
 }
 
