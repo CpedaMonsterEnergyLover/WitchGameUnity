@@ -71,10 +71,10 @@ public class ItemEntity : Entity
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter");
+        // Debug.Log("OnTriggerEnter");
         if (other.gameObject.CompareTag("Player") && isPickable)
         {
-            Debug.Log("Player");
+            // Debug.Log("Player");
             SaveData.amount -= WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
                 .AddItem(SaveData.item.Data.identifier, SaveData.amount, true);
             if(SaveData.amount == 0) Kill();

@@ -30,11 +30,30 @@ public class InventoryWindow : BaseWindow
 
     public override void Init()
     {
-        slots.AddRange(CreateSlots(slotAmountOnStart));
-        itemsOnStart.ForEach(i =>
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        PlayerData playerData = PlayerManager.Instance.PlayerData;
+        if (playerData is not null)
         {
-            AddItem(i.item.identifier, i.amount);
-        });
+            InventoryData inventoryData = playerData.InventoryData;
+            slots.AddRange(CreateSlots(inventoryData.SlotsAmount));
+            foreach (InventoryData.SlotData slotData in inventoryData.Slots)
+            {
+                if(slotData.SaveData is not null) AddItem(Item.Create(slotData.SaveData), slotData.Amount, false);
+            }
+            Debug.Log("Loaded inventory");
+        }
+        else
+        {
+            slots.AddRange(CreateSlots(slotAmountOnStart));
+            itemsOnStart.ForEach(i =>
+            {
+                AddItem(i.item.identifier, i.amount);
+            });
+        }
     }
     
     protected override void OnEnable()

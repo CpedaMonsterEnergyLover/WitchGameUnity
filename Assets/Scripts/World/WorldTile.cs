@@ -131,7 +131,6 @@ public class WorldTile : ICacheable
         WasChanged = true;
         DestroyInstantiated();
         savedData = interactableSaveData;
-        Debug.Log($"SaveData: {savedData}, has interactable: {HasInteractable}" );
         if(IsLoaded) LoadInteractable();
     }
 

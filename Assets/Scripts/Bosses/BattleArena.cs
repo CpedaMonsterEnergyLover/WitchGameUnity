@@ -5,6 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class BattleArena : MonoBehaviour
 {
+    public static BattleArena Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+        gameObject.SetActive(false);
+    }
+
+
     public Tilemap mainTilemap;
     public TileBase mainTilebase;
     public Tilemap bgTilemap;
@@ -44,6 +53,8 @@ public class BattleArena : MonoBehaviour
     {
         StartCoroutine(ClearArenaRoutine());
     }
+
+    public void SetPosition(Vector3 newPos) => transform.position = newPos;
     
     public void PaintArena()
     {

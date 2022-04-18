@@ -34,7 +34,7 @@ public class HolidaysManager : MonoBehaviour
         MapHolidaysData();
 
         // Определяет активный праздник на момент инициализации
-        List<Holiday> holidays = GetHolidaysByDate(TimelineManager.time.Season, TimelineManager.time.Day);
+        List<Holiday> holidays = GetHolidaysByDate(TimelineManager.time.Season, TimelineManager.time.day);
         if (holidays.Count != 0)
             ActiveHolidays.AddRange(holidays);
     }
@@ -90,7 +90,7 @@ public class HolidaysManager : MonoBehaviour
             season = holiday.season,
             date = TimeUtil.LerpDay(
                 1200,
-                TimelineManager.time.Month,
+                TimelineManager.time.month,
                 holiday.date)
         }))
         {

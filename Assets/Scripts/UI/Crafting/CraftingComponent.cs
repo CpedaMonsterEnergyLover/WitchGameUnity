@@ -17,6 +17,7 @@ public class CraftingComponent : MonoBehaviour
         itemAmount.text = $"{itemStack.havingAmount}/{itemStack.amount}";
         itemIcon.sprite = itemStack.item.icon;
         backgroundImage.color = itemStack.IsHavingEnough ? greenColor : redColor;
+        gameObject.SetActive(true);
     } 
 
 }

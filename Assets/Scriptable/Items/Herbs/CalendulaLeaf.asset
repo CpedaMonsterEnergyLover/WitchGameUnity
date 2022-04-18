@@ -15,7 +15,7 @@ MonoBehaviour:
   identifier:
     type: 11
     id: calendula_leaf
-  name: "\u041B\u0438\u0441\u0442\u044C\u044F "
+  name: "\u041B\u0438\u0441\u0442\u044C\u044F \u043A\u0430\u043B\u0435\u043D\u0434\u0443\u043B\u044B"
   icon: {fileID: 21300000, guid: 9b2e9efae263c634ab384f3e28699217, type: 3}
   maxStack: 32
   burningDuration: 5

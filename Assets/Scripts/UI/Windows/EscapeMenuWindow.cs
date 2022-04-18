@@ -17,7 +17,7 @@ public class EscapeMenuWindow : BaseWindow
     public void LoadMainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadSceneAsync(2);
+        var ao = SceneManager.LoadSceneAsync(2);
     }
 
     public void SaveGame()

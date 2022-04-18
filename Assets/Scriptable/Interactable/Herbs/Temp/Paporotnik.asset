@@ -13,30 +13,13 @@ MonoBehaviour:
   m_Name: Paporotnik
   m_EditorClassIdentifier: 
   id: paporotnik
-  type: 0
   name: "\u041F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A"
-  ignoreOffset: 0
   interactingTime: 1
+  ignoreRandomisation: 0
   blockGrowth: 1
-  growthSeason: 4
-  witherSpeed: 0
+  hasDrop: 1
+  itemDrop: {fileID: 11400000, guid: 084b1f9565d14df47a313536b1a9966a, type: 2}
   growthSpeed: 0
-  lootTable:
-  - growthStage: 0
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 1
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 2
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 3
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 4
-    loot: []
-    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: 0}

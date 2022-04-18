@@ -24,5 +24,6 @@ public enum ItemType
     Shovel,
     Seed,
     Burnable,
-    FireStarter
+    FireStarter,
+    MagicBook
 }

@@ -108,7 +108,7 @@ public class TileLoader : MonoBehaviour
         if (tile.HasInteractable)
             TileCache.Add(tile);
         tile.IsLoaded = false;
-        tile.lastLoadedMinute = TimelineManager.MinutesPassed;
+        tile.lastLoadedMinute = TimelineManager.minutesPassed;
         // Убирать из loadedTiles не надо, тк это происходит в цикле апдейта
     }
 
@@ -129,6 +129,7 @@ public class TileLoader : MonoBehaviour
         {
             _worldManager.EraseTile(new Vector3Int(tile.Position.x, tile.Position.y, 0));
             tile.OnPopped();
+            tile.lastLoadedMinute = TimelineManager.minutesPassed;
             tile.IsLoaded = false;
         }
         _loadedTiles = new();

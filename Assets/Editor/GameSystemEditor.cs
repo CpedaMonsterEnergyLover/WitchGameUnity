@@ -19,8 +19,7 @@ public class GameSystemEditor : UnityEditor.Editor {
         
         if (GUILayout.Button ("Delete all data")) {
             GameDataManager.InitDirPaths();
-            GameDataManager.ClearPers();
-            GameDataManager.ClearTemp();
+            GameDataManager.ClearAllData();
         }
     }
 }

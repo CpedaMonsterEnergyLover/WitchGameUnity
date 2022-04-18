@@ -15,7 +15,13 @@ public class  Item
     {
         data = GameCollection.Items.Get(identifier.id);
     }
-
+    
+    public static Item Create(ItemSaveData saveData)
+    {
+        var item = Create(saveData.identifier);
+        item.saveData = saveData;
+        return item;
+    }
     public static Item Create(string id)
     {
         return Create(GameCollection.Items.Get(id).identifier);
@@ -38,8 +44,10 @@ public class  Item
             ItemType.Shovel => new Shovel(identifier),
             ItemType.Burnable => new BurnableItem(identifier),
             ItemType.FireStarter => new Firestarter(identifier),
+            ItemType.MagicBook => new MagicBook(identifier),
             _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
         };
+        created.saveData.identifier = identifier;
         return created;
     }
 

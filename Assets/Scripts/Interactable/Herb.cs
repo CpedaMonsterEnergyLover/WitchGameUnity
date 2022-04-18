@@ -16,7 +16,11 @@ public class Herb : Interactable
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new HerbSaveData(origin) { initialized = true };
+        saveData = new HerbSaveData(origin)
+        {
+            growthStage = (GrowthStage) Random.Range(2, 4),
+            initialized = true
+        };
     }
 
     public override void OnTileLoad(WorldTile loadedTile)
@@ -36,7 +40,7 @@ public class Herb : Interactable
         _renderer = GetComponent<SpriteRenderer>();
 
         int counter = 0;
-        while (TimelineManager.TotalHours > SaveData.nextStageHour && counter <= 6)
+        while (TimelineManager.totalHours > SaveData.nextStageHour && counter <= 6)
         {
             Grow();
             counter++;

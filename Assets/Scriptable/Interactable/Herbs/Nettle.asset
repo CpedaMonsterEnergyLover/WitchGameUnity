@@ -13,30 +13,13 @@ MonoBehaviour:
   m_Name: Nettle
   m_EditorClassIdentifier: 
   id: nettle
-  type: 0
   name: "\u041A\u0440\u0430\u043F\u0438\u0432\u0430"
-  ignoreOffset: 0
   interactingTime: 1
+  ignoreRandomisation: 0
   blockGrowth: 0
-  growthSeason: 5
-  witherSpeed: 1
+  hasDrop: 1
+  itemDrop: {fileID: 11400000, guid: 7d903ee2f83f30842ba60cf6a6b17a58, type: 2}
   growthSpeed: 1
-  lootTable:
-  - growthStage: 0
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 1
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 2
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 3
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 4
-    loot: []
-    item: {fileID: 0}
   growthSprites:
   - growthStage: 0
     sprite: {fileID: -1198127235, guid: cd7ba6733127bdb4d856aae15fc53bbd, type: 3}

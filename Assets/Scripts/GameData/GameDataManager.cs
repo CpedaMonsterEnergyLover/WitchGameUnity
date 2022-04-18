@@ -17,13 +17,16 @@ public class GameDataManager : MonoBehaviour
     {
         _tempDir = Application.persistentDataPath + TempDir;
         _persDir = Application.persistentDataPath + PersDir;
+        _playerDir = Application.persistentDataPath + PlayerDir;
     }
 
 
     private const string PersDir = "/Save/Persistent/";
     private const string TempDir = "/Save/Temporary/";
+    private const string PlayerDir = "/Save/Player/";
     private static string _tempDir;
     private static string _persDir;
+    private static string _playerDir;
 
     public int CurrentSubWorldIndex { get; set; } = -1;
     
@@ -35,6 +38,7 @@ public class GameDataManager : MonoBehaviour
         WorldManager.Instance.UnloadAllEntities();
         TileLoader.Instance.Reload();
         SavePersistentWorldData(WorldManager.Instance.WorldData);
+        SavePlayerData();
         if(bar is not null) bar.SetPhase("Сохранение завершено!");
         await Task.Delay(500);
     }
@@ -58,6 +62,31 @@ public class GameDataManager : MonoBehaviour
         File.WriteAllText(dir + data.WorldScene.FileName, json);
     }
 
+    private static void SavePlayerData()
+    {
+        string dir = _playerDir;
+
+        if (!Directory.Exists(_playerDir))
+            Directory.CreateDirectory(_playerDir);
+
+        string json = JsonUtility.ToJson(PlayerData.Build(), true);
+        File.WriteAllText(dir + "PlayerData.json", json);
+    }
+
+    public static PlayerData LoadPlayerData()
+    {
+        string path = _playerDir + "PlayerData.json";
+        PlayerData loadedData = null;
+
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            loadedData = JsonUtility.FromJson<PlayerData>(json);
+        }
+        
+        return loadedData;
+    }
+    
     public static WorldData LoadPersistentWorldData(BaseWorldScene worldScene)
     {
         string path = _persDir + worldScene.FileName;
@@ -155,9 +184,17 @@ public class GameDataManager : MonoBehaviour
         string path = _tempDir + worldScene.FileName;
         if (File.Exists(path)) File.Delete(path);
     }
-    
-    public static void ClearTemp() => DeleteAllInDir(_tempDir);
-    public static void ClearPers() => DeleteAllInDir(_persDir);
+
+    private static void ClearTemp() => DeleteAllInDir(_tempDir);
+    private static void ClearPers() => DeleteAllInDir(_persDir);
+    private static void ClearPlayerData() => DeleteAllInDir(_playerDir);
+
+    public static void ClearAllData()
+    {
+        ClearPers();
+        ClearTemp();
+        ClearPlayerData();
+    }
     
     private static void DeleteAllInDir(string directory)
     {

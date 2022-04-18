@@ -13,7 +13,7 @@ public class Seed : Item, IUsableOnInteractable
                 initialized = true,
                 id = Data.herb.id,
                 hasBed = true,
-                creationHour = TimelineManager.TotalHours
+                creationHour = TimelineManager.totalHours
             });
         slot.RemoveItem(1);
     }

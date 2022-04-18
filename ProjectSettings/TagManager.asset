@@ -10,6 +10,9 @@ TagManager:
   - ObstacleHitBox
   - EntityHitBox
   - ItemEntity
+  - New tag
+  - HostileBullet
+  - FriendlyBullet
   layers:
   - Default
   - TransparentFX

@@ -70,9 +70,8 @@ public class CreateWorldMenu : MonoBehaviour
     {
         _needsConfirm = false;
         loadingBar.Activate(6);
-        loadingBar.SetPhase("Clearing data");
-        GameDataManager.ClearPers();
-        GameDataManager.ClearTemp();
+        loadingBar.SetPhase("Очистка данных");
+        GameDataManager.ClearAllData();
         var scene = SceneManager.LoadSceneAsync(sceneToLoad.sceneName, LoadSceneMode.Additive);
         scene.completed += AfterSceneLoading;
     }

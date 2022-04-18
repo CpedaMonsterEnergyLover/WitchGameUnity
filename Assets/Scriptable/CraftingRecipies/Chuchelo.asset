@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c42de4727f2b24c97091c8699839a9, type: 3}
+  m_Name: Chuchelo
+  m_EditorClassIdentifier: 
+  category: {fileID: 11400000, guid: e949b7adb9fd38e4ca5f403999be95cf, type: 2}
+  result:
+    item: {fileID: 11400000, guid: 447c1c6311b1a594ba0e65d38325795c, type: 2}
+    amount: 1
+    havingAmount: 0
+  instruments: []
+  craftStations: []
+  components:
+  - item: {fileID: 11400000, guid: a6b01e1ec3a6c85419245dd01ecc2153, type: 2}
+    amount: 10
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: 691acf45d25faec43a593dae7e90f338, type: 2}
+    amount: 2
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: 337bb4e18315fa74fb984c2d49644e5e, type: 2}
+    amount: 5
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: 7d903ee2f83f30842ba60cf6a6b17a58, type: 2}
+    amount: 5
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: a03ba68c62111ff4bbbb6e230a91a501, type: 2}
+    amount: 5
+    havingAmount: 0

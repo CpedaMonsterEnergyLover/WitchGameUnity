@@ -35,7 +35,6 @@ public class SceneLoadingBar : MonoBehaviour
         _phaseCounter++;
         _phaseName = phaseName;
         UpdateName();
-        Debug.Log($"Phase {phaseName} begins...");
         if(_routine is null) _routine = StartCoroutine(NameDotsRoutine());
     }
 

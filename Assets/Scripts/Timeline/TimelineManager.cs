@@ -24,8 +24,8 @@ public class TimelineManager : MonoBehaviour
     
     public static TimelineStamp time;
 
-    public static int TotalHours;
-    public static int MinutesPassed;
+    public static int totalHours;
+    public static int minutesPassed;
 
     public static int SeasonLength;
 
@@ -59,18 +59,9 @@ public class TimelineManager : MonoBehaviour
     private void Awake()
     {
         SeasonLength = timelineSettings.seasonLength;
-        
-        // Инициализация переменных
         YearLength = SeasonLength * SeasonAmount;
 
-        time = new TimelineStamp(
-            timelineSettings.startYear, 
-            (int) timelineSettings.startSeason,
-            timelineSettings.startDay <= timelineSettings.seasonLength ? timelineSettings.startDay : timelineSettings.seasonLength,
-            timelineSettings.startHour, 0);
-        
-        TotalHours = 0;
-        MinutesPassed = 0;
+        LoadData();
         
         SubscribeToEvents();
 
@@ -97,6 +88,31 @@ public class TimelineManager : MonoBehaviour
 
     #region ClassMethods
 
+
+    private void LoadData()
+    {
+        PlayerData playerData = PlayerManager.Instance.PlayerData;
+        if (playerData is not null)
+        {
+            time = TimelineStamp.FromLoadedStamp(playerData.TimelineStamp);
+            totalHours = playerData.TotalHours;
+            minutesPassed = playerData.MinutesPassed;
+            Debug.Log($"Loaded time data: {time}");
+        }
+        else
+        {
+            time = new TimelineStamp(
+                timelineSettings.startYear, 
+                (int) timelineSettings.startSeason,
+                timelineSettings.startDay <= timelineSettings.seasonLength ? timelineSettings.startDay : timelineSettings.seasonLength,
+                timelineSettings.startHour, 0);
+        
+            totalHours = 0;
+            minutesPassed = 0;
+        }
+    }
+    
+    
     // Обновляет текущее игровое время
     private void UpdateTimeOfDay()
     {
@@ -116,7 +132,7 @@ public class TimelineManager : MonoBehaviour
         // Контролирует единичное срабатывание
         if (_passedMinute == minute) return;
         _passedMinute = minute;
-        MinutesPassed++;
+        minutesPassed++;
         
         SunData curve = SunCycleManager.TodaysSunCurve;
         // Если солнце зашло, ждет рассвета
@@ -172,13 +188,13 @@ public class TimelineManager : MonoBehaviour
     // Ивент, срабатывающий каждый час в 0 минут
     private static void OnHourPassed(int hour)
     {
-        ONTotalHourPassed?.Invoke(TotalHours);
-        TotalHours++;
+        ONTotalHourPassed?.Invoke(totalHours);
+        totalHours++;
         switch (hour)
         {
             // Полночь
             case 0:
-                ONDayPassed?.Invoke(time.Day);
+                ONDayPassed?.Invoke(time.day);
                 break;
         }
     }
@@ -189,7 +205,7 @@ public class TimelineManager : MonoBehaviour
         // Если сейчас последний день года
         if (time.DayOfYear == YearLength)
         {
-            ONYearPassed?.Invoke(time.Year);
+            ONYearPassed?.Invoke(time.year);
         }
 
         // Если сейчас последний день сезона

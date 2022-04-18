@@ -1104,9 +1104,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.17339313
-    width: 0.29596415
-    height: 0.29596412
+    y: 0.17800511
+    width: 0.30379748
+    height: 0.30383632
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -1290,6 +1290,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a03ba68c62111ff4bbbb6e230a91a501, type: 2}
   - {fileID: 11400000, guid: a6b01e1ec3a6c85419245dd01ecc2153, type: 2}
   - {fileID: 11400000, guid: d1e588cc86de9384abf9c043890f23a1, type: 2}
+  - {fileID: 11400000, guid: 084b1f9565d14df47a313536b1a9966a, type: 2}
+  - {fileID: 11400000, guid: 691acf45d25faec43a593dae7e90f338, type: 2}
+  - {fileID: 11400000, guid: 447c1c6311b1a594ba0e65d38325795c, type: 2}
+  - {fileID: 11400000, guid: 28ec084afd1e9d940925ea4ff0fcf17e, type: 2}
 --- !u!1 &1467233495563310271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1377,7 @@ MonoBehaviour:
   - {fileID: 1392234063504567002, guid: 09668c3173f164947976591e48ebe8c5, type: 3}
   - {fileID: 3644423460089788273, guid: d4b6cef55f5c4aa418b76d5def166ff5, type: 3}
   - {fileID: 3689958076709443438, guid: 6c8e2dcdc924afd4db1a6b417f845891, type: 3}
+  - {fileID: 3245479220037530311, guid: dfa28bf3fd7231943a303d3de17103cb, type: 3}
   veins:
   - {fileID: 1392234063504567002, guid: df8069b20c39e3749ae1402e3a04b65e, type: 3}
   - {fileID: 1392234063504567002, guid: cb2fa5be5101e154f9a76bdba9eecd9a, type: 3}
@@ -2022,6 +2027,7 @@ GameObject:
   - component: {fileID: 1877312557555212272}
   - component: {fileID: 1877312557555212286}
   - component: {fileID: 1877312557555212285}
+  - component: {fileID: 5182811671564752909}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -2199,6 +2205,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0.044403333, y: 0.10461185}
   m_Size: {x: 0.501721, y: 0.18061472}
   m_Direction: 1
+--- !u!114 &5182811671564752909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877312557555211782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb4df0640fa4cc3ac8d6070ee7d4ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 1877312557075796438}
+  inventoryWindow: {fileID: 4583273668812158043}
+  playerData:
+    health: 0
+    position: {x: 0, y: 0}
+    timelineStamp:
+      year: 0
+      month: 0
+      day: 0
+      hours: 0
+      minutes: 0
+    totalHours: 0
+    minutesPassed: 0
+    inventoryData:
+      slots: []
+      slotsAmount: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1939066012091012651
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,6 +4134,8 @@ MonoBehaviour:
   objects:
   - {fileID: 11400000, guid: dad2d18fcd2d8d345b8d653f36d2a7ab, type: 2}
   - {fileID: 11400000, guid: 780618ae9109ceb48b1697e7d6c6461a, type: 2}
+  - {fileID: 11400000, guid: 994c282a855a01f42b2f7d1a65a5c6e5, type: 2}
+  - {fileID: 11400000, guid: a8b5b97adce108d4abc67aaf5dd6106e, type: 2}
 --- !u!1 &5605305238939875233
 GameObject:
   m_ObjectHideFlags: 0
@@ -8096,6 +8135,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 4e304ea024b311144b51d014eadd0ba5, type: 2}
     amount: 10
     havingAmount: 0
+  - item: {fileID: 11400000, guid: 28ec084afd1e9d940925ea4ff0fcf17e, type: 2}
+    amount: 1
+    havingAmount: 0
   slotPrefab: {fileID: 8835642265728589268, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}
   inventoryTransform: {fileID: 9176976989472435756}
   slots: []
@@ -11733,6 +11775,10 @@ PrefabInstance:
     - target: {fileID: 1291079708874890347, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -68.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849050365757361474, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 4140852670676659934, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: toValue

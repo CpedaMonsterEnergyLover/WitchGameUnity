@@ -6,7 +6,7 @@ public class InteractableSaveData
 {
     [Header("Interactable SaveData")] 
     [SerializeField] public string id;
-    [SerializeField] public int creationHour = TimelineManager.TotalHours;
+    [SerializeField] public int creationHour = TimelineManager.totalHours;
     [SerializeField] public bool initialized;
 
     public InteractableSaveData(string id)

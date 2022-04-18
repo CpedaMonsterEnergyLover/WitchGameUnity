@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\UI\InteractablePreview.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\CraftingTooltip.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\IFlammable.cs" />
      <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
      <Compile Include="Assets\Scripts\Interactable\Bonfire.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletSpawner.cs" />
@@ -96,6 +97,7 @@
      <Compile Include="Assets\Scripts\GameCollection\Entities.cs" />
      <Compile Include="Assets\Scripts\Items\SaveData\ItemSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingList.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\SunAffectableLight.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\FrogBehaviour.cs" />
@@ -112,6 +114,7 @@
      <Compile Include="Assets\Scripts\Entities\OldEntity.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\TooltipManager.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\WorldScene.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\NewItemPicker.cs" />
@@ -128,6 +131,7 @@
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\InventoryTooltip.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Items.cs" />
+     <Compile Include="Assets\Scripts\GameData\PlayerData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HouseData.cs" />
      <Compile Include="Assets\Scripts\World\CaveManager.cs" />
      <Compile Include="Assets\Scripts\Generator\NoiseSettings.cs" />
@@ -189,6 +193,7 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog\DialogWindow.cs" />
      <Compile Include="Assets\Scripts\Generator\Noise.cs" />
+     <Compile Include="Assets\Scripts\GameData\InventoryData.cs" />
      <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
@@ -210,6 +215,7 @@
      <Compile Include="Assets\Scripts\UI\Crafting\FilledCraftingRecipe.cs" />
      <Compile Include="Assets\Scripts\Generator\GeneratorSettings.cs" />
      <Compile Include="Assets\Scripts\Generator\Biome.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Chuchelo.cs" />
      <Compile Include="Assets\Scripts\Generator\Generator.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
@@ -256,7 +262,8 @@
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\UI\Dialog\DialogElement.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Miscs\SunAffectableLight.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\MagicBook.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\MagicBookData.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

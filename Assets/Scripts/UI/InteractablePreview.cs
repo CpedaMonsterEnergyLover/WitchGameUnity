@@ -31,6 +31,7 @@ public class InteractablePreview : MonoBehaviour
             _currentItem = item;
             preview.sprite = Data.preview;
         }
+        preview.SetNativeSize();
         UpdatePreview();
         gameObject.SetActive(true);
     }

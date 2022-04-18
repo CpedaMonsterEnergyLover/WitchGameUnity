@@ -1,8 +1,15 @@
+using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     // public GameObject bulletPrefab;
+    public static new Camera camera;
+
+    private void Awake()
+    {
+        camera = GetComponent<Camera>();
+    }
 
     public Transform playerTransform;
     public bool following;

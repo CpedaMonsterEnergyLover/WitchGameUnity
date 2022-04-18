@@ -64,7 +64,6 @@ public class WorldManager : MonoBehaviour
         ClearAllTiles();
         ClearAllInteractable();
         GameDataManager.DeleteTemporaryData(worldScene);
-        Debug.Log("WorldManagerStart");
         LoadData();
         SpawnPlayer();
         ScreenFader.Instance.FadeScaled(false).GetAwaiter();
@@ -113,7 +112,14 @@ public class WorldManager : MonoBehaviour
     
     protected virtual void SpawnPlayer()
     {
+        Debug.Log("Spawn player");
         var spawnPoint = WorldData.SpawnPoint;
+
+        PlayerData playerData = PlayerManager.Instance.PlayerData;
+        if (playerData is not null)
+        {
+            spawnPoint = playerData.Position;
+        }
         playerTransform.position = new Vector3(spawnPoint.x, spawnPoint.y, 0f);
     }
 
