@@ -9,7 +9,7 @@ namespace Receivers
         public bool receiveHostile;
         // Make sure that other collider is on "Bullet" layer and
         // On the same GO with "Bullet" script
-        protected override void OnStayOrEnter(GameObject otherGameObject)
+        protected override void OnAnyCollisionEnter(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out Bullet bullet))
             {
@@ -21,7 +21,7 @@ namespace Receivers
                 
         }
 
-        protected override void OnExit(GameObject otherGameObject)
+        protected override void OnAnyCollisionExit(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out Bullet bullet)) 
                 receiver.OnBulletExitReceiver(bullet);

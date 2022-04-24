@@ -125,6 +125,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   selectionColor: {r: 1, g: 0, b: 0.88069534, a: 1}
   leftPortrait: {fileID: 1341617037729189943}
   rightPortrait: {fileID: 6067855562324667581}

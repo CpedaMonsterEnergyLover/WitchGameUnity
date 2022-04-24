@@ -51,14 +51,15 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         base.OnTileLoad(loadedTile);
         RemoveBurningTime(TimelineManager.minutesPassed - loadedTile.lastLoadedMinute);
         sparklesParticles.Stop();
-        TryStartFireControlCoroutines(true);
+        StartFireControlCoroutines(true);
         UpdateParticlesAndLights();
     }
 
-    private void TryStartFireControlCoroutines(bool forceStart = false)
+    private void StartFireControlCoroutines(bool forceStart = false)
     {
         if (SaveData.burningDuration <= 0 || forceStart)
         {
+            fireLight.enabled = true;
             StartCoroutine(ParticlesAndLightsUpdateRoutine());
             StartCoroutine(BurningRoutine());
             StartCoroutine(LightChatoimentRoutine());
@@ -114,7 +115,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     public bool AddBurningTime(int minute)
     {
         if(SaveData.burningDuration > maxBurningDuration) return false;
-        TryStartFireControlCoroutines();
+        StartFireControlCoroutines();
         SaveData.burningDuration += minute;
         sparklesParticles.Play();
 
@@ -126,6 +127,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         SaveData.burningDuration -= minute;
         if (SaveData.burningDuration <= 0)
         {
+            fireLight.enabled = false;
             SaveData.burningDuration = 0;
             fireParticles.Stop();
             smokeParticles.Stop();

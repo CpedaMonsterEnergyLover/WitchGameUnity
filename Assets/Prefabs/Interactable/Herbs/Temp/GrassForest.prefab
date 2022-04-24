@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1554627385390719827}
   - component: {fileID: 3071005680958817059}
   - component: {fileID: -6480634296452647893}
-  - component: {fileID: -8820590038846180724}
   - component: {fileID: -1621490257694898326}
   m_Layer: 8
   m_Name: GrassForest
@@ -103,7 +102,7 @@ BoxCollider2D:
   m_Offset: {x: 0.0064572096, y: 0.36302805}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4935428, y: 0.13697195}
+    pivot: {x: 0.50691235, y: 0.30409002}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -113,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-8820590038846180724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8501037824442680476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-1621490257694898326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +129,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
   tile:
     rid: -2
+  spriteRenderer: {fileID: 3071005680958817059}
   references:
     version: 2
     RefIds:

@@ -8,7 +8,9 @@ public class Herb : Interactable
     public new HerbData Data => (HerbData) data;
     public new HerbSaveData SaveData => (HerbSaveData) saveData;
 
-    private SpriteRenderer _renderer;
+    [SerializeField]
+    private SpriteRenderer spriteRenderer;
+    
     private GameObject _bed;
 
 
@@ -33,11 +35,11 @@ public class Herb : Interactable
         }
         
         // Если вырос на грядке, спавнит ее модель
-        if (SaveData.hasBed && _bed is null) _bed = Instantiate(GameCollection.Interactables.Get("cropbed"), transform);
+        if (SaveData.hasBed && _bed is null) 
+            _bed = Instantiate(GameCollection.Interactables.Get("cropbed"), transform);
         
         // Рост
         if(Data.blockGrowth) return;
-        _renderer = GetComponent<SpriteRenderer>();
 
         int counter = 0;
         while (TimelineManager.totalHours > SaveData.nextStageHour && counter <= 6)
@@ -52,8 +54,6 @@ public class Herb : Interactable
 
     public override void Kill()
     {
-        base.Kill();
-
         // Если вырос на грядке, возвращает ее в мир
         if (SaveData.hasBed)
         {
@@ -61,6 +61,13 @@ public class Herb : Interactable
         }
         // Удаляет модель грядки
         if (_bed is not null) Destroy(_bed);
+        
+        
+        base.Kill();
+    }
+
+    private void OnDisable()
+    {
         TimelineManager.ONTotalHourPassed -= GrowOnHour;
     }
 
@@ -89,12 +96,12 @@ public class Herb : Interactable
 
     private void SetSprite(GrowthStage stage)
     {
-        if (_renderer is not null) 
-            _renderer.sprite = Data.SpriteOfGrowthStage(stage);
+        spriteRenderer.sprite = Data.SpriteOfGrowthStage(stage);
     }
 
     private void Grow()
     {
+        Debug.Log($"{Data.name} is growing", this);
         // Если растение находится в последней стадии роста ...
         if (SaveData.growthStage == GrowthStage.Decay)
         {

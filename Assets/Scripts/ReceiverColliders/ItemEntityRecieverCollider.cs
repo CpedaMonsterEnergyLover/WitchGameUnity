@@ -9,13 +9,13 @@ namespace Receivers
         
         // Make sure that other collider is on "ItemTrigger" layer and
         // On the same GO with "ItemEntity" script
-        protected override void OnStayOrEnter(GameObject otherGameObject)
+        protected override void OnAnyCollisionEnter(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out ItemEntity itemEntity)) 
                 receiver.OnReceiveItemEntity(itemEntity);
         }
 
-        protected override void OnExit(GameObject otherGameObject)
+        protected override void OnAnyCollisionExit(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out ItemEntity itemEntity)) 
                 receiver.OnItemEntityExitReceiver(itemEntity);

@@ -109,14 +109,5 @@ public class Interactable : MonoBehaviour
         if (Fader is not null && Fader.IsFaded) Fader.FadeOut(0.15f);
     }
 
-
-    /*
-    public void SelfDestroy()
-    {
-        if(Application.isPlaying) Destroy(gameObject);
-        else Object.DestroyImmediate(InstantiatedInteractable);
-    }
-    */
-    
     #endregion
 }

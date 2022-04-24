@@ -9,13 +9,13 @@ namespace Receivers
         
         // Make sure that other collider is on "Player" layer and
         // On the same GO with "PlayerController" script
-        protected override void OnStayOrEnter(GameObject otherGameObject)
+        protected override void OnAnyCollisionEnter(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out PlayerController _)) 
                 receiver.OnReceivePlayer();
         }
 
-        protected override void OnExit(GameObject otherGameObject)
+        protected override void OnAnyCollisionExit(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out PlayerController _)) 
                 receiver.OnPlayerExitReceiver();

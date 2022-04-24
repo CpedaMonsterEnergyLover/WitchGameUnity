@@ -5,7 +5,9 @@ using UnityEngine.Rendering.Universal;
 public class Sun : MonoBehaviour
 {
     public new Light2D light;
-    public float transitionDurationInRealSeconds;
+    [Header("The speed of sunset/sunrise in real seconds")]
+    public float transitionDuration;
+    public Gradient colorGradient;
     public float Intensity { get; private set; }
 
 
@@ -22,24 +24,25 @@ public class Sun : MonoBehaviour
     public void StartTransition(float to)
     {
         StopAllCoroutines();
-        StartCoroutine(LightRoutine(Intensity, to, transitionDurationInRealSeconds));
+        StartCoroutine(LightRoutine(Intensity, to, transitionDuration));
     }
     
     private IEnumerator LightRoutine(float from, float to, float duration)
     {
         float t = 0.0f;
-
+        
         Debug.Log($"Time is: {TimelineManager.time}, starting transition from {from} to {to}");
 
-        duration *= 10;
+        duration *= 20;
         
         while (t < duration)
         {
             Intensity = Mathf.Lerp(from, to, t / duration);
             light.intensity = Intensity;
+            light.color = colorGradient.Evaluate(1 - Intensity);
             t += 1;
             ONIntensityChanged?.Invoke(Intensity);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         Intensity = to;

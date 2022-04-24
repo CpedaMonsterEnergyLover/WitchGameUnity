@@ -129,6 +129,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: f5b3cc34dfaaf5a4fa7b242e396bd089, type: 2}
   tile:
     rid: -2
+  spriteRenderer: {fileID: 5323177454859358859}
   references:
     version: 2
     RefIds:

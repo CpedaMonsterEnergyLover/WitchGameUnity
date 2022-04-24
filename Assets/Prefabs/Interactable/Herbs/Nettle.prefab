@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1321650593016633079}
   - component: {fileID: 1579272387759798726}
   - component: {fileID: 37202818547746548}
-  - component: {fileID: 6252087856383603996}
   - component: {fileID: -7509101858961451826}
   m_Layer: 8
   m_Name: Nettle
@@ -113,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6252087856383603996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535772439325594255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-7509101858961451826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +129,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: a2d1e98c19587bc43bc157563154cbad, type: 2}
   tile:
     rid: -2
+  spriteRenderer: {fileID: 1579272387759798726}
   references:
     version: 2
     RefIds:

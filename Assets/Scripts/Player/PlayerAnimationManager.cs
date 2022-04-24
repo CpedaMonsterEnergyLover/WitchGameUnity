@@ -2,75 +2,25 @@ using UnityEngine;
 
 public class PlayerAnimationManager : MonoBehaviour
 {
-    #region Vars
-
-    // Public
-    public static Animator PlayerAnimator;
-    public static Animator WeaponAnimator;
-    
-    //Private
     [SerializeField]
-    private Animator _playerAnimator;
-    [SerializeField]
-    private Animator _weaponAnimator;
+    private Animator playerAnimator;
     
-    private static readonly int SPD = Animator.StringToHash("speed");
-    private static readonly int DSH = Animator.StringToHash("dashing");
-    private static readonly int ATK = Animator.StringToHash("attack");
-    private static readonly int WPN = Animator.StringToHash("weapon");
+    private static readonly int Spd = Animator.StringToHash("speed");
+    private static readonly int Dsh = Animator.StringToHash("dashing");
 
-    #endregion
-
-
-
-    #region UnityMethods
-
-    private void Awake()
-    {
-        PlayerAnimator = _playerAnimator;
-        WeaponAnimator = _weaponAnimator;
-    }
-
-    #endregion
-
-
-
-    #region ClassMethods
-
-    public static void StartAttack()
-    {
-        WeaponAnimator.SetBool(ATK, true);
-    }
-
-    public static void StopAttack()
-    {
-//        WeaponAnimator.SetBool(ATK, false);
-    }
-
-    public static void HideWeapon()
-    {
-        PlayerAnimator.SetBool(WPN, false);
-    }
-
-    public static void ShowWeapon()
-    {
-        PlayerAnimator.SetBool(WPN, true);
-    }
     
-    public static void AnimateMovement(float value)
+    public void AnimateMovement(float value)
     {
-        PlayerAnimator.SetFloat(SPD, value);
+        playerAnimator.SetFloat(Spd, value);
     }
 
-    public static void StartDash()
+    public void StartDash()
     {
-        PlayerAnimator.SetBool(DSH, true);
+        playerAnimator.SetBool(Dsh, true);
     }
 
-    public static void StopDash()
+    public void StopDash()
     {
-        PlayerAnimator.SetBool(DSH, false);
+        playerAnimator.SetBool(Dsh, false);
     }
-
-    #endregion
 }

@@ -34,7 +34,7 @@ public class ItemEntity : Entity
                 * 35);
         } else {
             rigidbody.AddForce(Vector2.left * 
-                               UnityEngine.Random.Range(25, 35) * 
+                               Random.Range(25, 35) * 
                                PlayerController.Instance.lookDirection);
         }
     }
@@ -44,7 +44,7 @@ public class ItemEntity : Entity
 
     private bool GetSameItemInRadius(float radius, out ItemEntity sameItemEntity)
     {
-        Collider2D[] results = new Collider2D[8];
+        Collider2D[] results = new Collider2D[32];
         int size = Physics2D.OverlapCircleNonAlloc(transform.position, radius, 
              results, 1 << LayerMask.NameToLayer("ItemTrigger"));
         
@@ -71,10 +71,8 @@ public class ItemEntity : Entity
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("OnTriggerEnter");
         if (other.gameObject.CompareTag("Player") && isPickable)
         {
-            // Debug.Log("Player");
             SaveData.amount -= WindowManager.Get<InventoryWindow>(WindowIdentifier.Inventory)
                 .AddItem(SaveData.item.Data.identifier, SaveData.amount, true);
             if(SaveData.amount == 0) Kill();

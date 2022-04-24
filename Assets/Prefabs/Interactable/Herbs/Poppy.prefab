@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2971993481132334291}
   - component: {fileID: 3026468998399577984}
   - component: {fileID: 3121440089729248532}
-  - component: {fileID: -8854615065710797347}
   - component: {fileID: 483547364329226942}
   m_Layer: 8
   m_Name: Poppy
@@ -113,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-8854615065710797347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713520256376422058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &483547364329226942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +129,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 50b8e149c67662d428b51f2bfac0b26a, type: 2}
   tile:
     rid: -2
+  spriteRenderer: {fileID: 3026468998399577984}
   references:
     version: 2
     RefIds:

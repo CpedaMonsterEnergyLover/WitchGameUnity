@@ -9,11 +9,8 @@ namespace Receivers
     {
         [Header("Component-reciever (IReciever)")] 
         public Component receiverComponent;
-        public bool onStay;
-        public float onStayTickDelay;
         
         protected T receiver;
-        private Coroutine _routine;
 
         private void OnDisable()
         {
@@ -40,31 +37,8 @@ namespace Receivers
 
         private void OnTriggerExit2D(Collider2D other) => OnAnyCollisionExit(other.gameObject);
         private void OnCollisionExit2D(Collision2D other) => OnAnyCollisionExit(other.gameObject);
-        
-        private void OnAnyCollisionEnter(GameObject otherGameObject)
-        {
-            if (!onStay) OnStayOrEnter(otherGameObject);
-            else _routine = StartCoroutine(OnStayRoutine(otherGameObject));
-        }
-        
-        private void OnAnyCollisionExit(GameObject otherGameObject)
-        {
-            if(_routine is not null) StopCoroutine(_routine);
-            OnExit(otherGameObject);
-        }
 
-        private IEnumerator OnStayRoutine(GameObject otherGameObject)
-        {
-            while (true)
-            {
-                if (otherGameObject is null) yield break;
-                OnStayOrEnter(otherGameObject);
-                yield return new WaitForSecondsRealtime(onStayTickDelay);
-            }
-            // ReSharper disable once IteratorNeverReturns
-        }
-
-        protected abstract void OnStayOrEnter(GameObject otherGameObject);
-        protected abstract void OnExit(GameObject otherGameObject);
+        protected abstract void OnAnyCollisionEnter(GameObject otherGameObject);
+        protected abstract void OnAnyCollisionExit(GameObject otherGameObject);
     }
 }

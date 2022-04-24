@@ -33,7 +33,7 @@ public class VolumeAnimator : MonoBehaviour
         while (t < duration)
         {
             _vignette.intensity.value = Mathf.Lerp(from, to, t / duration);
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             yield return null;
         }
     }

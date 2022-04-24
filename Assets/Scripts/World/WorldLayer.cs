@@ -12,6 +12,7 @@ public class WorldLayer : MonoBehaviour
     public TileBase tileBase;
     public TilemapGenerationRule tilemapGenerationRule;
     public List<GenerationRule> rules = new ();
+    public WorldLayerType layerType;
     public WorldLayerEditSettings layerEditSettings = new();
 
 

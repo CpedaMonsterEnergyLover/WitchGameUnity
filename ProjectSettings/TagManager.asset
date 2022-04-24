@@ -29,7 +29,7 @@ TagManager:
   - Entity
   - MainMenu
   - WorldBorder
-  - 
+  - PlayerWaterCollider
   - 
   - 
   - 

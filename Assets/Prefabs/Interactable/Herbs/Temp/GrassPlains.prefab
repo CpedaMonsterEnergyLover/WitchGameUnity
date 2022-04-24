@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8141004007437903360}
   - component: {fileID: 5762331777147405936}
   - component: {fileID: -6070519031732596447}
-  - component: {fileID: -149898999809551379}
   - component: {fileID: 6298949927259552521}
   m_Layer: 8
   m_Name: GrassPlains
@@ -103,7 +102,7 @@ BoxCollider2D:
   m_Offset: {x: 0.00000011920929, y: 0.31807232}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.49999988, y: 0.18192768}
+    pivot: {x: 0.49999976, y: 0.34708452}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -113,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-149898999809551379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193539120484319695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52da954298d55cf408c2dc910623965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6298949927259552521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +129,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
   tile:
     rid: -2
+  spriteRenderer: {fileID: 5762331777147405936}
   references:
     version: 2
     RefIds:

@@ -100,7 +100,7 @@ public class SunCycleManager : MonoBehaviour
 
     private static void UpdateSunLight()
     {
-        Sun.SetCurrent(IsSunDownCached ? 0.5f : 1f);
+        Sun.SetCurrent(IsSunDownCached ? 0f : 1f);
     }
     
     #endregion
@@ -122,7 +122,7 @@ public class SunCycleManager : MonoBehaviour
         {
             IsSunDownCached = true;
             Debug.Log("----------------------SUNSET----------------------");
-            Sun.StartTransition(0.5f);
+            Sun.StartTransition(0f);
         }
     }
     
