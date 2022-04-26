@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlaceableItem : Item, IPlaceable
+public class PlaceableItem : Item, IUsable
 {
     public new PlaceableData Data => (PlaceableData) data;
     
@@ -13,7 +13,7 @@ public class PlaceableItem : Item, IPlaceable
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (tile is null || tile.HasInteractable || !IsInDistance(entity, tile, interactable)) 
+        if (tile is null || tile.HasInteractable || tile.IsBlockedForLoading || !IsInDistance(entity, tile, interactable)) 
             return false;
         return WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer layer) &&
                layer.layerEditSettings.canPlace;

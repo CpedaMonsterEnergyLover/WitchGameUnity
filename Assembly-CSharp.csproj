@@ -56,8 +56,10 @@
      <Compile Include="Assets\Scripts\World\WorldScenes\TestingSceneLoader.cs" />
      <Compile Include="Assets\Scripts\UI\SceneLoadingBar.cs" />
      <Compile Include="Assets\Scripts\Util\VolumeAnimator.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartAnimationHelper.cs" />
      <Compile Include="Assets\Scripts\Items\Data\SeedData.cs" />
      <Compile Include="Assets\Scripts\World\TileLoader\ICacheable.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\HeartOfTheBeast.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
@@ -66,6 +68,7 @@
      <Compile Include="Assets\Scripts\UI\Windows\EscapeMenuWindow.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\BlinkBehaviour.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\KeyListener.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IControlsUsabilityInMove.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogSide.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogPortrait.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
@@ -81,6 +84,8 @@
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
      <Compile Include="Assets\Scripts\Interactable\WoodTree.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnAnyTarget.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\ItemPicker.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\BonfireSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\ITemporaryDismissable.cs" />
@@ -90,6 +95,7 @@
      <Compile Include="Assets\Scripts\Interactable\Herb.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\BagsPanel.cs" />
      <Compile Include="Assets\Scripts\GameData\TemporaryWorldData.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartBar.cs" />
      <Compile Include="Assets\Scripts\Items\Data\ItemData.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\Tooltip.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\ItemEntitySaveData.cs" />
@@ -130,6 +136,7 @@
      <Compile Include="Assets\Scripts\ReceiverColliders\IReceiver.cs" />
      <Compile Include="Assets\Scripts\Bosses\Boss.cs" />
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartOrigin.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\InventoryTooltip.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Items.cs" />
      <Compile Include="Assets\Scripts\GameData\PlayerData.cs" />
@@ -149,11 +156,13 @@
      <Compile Include="Assets\Scripts\Items\Items\Hoe.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\Moon.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Firestarter.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartData.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\HotbarWindow.cs" />
      <Compile Include="Assets\Scripts\Entities\Data\EntityData.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\EscapeKeyListener.cs" />
      <Compile Include="Assets\Scripts\UI\StatBar.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysManager.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\DemonicHeart.cs" />
      <Compile Include="Assets\Scripts\Util\TimeUtil.cs" />
      <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
      <Compile Include="Assets\Scripts\UI\DragButton.cs" />
@@ -189,6 +198,7 @@
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingRecipe.cs" />
      <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArena.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\HumanHeart.cs" />
      <Compile Include="Assets\Scripts\Player\WaterCollider.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Items\Items\PlaceableItem.cs" />
@@ -197,11 +207,11 @@
      <Compile Include="Assets\Scripts\Generator\Noise.cs" />
      <Compile Include="Assets\Scripts\GameData\InventoryData.cs" />
      <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnEntity.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Interactable\Vein.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CustomToggleGroup.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\DamageType.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\HotbarSlot.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Bag.cs" />
      <Compile Include="Assets\Scripts\Timeline\HolidaysList.cs" />
@@ -209,7 +219,6 @@
      <Compile Include="Assets\Scripts\Items\Data\MagicBookData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BurnableItemData.cs" />
      <Compile Include="Assets\Scripts\Items\Data\FoodData.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IPlaceable.cs" />
      <Compile Include="Assets\Scripts\World\TileLoader\TileLoader.cs" />
      <Compile Include="Assets\Scripts\Generator\GenerationRule.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\CraftingSlot.cs" />
@@ -239,12 +248,12 @@
      <Compile Include="Assets\Scripts\World\WorldLayerType.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnTile.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\PlacingKeyListener.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\UI\CursorManager.cs" />
      <Compile Include="Assets\Scripts\World\CavePolisher.cs" />
      <Compile Include="Assets\Scripts\World\Sun.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartType.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingComponent.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingWindow.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimationManager.cs" />
@@ -254,18 +263,24 @@
      <Compile Include="Assets\Scripts\UI\MainMenu\DifficultyToggleGroup.cs" />
      <Compile Include="Assets\Scripts\Entities\Ghost.cs" />
      <Compile Include="Assets\Scripts\UI\CursorHoverCheck.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IHasOwnInteractionTime.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\BaseWindow.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CustomButtonLightSticker.cs" />
      <Compile Include="Assets\Scripts\Generator\Biomes.cs" />
      <Compile Include="Assets\Scripts\Util\ShowOnlyAttribute.cs" />
-     <Compile Include="Assets\Scripts\Items\Interfaces\IUsableOnInteractable.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineSettings.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\TemporaryDismissData.cs" />
      <Compile Include="Assets\Scripts\AnimationBehaviour\GhostBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\ShadowHeart.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\HeartTypeSprites.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\Heart.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogElement.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\HeartOfTheNature.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\ArchDemonicHeart.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\Hearts\SpectralHeart.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -1,5 +1,0 @@
-﻿
-public interface IUsableOnEntity : IUsable
-{
-
-}

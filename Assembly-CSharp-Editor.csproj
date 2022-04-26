@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\CaveGeneratorEditor.cs" />
+     <Compile Include="Assets\Editor\HeartBarEditor.cs" />
      <Compile Include="Assets\Editor\ScreenFaderEditor.cs" />
      <Compile Include="Assets\Editor\ShowOnlyDrawer.cs" />
      <Compile Include="Assets\Editor\GameSystemEditor.cs" />

@@ -1,4 +1,4 @@
-public class Hoe : Instrument, IUsableOnTile
+public class Hoe : Instrument
 {
     public override void Use(ItemSlot slot,Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

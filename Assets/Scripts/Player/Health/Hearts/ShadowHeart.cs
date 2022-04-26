@@ -1,0 +1,4 @@
+﻿public class ShadowHeart : Heart
+{
+    
+}

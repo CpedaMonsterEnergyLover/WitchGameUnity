@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
+  m_Name: HumanHeart
+  m_EditorClassIdentifier: 
+  origin: 0
+  heartTypeSprites:
+  - heartType: 0
+    sprite: {fileID: 1196521974, guid: 3af7328ac355c4f44bf5c46c8c1b21a4, type: 3}
+  - heartType: 1
+    sprite: {fileID: -1819077839, guid: 3af7328ac355c4f44bf5c46c8c1b21a4, type: 3}
+  - heartType: 2
+    sprite: {fileID: -1170373231, guid: 3af7328ac355c4f44bf5c46c8c1b21a4, type: 3}
+  - heartType: 3
+    sprite: {fileID: 1780727563, guid: 3af7328ac355c4f44bf5c46c8c1b21a4, type: 3}
+  ignoreColor: 0
+  color: {r: 1, g: 0.20784315, b: 0, a: 1}
+  outlineColor: {r: 0.33962262, g: 0, b: 0, a: 1}
+  resistDamageTypes: 

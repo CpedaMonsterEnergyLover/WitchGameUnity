@@ -27,7 +27,7 @@ public class InventorySlot : ItemSlot
         {
             if (storedItem is IConsumable consumable && consumable.AllowUse()){
                 consumable.Use(this);
-            } else if (storedItem is IPlaceable)
+            } else if (storedItem is PlaceableItem)
             {
                 WindowManager.Get<PlaceableWindow>(WindowIdentifier.Placeable)
                     .Show(this);

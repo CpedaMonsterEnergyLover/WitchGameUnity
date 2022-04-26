@@ -101,7 +101,6 @@ public class Herb : Interactable
 
     private void Grow()
     {
-        Debug.Log($"{Data.name} is growing", this);
         // Если растение находится в последней стадии роста ...
         if (SaveData.growthStage == GrowthStage.Decay)
         {

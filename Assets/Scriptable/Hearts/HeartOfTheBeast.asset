@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
+  m_Name: HeartOfTheBeast
+  m_EditorClassIdentifier: 
+  origin: 3
+  heartTypeSprites:
+  - heartType: 0
+    sprite: {fileID: 1700741782, guid: 5de6208b2d2583d4c9af0b884e596876, type: 3}
+  - heartType: 1
+    sprite: {fileID: -1114994110, guid: 5de6208b2d2583d4c9af0b884e596876, type: 3}
+  - heartType: 2
+    sprite: {fileID: 506447827, guid: 5de6208b2d2583d4c9af0b884e596876, type: 3}
+  - heartType: 3
+    sprite: {fileID: -277896472, guid: 5de6208b2d2583d4c9af0b884e596876, type: 3}
+  ignoreColor: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0.3018868, g: 0.10024265, b: 0, a: 1}
+  resistDamageTypes: 

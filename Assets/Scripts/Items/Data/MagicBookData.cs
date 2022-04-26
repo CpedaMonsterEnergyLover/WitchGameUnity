@@ -4,5 +4,7 @@
 public class MagicBookData : ItemData
 {
     public GameObject bullet;
-    public int cooldownMS;
+    public int cooldown;
+    public bool canCastInMove;
+    public bool autoShoot;
 }

@@ -1,4 +1,4 @@
-﻿public class Firestarter : Instrument, IUsableOnInteractable
+﻿public class Firestarter : Instrument
 {
     public override bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

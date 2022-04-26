@@ -1,4 +1,4 @@
-﻿public class BurnableItem : Item, IUsableOnInteractable, IBurnableItem
+﻿public class BurnableItem : Item, IUsable, IBurnableItem
 {
     public new BurnableItemData Data => (BurnableItemData) data;
     

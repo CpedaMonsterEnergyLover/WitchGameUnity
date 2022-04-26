@@ -1,3 +1,7 @@
-﻿public interface IPlaceable : IUsable
+﻿namespace DefaultNamespace.Items.Interfaces
 {
+    public interface IPlaceable
+    {
+        
+    }
 }

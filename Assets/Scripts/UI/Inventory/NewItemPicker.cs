@@ -90,17 +90,18 @@ public class NewItemPicker : MonoBehaviour, ITemporaryDismissable
     {
         if(!UseAllowed) return;
 
-        float useTime = itemSlot.storedItem is Instrument instrument ? 
-            instrument.Data.useTime : 0.0f;
-
-        Interact(useTime, 
-            () => ((IUsable) itemSlot.storedItem).
-                Use(
-                    WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar).currentSelectedSlot.ReferredSlot,
+        Item storedItem = itemSlot.storedItem;
+        float useTime = storedItem  is IHasOwnInteractionTime item ? 
+            item.InteractionTime : 0.0f;
+        InteractionFilter filter = new InteractionFilter(
+            storedItem is IControlsUsabilityInMove controller ? controller.CanUseMoving : false, 
+            storedItem is not IUsableOnAnyTarget);
+        
+        Interact(useTime, () => ((IUsable) itemSlot.storedItem).
+                Use(WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar).currentSelectedSlot.ReferredSlot,
                     InteractionDataProvider.Data.Entity, 
                     InteractionDataProvider.Data.Tile, 
-                    InteractionDataProvider.Data.Interactable), 
-            false);
+                    InteractionDataProvider.Data.Interactable), false, filter);
     }
 
     private void UseHand()
@@ -110,16 +111,17 @@ public class NewItemPicker : MonoBehaviour, ITemporaryDismissable
         
         if(Vector2.Distance(PlayerController.Instance.transform.position,
             interactableUnderCursor.transform.position) > 1.6f) return;
-        
-        Interact(interactableUnderCursor.Data.interactingTime, () =>
-            interactableUnderCursor.Interact(), true);
+
+        InteractionFilter filter = new InteractionFilter(true, true);
+        Interact(interactableUnderCursor.Data.interactingTime, 
+            () => interactableUnderCursor.Interact(), true, filter);
     }
 
-    private void Interact(float useTime, Action action, bool isHand)
+    private void Interact(float useTime, Action action, bool isHand, InteractionFilter filter)
     {
         PlayerController.Instance.LookDirectionToMouse();
         PlayerController.Instance.UpdateLookDirection();
-        interactionBar.StartInteraction(useTime, action, isHand);
+        interactionBar.StartInteraction(useTime, action, isHand, filter);
     }
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)

@@ -20,7 +20,7 @@ public interface IUsable
             targetPosition = interactable.transform.position;
         } else if (tile is not null)
         {
-            targetPosition = (Vector2) tile.Position + new Vector2(0.5f, 0.5f);
+            targetPosition = tile.Position + new Vector2(0.5f, 0.5f);
         }
 
         return Vector2.Distance(WorldManager.Instance.playerTransform.position, targetPosition) <= 1.6f;

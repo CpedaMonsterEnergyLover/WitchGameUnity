@@ -5,7 +5,6 @@ public class HotbarWindow : BaseWindow
 {
     public GameObject arrow;
     public HotbarSlot currentSelectedSlot;
-    [ShowOnly]
     public int selectedSlotIndex;
     
     public List<HotbarSlot> slots = new();

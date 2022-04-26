@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Seed : Item, IUsableOnInteractable
+public class Seed : Item, IUsable
 {
     public new SeedData Data => (SeedData) data;
     

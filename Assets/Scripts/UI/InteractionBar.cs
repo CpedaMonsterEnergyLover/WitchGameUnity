@@ -8,10 +8,7 @@ public class InteractionBar : MonoBehaviour
     public InteractionDataProvider interactionDataProvider;
     public Image barImage;
 
-    private float _duration;
-    private Action _actionOnComplete;
     private InteractionEventData _dataOnStart;
-    private bool _isHand;
 
     private void OnEnable()
     {
@@ -25,15 +22,16 @@ public class InteractionBar : MonoBehaviour
 
     private void StopInteraction()
     {
-        _duration = 0.0f;
-        _actionOnComplete = null;
         gameObject.SetActive(false);
         NewItemPicker.Instance.HideWhileInteracting = false;
     }
 
-    public void StartInteraction(float duration, Action actionOnComplete, bool isHand)
+    public void StartInteraction(
+        float duration, 
+        Action actionOnComplete, 
+        bool isHand,
+        InteractionFilter filter)
     {
-        _isHand = isHand;
         if (duration == 0.0f)
         {
             actionOnComplete.Invoke();
@@ -41,24 +39,19 @@ public class InteractionBar : MonoBehaviour
         else
         {
             _dataOnStart = InteractionDataProvider.Data;
-            _duration = duration;
-            _actionOnComplete = actionOnComplete;
             gameObject.SetActive(true);
             NewItemPicker.Instance.HideWhileInteracting = true;
-            StartCoroutine(FillRoutine(duration, actionOnComplete));   
+            StartCoroutine(FillRoutine(duration, actionOnComplete, isHand, filter));   
         }
     }
 
-    private void ContinueInteraction()
+    private void ContinueInteraction(float duration, Action actionOnComplete, bool isHand, InteractionFilter filter)
     {
-        if (!_dataOnStart.Equals(InteractionDataProvider.ForceUpdateData()))
-        {
+        if (filter.stopOnTargetChange &&
+            !_dataOnStart.Equals(InteractionDataProvider.ForceUpdateData()))
             StopInteraction();
-        }
         else
-        {
-            StartInteraction(_duration, _actionOnComplete, _isHand);
-        }
+            StartInteraction(duration, actionOnComplete, isHand, filter);
     }
 
     private void OnWindowOpened(WindowIdentifier window)
@@ -77,15 +70,20 @@ public class InteractionBar : MonoBehaviour
         BaseWindow.ONWindowOpened -= OnWindowOpened;
     }
     
-    private IEnumerator FillRoutine(float duration, Action actionOnComplete)
+    private IEnumerator FillRoutine(float duration, Action actionOnComplete, bool isHand, InteractionFilter filter)
     {
         float t = 0.0f;
         barImage.fillAmount = 0.0f;
         while ( t  < duration )
         {
-            if (PlayerController.Instance.MovementInput != Vector2.zero ||
+            bool stopOnMove = filter.stopOnMove && PlayerController.Instance.MovementInput != Vector2.zero;
+            bool notHandAndUseNotAllowed = !isHand && !NewItemPicker.Instance.UseAllowed;
+            bool stopOnTargetChange = filter.stopOnTargetChange && !_dataOnStart.Equals(InteractionDataProvider.Data);
+            
+            if (stopOnMove ||
                 Input.GetMouseButtonUp(0) ||
-                !_dataOnStart.Equals(InteractionDataProvider.Data) || !_isHand && !NewItemPicker.Instance.UseAllowed)
+                stopOnTargetChange || 
+                notHandAndUseNotAllowed)
             {
                 StopInteraction();
                 yield break;
@@ -95,7 +93,20 @@ public class InteractionBar : MonoBehaviour
             yield return null;
         }
         actionOnComplete.Invoke();
-        ContinueInteraction();
+        ContinueInteraction(duration, actionOnComplete, isHand, filter);
     }
 
+}
+
+public readonly struct InteractionFilter
+{
+    public readonly bool stopOnMove;
+    public readonly bool stopOnTargetChange;
+    
+
+    public InteractionFilter(bool stopOnMove, bool stopOnTargetChange)
+    {
+        this.stopOnMove = stopOnMove;
+        this.stopOnTargetChange = stopOnTargetChange;
+    }
 }

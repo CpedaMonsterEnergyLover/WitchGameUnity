@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Instrument : Item, IUsable, IDamageableItem
+public class Instrument : Item, IUsable, IDamageableItem, IHasOwnInteractionTime
 {
+    private float _interactionTime;
     public new InstrumentData Data => (InstrumentData) data;
     public new InstrumentSaveData SaveData => (InstrumentSaveData) saveData;
     
     public int MaxDamage => Data.maxDurability;
     public int CurrentDamage => SaveData.durability;
+    public float InteractionTime => Data.useTime;
+    
     public void Damage(ItemSlot slot)
     {
         SaveData.durability--;
@@ -34,7 +37,7 @@ public class Instrument : Item, IUsable, IDamageableItem
         return base.GetDescription() + "\n" +
                $"Эффективность: {Data.tier}\nПрочность: {SaveData.durability} / {Data.maxDurability}";
     }
-
+    
 }
 
 public class InstrumentSaveData : ItemSaveData
