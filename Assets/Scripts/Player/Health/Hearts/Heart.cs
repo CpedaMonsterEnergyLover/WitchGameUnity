@@ -1,82 +1,92 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
-public abstract class Heart : MonoBehaviour
+public abstract class Heart
 {
     [SerializeField] private HeartData heartData;
     [SerializeField] private HeartType heartType;
 
-    [NonSerialized] public bool isPopping;
-    [NonSerialized] private Image _image;
-    [NonSerialized] private Animator _animator;
-    [NonSerialized] private Outline _outline;
-    [NonSerialized] private bool _initComponents;
-
-    private static readonly int POP = Animator.StringToHash("Pop");
-    private static readonly int RECREATE = Animator.StringToHash("Recreate");
-
-    public HeartOrigin Origin => heartData.origin;
+    
+    public HeartUnit Unit { get; private set; }
     public HeartData Data => heartData;
     public HeartType Type => heartType;
 
+    public int Index { get; set; }
 
     
-    public void Init(HeartData data, HeartType type, bool popping)
+    protected Heart(HeartData data, HeartType type)
     {
-        if (!_initComponents) InitComponents();
-        isPopping = popping;
-        heartType = type;
         heartData = data;
-        if(popping) _animator.SetTrigger(RECREATE);
-        StopAllCoroutines();
+        heartType = type;
     }
-    
-    public void UpdateFlip()
+
+    public void SetUnit(HeartUnit unit)
     {
-        _animator.Play("HeartFlip");
+        unit.HeartData = heartData;
+        unit.HeartType = heartType;
+        Unit = unit;
     }
+
+
+    public void ApplyEffect() { }
     
-    public void UpdateInstant()
+    public void RemoveEffect() { }
+    
+    public bool ApplyDamage(DamageType damageType, BulletSize bulletSize)
     {
-        UpdateImage();
-        gameObject.SetActive(true);
-    }
-    
-    
-    
-    private void InitComponents()
-    {
-        Transform child = transform.GetChild(0);
-        _image = child.GetComponent<Image>();
-        _animator = child.GetComponent<Animator>();
-        _outline = child.GetComponent<Outline>();
-        _initComponents = true;
-    }
-    
-    
-    private void UpdateImage()
-    {
-        _image.sprite = heartData.heartTypeSprites[(int) heartType].sprite;
-        _image.color = heartData.ignoreColor ? Color.white : heartData.color;
-        _outline.effectColor = heartData.outlineColor;
-    }
-    
-    
-    // Return true if the heart was popped
-    public virtual bool ApplyDamage(DamageType damageType)
-    {
-        if (heartData.resistDamageTypes.Contains(damageType)) return false;
-        Pop();
+        if (heartType is HeartType.Holed &&
+            bulletSize is BulletSize.Small ||
+            heartData.immuneDamageTypes.Contains(damageType))
+        {
+            Unit.PlayImmune();
+            return false;
+        }
+        if (heartType is HeartType.Solid or HeartType.Healed && 
+            heartData.resistDamageTypes.Contains(damageType))
+        {
+            heartType = HeartType.Torned;
+            Unit.HeartType = HeartType.Torned;
+            Unit.PlayDamaged();
+            OnDamageTake();
+            return false;
+        }
         return true;
     }
 
-    protected virtual void Pop()
+    public void Heal()
     {
-        Debug.Log("Heart was popped");
-        isPopping = true;
-        _animator.SetTrigger(POP);
+        if(heartType != HeartType.Torned) return;
+        heartType = HeartType.Healed;
+        Unit.HeartType = HeartType.Healed;
+        Unit.PlayHeal();
+    }
+
+    public virtual void OnCreated() { }
+    
+    protected virtual void OnDamageTake() { }
+
+    public virtual void Pop() { }
+    
+    
+    
+    public override string ToString()
+    {
+        return $"{GetType()}:{heartData.id}";
+    }
+
+    public static Heart Create(HeartOrigin origin, HeartType type)
+    {
+        return origin switch
+        {
+            HeartOrigin.Human => new HumanHeart(type),
+            HeartOrigin.Shadow => new ShadowHeart(type),
+            HeartOrigin.Beast => new HeartOfTheBeast(type),
+            HeartOrigin.Demonic => new DemonicHeart(type),
+            HeartOrigin.Spectral => new SpectralHeart(type),
+            HeartOrigin.Wild => new HeartOfTheWild(type),
+            HeartOrigin.Archdemonic => new ArchDemonicHeart(type),
+            _ => throw new ArgumentOutOfRangeException(nameof(origin), origin, null)
+        };
     }
 }

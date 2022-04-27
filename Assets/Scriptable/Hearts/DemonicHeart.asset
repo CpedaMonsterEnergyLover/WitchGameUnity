@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: DemonicHeart
   m_EditorClassIdentifier: 
-  origin: 2
+  id: demonic_heart
+  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: 524986815, guid: c8ed979549c30d44db540c9bc6b60e65, type: 3}

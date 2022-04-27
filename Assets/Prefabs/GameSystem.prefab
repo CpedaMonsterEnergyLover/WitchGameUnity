@@ -660,7 +660,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1968786223708494387}
   - component: {fileID: 7225711141837389780}
-  - component: {fileID: 4164065659576846066}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -712,38 +711,6 @@ MonoBehaviour:
   m_Spacing: {x: 2, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 13
---- !u!114 &4164065659576846066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870507600046859401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df338438acf944acb383c76ba4e542ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxPossibleHeartsAmount: 26
-  heartPrefab: {fileID: 6532355393447523894, guid: 3290a2c6e1c53ee48af51aa0b05cf21c, type: 3}
-  heartOriginsData:
-  - origin: 0
-    data: {fileID: 11400000, guid: 20ed9af2ea5387441bead6f0cbdfbe29, type: 2}
-  - origin: 1
-    data: {fileID: 11400000, guid: b77a7a3277250874c846a1224c2ae890, type: 2}
-  - origin: 2
-    data: {fileID: 11400000, guid: f471283955504f9479c081cf56f6fd00, type: 2}
-  - origin: 3
-    data: {fileID: 11400000, guid: f5d8a0199f0962640b0ff785228fa42d, type: 2}
-  - origin: 4
-    data: {fileID: 11400000, guid: 65e0f9f4216c9e540a4c47768a39c7bd, type: 2}
-  - origin: 5
-    data: {fileID: 11400000, guid: b5480ab36d473e842bba4a465c36015a, type: 2}
-  - origin: 6
-    data: {fileID: 11400000, guid: 23f951fb31a8c3b4db09140eaf27840d, type: 2}
-  heartDataToAdd: {fileID: 11400000, guid: f471283955504f9479c081cf56f6fd00, type: 2}
-  heartTypeToAdd: 0
-  indexToConvert: 0
 --- !u!1 &1172351299401455086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,9 +1165,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.18055555
-    width: 0.253125
-    height: 0.25312498
+    y: 0.1425926
+    width: 0.32812503
+    height: 0.328125
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -1514,6 +1481,7 @@ Transform:
   - {fileID: 1467233495413213553}
   - {fileID: 5190625841370356689}
   - {fileID: 5806031678183365172}
+  - {fileID: 1296153038006966056}
   m_Father: {fileID: 1467233496859208589}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1534,6 +1502,7 @@ MonoBehaviour:
   interactables: {fileID: 1467233495563310240}
   recipies: {fileID: 572422037184602884}
   scenesCollection: {fileID: 1541241255684133732}
+  heartsCollection: {fileID: 501097767984481834}
 --- !u!1 &1467233496359143350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3945,6 +3914,7 @@ GameObject:
   - component: {fileID: 2256123933184167582}
   - component: {fileID: 5741762551774703939}
   - component: {fileID: 6491722222780184943}
+  - component: {fileID: 863128716773544427}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -4144,6 +4114,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &863128716773544427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309472240249225851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df338438acf944acb383c76ba4e542ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 6532355393447523894, guid: 3290a2c6e1c53ee48af51aa0b05cf21c, type: 3}
+  unitsTransform: {fileID: 1968786223708494387}
+  maxHearts: 10
+  indexToPop: 0
 --- !u!1 &5311690152827879521
 GameObject:
   m_ObjectHideFlags: 0
@@ -5996,6 +5982,58 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7898953602899553212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296153038006966056}
+  - component: {fileID: 501097767984481834}
+  m_Layer: 0
+  m_Name: Hearts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1296153038006966056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7898953602899553212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1467233495831755674}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &501097767984481834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7898953602899553212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ea86399e6a4e7686efcaeabf238176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartDatas:
+  - {fileID: 11400000, guid: b5480ab36d473e842bba4a465c36015a, type: 2}
+  - {fileID: 11400000, guid: f471283955504f9479c081cf56f6fd00, type: 2}
+  - {fileID: 11400000, guid: f5d8a0199f0962640b0ff785228fa42d, type: 2}
+  - {fileID: 11400000, guid: 23f951fb31a8c3b4db09140eaf27840d, type: 2}
+  - {fileID: 11400000, guid: 20ed9af2ea5387441bead6f0cbdfbe29, type: 2}
+  - {fileID: 11400000, guid: b77a7a3277250874c846a1224c2ae890, type: 2}
+  - {fileID: 11400000, guid: 65e0f9f4216c9e540a4c47768a39c7bd, type: 2}
 --- !u!1 &7964923333765574011
 GameObject:
   m_ObjectHideFlags: 0

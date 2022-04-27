@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: HumanHeart
   m_EditorClassIdentifier: 
-  origin: 0
+  id: human_heart
+  provider: {fileID: 9172342626386699442, guid: 652d0a34341b9fc4a9544aefcdd921c3, type: 3}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: 1196521974, guid: 3af7328ac355c4f44bf5c46c8c1b21a4, type: 3}

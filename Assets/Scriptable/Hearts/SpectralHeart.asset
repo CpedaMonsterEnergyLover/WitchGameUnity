@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
-  m_Name: HeartOfTheWild
+  m_Name: SpectralHeart
   m_EditorClassIdentifier: 
-  id: heart_of_the_wild
+  id: spectral_heart
   provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
-    sprite: {fileID: -1897101252, guid: 4ee58b488a28e2846bd74e6f2dfec9df, type: 3}
+    sprite: {fileID: 692048381, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
   - heartType: 1
-    sprite: {fileID: -119250514, guid: 4ee58b488a28e2846bd74e6f2dfec9df, type: 3}
+    sprite: {fileID: 142247400, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
   - heartType: 2
-    sprite: {fileID: -2063636836, guid: 4ee58b488a28e2846bd74e6f2dfec9df, type: 3}
+    sprite: {fileID: 582044685, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
   - heartType: 3
-    sprite: {fileID: 55229443, guid: 4ee58b488a28e2846bd74e6f2dfec9df, type: 3}
+    sprite: {fileID: -394300875, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
   ignoreColor: 1
   color: {r: 1, g: 1, b: 1, a: 1}
-  outlineColor: {r: 0.2576955, g: 0.2924528, b: 0, a: 1}
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
   resistDamageTypes: 

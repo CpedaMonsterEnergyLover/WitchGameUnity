@@ -186,7 +186,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.33333334
-    functionName: UpdateHeart
+    functionName: UpdateImage
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

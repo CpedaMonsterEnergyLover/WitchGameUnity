@@ -13,6 +13,7 @@ namespace GameCollection
         public Interactables interactables;
         public CraftingRecipies recipies;
         public WorldScenesCollection scenesCollection;
+        public Hearts heartsCollection;
 
         private void Awake()
         {
@@ -26,6 +27,7 @@ namespace GameCollection
             interactables.Init();
             recipies.Init();
             scenesCollection.Init();
+            heartsCollection.Init();
         }
 
         public static void MapCollection<T>(List<GameObject> objects, Dictionary<string, GameObject> dictionary, string collectionName) where T : Interactable

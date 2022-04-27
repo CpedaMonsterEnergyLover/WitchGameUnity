@@ -6,6 +6,7 @@ using UnityEngine;
 public class HeartData : ScriptableObject
 {
     public HeartOrigin origin;
+    public string id;
     public HeartTypeSprite[] heartTypeSprites = {
         new (HeartType.Solid, null),
         new (HeartType.Holed, null),
@@ -16,4 +17,5 @@ public class HeartData : ScriptableObject
     public Color color;
     public Color outlineColor;
     public List<DamageType> resistDamageTypes = new();
+    public List<DamageType> immuneDamageTypes = new();
 }

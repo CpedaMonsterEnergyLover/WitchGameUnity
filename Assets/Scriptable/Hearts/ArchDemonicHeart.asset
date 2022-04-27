@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: ArchDemonicHeart
   m_EditorClassIdentifier: 
-  origin: 5
+  id: archdemonic_heart
+  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: 692048381, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
