@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: SpectralHeart
   m_EditorClassIdentifier: 
+  origin: 4
   id: spectral_heart
-  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
-    sprite: {fileID: 692048381, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
+    sprite: {fileID: -504977038, guid: e2b106212289f6d4bb8ffccd07406556, type: 3}
   - heartType: 1
-    sprite: {fileID: 142247400, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
+    sprite: {fileID: -1388970537, guid: e2b106212289f6d4bb8ffccd07406556, type: 3}
   - heartType: 2
-    sprite: {fileID: 582044685, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
+    sprite: {fileID: -1033232172, guid: e2b106212289f6d4bb8ffccd07406556, type: 3}
   - heartType: 3
-    sprite: {fileID: -394300875, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
+    sprite: {fileID: -254901248, guid: e2b106212289f6d4bb8ffccd07406556, type: 3}
   ignoreColor: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   outlineColor: {r: 0, g: 0, b: 0, a: 1}
   resistDamageTypes: 
+  immuneDamageTypes: 00000000

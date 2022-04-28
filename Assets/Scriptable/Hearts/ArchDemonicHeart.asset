@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: ArchDemonicHeart
   m_EditorClassIdentifier: 
+  origin: 6
   id: archdemonic_heart
-  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: 692048381, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
@@ -25,5 +25,5 @@ MonoBehaviour:
     sprite: {fileID: -394300875, guid: 0828689229e54ec4791ae8b31068239f, type: 3}
   ignoreColor: 1
   color: {r: 1, g: 1, b: 1, a: 1}
-  outlineColor: {r: 0.13468266, g: 0, b: 0.3962264, a: 1}
   resistDamageTypes: 
+  immuneDamageTypes: 02000000

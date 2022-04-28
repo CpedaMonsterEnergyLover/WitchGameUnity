@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: HeartOfTheBeast
   m_EditorClassIdentifier: 
+  origin: 2
   id: heart_of_the_beast
-  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: 1700741782, guid: 5de6208b2d2583d4c9af0b884e596876, type: 3}
@@ -26,4 +26,5 @@ MonoBehaviour:
   ignoreColor: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   outlineColor: {r: 0.3018868, g: 0.10024265, b: 0, a: 1}
-  resistDamageTypes: 
+  resistDamageTypes: 01000000
+  immuneDamageTypes: 

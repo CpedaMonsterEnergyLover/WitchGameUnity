@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: ShadowHeart
   m_EditorClassIdentifier: 
+  origin: 1
   id: shadow_heart
   heartTypeSprites:
   - heartType: 0
@@ -25,5 +26,5 @@ MonoBehaviour:
   ignoreColor: 0
   color: {r: 0, g: 0.71928596, b: 1, a: 1}
   outlineColor: {r: 0, g: 0.21381558, b: 0.3679245, a: 1}
-  resistDamageTypes: 
+  resistDamageTypes: 00000000
   immuneDamageTypes: 

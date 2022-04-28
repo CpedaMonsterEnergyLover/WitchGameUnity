@@ -26,9 +26,19 @@ public class HeartBarEditor : Editor {
             manager.ChangeOrigin(manager.indexToPop, manager.origin);
         }
         
-        if (GUILayout.Button ("Pop"))
+        if (GUILayout.Button ("Pop by index"))
         {
             manager.Pop(manager.indexToPop);
+        }
+        
+        if (GUILayout.Button ("Apply effect"))
+        {
+            manager.ApplyEffect(manager.indexToPop, manager.effectToApply);
+        }
+        
+        if (GUILayout.Button ("Clear effect"))
+        {
+            manager.ClearEffect(manager.indexToPop);
         }
         
         /*if (GUILayout.Button ("Convert"))

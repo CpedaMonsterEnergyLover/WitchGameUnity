@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc66c19113942e7949717a728d338c9, type: 3}
   m_Name: HeartOfTheWild
   m_EditorClassIdentifier: 
+  origin: 5
   id: heart_of_the_wild
-  provider: {fileID: 0}
   heartTypeSprites:
   - heartType: 0
     sprite: {fileID: -1897101252, guid: 4ee58b488a28e2846bd74e6f2dfec9df, type: 3}
@@ -27,3 +27,4 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   outlineColor: {r: 0.2576955, g: 0.2924528, b: 0, a: 1}
   resistDamageTypes: 
+  immuneDamageTypes: 01000000
