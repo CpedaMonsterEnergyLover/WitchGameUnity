@@ -11,10 +11,12 @@ public class WorldData
     [SerializeField] private BaseWorldScene worldScene;
     [SerializeField] private SerializeableQuadArray<WorldTile> worldTiles;
     [SerializeField] private Vector2 spawnPoint;
+    [SerializeField] private int colorfulLayerIndex;
     public BaseWorldScene WorldScene => worldScene;
     public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
     public int MapWidth => worldTiles.Width;
     public int MapHeight => worldTiles.Height;
+    public int ColorLayerIndex => colorfulLayerIndex;
     public Vector2 SpawnPoint
     {
         get => spawnPoint;
@@ -36,12 +38,14 @@ public class WorldData
         int height, 
         bool[][,] layers,
         InteractableData[,] biomeLayer, 
-        BaseWorldScene worldScene)
+        BaseWorldScene worldScene,
+        Color[,] colorLayer,
+        int colorfulLayerIndex)
     {
         this.worldScene = worldScene;
+        this.colorfulLayerIndex = colorfulLayerIndex;
         worldTiles = new SerializeableQuadArray<WorldTile>(width, height);
-
-        
+        bool hasColor = colorLayer is not null;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -50,7 +54,7 @@ public class WorldData
                 for (var i = 0; i < layers.Length; i++) 
                     tiles[i] = layers[i][x, y];
                 worldTiles.Set(x, y, new WorldTile(
-                    x, y, tiles, biomeLayer[x, y]));
+                    x, y, tiles, biomeLayer[x, y], hasColor ? colorLayer[x,y] : Color.white));
             }
         }
 

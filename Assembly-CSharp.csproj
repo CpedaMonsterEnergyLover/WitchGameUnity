@@ -187,6 +187,7 @@
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArenaBorder.cs" />
      <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
+     <Compile Include="Assets\Scripts\World\ColorfulWorldLayer.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\Health\HeartAnimatorHelper.cs" />
      <Compile Include="Assets\Scripts\World\WorldBounds.cs" />
@@ -289,9 +290,11 @@
      <Compile Include="Assets\Scripts\Bullet\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullet\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\Heart.cs" />
+     <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectsController.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogElement.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectsController.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\IInheritsWorldLayerColor.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Grass.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

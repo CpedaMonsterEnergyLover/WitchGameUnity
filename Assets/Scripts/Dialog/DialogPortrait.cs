@@ -9,7 +9,7 @@ public class DialogPortrait : MonoBehaviour
     public Image panel;
     public Image image;
     public Text nameText;
-    public AnimationCurve popupCurve;
+    public Animator animator;
 
     private float _ypos;
     private GameObject _decoration;
@@ -19,11 +19,11 @@ public class DialogPortrait : MonoBehaviour
         _ypos = transform.localPosition.y;
     }
 
-    public void Select(Color color, bool blockPop = false)
+    public void Select(Color color)
     {
         panel.color = color;
         nameText.color = color;
-        if(!blockPop) StartCoroutine(PopupRoutine(0.3f));
+        animator.Play("PortraitStartTalk");
     }
 
     public void Unselect()
@@ -55,21 +55,7 @@ public class DialogPortrait : MonoBehaviour
             SetDecoration(member);
         } else gameObject.SetActive(false);
     }
-
-    private IEnumerator PopupRoutine(float duration)
-    {
-        float t = 0.0f;
-        while (t < duration)
-        {
-            float current = t / duration;
-            var pos = transform.localPosition;
-            pos.y = _ypos + popupCurve.Evaluate(current);
-            transform.localPosition = pos;
-            t += Time.deltaTime;
-            yield return null;
-        }
-    }
-
+    
     private void OnDisable()
     {
         Unselect();

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1554627385390719827}
   - component: {fileID: 3071005680958817059}
   - component: {fileID: -6480634296452647893}
-  - component: {fileID: -1621490257694898326}
+  - component: {fileID: 5876206090644017520}
   m_Layer: 8
   m_Name: GrassForest
   m_TagString: Untagged
@@ -99,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0064572096, y: 0.36302805}
+  m_Offset: {x: -0.0069123507, y: 0.19590998}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.50691235, y: 0.30409002}
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-1621490257694898326
+--- !u!114 &5876206090644017520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8501037824442680476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d49124cc08caf5e46bac5f24cce69284, type: 3}
+  m_Script: {fileID: 11500000, guid: 2561eae035d84c83af3c572c71e073e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   saveData:

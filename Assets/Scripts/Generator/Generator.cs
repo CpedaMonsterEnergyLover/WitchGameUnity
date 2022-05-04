@@ -63,7 +63,7 @@ public class Generator : MonoBehaviour
         InitRandom();
         GetCardinalPoints();
         GenerateCardinalMap();
-        
+
         if(_bar is not null) _bar.SetPhase("Создание шума");
         WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
             _cardinalMap,
@@ -75,10 +75,12 @@ public class Generator : MonoBehaviour
             additionalMapNoiseSettings);
         
         if(_bar is not null) _bar.SetPhase("Раскраска мира");
+        ColorfulWorldLayer colorLayer = null;
         bool[][,] layerData = new bool[layers.Count][,];
         foreach (var layer in layers)
         {
             layerData[layer.index] = await layer.Generate(generatorSettings, worldNoiseData);
+            if (layer is ColorfulWorldLayer colorfulWorldLayer) colorLayer = colorfulWorldLayer;
         }
 
 
@@ -90,12 +92,18 @@ public class Generator : MonoBehaviour
             biomeLayer = await GenerateBiomeLayer(worldNoiseData);
         }
 
+        Color[,] colorData = colorLayer is null ? null :
+            colorLayer.GetColors(generatorSettings, worldNoiseData);
+        
+        
         WorldData worldData = new WorldData(
             generatorSettings.width,
             generatorSettings.height,
             layerData,
             biomeLayer,
-            worldScene
+            worldScene,
+            colorData,
+            colorLayer is null ? -1 : colorLayer.index
             );
         
         PlaceHouse(worldData);
@@ -110,8 +118,10 @@ public class Generator : MonoBehaviour
         bool placeNotFound = true;
         int r = 3;
         Vector2Int mapCenter = new Vector2Int(worldData.MapWidth / 2, worldData.MapHeight / 2);
-        while (placeNotFound)
+        int counter = 0;
+        while (placeNotFound && counter < 100)
         {
+            counter++;
             var newPosF = Random.insideUnitCircle * r;
             int x = (int) newPosF.x + mapCenter.x;
             int y = (int) newPosF.y + mapCenter.y;
@@ -127,6 +137,7 @@ public class Generator : MonoBehaviour
                 if (r >= 30) r = 3;
             }
         }
+        if(counter >= 100) Debug.LogWarning("Houseplacing took 100 iterations. The process was stopped");
     }
 
     private bool IsAreaPlaceable(WorldData data, int centerX, int centerY, int width, int height)

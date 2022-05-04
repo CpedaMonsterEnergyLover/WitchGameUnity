@@ -11,13 +11,6 @@ public class DialogWindowEditor : UnityEditor.Editor
         if (manager == null) return;
 
         DrawDefaultInspector();
-
-        
-        
-        if (GUILayout.Button ("Animate"))
-        {
-            manager.AnimateAll();
-        }
         
         if (GUILayout.Button ("Start test"))
         {

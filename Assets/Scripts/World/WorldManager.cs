@@ -175,6 +175,12 @@ public class WorldManager : MonoBehaviour
             worldLayer.tilemap.SetTile(position, 
                 tile.Layers[i] ? worldLayer.tileBase : null);
         }
+
+        if (WorldData.ColorLayerIndex != -1)
+        {
+            layers[WorldData.ColorLayerIndex].tilemap
+                .SetColor(position, tile.Color);
+        }
     }
 
     public void EraseTile(Vector3Int position)

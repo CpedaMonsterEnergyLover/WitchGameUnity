@@ -16,12 +16,16 @@ public class WorldTile : ICacheable
     [SerializeField] public int lastLoadedMinute;
     [SerializeReference] public InteractableSaveData savedData;
     [SerializeReference] private List<EntitySaveData> savedEntities = new();
+    [SerializeField] private Color color;
+
 
     [NonSerialized] private List<Entity> _cachedEntities = new();
 
     private List<Entity> CachedEntities { get; set; } = new();
     private Interactable InstantiatedInteractable { get; set; }
     public bool IsBlockedForLoading { get; set; }
+    public Color Color => color;
+
 
     public bool[] Layers => layers;
     public Vector2Int Position
@@ -54,13 +58,14 @@ public class WorldTile : ICacheable
         _cachedEntities = new List<Entity>();
     }
     
-    public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData)
+    public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData, Color color)
     {
         position = new Vector2Int(x, y);
         layers = tiles;
         savedData = interactableData is null ? null : 
             new InteractableSaveData(interactableData);
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
+        this.color = color;
     }
 
     public void SetLayer(int layerIndex, bool value)
@@ -100,7 +105,10 @@ public class WorldTile : ICacheable
         if (IsCached)
             InstantiatedInteractable.SetActive(true);
         else
+        {
             InstantiatedInteractable = Interactable.Create(savedData);
+            if(InstantiatedInteractable is IInheritsWorldLayerColor inheritor) inheritor.SetColor(color);             
+        }
         
         // bool ignoreRandomisation = instantiatedInteractable is IIgnoreTileRandomisation;
         bool ignoreRandomisation = InstantiatedInteractable.Data.ignoreRandomisation;

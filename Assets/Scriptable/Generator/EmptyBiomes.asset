@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4b2ddaea5dc4c838cdf0f3657c4d217, type: 3}
-  m_Name: LayerTestBiomes
+  m_Name: EmptyBiomes
   m_EditorClassIdentifier: 
   list: []

@@ -9,7 +9,7 @@ public class Herb : Interactable
     public new HerbSaveData SaveData => (HerbSaveData) saveData;
 
     [SerializeField]
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
     
     private GameObject _bed;
 

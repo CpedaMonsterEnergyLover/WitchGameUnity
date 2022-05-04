@@ -16,6 +16,8 @@ namespace GameCollection
 
         public void Init()
         {
+            HeartsCollection.Clear();
+            EffectsCollection.Clear();
             foreach (HeartData data in heartDatas) HeartsCollection.Add(data.id, data);
             foreach (HeartEffectData data in effectDatas) EffectsCollection.Add(data.id, data);
         }

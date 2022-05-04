@@ -27,10 +27,12 @@ public class DialogWindow : BaseWindow
     [Header("Player")]
     public DialogMember player;
 
-    [Header("Parts of the window")] 
-    public VerticalScrollAnimator[] animators = new VerticalScrollAnimator[3];
-    public float animationDuration;
-    public VolumeAnimator volumeAnimator;
+    [Header("Animators")] 
+    public Animator topLitterBoxAnimator;
+    public Animator bottomLitterBoxAnimator;
+    public Animator vignetteAnimator;
+    public Animator panelAnimator;
+    public GameObject skipIndicator;
     public DialogTree testDialog;
     public float textPrintSpeed;
 
@@ -54,19 +56,20 @@ public class DialogWindow : BaseWindow
     {
         while (isActiveAndEnabled)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) ||
+                Input.GetMouseButtonDown(0) || 
+                Input.GetMouseButtonDown(1))
                 Next();
             yield return null;
         }
     }
-
-    public void AnimateAll()
+    
+    private void AnimateStop()
     {
-        foreach (VerticalScrollAnimator animator in animators)
-        {
-            animator.Animate(animationDuration, false);
-        }
-        volumeAnimator.Animate(animationDuration, false);
+        topLitterBoxAnimator.Play("TopLitterBoxStop");
+        bottomLitterBoxAnimator.Play("BottomLitterBoxStop");
+        vignetteAnimator.Play("VignetteStop");
+        panelAnimator.Play("DialogPanelStop");
     }
     
     public void StartDialog(DialogTree dialogTree)
@@ -80,28 +83,34 @@ public class DialogWindow : BaseWindow
         leftPortrait.SetMember(dialogTree.leftSide);
         rightPortrait.SetMember(dialogTree.rightSide);
         _currentElement = null;
+        dialogText.text = string.Empty;
         gameObject.SetActive(true);
         Time.timeScale = 0;
+        StartCoroutine(PlayDialog());
+    }
+
+    private IEnumerator PlayDialog()
+    {
+        yield return new WaitForSecondsRealtime(1f);
         _keyListenerRoutine = StartCoroutine(KeyListenerRoutine());
-        AnimateAll();
-        PlayElement(dialogTree.elements[0]);
+        PlayElement(_dialogTree.elements[0]);
+        Debug.Log("Play dialog");
     }
 
     private void EndDialog()
     {
+        AnimateStop();
+        StopCoroutine(_keyListenerRoutine);
+        _keyListenerRoutine = null;
+        StartCoroutine(Disable());
+    }
+    
+    private IEnumerator Disable()
+    {
+        yield return new WaitForSecondsRealtime(0.95f);
         Time.timeScale = 1;
         _dismissData = _dismissData.ShowAll();
         _dialogTree = null;
-        foreach (VerticalScrollAnimator animator in animators) 
-            animator.Animate(animationDuration, true);
-        volumeAnimator.Animate(animationDuration, true);
-        Invoke(nameof(Disable), animationDuration / 2);
-        StopCoroutine(_keyListenerRoutine);
-        _keyListenerRoutine = null;
-    }
-    
-    private void Disable()
-    {
         gameObject.SetActive(false);
     }
 
@@ -127,7 +136,7 @@ public class DialogWindow : BaseWindow
     {
         if (_currentElement is null)
         {
-            _portraits[(int) dialogSide].Select(selectionColor, true);
+            _portraits[(int) dialogSide].Select(selectionColor);
             return;
         }
         if (dialogSide == _currentElement.speakingSide) return;
@@ -144,6 +153,7 @@ public class DialogWindow : BaseWindow
 
     private IEnumerator TextPrintRoutine(string speakerName, string text)
     {
+        skipIndicator.SetActive(false);
         speakerName += ": ";
         _finalText = speakerName + text;
         string printed = "";
@@ -156,7 +166,8 @@ public class DialogWindow : BaseWindow
             index++;
             yield return new WaitForSecondsRealtime(textPrintSpeed);
         }
-
+        
+        skipIndicator.SetActive(true);
         _textRoutine = null;
     }
     
