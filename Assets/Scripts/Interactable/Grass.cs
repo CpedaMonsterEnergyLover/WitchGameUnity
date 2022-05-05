@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Grass : Herb, IInheritsWorldLayerColor
+public class Grass : Herb, IColorableInteractable
 {
     public void SetColor(Color color)
     {

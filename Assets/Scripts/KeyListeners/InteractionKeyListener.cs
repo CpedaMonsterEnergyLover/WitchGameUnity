@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InteractionKeyListener : KeyListener
 {
-    public NewItemPicker newItemPicker;
+    [FormerlySerializedAs("newItemPicker")] public ItemPicker itemPicker;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            newItemPicker.Use();
+            itemPicker.Use();
         }
     }
 

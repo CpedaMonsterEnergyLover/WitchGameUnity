@@ -30,7 +30,7 @@ public class CraftingSlot : ItemSlot
         storedAmount -= amount;
     }
 
-    public override void Clear() { }
+    protected override void Clear() { }
 
 
     

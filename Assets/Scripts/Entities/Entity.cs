@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using JetBrains.Annotations;
 using TileLoading;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public abstract class Entity : MonoBehaviour, ICacheable
 {

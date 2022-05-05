@@ -19,14 +19,10 @@ public class WorldTile : ICacheable
     [SerializeField] private Color color;
 
 
-    [NonSerialized] private List<Entity> _cachedEntities = new();
-
-    private List<Entity> CachedEntities { get; set; } = new();
+    private List<Entity> CachedEntities { get; set; } = new ();
     private Interactable InstantiatedInteractable { get; set; }
     public bool IsBlockedForLoading { get; set; }
     public Color Color => color;
-
-
     public bool[] Layers => layers;
     public Vector2Int Position
     {
@@ -34,7 +30,6 @@ public class WorldTile : ICacheable
         set => position = value;
     }
     public bool HasInteractable => savedData is not null;
-    
     public bool WasChanged { get; private set; }
 
 
@@ -53,11 +48,6 @@ public class WorldTile : ICacheable
 
     #endregion
 
-    public void InitAfterLoading()
-    {
-        _cachedEntities = new List<Entity>();
-    }
-    
     public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData, Color color)
     {
         position = new Vector2Int(x, y);
@@ -73,14 +63,14 @@ public class WorldTile : ICacheable
         Layers[layerIndex] = value;
     }
 
-    public void MergeData(WorldTile from, bool keepChanges)
+    public void MergeData(WorldTile from, bool keepChanged)
     {
         interactableOffset = from.interactableOffset;
         savedData = from.savedData;
         layers = from.Layers;
         position = from.Position;
         savedEntities = from.savedEntities;
-        if(!keepChanges) WasChanged = false;
+        if(!keepChanged) WasChanged = false;
     }
     
     public void Load()
@@ -107,26 +97,29 @@ public class WorldTile : ICacheable
         else
         {
             InstantiatedInteractable = Interactable.Create(savedData);
-            if(InstantiatedInteractable is IInheritsWorldLayerColor inheritor) inheritor.SetColor(color);             
+            if(InstantiatedInteractable is IColorableInteractable inheritor) inheritor.SetColor(color);    
+            bool ignoreRandomisation = InstantiatedInteractable.Data.ignoreTileRandomisation;
+            InstantiatedInteractable.transform.position = ignoreRandomisation ?
+                new Vector3(Position.x + 0.5f, Position.y + 0.5f, 0)
+                : new Vector3(Position.x + interactableOffset.x, Position.y + interactableOffset.y, 0);
         }
         
-        // bool ignoreRandomisation = instantiatedInteractable is IIgnoreTileRandomisation;
-        bool ignoreRandomisation = InstantiatedInteractable.Data.ignoreRandomisation;
-        var transform = InstantiatedInteractable.transform;
-        transform.position = ignoreRandomisation ?
-            new Vector3(Position.x + 0.5f, Position.y + 0.5f, 0)
-            : new Vector3(Position.x + interactableOffset.x, Position.y + interactableOffset.y, 0);
-
         InstantiatedInteractable.OnTileLoad(this);
         savedData = InstantiatedInteractable.SaveData;
     }
 
     public void LoadEntities()
     {
-        if(_cachedEntities.Count > 0)
-            foreach (Entity entity in _cachedEntities) 
+        if (CachedEntities is null)
+        {
+            CachedEntities = new List<Entity>();
+        }
+        else if (CachedEntities.Count > 0)
+        {
+            foreach (Entity entity in CachedEntities) 
                 entity.Load();
-        _cachedEntities.Clear();
+            CachedEntities.Clear();
+        }
         
         foreach (EntitySaveData entitySaveData in savedEntities) 
             Entity.Create(entitySaveData);
@@ -144,14 +137,14 @@ public class WorldTile : ICacheable
 
     public void CacheEntity([NotNull] Entity entity)
     {
-        if (_cachedEntities.Contains(entity)) return;
-        _cachedEntities.Add(entity);
+        if (CachedEntities.Contains(entity)) return;
+        CachedEntities.Add(entity);
     }
 
     public void RemoveEntityFromCache([NotNull] Entity entity)
     {
-        if (!_cachedEntities.Contains(entity)) return;
-        _cachedEntities.Remove(entity);
+        if (!CachedEntities.Contains(entity)) return;
+        CachedEntities.Remove(entity);
     }
     
     public void AddEntitySaveData([NotNull] EntitySaveData entitySaveData)

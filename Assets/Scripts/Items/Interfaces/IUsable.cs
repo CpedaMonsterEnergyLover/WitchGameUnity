@@ -3,9 +3,8 @@ using UnityEngine;
 
 public interface IUsable
 {
-    public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
-        => throw new NotImplementedException();
-    
+    public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null) { }
+
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null) 
         => false;
 

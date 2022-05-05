@@ -410,7 +410,7 @@ MonoBehaviour:
   storedAmount: 0
   itemIcon: {fileID: 1129419629450014617}
   itemText: {fileID: 6500286783728623978}
-  durabilityBar: {fileID: 8711562563178913350}
+  slotDurabilityBar: {fileID: 8711562563178913350}
   references:
     version: 2
     RefIds:

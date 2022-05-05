@@ -5,7 +5,7 @@
         return base.AllowUse(entity, tile, interactable) 
                && interactable is Bonfire bonfire 
                && bonfire.SaveData.burningDuration == 0
-               || interactable is IFlammable;
+               || interactable is IFlammableInteractable;
     }
 
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
@@ -14,7 +14,7 @@
         {
             if(bonfire.AddBurningTime(10))
                 base.Use(slot, entity, tile, interactable);
-        } else if (interactable is IFlammable flammable)
+        } else if (interactable is IFlammableInteractable flammable)
         {
             if(flammable.Flame())
                 base.Use(slot, entity, tile, interactable);

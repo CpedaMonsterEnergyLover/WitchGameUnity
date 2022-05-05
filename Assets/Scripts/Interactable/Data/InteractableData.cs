@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 [CreateAssetMenu(menuName = "Interactable/Base")]
@@ -10,5 +11,5 @@ public class InteractableData : ScriptableObject
     [Range(0, 10)]
     public float interactingTime;
 
-    public bool ignoreRandomisation;
+    [FormerlySerializedAs("ignoreRandomisation")] public bool ignoreTileRandomisation;
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TileLoading;
 using UnityEngine;
@@ -132,19 +131,7 @@ public class TileLoader : MonoBehaviour
             tile.lastLoadedMinute = TimelineManager.minutesPassed;
             tile.IsLoaded = false;
         }
-        _loadedTiles = new();
+        _loadedTiles = new List<WorldTile>();
     }
-
-    public async Task<bool> AwaitAllTilesLoaded()
-    {
-        int tilesToAwait = viewRangeX * viewRangeY;
-        while (_loadedTiles.Count < tilesToAwait)
-        {
-            await Task.Delay((int) Time.deltaTime * 1000);
-        }
-
-        return true;
-    }
-    
 
 }

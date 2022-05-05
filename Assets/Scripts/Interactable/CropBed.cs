@@ -1,4 +1,4 @@
-public class CropBed : Interactable, IIgnoreTileRandomisation
+public class CropBed : Interactable
 {
     public new CropBedSaveData SaveData => (CropBedSaveData) saveData;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// TODO: Rework
 public class Fader : MonoBehaviour
 {
     public SpriteRenderer SpriteRenderer { get; private set; }

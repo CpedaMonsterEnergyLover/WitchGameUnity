@@ -7,6 +7,7 @@ public class PlaceableWindow : BaseWindow
     public List<Component> toDismiss = new();
     public Transform slotTransform;
     public Text titleText;
+    public InteractablePreview interactablePreview;
 
     private GameObject _instantiatedPrefab;
 
@@ -44,7 +45,7 @@ public class PlaceableWindow : BaseWindow
 
         titleText.text = _slot.storedItem.Data.name;
         
-        InteractablePreview.Instance.Show(_placeableItem);
+        interactablePreview.Show(_placeableItem);
         
         SetActive(true);
     }
@@ -54,12 +55,11 @@ public class PlaceableWindow : BaseWindow
         // Disable preview
         _dismissData = _dismissData.ShowAll();
         _slot.transform.SetParent(_slotParent, false);
-        if (_slot is CraftingSlot)
-            _slot.storedItem = null;
+        if (_slot is CraftingSlot) _slot.storedItem = null;
         _slot = null;
         _slotParent = null;
         
-        InteractablePreview.Instance.Hide();
+        interactablePreview.Hide();
         base.OnDisable();
     }
 

@@ -14,7 +14,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public Image itemIcon;
     public Text itemText;
-    public DurabilityBar durabilityBar;
+    public SlotDurabilityBar slotDurabilityBar;
     
     protected static InventoryWindow InventoryWindow;
     
@@ -110,11 +110,11 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public virtual void UpdateUI()
     {
-        if(durabilityBar is not null)
+        if(slotDurabilityBar is not null)
             if (storedItem is IDamageableItem damageableItem)
-                durabilityBar.UpdateDurability(damageableItem);
+                slotDurabilityBar.UpdateDurability(damageableItem);
             else 
-                durabilityBar.SetActive(false);
+                slotDurabilityBar.SetActive(false);
         
         // Если предмет был последний
         if (storedItem == null || storedAmount <= 0)
@@ -146,25 +146,8 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 
     #region Utils
-    
-    public void Shake()
-    {
-        StartCoroutine(Shake(0.75f, 30f));
-    }
-    
-    private IEnumerator Shake(float duration, float speed)
-    {
-        float t = 0.0f;
-        while ( t  < duration )
-        {
-            t += Time.deltaTime;
-            float angle = Mathf.Sin(t * speed) * 5; 
-            itemIcon.transform.rotation  = Quaternion.AngleAxis(angle, Vector3.forward);
-            yield return null;
-        }
-    }
-    
-    public virtual void Clear()
+
+    protected virtual void Clear()
     {
         storedAmount = 0;
         storedItem = null;

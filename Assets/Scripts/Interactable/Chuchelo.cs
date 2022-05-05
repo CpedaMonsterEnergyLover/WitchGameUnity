@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Chuchelo : Interactable, IFlammable
+public class Chuchelo : Interactable, IFlammableInteractable
 {
     public ParticleSystem fire;
     public ParticleSystem smoke;

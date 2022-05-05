@@ -20,7 +20,6 @@ public class GameDataManager : MonoBehaviour
         _playerDir = Application.persistentDataPath + PlayerDir;
     }
 
-
     private const string PersDir = "/Save/Persistent/";
     private const string TempDir = "/Save/Temporary/";
     private const string PlayerDir = "/Save/Player/";
@@ -111,6 +110,7 @@ public class GameDataManager : MonoBehaviour
             Directory.CreateDirectory(dir);
 
         WorldManager.Instance.UnloadAllEntities();
+        // TODO: save changed tiles in an array
         var changedTiles = 
             WorldManager.Instance.WorldData.Changes;
         string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);

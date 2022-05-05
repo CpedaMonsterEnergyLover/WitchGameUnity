@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MagicBook : Item, IUsable, IHasOwnInteractionTime, IUsableOnAnyTarget, IControlsUsabilityInMove
 {

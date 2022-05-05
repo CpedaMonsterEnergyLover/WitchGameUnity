@@ -31,12 +31,12 @@ public class HotbarSlot : ItemSlot
     public override void UpdateUI()
     {
         base.UpdateUI();
-        NewItemPicker.Instance.SyncWithSlot(this);
+        ItemPicker.Instance.SyncWithSlot(this);
     }
 
     public override int AddItem(Item item, int amount) => 0;
 
-    public override void Clear()
+    protected override void Clear()
     {
         base.Clear();
         if(ReferredSlot is not null) ReferredSlot.ReferredHotbarSlot = null;

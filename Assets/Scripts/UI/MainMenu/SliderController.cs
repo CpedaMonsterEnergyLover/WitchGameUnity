@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
@@ -12,6 +13,10 @@ public class SliderController : MonoBehaviour
     
     public void UpdateSliderHandlerText()
     {
-        sliderHandlerText.text = Value + " " + unit;
+        StringBuilder sb = new StringBuilder()
+            .Append(Value)
+            .Append(" ")
+            .Append(unit);
+        sliderHandlerText.text = sb.ToString();
     }
 }

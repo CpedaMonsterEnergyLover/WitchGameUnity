@@ -154,7 +154,6 @@ public class OldEntity : MonoBehaviour
     }
 
     // Когда сущность убегает
-    // TODO: придумать куда она будет двигаться, можно взять в принципе как в KeepDistanceFromPlayer 
     protected virtual void Flee()
     {
         SetTarget(-PlayerPosition);

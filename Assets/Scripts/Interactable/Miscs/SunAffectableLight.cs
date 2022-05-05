@@ -1,7 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+
+// Controls light's intensity depending on a global illumination intensity
 [RequireComponent(typeof(Light2D))]
 public class SunAffectableLight : MonoBehaviour
 {

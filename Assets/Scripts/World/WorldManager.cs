@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using TileLoading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class WorldManager : MonoBehaviour
 {
@@ -112,7 +110,6 @@ public class WorldManager : MonoBehaviour
     
     protected virtual void SpawnPlayer()
     {
-        Debug.Log("Spawn player");
         var spawnPoint = WorldData.SpawnPoint;
 
         PlayerData playerData = PlayerManager.Instance.PlayerData;

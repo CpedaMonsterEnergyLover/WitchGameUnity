@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Instrument : Item, IUsable, IDamageableItem, IHasOwnInteractionTime
 {
     private float _interactionTime;

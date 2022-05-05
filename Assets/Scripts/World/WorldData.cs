@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WorldScenes;
-using Object = UnityEngine.Object;
 
 [Serializable]
 public class WorldData
@@ -28,7 +27,6 @@ public class WorldData
     {
         foreach (WorldTile tile in worldTiles.Items)
         {
-            tile.InitAfterLoading();
             tile.IsLoaded = false;
         }
     }

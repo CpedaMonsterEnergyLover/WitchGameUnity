@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
@@ -141,7 +140,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         while (gameObject.activeInHierarchy && SaveData.burningDuration > 0)
         {
             RemoveBurningTime(1);
-            yield return new WaitForMinutesInGame(1);
+            yield return new WaitForSeconds(TimelineManager.MinuteDuration);
         }
     }
 

@@ -1,9 +1,8 @@
 using UnityEngine;
 
+//TODO: Rework
 public class TimelineManager : MonoBehaviour
 {
-    #region Vars
-
     // Private fields
     [SerializeField]
     private TimelineSettings timelineSettings;
@@ -47,12 +46,7 @@ public class TimelineManager : MonoBehaviour
     
     public delegate void TotalHourPassedEvent(int hour);
     public static event TotalHourPassedEvent ONTotalHourPassed;
-    
 
-    #endregion
-    
-    //TODO: remove
-    // private int _passedHour = -1;
 
     #region UnityMethods
 
@@ -166,6 +160,7 @@ public class TimelineManager : MonoBehaviour
         }
     }
     
+    // TODO: Убрать нахуй этот позор
     // Сравнивает заданное значение пройденных за один кадр
     // секунд с допустимым порогом (обычно минута). Если оно было
     // превышено, оповещает об этом в консоли и разгружает систему
