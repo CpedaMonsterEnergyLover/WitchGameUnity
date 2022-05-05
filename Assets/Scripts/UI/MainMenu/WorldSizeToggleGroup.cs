@@ -1,2 +1,4 @@
-﻿public class WorldSizeToggleGroup : CustomToggleGroup<CreateWorldMenu.WorldSize>
+﻿using GameSettings;
+
+public class WorldSizeToggleGroup : CustomToggleGroup<WorldSize>
 { }

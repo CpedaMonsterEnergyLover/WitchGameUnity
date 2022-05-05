@@ -1,13 +1,15 @@
-﻿public class SelectedGeneratorSettings
+﻿using GameSettings;
+
+public class SelectedGeneratorSettings
 {
-    public readonly CreateWorldMenu.GameDifficulty difficulty;
-    public readonly CreateWorldMenu.WorldSize size;
+    public readonly Difficulty difficulty;
+    public readonly WorldSize size;
     public readonly string seed;
     public readonly int seasonLength;
 
     public SelectedGeneratorSettings(
-        CreateWorldMenu.GameDifficulty difficulty, 
-        CreateWorldMenu.WorldSize size, 
+        Difficulty difficulty, 
+        WorldSize size, 
         string seed, 
         int seasonLength)
     {

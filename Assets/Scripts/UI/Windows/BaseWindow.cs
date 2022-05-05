@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class BaseWindow : MonoBehaviour, ITemporaryDismissable
+public abstract class BaseWindow : MonoBehaviour, ITemporaryDismissable, INeedsInitialisation
 {
     [SerializeField]
     private WindowIdentifier windowIdentifier;

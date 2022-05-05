@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using WorldScenes;
 using Random = UnityEngine.Random;
 
 public class Generator : MonoBehaviour
 {
+    public static Generator Instance { get; private set; }
+
+    private void Awake() => Instance = this;
+
     [Header("Коллекция игровых объектов")] 
     public GameCollection.Manager gameObjectsCollection;
 
@@ -37,34 +44,39 @@ public class Generator : MonoBehaviour
     private int _seedHash;
     private WorldNoiseData _noiseData;
     private float[] _cardinalMap;
-    private SceneLoadingBar _bar;
+    private LoadingBar _bar;
 
-
-    public async Task Generate(SelectedGeneratorSettings newSettings, SceneLoadingBar bar)
+    
+    public void Init(string seed)
     {
+        Random.InitState(Animator.StringToHash(seed));
         gameObjectsCollection.Init();
-        _bar = bar;
+    }
+
+    public async UniTask Generate(SelectedGeneratorSettings newSettings, LoadingBar loadingBar)
+    {
+        _bar = loadingBar;
         generatorSettings.width = worldSizes[(int)newSettings.size].x;
         generatorSettings.height = worldSizes[(int)newSettings.size].y;
         generatorSettings.seed = newSettings.seed;
+
+        var generationTask = GenerateWorldData(worldManager.layers, worldManager.worldScene);
+        WorldData data = await generationTask;
         
-        WorldData data = await GenerateWorldData(
-            worldManager.layers, worldManager.worldScene);
-        
-        bar.SetPhase("Сжигание мусора");
+        _bar.NextPhase();
+        await UniTask.Delay(250);
         GameDataManager.SavePersistentWorldData(data);
         Destroy(gameObject);
     }
 
-    public async Task<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
+    public async UniTask<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
     { 
-        if(_bar is not null) _bar.SetPhase("Инициализация");
-        HashSeed();
-        InitRandom();
+        Init(generatorSettings.seed);
         GetCardinalPoints();
         GenerateCardinalMap();
 
-        if(_bar is not null) _bar.SetPhase("Создание шума");
+        _bar.NextPhase();
+        await UniTask.Delay(250);        
         WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
             _cardinalMap,
             hasCardinality,
@@ -74,22 +86,27 @@ public class Generator : MonoBehaviour
             secondaryMapNoiseSettings, 
             additionalMapNoiseSettings);
         
-        if(_bar is not null) _bar.SetPhase("Раскраска мира");
+        _bar.NextPhase();
+        await UniTask.Delay(250);
         ColorfulWorldLayer colorLayer = null;
         bool[][,] layerData = new bool[layers.Count][,];
-        foreach (var layer in layers)
+        await UniTask.RunOnThreadPool(async () =>
         {
-            layerData[layer.index] = await layer.Generate(generatorSettings, worldNoiseData);
-            if (layer is ColorfulWorldLayer colorfulWorldLayer) colorLayer = colorfulWorldLayer;
-        }
-
-
-        if(_bar is not null) _bar.SetPhase("Выращивание лесов");
+            foreach (var layer in layers)
+            {
+                layerData[layer.index] = await layer.Generate(generatorSettings, worldNoiseData);
+                if (layer is ColorfulWorldLayer colorfulWorldLayer && colorLayer is null)
+                    colorLayer = colorfulWorldLayer;
+            }
+        });
+        
+        _bar.NextPhase();
+        await UniTask.Delay(250);
         InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
         if (biomes is not null)
         {
             biomes.InitSpawnEdges();
-            biomeLayer = await GenerateBiomeLayer(worldNoiseData);
+            biomeLayer = GenerateBiomeLayer(worldNoiseData);
         }
 
         Color[,] colorData = colorLayer is null ? null :
@@ -106,6 +123,8 @@ public class Generator : MonoBehaviour
             colorLayer is null ? -1 : colorLayer.index
             );
         
+        _bar.NextPhase();
+        await UniTask.Delay(250);
         PlaceHouse(worldData);
         
         if(Application.isPlaying) GameDataManager.SavePersistentWorldData(worldData);
@@ -137,6 +156,7 @@ public class Generator : MonoBehaviour
                 if (r >= 30) r = 3;
             }
         }
+        
         if(counter >= 100) Debug.LogWarning("Houseplacing took 100 iterations. The process was stopped");
     }
 
@@ -153,17 +173,8 @@ public class Generator : MonoBehaviour
                 data.GetTile(x,y).SetInteractable(null);
         return isPlaceable;
     }
-
-    private void HashSeed()
-    {
-        _seedHash = Animator.StringToHash(generatorSettings.seed);
-    }
-
-    private void InitRandom()
-    {
-        Random.InitState(_seedHash);
-    }
     
+
     private void GetCardinalPoints()
     {
         if (!generateCardinality) return;
@@ -186,12 +197,12 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private async Task<InteractableData[,]> GenerateBiomeLayer(WorldNoiseData noiseData)
+    private InteractableData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
     {
 
         InteractableData[,] interactables = 
             new InteractableData[generatorSettings.width, generatorSettings.height];
-        
+
         //TODO: разбить побиомно
         for (int x = 0; x < generatorSettings.width; x++)
         {
@@ -212,9 +223,7 @@ public class Generator : MonoBehaviour
                     interactables[x, y] = generatedBiome.GetRandomInteractable();
             }
         }
-
-        await Task.Delay(500);
-    
+        
         return interactables;
     }
 }

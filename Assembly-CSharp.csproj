@@ -68,11 +68,11 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IControlsUsabilityInMove.cs" />
      <Compile Include="Assets\Scripts\Dialogs\DialogSide.cs" />
      <Compile Include="Assets\Scripts\UI\Dialogs\DialogPortrait.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractablePreview.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltips\CraftingTooltip.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interfaces\IFlammableInteractable.cs" />
-     <Compile Include="Assets\Scripts\World\WorldLayerEditSettings.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\WorldLayerEditSettings.cs" />
      <Compile Include="Assets\Scripts\Interactable\Bonfire.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletSpawner.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\WindowKeyListener.cs" />
@@ -93,6 +93,7 @@
      <Compile Include="Assets\Scripts\UI\Inventory\BagsPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Health\HeartUnit.cs" />
      <Compile Include="Assets\Scripts\GameData\TemporaryWorldData.cs" />
+     <Compile Include="Assets\Scripts\UI\LoadingBars\LoadingPhase.cs" />
      <Compile Include="Assets\Scripts\Health\HeartContainer.cs" />
      <Compile Include="Assets\Scripts\Items\Data\ItemData.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltips\Tooltip.cs" />
@@ -105,10 +106,11 @@
      <Compile Include="Assets\Scripts\Interactable\Miscs\SunAffectableLight.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
-     <Compile Include="Assets\Scripts\World\WorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\WorldLayer.cs" />
      <Compile Include="Assets\Scripts\GameCollection\CraftingRecipies.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\SlotDurabilityBar.cs" />
      <Compile Include="Assets\Scripts\UI\Util\DebugWindow.cs" />
+     <Compile Include="Assets\Scripts\GameSettings\Difficulty.cs" />
      <Compile Include="Assets\Scripts\Entities\SaveData\EntitySaveData.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\TreeSaveData.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\FOVProvider.cs" />
@@ -176,18 +178,20 @@
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SliderController.cs" />
-     <Compile Include="Assets\Scripts\SimplePlayerController.cs" />
+     <Compile Include="Assets\Scripts\Player\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArenaBorder.cs" />
      <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
-     <Compile Include="Assets\Scripts\World\ColorfulWorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\ColorfulWorldLayer.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\UI\Health\HeartAnimatorHelper.cs" />
      <Compile Include="Assets\Scripts\World\WorldBounds.cs" />
+     <Compile Include="Assets\Scripts\UI\Util\SimpleInitialisationInitiator.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SceneDecorations\ParallaxController.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu\CreateWorldMenu.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
+     <Compile Include="Assets\Scripts\UI\LoadingBars\LoadingBar.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
@@ -198,6 +202,7 @@
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
      <Compile Include="Assets\Scripts\Crafting\CraftingRecipe.cs" />
      <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Scripts\GameSettings\WorldSize.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArena.cs" />
      <Compile Include="Assets\Scripts\Health\HeartContainerExtensions.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\HumanHeart.cs" />
@@ -246,13 +251,13 @@
      <Compile Include="Assets\Scripts\GameSystem.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SceneDecorations\MainMenuBonFire.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\InventoryWindow.cs" />
-     <Compile Include="Assets\Scripts\World\WorldLayerType.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\WorldLayerType.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\HotbarKeyListener.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\PlacingKeyListener.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
      <Compile Include="Assets\Scripts\World\CavePolisher.cs" />
-     <Compile Include="Assets\Scripts\World\Sun.cs" />
+     <Compile Include="Assets\Scripts\Environments\Sun.cs" />
      <Compile Include="Assets\Scripts\Health\HeartType.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingComponent.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingWindow.cs" />
@@ -276,6 +281,7 @@
      <Compile Include="Assets\Scripts\UI\Windows\TemporaryDismissData.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\ShadowHeart.cs" />
      <Compile Include="Assets\Scripts\Health\HeartTypeSprites.cs" />
+     <Compile Include="Assets\Scripts\UI\Util\INeedsInitialisation.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletProperties.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\Heart.cs" />
@@ -960,6 +966,9 @@
      <Reference Include="Unity.2D.Psdimporter.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="UniTask.DOTween">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Runtime">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
@@ -981,6 +990,9 @@
      <Reference Include="Unity.2D.Tilemap.Extras.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="UniTask.Linq">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Linq.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.InternalAPIEditorBridge.001">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
      </Reference>
@@ -989,6 +1001,9 @@
      </Reference>
      <Reference Include="Unity.2D.IK.Runtime">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.TextMeshPro">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.TextMeshPro.dll</HintPath>
      </Reference>
      <Reference Include="Unity.ShaderGraph.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
@@ -1023,29 +1038,20 @@
      <Reference Include="Unity.2D.SpriteShape.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="UniTask">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.2D.Common.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.Addressables">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Addressables.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Editor">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="UniTask.TextMeshPro">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.TextMeshPro.dll</HintPath>
-     </Reference>
-     <Reference Include="UniTask.Addressables">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Addressables.dll</HintPath>
-     </Reference>
-     <Reference Include="UniTask.DOTween">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>
-     </Reference>
-     <Reference Include="UniTask.Linq">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Linq.dll</HintPath>
-     </Reference>
-     <Reference Include="UniTask">
-     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

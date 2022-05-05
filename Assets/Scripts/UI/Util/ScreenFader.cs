@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class ScreenFader : BaseWindow
 {
-    private static Action _continuation;
+    public static ScreenFader Instance { get; private set; }
+    
+    private Action _continuation;
 
-    public Animator animator;
+    public Animator _animator;
 
-    private static Animator _animator;
-    private static GameObject _gameObject;
     public override void Init()
     {
         base.Init();
-        _animator = animator;
-        _gameObject = gameObject;
+        Instance = this;
     }
 
     // Called as animation event inside the animator
@@ -25,23 +24,23 @@ public class ScreenFader : BaseWindow
     }
 
     // Called as animation event inside the animator
-    public void Disable() => _gameObject.SetActive(false);
+    public void Disable() => gameObject.SetActive(false);
 
-    public static void SetContinuation(Action whenAnimationEnds)
+    public void SetContinuation(Action whenAnimationEnds)
     {
         _continuation = whenAnimationEnds;
     }
 
-    public static void StartFade(float speed = 1f)
+    public void StartFade(float speed = 1f)
     {
-        _gameObject.SetActive(true);
+        gameObject.SetActive(true);
         _animator.speed = speed;
         _animator.Play("ScreenFaderStart");
     }
 
-    public static void StopFade(float speed = 1f)
+    public void StopFade(float speed = 1f)
     {
-        _gameObject.SetActive(true);
+        gameObject.SetActive(true);
         _animator.speed = speed;
         _animator.Play("ScreenFaderStop");    
     }

@@ -30,12 +30,12 @@ public class WaterCollider : MonoBehaviour
         PlayerController.Instance.Stop();
         _dismissData = new TemporaryDismissData().Add(toDismiss).HideAll();
 
-        ScreenFader.SetContinuation(() =>
+        ScreenFader.Instance.SetContinuation(() =>
         {
             TransferBack();
             _dismissData = _dismissData.ShowAll();
         });
-        ScreenFader.StartFade();
+        ScreenFader.Instance.StartFade();
     }
     
 
@@ -45,7 +45,7 @@ public class WaterCollider : MonoBehaviour
         PlayerManager.Instance.PlayerSpriteRenderer.enabled = true;
         PlayerController.Instance.transform.position = _startDashPosition;
         cameraController.UpdatePosition();
-        ScreenFader.StopFade();
+        ScreenFader.Instance.StopFade();
     }
     
     private IEnumerator StopDash(float dashDuration)

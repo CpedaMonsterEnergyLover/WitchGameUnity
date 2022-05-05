@@ -1,5 +1,8 @@
-﻿using DefaultNamespace;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using WorldScenes;
@@ -14,23 +17,18 @@ public class CreateWorldMenu : MonoBehaviour
     public CustomButtonLightSticker worldSizeLightSticker;
     public Button continueButton;
     public Text confirmRewriteText;
+    public EventSystem eventSystem;
 
     [Header("Loading bar")] 
     public BaseWorldScene sceneToLoad;
-    public SceneLoadingBar loadingBar;
+    public LoadingBar loadingBar;
+    public GameObject panelToDisable;
+    public List<string> loadingPhases;
 
-    public enum GameDifficulty
-    {
-        Easy,
-        Normal,
-        Hard
-    }
-    public enum WorldSize
-    {
-        Small,
-        Standart,
-        Huge
-    }
+    [Header("Screen fader")] 
+    public ScreenFader screenFader;
+
+
     private bool _needsConfirm;
 
 
@@ -54,57 +52,55 @@ public class CreateWorldMenu : MonoBehaviour
         {
             confirmRewriteText.gameObject.SetActive(true);
             if (_needsConfirm)
-                LoadNewWorldScene();
+            {
+                loadingBar.Activate(loadingPhases);
+                LoadNewWorldScene().Forget();
+            }
             _needsConfirm = true;
         }
         else
         {
-            LoadNewWorldScene();
+            loadingBar.Activate(loadingPhases);
+            LoadNewWorldScene().Forget();
         }
 
     }
     
-    private void LoadNewWorldScene()
+    private async UniTask LoadNewWorldScene()
     {
+        screenFader.Init();
+        eventSystem.enabled = false;
+        panelToDisable.SetActive(false);
         _needsConfirm = false;
-        loadingBar.Activate(6);
-        loadingBar.SetPhase("Очистка данных");
         GameDataManager.ClearAllData();
-        var scene = SceneManager.LoadSceneAsync(sceneToLoad.sceneName, LoadSceneMode.Additive);
-        scene.completed += AfterSceneLoading;
-    }
-
-    private WorldManager wm;
-    private GameSystem gs;
-    private bool _startFade;
-    
-    private void AfterSceneLoading(AsyncOperation ao)
-    {
-        wm = FindObjectOfType<WorldManager>(true);
-        gs = FindObjectOfType<GameSystem>(true);
+        await SceneManager.LoadSceneAsync(sceneToLoad.sceneName, LoadSceneMode.Additive);
+        WorldManager wm = WorldManager.Instance;
+        GameSystem gs = GameSystem.Instance;
+        Generator generator = Generator.Instance;
         gs.gameObject.SetActive(false);
         wm.gameObject.SetActive(false);
-        Generator generator = FindObjectOfType<Generator>(true);
         
-        
-        
-         generator.Generate(
+        await generator.Generate(
             new SelectedGeneratorSettings(
-                difficultyToggleGroup.value, 
-                worldSizeToggleGroup.value, 
-                seedInput.text, 
+                difficultyToggleGroup.value,
+                worldSizeToggleGroup.value,
+                seedInput.text,
                 seasonSliderController.Value),
-            loadingBar).GetAwaiter().OnCompleted(() =>
-         {
-            ScreenFader.SetContinuation(() =>
-            {
-                gs.gameObject.SetActive(true);
-                wm.gameObject.SetActive(true);
-                SceneManager.UnloadSceneAsync(2);
-            });
-            ScreenFader.StartFade();
-         });
+            loadingBar);
+        
+        ScreenFader.Instance.SetContinuation(() =>
+        {
+            loadingBar.Stop();
+            SceneManager.UnloadSceneAsync(2);
+            gs.gameObject.SetActive(true);
+            wm.gameObject.SetActive(true);
+        });
+
+        await UniTask.SwitchToMainThread();
+        await UniTask.DelayFrame(1);
+        ScreenFader.Instance.StartFade();
     }
 
-
 }
+
+

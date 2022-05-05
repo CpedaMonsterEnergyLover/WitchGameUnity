@@ -6,7 +6,7 @@ namespace DefaultNamespace
     {
         public GameCollection.Manager collectionManager;
         
-        private static GameSystem Instance;
+        public static GameSystem Instance { get; private set; }
 
         private void Awake()
         {

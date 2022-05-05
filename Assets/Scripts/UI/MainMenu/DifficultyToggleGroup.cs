@@ -1,4 +1,6 @@
-﻿public class DifficultyToggleGroup : CustomToggleGroup<CreateWorldMenu.GameDifficulty>
+﻿using GameSettings;
+
+public class DifficultyToggleGroup : CustomToggleGroup<Difficulty>
 {
     
 }
