@@ -139,7 +139,9 @@
      <Compile Include="Assets\Scripts\ReceiverColliders\IReceiver.cs" />
      <Compile Include="Assets\Scripts\Bosses\Boss.cs" />
      <Compile Include="Assets\Scripts\Entities\BrandNewEntity.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Grass.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip\InventoryTooltip.cs" />
+     <Compile Include="Assets\Scripts\Util\Enumerators\WaitForMinutesInGame.cs" />
      <Compile Include="Assets\Scripts\Health\HeartEffects\Effects\HeartEffect.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Items.cs" />
      <Compile Include="Assets\Scripts\GameData\PlayerData.cs" />
@@ -153,6 +155,7 @@
      <Compile Include="Assets\Scripts\GameCollection\WorldScenesCollection.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCycleManager.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Manager.cs" />
+     <Compile Include="Assets\Scripts\Interactable\Miscs\IInheritsWorldLayerColor.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\MainMenuSubScene.cs" />
      <Compile Include="Assets\Scripts\Interactable\CropBed.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\WorldSizeToggleGroup.cs" />
@@ -293,8 +296,6 @@
      <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectsController.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogElement.cs" />
      <Compile Include="Assets\Scripts\UI\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Miscs\IInheritsWorldLayerColor.cs" />
-     <Compile Include="Assets\Scripts\Interactable\Grass.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -1044,6 +1045,21 @@
      </Reference>
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.TextMeshPro">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.Addressables">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Addressables.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.DOTween">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.Linq">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Linq.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -14,11 +14,11 @@ public class WindowManager : MonoBehaviour
     private void Awake()
     {
         All = windows;
-        windows.ForEach(window =>
+        foreach (var window in windows)
         {
             Windows[window.Identifier] = window;
             window.Init();
-        });        
+        }
     }
 
     

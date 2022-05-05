@@ -43,7 +43,6 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\CaveGeneratorEditor.cs" />
      <Compile Include="Assets\Editor\HeartBarEditor.cs" />
-     <Compile Include="Assets\Editor\ScreenFaderEditor.cs" />
      <Compile Include="Assets\Editor\ShowOnlyDrawer.cs" />
      <Compile Include="Assets\Editor\GameSystemEditor.cs" />
      <Compile Include="Assets\Editor\BattleArenaEditor.cs" />
@@ -1069,6 +1068,21 @@
      </Reference>
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.TextMeshPro">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.Addressables">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Addressables.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.DOTween">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask.Linq">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.Linq.dll</HintPath>
+     </Reference>
+     <Reference Include="UniTask">
+     <HintPath>C:\Users\VovaC\UnityProjects\WitchGame\Library\ScriptAssemblies\UniTask.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

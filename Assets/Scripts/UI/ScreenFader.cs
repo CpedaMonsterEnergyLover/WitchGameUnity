@@ -4,62 +4,46 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenFader : MonoBehaviour
+public class ScreenFader : BaseWindow
 {
-    public static ScreenFader Instance;
+    private static Action _continuation;
 
-    private void Awake()
+    public Animator animator;
+
+    private static Animator _animator;
+    private static GameObject _gameObject;
+    public override void Init()
     {
-        Instance = this;
-        gameObject.SetActive(false);
+        base.Init();
+        _animator = animator;
+        _gameObject = gameObject;
     }
 
-    public Image img;
-    public float duration;
+    public void ContinueWhenAnimationEnds()
+    {
+        if (_continuation is null) return;
+        _continuation();
+        _continuation = null;
+    }
 
-    public void Instant(bool toBlack)
+    public void Disable() => _gameObject.SetActive(false);
+
+    public static void SetContinuation(Action whenAnimationEnds)
     {
-        img.color = new Color(0, 0, 0, toBlack ? 1 : 0);
-        gameObject.SetActive(true);
+        _continuation = whenAnimationEnds;
     }
-    
-    
-    
-    public async Task FadeScaled(bool toBlack)
+
+    public static void StartFade(float speed = 1f)
     {
-        if (Time.timeScale == 0)
-        {
-            Debug.Log("Time scale is 0");
-            return;
-        }
-        
-        gameObject.SetActive(true);
-        img.color = new Color(0, 0, 0, toBlack ? 0 : 1);
-        
-        float t = 0.0f;
-        while (t < duration)
-        {
-            float alpha = toBlack ? t / duration : 1 - t / duration;
-            img.color = new Color(0, 0, 0, alpha);
-            t += Time.deltaTime;
-            await Task.Delay((int)(Time.deltaTime * 1000));
-        }
-        if(!toBlack) gameObject.SetActive(false);
+        _gameObject.SetActive(true);
+        _animator.speed = speed;
+        _animator.Play("ScreenFaderStart");
     }
-    
-    public async Task FadeUnscaled(bool toBlack)
+
+    public static void StopFade(float speed = 1f)
     {
-        img.color = new Color(0, 0, 0, toBlack ? 0 : 1);
-        gameObject.SetActive(true);
-        float t = 0.0f;
-        while (t < duration)
-        {
-            float alpha = toBlack ? t / duration : 1 - t / duration;
-            img.color = new Color(0, 0, 0, alpha);
-            t += Time.unscaledDeltaTime;
-            await Task.Delay((int)(Time.unscaledDeltaTime * 1000));
-        }
-        if(!toBlack) gameObject.SetActive(false);
+        _animator.speed = speed;
+        _animator.Play("ScreenFaderStop");    
     }
 
 }

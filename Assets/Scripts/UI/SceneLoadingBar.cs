@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,7 +40,8 @@ public class SceneLoadingBar : MonoBehaviour
     }
 
 
-    private void UpdateName() => loadingText.text = _phaseName + _dots;
+    private void UpdateName() 
+        => loadingText.text = new StringBuilder().Append(_phaseName).Append(_dots).ToString();
 
     private void OnDisable()
     {

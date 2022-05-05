@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using DefaultNamespace;
 using UnityEngine;
@@ -88,6 +89,8 @@ public class CreateWorldMenu : MonoBehaviour
         wm.gameObject.SetActive(false);
         Generator generator = FindObjectOfType<Generator>(true);
         
+        
+        
          generator.Generate(
             new SelectedGeneratorSettings(
                 difficultyToggleGroup.value, 
@@ -96,12 +99,13 @@ public class CreateWorldMenu : MonoBehaviour
                 seasonSliderController.Value),
             loadingBar).GetAwaiter().OnCompleted(() =>
          {
-             ScreenFader.Instance.FadeUnscaled(true).GetAwaiter().OnCompleted(() =>
-             {
-                 gs.gameObject.SetActive(true);
-                 wm.gameObject.SetActive(true);
-                 SceneManager.UnloadSceneAsync(2);
-             });
+            ScreenFader.SetContinuation(() =>
+            {
+                gs.gameObject.SetActive(true);
+                wm.gameObject.SetActive(true);
+                SceneManager.UnloadSceneAsync(2);
+            });
+            ScreenFader.StartFade();
          });
     }
 

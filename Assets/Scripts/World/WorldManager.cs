@@ -66,7 +66,7 @@ public class WorldManager : MonoBehaviour
         GameDataManager.DeleteTemporaryData(worldScene);
         LoadData();
         SpawnPlayer();
-        ScreenFader.Instance.FadeScaled(false).GetAwaiter();
+        ScreenFader.StopFade();
         worldBounds.Init(WorldData);
     }
     

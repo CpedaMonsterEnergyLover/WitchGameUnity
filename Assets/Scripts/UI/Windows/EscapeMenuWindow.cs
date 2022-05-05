@@ -24,15 +24,16 @@ public class EscapeMenuWindow : BaseWindow
     {
         loadingBar.Activate(3);
         
-        ScreenFader.Instance.FadeUnscaled(true).GetAwaiter().OnCompleted(async () =>
+        ScreenFader.SetContinuation(async () =>
         {
             loadingBar.SetPhase("Сохранение");
             await GameDataManager.SaveAll(loadingBar);
             Time.timeScale = 1;
             _dismissData = _dismissData?.ShowAll();
             loadingBar.gameObject.SetActive(false);
-            await ScreenFader.Instance.FadeUnscaled(false);
+            ScreenFader.StopFade();
         });
+        ScreenFader.StartFade();
     }
 
 

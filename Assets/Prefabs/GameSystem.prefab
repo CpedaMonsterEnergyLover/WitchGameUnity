@@ -504,7 +504,7 @@ RectTransform:
   m_Children:
   - {fileID: 2101234050820348065}
   m_Father: {fileID: 3390853725835659955}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1287,9 +1287,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.17962962
-    width: 0.2541667
-    height: 0.25416666
+    y: 0.08981481
+    width: 0.12708335
+    height: 0.12708333
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -10058,6 +10058,7 @@ MonoBehaviour:
   - {fileID: 1467233496359143355}
   - {fileID: 3572148408015334110}
   - {fileID: 3315761526011431943}
+  - {fileID: 3390853725835659959}
 --- !u!223 &9176976990496980316
 Canvas:
   m_ObjectHideFlags: 0
@@ -41581,6 +41582,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8782366654038070351, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
   m_PrefabInstance: {fileID: 6264366959850315516}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3390853725835659959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8782366654038070347, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
+  m_PrefabInstance: {fileID: 6264366959850315516}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10820857ba5e4c3691f783639910cce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6739801036778998739
 PrefabInstance:
   m_ObjectHideFlags: 0
