@@ -8,11 +8,11 @@ public class WorldManager : MonoBehaviour
 {
     public static WorldManager Instance;
 
-    [SerializeField, Header("WorldScene")]
-    public WorldScenes.BaseWorldScene worldScene;
+    [SerializeField, Header("GameSystemPrefab")]
+    private GameObject gameSystemPrefab;
     
-    // [SerializeField, Header("Игрок")] 
-    public Transform playerTransform;
+    [Header("WorldScene")]
+    public WorldScenes.BaseWorldScene worldScene;
     
     [Header("Игровые настройки")]
     public PlayerSettings playerSettings;
@@ -42,11 +42,9 @@ public class WorldManager : MonoBehaviour
     
     private void Awake()
     {
-        playerTransform = FindObjectOfType<PlayerController>().transform;
         Application.targetFrameRate = playerSettings.targetFrameRate;
         EntityCache = new Cache<Entity>(playerSettings.entitiesCacheSize);
         Instance = this;
-        
     }
 
     public void UnloadAllEntities()
@@ -63,7 +61,6 @@ public class WorldManager : MonoBehaviour
     private void Start()
     {
         ScreenFader.Instance.PlayBlack();
-        Debug.Log("World Manager Start " + Time.realtimeSinceStartup);
         ClearAllTiles();
         ClearAllInteractable();
         GameDataManager.DeleteTemporaryData(worldScene);
@@ -75,11 +72,9 @@ public class WorldManager : MonoBehaviour
         await UniTask.NextFrame();
         await LoadData();
         ONWorldLoaded?.Invoke();
-        Debug.Log("WM Data loaded " + Time.realtimeSinceStartup);
         worldBounds.Init(WorldData);
-        SpawnPlayer();
-        await ScreenFader.Instance.StopFade(0.2f);
-
+        PlayerManager.Instance.Position = GetPlayerSpawn();
+        await ScreenFader.Instance.StopFade(0.5f);
     }
     
     private async UniTask LoadData()
@@ -127,16 +122,17 @@ public class WorldManager : MonoBehaviour
 
     
     
-    protected virtual void SpawnPlayer()
+    protected virtual Vector2 GetPlayerSpawn()
     {
-        var spawnPoint = WorldData.SpawnPoint;
+        Vector2 spawnPoint = WorldData.SpawnPoint;
 
         PlayerData playerData = PlayerManager.Instance.PlayerData;
         if (playerData is not null)
         {
             spawnPoint = playerData.Position;
         }
-        playerTransform.position = new Vector3(spawnPoint.x, spawnPoint.y, 0f);
+
+        return spawnPoint;
     }
     
     public void DrawAllTiles()

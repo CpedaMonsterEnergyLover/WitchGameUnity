@@ -22,6 +22,6 @@ public interface IUsable
             targetPosition = tile.Position + new Vector2(0.5f, 0.5f);
         }
 
-        return Vector2.Distance(WorldManager.Instance.playerTransform.position, targetPosition) <= 1.6f;
+        return Vector2.Distance(PlayerManager.Instance.Position, targetPosition) <= 1.6f;
     }
 }

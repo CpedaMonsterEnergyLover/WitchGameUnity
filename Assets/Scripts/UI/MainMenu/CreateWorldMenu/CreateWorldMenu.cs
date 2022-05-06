@@ -65,6 +65,7 @@ public class CreateWorldMenu : MonoBehaviour
         _needsConfirm = false;
         GameDataManager.ClearAllData();
         
+        WorldSettingsProvider.Clear();
         WorldSettingsProvider.SetSettings(new WorldSettings(
             difficultyToggleGroup.value,
             worldSizeToggleGroup.value,

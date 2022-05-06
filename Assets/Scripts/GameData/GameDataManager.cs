@@ -31,13 +31,15 @@ public class GameDataManager : MonoBehaviour
     public int CurrentSubWorldIndex { get; set; } = -1;
     
 
-    public static async Task SaveAll()
+    public static async UniTask SaveAll()
     {
-        await Task.Run(MergeAllWorldData);
+        await MergeAllWorldData();
         WorldManager.Instance.UnloadAllEntities();
+        Debug.Log("Unloaded entities");
         TileLoader.Instance.Reload();
-        SavePersistentWorldData(WorldManager.Instance.WorldData).Forget();
+        Debug.Log("Reloaded tile loader");
         SavePlayerData();
+        await SavePersistentWorldData(WorldManager.Instance.WorldData);
     }
 
     public static bool HasSavedOverWorld()
@@ -54,7 +56,7 @@ public class GameDataManager : MonoBehaviour
 
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
-        
+
         string json = JsonUtility.ToJson(data, true);
         await File.WriteAllTextAsync(dir + data.WorldScene.FileName, json);
     }
@@ -126,8 +128,9 @@ public class GameDataManager : MonoBehaviour
         return loadedData;
     }
     
-    private static void MergeAllWorldData()
+    private static async UniTask MergeAllWorldData()
     {
+        Debug.Log("Start merge");
         string dir = _tempDir;
 
         if (!Directory.Exists(dir))
@@ -168,11 +171,14 @@ public class GameDataManager : MonoBehaviour
                 persistentData.GetTile(tile.Position.x, tile.Position.y)
                     .MergeData(tile, false);
             }
+            
+            Debug.Log($"Merging {fileName}");
          
-            SavePersistentWorldData(persistentData).Forget();
+            await SavePersistentWorldData(persistentData);
         }
-        
-        
+        Debug.Log("Merge complete");
+
+        await UniTask.Yield();
     }
 
     public static void DeleteTemporaryData(BaseWorldScene worldScene)

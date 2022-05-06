@@ -51,7 +51,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private void DropItem(int amount)
     {
-        ItemEntity item = (ItemEntity) Entity.Create(new ItemEntitySaveData(storedItem, amount, WorldManager.Instance.playerTransform.position));
+        ItemEntity item = (ItemEntity) Entity.Create(new ItemEntitySaveData(storedItem, amount, PlayerManager.Instance.Position));
         item.isDroppedByPlayer = true;
         RemoveItem(amount);
     }

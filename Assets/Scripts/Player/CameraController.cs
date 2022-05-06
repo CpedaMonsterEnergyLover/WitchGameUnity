@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Camera mainCamera;
     public new static Camera camera;
-    private void Awake() => camera = GetComponent<Camera>();
+    private void Awake() => camera = mainCamera;
 
     public Transform playerTransform;
     public bool following;

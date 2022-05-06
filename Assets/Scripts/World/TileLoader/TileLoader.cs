@@ -46,6 +46,11 @@ public class TileLoader : MonoBehaviour
         WorldManager.ONWorldLoaded += ActivateAfterWorldLoad;
     }
 
+    private void OnDestroy()
+    {
+        WorldManager.ONWorldLoaded -= ActivateAfterWorldLoad;
+    }
+
     private void ActivateAfterWorldLoad()
     {
         enabled = true;

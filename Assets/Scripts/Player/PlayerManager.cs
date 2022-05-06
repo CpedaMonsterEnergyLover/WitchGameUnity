@@ -13,7 +13,15 @@ public class PlayerManager : MonoBehaviour
     
     public PlayerData PlayerData { get; private set; }
     public int Health { get; private set; }
-    public Vector3 Position => playerTransform.position;
+
+    public Vector2 Position
+    {
+        get => playerTransform.position;
+        set => playerTransform.position = value;
+    }
+
+    public Transform Transform => playerTransform;
+    public Vector3 Position3 => playerTransform.position;
     public Vector2Int TilePosition 
         => new(Mathf.FloorToInt(playerTransform.position.x),
                 Mathf.FloorToInt(playerTransform.position.y));
@@ -23,6 +31,8 @@ public class PlayerManager : MonoBehaviour
     public delegate void HeartAddEvent(Heart heart, int index);
     public delegate void HeartRemoveEvent(int index);
 
+    public void SetPosition(Vector2 position) => playerTransform.position = position;
+    
     private void Awake()
     {
         Instance = this;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using WorldScenes;
@@ -15,7 +16,12 @@ public class MainMenu : MonoBehaviour
 
     public void LoadSavedGame()
     {
-        SceneManager.LoadScene(sceneToLoad.sceneName);
+        async UniTask Load()
+        {
+            await ScreenFader.Instance.StartFade();
+            SceneManager.LoadScene(sceneToLoad.sceneName);
+        }   
+        Load().Forget();
     }
 
     public void ExitGame()

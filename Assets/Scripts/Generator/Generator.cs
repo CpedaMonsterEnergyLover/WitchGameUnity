@@ -63,15 +63,15 @@ public class Generator : MonoBehaviour
         Debug.Log($"Generating {worldScene.sceneName} with settings[{worldSettings}]");
         generatorSettings.width = worldSizes[(int)worldSettings.Size].x;
         generatorSettings.height = worldSizes[(int)worldSettings.Size].y;
-        generatorSettings.seed = worldSettings.Seed;
-        Random.InitState(Animator.StringToHash(generatorSettings.seed));
+        Random.InitState(Animator.StringToHash(worldSettings.Seed));
         gameObjectsCollection.Init();
         
         GetCardinalPoints();
         GenerateCardinalMap();
 
         await NextPhase();
-        WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
+        await UniTask.SwitchToMainThread();
+        WorldNoiseData worldNoiseData = WorldNoiseData.GenerateData(
             _cardinalMap,
             hasCardinality,
             generatorSettings, 

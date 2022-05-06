@@ -57,8 +57,8 @@ public class CaveManager : WorldManager
     }
 
 
-    protected override void SpawnPlayer()
+    protected override Vector2 GetPlayerSpawn()
     {
-        playerTransform.position = _caveEntrance;
+        return new Vector2(_caveEntrance.x, _caveEntrance.y);
     }
 }

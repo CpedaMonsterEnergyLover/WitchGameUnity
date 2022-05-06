@@ -11,8 +11,9 @@ public class MagicBook : Item, IUsable, IHasOwnInteractionTime, IUsableOnAnyTarg
 
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        var position = PlayerManager.Instance.Position + 
-                       (PlayerManager.Instance.Position - CameraController.camera.ScreenToWorldPoint(Input.mousePosition)).normalized * -0.3f;
+        var playerPos = PlayerManager.Instance.Position3;
+        var position = playerPos + 
+                       (playerPos - CameraController.camera.ScreenToWorldPoint(Input.mousePosition)).normalized * -0.3f;
         BulletSpawner.SingleBullet(Data.bullet, position);
     }
 

@@ -50,7 +50,7 @@ public abstract class Entity : MonoBehaviour, ICacheable
     
     protected virtual void Start()
     {
-        _playerTransform = WorldManager.playerTransform;
+        _playerTransform = PlayerManager.Instance.Transform;
         Load();
     }
 

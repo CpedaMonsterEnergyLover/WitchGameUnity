@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class InteractionDataProvider : MonoBehaviour
 {
     private static Camera _playerCamera;

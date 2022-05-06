@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class EscapeMenuWindow : BaseWindow
 {
-    public GameObject gameSystem;
     public SceneLoadingBar loadingBar;
-    
+    public GameObject panelToDisable;
     
     public List<Component> toDisable = new();
         
@@ -16,17 +15,22 @@ public class EscapeMenuWindow : BaseWindow
     public void LoadMainMenu()
     {
         Time.timeScale = 1;
-        var ao = SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadScene(2);
     }
 
-    public async UniTask SaveGame()
+    public void SaveGame()
     {
-        await ScreenFader.Instance.StartFade();
-        await GameDataManager.SaveAll();
-        Time.timeScale = 1;
-        _dismissData = _dismissData?.ShowAll();
-        loadingBar.gameObject.SetActive(false);
-        await ScreenFader.Instance.StopFade();
+        async UniTask Run()
+        {
+            panelToDisable.SetActive(false);
+            await ScreenFader.Instance.StartFade();
+            await GameDataManager.SaveAll();
+            _dismissData = _dismissData?.ShowAll();
+            Toggle();
+            panelToDisable.SetActive(true);
+            await ScreenFader.Instance.StopFade();
+        }
+        Run().Forget();
     }
 
 

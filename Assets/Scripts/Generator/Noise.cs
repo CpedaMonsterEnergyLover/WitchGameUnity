@@ -13,12 +13,11 @@ public static class Noise {
         Vector2 offset, bool hasCircleBounds) {
         
         float[,] noiseMap = new float[mapWidth,mapHeight];
-
-        System.Random prng = new System.Random (seed);
+        
         Vector2[] octaveOffsets = new Vector2[octaves];
         for (int i = 0; i < octaves; i++) {
-            float offsetX = prng.Next (-100000, 100000) + offset.x;
-            float offsetY = prng.Next (-100000, 100000) + offset.y;
+            float offsetX = Random.Range(-100000, 100001) + offset.x;
+            float offsetY = Random.Range(-100000, 100001) + offset.y;
             octaveOffsets [i] = new Vector2 (offsetX, offsetY);
         }
 
