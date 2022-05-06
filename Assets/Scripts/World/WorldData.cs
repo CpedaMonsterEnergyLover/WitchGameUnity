@@ -11,6 +11,7 @@ public class WorldData
     [SerializeField] private SerializeableQuadArray<WorldTile> worldTiles;
     [SerializeField] private Vector2 spawnPoint;
     [SerializeField] private int colorfulLayerIndex;
+    [SerializeField] private WorldSettings worldSettings; 
     public BaseWorldScene WorldScene => worldScene;
     public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
     public int MapWidth => worldTiles.Width;
@@ -22,6 +23,7 @@ public class WorldData
         set => spawnPoint = value;
     }
     public List<WorldTile> Changes => worldTiles.Items.Where(tile => tile.WasChanged).ToList();
+    public WorldSettings WorldSettings => worldSettings;
 
     public void Init()
     {
@@ -32,21 +34,21 @@ public class WorldData
     }
     
     public  WorldData(
-        int width, 
-        int height, 
+        GeneratorSettings generatorSettings,
         bool[][,] layers,
         InteractableData[,] biomeLayer, 
         BaseWorldScene worldScene,
         Color[,] colorLayer,
         int colorfulLayerIndex)
     {
+        worldSettings = WorldSettingsProvider.GetSettings();
         this.worldScene = worldScene;
         this.colorfulLayerIndex = colorfulLayerIndex;
-        worldTiles = new SerializeableQuadArray<WorldTile>(width, height);
+        worldTiles = new SerializeableQuadArray<WorldTile>(generatorSettings.width, generatorSettings.width);
         bool hasColor = colorLayer is not null;
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < generatorSettings.width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < generatorSettings.width; y++)
             {
                 bool[] tiles = new bool[layers.Length];
                 for (var i = 0; i < layers.Length; i++) 

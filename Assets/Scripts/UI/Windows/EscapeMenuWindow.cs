@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,20 +19,14 @@ public class EscapeMenuWindow : BaseWindow
         var ao = SceneManager.LoadSceneAsync(2);
     }
 
-    public void SaveGame()
+    public async UniTask SaveGame()
     {
-        loadingBar.Activate(3);
-        
-        ScreenFader.Instance.SetContinuation(async () =>
-        {
-            loadingBar.SetPhase("Сохранение");
-            await GameDataManager.SaveAll(loadingBar);
-            Time.timeScale = 1;
-            _dismissData = _dismissData?.ShowAll();
-            loadingBar.gameObject.SetActive(false);
-            ScreenFader.Instance.StopFade();
-        });
-        ScreenFader.Instance.StartFade();
+        await ScreenFader.Instance.StartFade();
+        await GameDataManager.SaveAll();
+        Time.timeScale = 1;
+        _dismissData = _dismissData?.ShowAll();
+        loadingBar.gameObject.SetActive(false);
+        await ScreenFader.Instance.StopFade();
     }
 
 

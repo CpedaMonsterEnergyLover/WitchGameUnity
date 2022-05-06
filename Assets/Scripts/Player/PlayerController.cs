@@ -1,6 +1,6 @@
-using System.Collections;
+using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour, ITemporaryDismissable
 {
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     private void Update()
     {
         UpdateMovementInput();
-        if (_isDashAllowed && Input.GetKeyDown(KeyCode.Space)) StartCoroutine(StartDash());
+        if (_isDashAllowed && Input.GetKeyDown(KeyCode.Space)) StartDash().Forget();
         Move(movementSpeed);
         LookDirectionToVelocity();
         UpdateLookDirection();
@@ -70,26 +70,26 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
         playerAnimationManager.AnimateMovement(MovementInput.sqrMagnitude);
     }
 
-    private IEnumerator StartDash()
+    private async UniTaskVoid StartDash()
     {
         // Phase 1: collider set-up
-        waterCollider.StartDash(dashDuration);
-        yield return new WaitForEndOfFrame();
+        waterCollider.StartDash(dashDuration).Forget();
+        await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
         // Phase 2: initial dash velocity vector set up
         rigidBody.velocity = rigidBody.velocity.normalized * dashSpeed;
         playerAnimationManager.StartDash();
         _isDashing = true;
         _isMoveAllowed = false;
         _isDashAllowed = false;
-        yield return new WaitForSeconds(0.1f);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
         // Phase 3: allow change dash velocity vector
         _isMoveAllowed = true;
-        yield return new WaitForSeconds(dashDuration - 0.1f);
+        await UniTask.Delay(TimeSpan.FromSeconds(dashDuration - 0.1f));
         // Phase 4: Stop dash
         _isDashing = false;
         rigidBody.velocity = Vector2.zero;
         playerAnimationManager.StopDash();
-        yield return new WaitForSeconds(0.16f);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.16f));
         // Phase 5: Allow dash again in delay
         _isDashAllowed = true;
     }

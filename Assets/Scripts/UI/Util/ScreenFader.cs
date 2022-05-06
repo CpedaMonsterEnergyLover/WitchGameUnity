@@ -1,48 +1,54 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class ScreenFader : BaseWindow
+public class ScreenFader : MonoBehaviour
 {
+    public bool blackOnStart;
     public static ScreenFader Instance { get; private set; }
     
     private Action _continuation;
 
     public Animator _animator;
 
-    public override void Init()
+    private void Awake()
     {
-        base.Init();
         Instance = this;
+        _animator.Play(blackOnStart ? "ScreenFaderBlack" : "ScreenFaderTransparent");
     }
 
-    // Called as animation event inside the animator
-    public void ContinueWhenAnimationEnds()
+
+    public void PlayBlack()
     {
-        if (_continuation is null) return;
-        _continuation();
-        _continuation = null;
+        _animator.Play("ScreenFaderBlack");
+    }
+    
+    public void PlayTransparent()
+    {
+        _animator.Play("ScreenFaderTransparent");
     }
 
-    // Called as animation event inside the animator
-    public void Disable() => gameObject.SetActive(false);
-
-    public void SetContinuation(Action whenAnimationEnds)
+    public async UniTask StartFade(float speed = 1f)
     {
-        _continuation = whenAnimationEnds;
-    }
-
-    public void StartFade(float speed = 1f)
-    {
-        gameObject.SetActive(true);
+        await UniTask.SwitchToMainThread();
+        await UniTask.NextFrame();
+        if (speed <= 0.1f) speed = 0.1f;
         _animator.speed = speed;
         _animator.Play("ScreenFaderStart");
+        await UniTask.Delay(TimeSpan.FromSeconds(1f / speed));
+        PlayBlack();
     }
 
-    public void StopFade(float speed = 1f)
+    public async UniTask StopFade(float speed = 1f)
     {
-        gameObject.SetActive(true);
+        await UniTask.SwitchToMainThread();
+        await UniTask.NextFrame();
+        if (speed <= 0.1f) speed = 0.1f;
         _animator.speed = speed;
-        _animator.Play("ScreenFaderStop");    
+        _animator.Play("ScreenFaderStop");
+        await UniTask.Delay(TimeSpan.FromSeconds(1f / speed));
+        Debug.Log("Fade stopped " + Time.realtimeSinceStartup);
+        PlayTransparent();
     }
 
 }

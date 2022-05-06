@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class CaveManager : WorldManager
@@ -12,7 +13,8 @@ public class CaveManager : WorldManager
 
     private Vector3Int _caveEntrance;
     
-    public override async Task GenerateWorld()
+    // TODO something with this
+    public /*override*/ async UniTaskVoid GenerateWorld()
     {
         gameCollectionManager.Init();
         WorldData = generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();

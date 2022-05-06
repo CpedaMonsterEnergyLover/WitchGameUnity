@@ -17,7 +17,6 @@ public class CreateWorldMenu : MonoBehaviour
     public CustomButtonLightSticker worldSizeLightSticker;
     public Button continueButton;
     public Text confirmRewriteText;
-    public EventSystem eventSystem;
 
     [Header("Loading bar")] 
     public BaseWorldScene sceneToLoad;
@@ -49,56 +48,31 @@ public class CreateWorldMenu : MonoBehaviour
     public void OnCreateWorldClicked()
     {
         if (GameDataManager.HasSavedOverWorld())
-        {
-            confirmRewriteText.gameObject.SetActive(true);
-            if (_needsConfirm)
+            if (!_needsConfirm)
             {
-                loadingBar.Activate(loadingPhases);
-                LoadNewWorldScene().Forget();
+                confirmRewriteText.gameObject.SetActive(true);
+                _needsConfirm = true;
             }
-            _needsConfirm = true;
-        }
+            else
+                LoadNewWorldScene().Forget();
         else
-        {
-            loadingBar.Activate(loadingPhases);
             LoadNewWorldScene().Forget();
-        }
-
     }
     
     private async UniTask LoadNewWorldScene()
     {
-        screenFader.Init();
-        eventSystem.enabled = false;
-        panelToDisable.SetActive(false);
+        screenFader.PlayTransparent();
         _needsConfirm = false;
         GameDataManager.ClearAllData();
-        await SceneManager.LoadSceneAsync(sceneToLoad.sceneName, LoadSceneMode.Additive);
-        WorldManager wm = WorldManager.Instance;
-        GameSystem gs = GameSystem.Instance;
-        Generator generator = Generator.Instance;
-        gs.gameObject.SetActive(false);
-        wm.gameObject.SetActive(false);
         
-        await generator.Generate(
-            new SelectedGeneratorSettings(
-                difficultyToggleGroup.value,
-                worldSizeToggleGroup.value,
-                seedInput.text,
-                seasonSliderController.Value),
-            loadingBar);
+        WorldSettingsProvider.SetSettings(new WorldSettings(
+            difficultyToggleGroup.value,
+            worldSizeToggleGroup.value,
+            seedInput.text,
+            seasonSliderController.Value));
         
-        ScreenFader.Instance.SetContinuation(() =>
-        {
-            loadingBar.Stop();
-            SceneManager.UnloadSceneAsync(2);
-            gs.gameObject.SetActive(true);
-            wm.gameObject.SetActive(true);
-        });
-
-        await UniTask.SwitchToMainThread();
-        await UniTask.DelayFrame(1);
-        ScreenFader.Instance.StartFade();
+        await screenFader.StartFade(0.5f);
+        SceneManager.LoadScene(sceneToLoad.sceneName, LoadSceneMode.Single);
     }
 
 }

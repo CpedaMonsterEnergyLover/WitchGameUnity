@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using TileLoading;
 using UnityEngine;
@@ -35,6 +35,9 @@ public class WorldManager : MonoBehaviour
     private List<Entity> Entities { get; } = new();
     private Cache<Entity> EntityCache { get; set; }
 
+
+    public delegate void WorldLoadingEvent();
+    public static event WorldLoadingEvent ONWorldLoaded;
     
     
     private void Awake()
@@ -59,28 +62,40 @@ public class WorldManager : MonoBehaviour
  
     private void Start()
     {
+        ScreenFader.Instance.PlayBlack();
+        Debug.Log("World Manager Start " + Time.realtimeSinceStartup);
         ClearAllTiles();
         ClearAllInteractable();
         GameDataManager.DeleteTemporaryData(worldScene);
-        LoadData();
-        SpawnPlayer();
-        // ScreenFader.StopFade();
+        PostStart().Forget();
+    }
+
+    private async UniTask PostStart()
+    {
+        await UniTask.NextFrame();
+        await LoadData();
+        ONWorldLoaded?.Invoke();
+        Debug.Log("WM Data loaded " + Time.realtimeSinceStartup);
         worldBounds.Init(WorldData);
+        SpawnPlayer();
+        await ScreenFader.Instance.StopFade(0.2f);
+
     }
     
-    private void LoadData()
+    private async UniTask LoadData()
     {
         var loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
+        
+        if (generator.GeneratedData is not null && loadedData is null) loadedData = generator.GeneratedData;
+        Destroy(generator.gameObject);
 
         // Если файла мира еще нет, генерирует его
         if (loadedData is null)
         {
-            Debug.Log($"Generating world {worldScene.sceneName}");
             GameDataManager.DeleteTemporaryData(worldScene);
-            WorldData = TestGenerateWorld();
-            GameDataManager.SavePersistentWorldData(WorldData);
+            if (Application.isEditor) Instance = this;
+            WorldData = await generator.GenerateWorldData(layers, worldScene);
         }
-        
         // Если он уже есть
         else
         {
@@ -100,11 +115,15 @@ public class WorldManager : MonoBehaviour
             }
 
             WorldData = loadedData;
+            WorldSettingsProvider.SetSettings(WorldData.WorldSettings);
         }
         
     }
- 
 
+    public async UniTaskVoid GenerateFromEditor()
+    {
+        WorldData = await generator.GenerateWorldData(layers, worldScene);
+    }
 
     
     
@@ -119,27 +138,7 @@ public class WorldManager : MonoBehaviour
         }
         playerTransform.position = new Vector3(spawnPoint.x, spawnPoint.y, 0f);
     }
-
-    private WorldData TestGenerateWorld()
-    {
-        if (Application.isEditor)
-        {
-            gameCollectionManager.Init();
-            Instance = this;
-        }
-        return generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
-    }
     
-    public virtual async Task GenerateWorld()
-    {
-        if (Application.isEditor)
-        {
-            gameCollectionManager.Init();
-            Instance = this;
-        }
-        WorldData = await generator.GenerateWorldData(layers, worldScene);
-    }
-
     public void DrawAllTiles()
     {
         for (int x = 0; x < WorldData.MapWidth; x++)

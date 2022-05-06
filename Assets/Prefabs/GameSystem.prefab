@@ -1265,7 +1265,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1467233496859208589}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1467233495152162106
 Camera:
@@ -1287,9 +1287,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.08981481
-    width: 0.12708335
-    height: 0.12708333
+    y: 0.15555555
+    width: 0.2541667
+    height: 0.25416666
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -1892,8 +1892,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2160264783586454981}
   - {fileID: 1467233495152162107}
+  - {fileID: 2160264783586454981}
   - {fileID: 1467233495831755674}
   - {fileID: 1467233495085402862}
   - {fileID: 8495264225470417413}
@@ -1917,6 +1917,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionManager: {fileID: 1467233495831755673}
+  toDisableWhileLoading:
+  - {fileID: 5309472240249225851}
+  - {fileID: 1467233495085402861}
 --- !u!1 &1484718446326489998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4241,7 +4244,7 @@ Transform:
   - {fileID: 7805708638228221813}
   - {fileID: 757076723465342479}
   m_Father: {fileID: 1467233496859208589}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &98553401670222334
 MonoBehaviour:
@@ -4260,6 +4263,7 @@ MonoBehaviour:
   waterCollider: {fileID: 5732706123779164864}
   dashSpeed: 9
   dashDuration: 0.3
+  dashRotationSpeed: 0
   playerAnimationManager: {fileID: 2256123933184167582}
   lookDirection: 1
 --- !u!114 &1428787728477660932
@@ -10057,7 +10061,6 @@ MonoBehaviour:
   - {fileID: 1467233496359143355}
   - {fileID: 3572148408015334110}
   - {fileID: 3315761526011431943}
-  - {fileID: 3390853725835659959}
 --- !u!223 &9176976990496980316
 Canvas:
   m_ObjectHideFlags: 0
@@ -41376,6 +41379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenFader
       objectReference: {fileID: 0}
+    - target: {fileID: 8782366654038070347, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
+      propertyPath: blackOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8782366654038070350, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
       propertyPath: m_Camera
       value: 
@@ -41471,17 +41478,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8782366654038070351, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
   m_PrefabInstance: {fileID: 6264366959850315516}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3390853725835659959 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8782366654038070347, guid: be426ba1ad0f00a488060ba2603a2242, type: 3}
-  m_PrefabInstance: {fileID: 6264366959850315516}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10820857ba5e4c3691f783639910cce1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6739801036778998739
 PrefabInstance:
   m_ObjectHideFlags: 0

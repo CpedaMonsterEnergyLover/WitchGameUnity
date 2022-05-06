@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using WorldScenes;
 
@@ -30,16 +31,13 @@ public class GameDataManager : MonoBehaviour
     public int CurrentSubWorldIndex { get; set; } = -1;
     
 
-    public static async Task SaveAll(SceneLoadingBar bar)
+    public static async Task SaveAll()
     {
         await Task.Run(MergeAllWorldData);
-        if(bar is not null) bar.SetPhase("Сбор сущностей");
         WorldManager.Instance.UnloadAllEntities();
         TileLoader.Instance.Reload();
-        SavePersistentWorldData(WorldManager.Instance.WorldData);
+        SavePersistentWorldData(WorldManager.Instance.WorldData).Forget();
         SavePlayerData();
-        if(bar is not null) bar.SetPhase("Сохранение завершено!");
-        await Task.Delay(500);
     }
 
     public static bool HasSavedOverWorld()
@@ -50,15 +48,15 @@ public class GameDataManager : MonoBehaviour
     }
     
     
-    public static void SavePersistentWorldData(WorldData data)
+    public static async UniTask SavePersistentWorldData(WorldData data)
     {
         string dir = _persDir;
 
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
-
+        
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(dir + data.WorldScene.FileName, json);
+        await File.WriteAllTextAsync(dir + data.WorldScene.FileName, json);
     }
 
     private static void SavePlayerData()
@@ -103,7 +101,6 @@ public class GameDataManager : MonoBehaviour
 
     public static void SaveTemporaryWorldData()
     {
-        // Save data into file
         string dir = _tempDir;
 
         if (!Directory.Exists(dir))
@@ -131,7 +128,6 @@ public class GameDataManager : MonoBehaviour
     
     private static void MergeAllWorldData()
     {
-        // Get all Worldscenes/Temporary/... files, iterate over them
         string dir = _tempDir;
 
         if (!Directory.Exists(dir))
@@ -173,7 +169,7 @@ public class GameDataManager : MonoBehaviour
                     .MergeData(tile, false);
             }
          
-            SavePersistentWorldData(persistentData);
+            SavePersistentWorldData(persistentData).Forget();
         }
         
         

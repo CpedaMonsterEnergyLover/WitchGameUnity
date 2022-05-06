@@ -38,24 +38,30 @@ public class TileLoader : MonoBehaviour
 
     private void Start()
     {
-        
-        playerTransform = FindObjectOfType<PlayerController>().transform;
+        playerTransform = PlayerController.Instance.transform;
         _worldManager = WorldManager.Instance;
+
+        enabled = false;
+
+        WorldManager.ONWorldLoaded += ActivateAfterWorldLoad;
+    }
+
+    private void ActivateAfterWorldLoad()
+    {
+        enabled = true;
         _worldData = _worldManager.WorldData;
         TileCache = new Cache<WorldTile>(WorldManager.Instance.playerSettings.tileCacheSize);
 
         if (_worldData is null)
-        {
-            Debug.LogError("TileLoader активен, но мир не сгенерирован");
-            return;
-        }
+            throw new Exception("TileLoader активен, но мир не сгенерирован");
 
-        // Если мод стоит только на конроль прогрузки объектов, рисует весь мир полностью на старте
         if (mode is TileLoadingMode.OnlyInteractables) _worldManager.DrawAllTiles();
     }
 
     private void FixedUpdate()
     {
+        // TODO: 
+        if(_worldData is null) return;
         // Прогрузка тайлов вокруг игрока
         var playerPosition = Vector3Int.FloorToInt(playerTransform.position);
         for (var x = -viewRangeX; x <= viewRangeX; x++)

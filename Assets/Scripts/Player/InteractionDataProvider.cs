@@ -6,13 +6,15 @@ public class InteractionDataProvider : MonoBehaviour
 {
     private static Camera _playerCamera;
     private static int _layerMask;
+    
+    // Do not cache because loading another scene would not replace it
     private static WorldManager WorldManager => WorldManager.Instance;
 
     public static InteractionEventData Data { get; private set;  }
 
     private void Start()
     {
-        _playerCamera = GetComponent<Camera>();
+        _playerCamera = CameraController.camera;
         _layerMask = LayerMask.GetMask("InteractionCollider");
     }
 
@@ -40,7 +42,7 @@ public class InteractionDataProvider : MonoBehaviour
 
         // Gets tile under cursor
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
-        WorldTile tile = WorldManager.WorldData.GetTile(gridPos.x, gridPos.y);
+        WorldTile tile = WorldManager.WorldData?.GetTile(gridPos.x, gridPos.y);
 
         // Debug.Log($"entity: {entity?.name}, interactable: {interactable?.name}, tile: {tile?.Position}");
         

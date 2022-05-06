@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class WaterCollider : MonoBehaviour
@@ -14,57 +16,57 @@ public class WaterCollider : MonoBehaviour
 
     private void SetActive(bool isActive) => collider2D.enabled = isActive;
 
-    public void StartDash(float dashDuration)
+    public async UniTaskVoid StartDash(float dashDuration)
     {
         _startDashPosition = transform.position;
         SetActive(false);
-        StartCoroutine(StopDash(dashDuration));
+        await StopDash(dashDuration);
     }
 
-    private void DashEndedUpInVoid() { }
+    private async UniTask DashEndedUpInVoid()
+    {
+        await UniTask.Yield(); 
+    }
     
-    private void DashEndedUpInWater()
+    private async UniTask DashEndedUpInWater()
     {
         waterDropsParticleSystem.Play();
         PlayerManager.Instance.PlayerSpriteRenderer.enabled = false;
         PlayerController.Instance.Stop();
         _dismissData = new TemporaryDismissData().Add(toDismiss).HideAll();
 
-        ScreenFader.Instance.SetContinuation(() =>
-        {
-            TransferBack();
-            _dismissData = _dismissData.ShowAll();
-        });
-        ScreenFader.Instance.StartFade();
+        await ScreenFader.Instance.StartFade();
+        await TransferBack();
+        _dismissData = _dismissData.ShowAll();
     }
     
 
     
-    private void TransferBack()
+    private async UniTask TransferBack()
     {
         PlayerManager.Instance.PlayerSpriteRenderer.enabled = true;
         PlayerController.Instance.transform.position = _startDashPosition;
         cameraController.UpdatePosition();
-        ScreenFader.Instance.StopFade();
+        await ScreenFader.Instance.StopFade();
     }
     
-    private IEnumerator StopDash(float dashDuration)
+    private async UniTask StopDash(float dashDuration)
     {
-        yield return new WaitForSeconds(dashDuration);
+        await UniTask.Delay(TimeSpan.FromSeconds(dashDuration));
         SetActive(true);
-        yield return new WaitForSeconds(0.15f);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.15f));
         var playerTile = PlayerManager.Instance.TilePosition;
         if (WorldManager.Instance.TryGetTopLayer(
             WorldManager.Instance.WorldData.GetTile(playerTile.x, playerTile.y), out WorldLayer worldLayer))
         {
             if (worldLayer.layerType == WorldLayerType.Water)
             {
-                DashEndedUpInWater();
+                await DashEndedUpInWater();
             }
         } 
         // Fall in void
         else {
-            DashEndedUpInVoid();
+            await DashEndedUpInVoid();
         }
     }
 }

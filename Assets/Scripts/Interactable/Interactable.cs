@@ -95,7 +95,6 @@ public class Interactable : MonoBehaviour
 
     public virtual void Kill()
     {
-        Debug.Log($"Kill interactable at {tile.Position}");
         tile.SetInteractable(null);
     }
     

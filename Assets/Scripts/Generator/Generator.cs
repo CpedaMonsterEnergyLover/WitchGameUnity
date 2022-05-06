@@ -45,38 +45,32 @@ public class Generator : MonoBehaviour
     private WorldNoiseData _noiseData;
     private float[] _cardinalMap;
     private LoadingBar _bar;
-
     
-    public void Init(string seed)
-    {
-        Random.InitState(Animator.StringToHash(seed));
-        gameObjectsCollection.Init();
-    }
+    public WorldData GeneratedData { get; private set; }
 
-    public async UniTask Generate(SelectedGeneratorSettings newSettings, LoadingBar loadingBar)
-    {
-        _bar = loadingBar;
-        generatorSettings.width = worldSizes[(int)newSettings.size].x;
-        generatorSettings.height = worldSizes[(int)newSettings.size].y;
-        generatorSettings.seed = newSettings.seed;
 
-        var generationTask = GenerateWorldData(worldManager.layers, worldManager.worldScene);
-        WorldData data = await generationTask;
-        
+
+    protected async UniTask NextPhase()
+    {
+        if(_bar is null) return;
         _bar.NextPhase();
-        await UniTask.Delay(250);
-        GameDataManager.SavePersistentWorldData(data);
-        Destroy(gameObject);
+        await UniTask.DelayFrame(30);
     }
-
+    
     public async UniTask<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
-    { 
-        Init(generatorSettings.seed);
+    {
+        WorldSettings worldSettings = WorldSettingsProvider.GetSettings(generatorSettings.seed);
+        Debug.Log($"Generating {worldScene.sceneName} with settings[{worldSettings}]");
+        generatorSettings.width = worldSizes[(int)worldSettings.Size].x;
+        generatorSettings.height = worldSizes[(int)worldSettings.Size].y;
+        generatorSettings.seed = worldSettings.Seed;
+        Random.InitState(Animator.StringToHash(generatorSettings.seed));
+        gameObjectsCollection.Init();
+        
         GetCardinalPoints();
         GenerateCardinalMap();
 
-        _bar.NextPhase();
-        await UniTask.Delay(250);        
+        await NextPhase();
         WorldNoiseData worldNoiseData = await WorldNoiseData.GenerateData(
             _cardinalMap,
             hasCardinality,
@@ -86,8 +80,7 @@ public class Generator : MonoBehaviour
             secondaryMapNoiseSettings, 
             additionalMapNoiseSettings);
         
-        _bar.NextPhase();
-        await UniTask.Delay(250);
+        await NextPhase();
         ColorfulWorldLayer colorLayer = null;
         bool[][,] layerData = new bool[layers.Count][,];
         await UniTask.RunOnThreadPool(async () =>
@@ -100,8 +93,7 @@ public class Generator : MonoBehaviour
             }
         });
         
-        _bar.NextPhase();
-        await UniTask.Delay(250);
+        await NextPhase();
         InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
         if (biomes is not null)
         {
@@ -112,10 +104,8 @@ public class Generator : MonoBehaviour
         Color[,] colorData = colorLayer is null ? null :
             colorLayer.GetColors(generatorSettings, worldNoiseData);
         
-        
         WorldData worldData = new WorldData(
-            generatorSettings.width,
-            generatorSettings.height,
+            generatorSettings,
             layerData,
             biomeLayer,
             worldScene,
@@ -123,11 +113,11 @@ public class Generator : MonoBehaviour
             colorLayer is null ? -1 : colorLayer.index
             );
         
-        _bar.NextPhase();
-        await UniTask.Delay(250);
+        await NextPhase();
         PlaceHouse(worldData);
         
-        if(Application.isPlaying) GameDataManager.SavePersistentWorldData(worldData);
+        await NextPhase();
+        if(Application.isPlaying) await GameDataManager.SavePersistentWorldData(worldData);
         
         return worldData;
     }

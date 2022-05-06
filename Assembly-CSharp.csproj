@@ -45,7 +45,7 @@
      <Compile Include="Assets\Scripts\Dialogs\DialogMember.cs" />
      <Compile Include="Assets\Scripts\Interactable\House.cs" />
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
-     <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu\SelectedGeneratorSettings.cs" />
+     <Compile Include="Assets\Scripts\GameData\WorldSettings.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
      <Compile Include="Assets\Scripts\World\TileLoader\Cache.cs" />
@@ -213,6 +213,7 @@
      <Compile Include="Assets\Scripts\Items\Interfaces\IConsumable.cs" />
      <Compile Include="Assets\Scripts\UI\Dialogs\DialogWindow.cs" />
      <Compile Include="Assets\Scripts\Generator\Noise.cs" />
+     <Compile Include="Assets\Scripts\GameData\WorldSettingsProvider.cs" />
      <Compile Include="Assets\Scripts\GameData\InventoryData.cs" />
      <Compile Include="Assets\Scripts\Generator\TilemapGenerationRule.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityIdentifier.cs" />
