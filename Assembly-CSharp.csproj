@@ -289,6 +289,11 @@
      <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectsController.cs" />
      <Compile Include="Assets\Scripts\Dialogs\DialogElement.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractionBar.cs" />
+     <Compile Include="Assets\Scripts\Player\ToolHolder\ToolHolder.cs" />
+     <Compile Include="Assets\Scripts\Items\Interfaces\IToolHolderFullSprite.cs" />
+     <Compile Include="Assets\Scripts\Items\Items\MeleeWeapon.cs" />
+     <Compile Include="Assets\Scripts\Items\Data\MeleeWeaponData.cs" />
+     <Compile Include="Assets\Scripts\Items\MeleeWeaponType.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

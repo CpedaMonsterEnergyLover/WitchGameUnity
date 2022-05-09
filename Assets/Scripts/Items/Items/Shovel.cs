@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Shovel : Instrument
+public class Shovel : Instrument, IToolHolderFullSprite
 {
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

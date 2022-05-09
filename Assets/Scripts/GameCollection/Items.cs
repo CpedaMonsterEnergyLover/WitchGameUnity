@@ -5,7 +5,7 @@ namespace GameCollection
 {
     public class Items : MonoBehaviour
     {
-        public List<ItemData> objects;
+        public List<ItemData> objects = new ();
 
         private static readonly Dictionary<string, ItemData> Collection = new();
 

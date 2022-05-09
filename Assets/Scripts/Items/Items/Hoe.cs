@@ -1,4 +1,4 @@
-public class Hoe : Instrument
+public class Hoe : Instrument, IToolHolderFullSprite
 {
     public override void Use(ItemSlot slot,Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

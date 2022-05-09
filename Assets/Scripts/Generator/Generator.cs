@@ -57,12 +57,12 @@ public class Generator : MonoBehaviour
         await UniTask.DelayFrame(30);
     }
     
-    public async UniTask<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene)
+    public async UniTask<WorldData> GenerateWorldData(List<WorldLayer> layers, BaseWorldScene worldScene, bool fromEditor = false)
     {
         WorldSettings worldSettings = WorldSettingsProvider.GetSettings(generatorSettings.seed);
         Debug.Log($"Generating {worldScene.sceneName} with settings[{worldSettings}]");
-        generatorSettings.width = worldSizes[(int)worldSettings.Size].x;
-        generatorSettings.height = worldSizes[(int)worldSettings.Size].y;
+        generatorSettings.width = fromEditor ? generatorSettings.width : worldSizes[(int)worldSettings.Size].x;
+        generatorSettings.height = fromEditor ? generatorSettings.height : worldSizes[(int)worldSettings.Size].y;
         Random.InitState(Animator.StringToHash(worldSettings.Seed));
         gameObjectsCollection.Init();
         

@@ -115,9 +115,10 @@ public class WorldManager : MonoBehaviour
         
     }
 
-    public async UniTaskVoid GenerateFromEditor()
+    public async UniTask GenerateFromEditor()
     {
-        WorldData = await generator.GenerateWorldData(layers, worldScene);
+        Instance = this;
+        WorldData = await generator.GenerateWorldData(layers, worldScene, true);
     }
 
     

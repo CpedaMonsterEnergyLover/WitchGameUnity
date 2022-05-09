@@ -2600,6 +2600,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 691acf45d25faec43a593dae7e90f338, type: 2}
   - {fileID: 11400000, guid: 447c1c6311b1a594ba0e65d38325795c, type: 2}
   - {fileID: 11400000, guid: 28ec084afd1e9d940925ea4ff0fcf17e, type: 2}
+  - {fileID: 11400000, guid: e9122d48e7e3417429c34742e0a0dd0c, type: 2}
 --- !u!1 &4201173695396718836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2748,9 +2749,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.17962962
-    width: 0.2541667
-    height: 0.25416666
+    y: 0.13981481
+    width: 0.33489585
+    height: 0.33489582
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -5046,6 +5047,9 @@ MonoBehaviour:
     amount: 1
     havingAmount: 0
   - item: {fileID: 11400000, guid: 28ec084afd1e9d940925ea4ff0fcf17e, type: 2}
+    amount: 1
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: e9122d48e7e3417429c34742e0a0dd0c, type: 2}
     amount: 1
     havingAmount: 0
   slotPrefab: {fileID: 8835642265728589268, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}
@@ -7865,6 +7869,7 @@ GameObject:
   - component: {fileID: 8360372881726588196}
   - component: {fileID: 2732359916792901024}
   - component: {fileID: 7950506876520711869}
+  - component: {fileID: 5696319056971983017}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -8098,6 +8103,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 2732359916792901024}
+--- !u!210 &5696319056971983017
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7475466305816460848}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &7534658180399162496
 GameObject:
   m_ObjectHideFlags: 0

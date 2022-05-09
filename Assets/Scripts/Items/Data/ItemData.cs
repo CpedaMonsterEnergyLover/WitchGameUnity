@@ -25,5 +25,6 @@ public enum ItemType
     Seed,
     Burnable,
     FireStarter,
-    MagicBook
+    MagicBook,
+    MeleeWeapon
 }

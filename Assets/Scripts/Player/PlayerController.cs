@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     }
 
     #endregion
-    
-    
+
+    public GameObject toolHolderGO;
     public float movementSpeed;
     public Rigidbody2D rigidBody;
     public WaterCollider waterCollider;
@@ -29,16 +29,25 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     public Vector2 MovementInput { get; private set; }
     public int lookDirection = 1;
     
-    private bool _isDashing;
+    public bool IsDashing { get; private set; }
     private bool _isDashAllowed = true;
     private bool _isMoveAllowed = true;
 
+
+    private bool CanDash()
+    {
+        return _isDashAllowed &&
+               !ToolHolder.Instance.InUse;
+    }
+    
+    
     private void Update()
     {
         UpdateMovementInput();
-        if (_isDashAllowed && Input.GetKeyDown(KeyCode.Space)) StartDash().Forget();
+        if (Input.GetKeyDown(KeyCode.Space) && CanDash()) StartDash().Forget();
         Move(movementSpeed);
-        LookDirectionToVelocity();
+        if(ToolHolder.Instance.UseStarted) LookDirectionToMouse();
+        else LookDirectionToVelocity();
         UpdateLookDirection();
     }
 
@@ -46,10 +55,10 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     {
         rigidBody.velocity = Vector2.zero;
         playerAnimationManager.AnimateMovement(0);
-        if (_isDashing)
+        if (IsDashing)
         {
             StopAllCoroutines();
-            _isDashing = false;
+            IsDashing = false;
             _isMoveAllowed = true;
             _isDashAllowed = true;
         }
@@ -58,27 +67,30 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     private void Move(float speed)
     {
         if(!_isMoveAllowed) return;
-        if (_isDashing)
+        if (IsDashing)
         {
             Vector2 newVelocity = (rigidBody.velocity + MovementInput).normalized * dashSpeed;
             rigidBody.velocity = newVelocity;
         }
         else
         {
-            rigidBody.velocity = MovementInput.normalized * speed;
+            rigidBody.velocity = MovementInput.normalized * speed * (IsLookingToVelocity() ?  1: 0.5f);
         }
         playerAnimationManager.AnimateMovement(MovementInput.sqrMagnitude);
     }
 
     private async UniTaskVoid StartDash()
     {
+        TemporaryDismissData dismissData = new TemporaryDismissData()
+            .Add(ItemPicker.Instance)
+            .Add(ToolHolder.Instance).HideAll();
         // Phase 1: collider set-up
         waterCollider.StartDash(dashDuration).Forget();
         await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
         // Phase 2: initial dash velocity vector set up
         rigidBody.velocity = rigidBody.velocity.normalized * dashSpeed;
         playerAnimationManager.StartDash();
-        _isDashing = true;
+        IsDashing = true;
         _isMoveAllowed = false;
         _isDashAllowed = false;
         await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
@@ -86,9 +98,10 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
         _isMoveAllowed = true;
         await UniTask.Delay(TimeSpan.FromSeconds(dashDuration - 0.1f));
         // Phase 4: Stop dash
-        _isDashing = false;
+        IsDashing = false;
         rigidBody.velocity = Vector2.zero;
         playerAnimationManager.StopDash();
+        dismissData.ShowAll();
         await UniTask.Delay(TimeSpan.FromSeconds(0.16f));
         // Phase 5: Allow dash again in delay
         _isDashAllowed = true;
@@ -112,7 +125,7 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     }
 
 
-    private bool IsLookingToVelocityDirection()
+    private bool IsLookingToVelocity()
     {
         return lookDirection != (int) MovementInput.x;
     }
