@@ -92,7 +92,6 @@ public class DialogWindow : BaseWindow
         yield return new WaitForSecondsRealtime(1f);
         _keyListenerRoutine = StartCoroutine(KeyListenerRoutine());
         PlayElement(_dialogTree.elements[0]);
-        Debug.Log("Play dialog");
     }
 
     private void EndDialog()

@@ -1,4 +1,6 @@
-﻿public class MeleeWeapon : Item, IUsable, IUsableOnAnyTarget, IToolHolderFullSprite, IControlsUsabilityInMove
+﻿using UnityEngine;
+
+public class MeleeWeapon : Item, IUsable, IUsableOnAnyTarget, IToolHolderFullSprite, IControlsUsabilityInMove, IParticleEmitterItem, IControlsInteractionContinuation
 {
     public new MeleeWeaponData Data => (MeleeWeaponData) data;
     
@@ -10,7 +12,14 @@
     public void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         if(!AllowUse()) return;
-        ToolHolder.Instance.Attack(this);
+
+        ToolSwipeAnimationData animationData = new ToolSwipeAnimationData(
+            ToolSwipeAnimationType.Swipe,
+            Data.speed,
+            Data.cooldown,
+            Data.allowSpam,
+            false);
+        ToolHolder.Instance.StartAnimation(animationData);
     }
 
     public bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
@@ -23,4 +32,8 @@
     }
 
     public bool CanUseMoving => true;
+    public bool HasParticles => Data.hasParticles;
+    public ParticleSystem ParticleSystem => Data.particleSystem;
+    public ItemParticleEmissionMode EmissionMode => ItemParticleEmissionMode.AlwaysEmit;
+    public bool AllowContinuation => Data.allowSpam;
 }

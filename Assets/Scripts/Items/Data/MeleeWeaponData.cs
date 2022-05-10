@@ -3,7 +3,10 @@
 [CreateAssetMenu(menuName = "Items/MeleeWeapon")]
 public class MeleeWeaponData : ItemData
 {
-    public MeleeWeaponType type;
+    [Range(1f, 20f)]
     public float speed;
-    public bool spam;
+    public bool allowSpam;
+    public bool hasParticles;
+    public ParticleSystem particleSystem;
+    public float cooldown;
 }

@@ -97,15 +97,21 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         Item storedItem = itemSlot.storedItem;
         float useTime = storedItem  is IHasOwnInteractionTime item ? 
             item.InteractionTime : 0.0f;
+
+        Action onStart = storedItem is IEventOnUseStart eventInvoker ? eventInvoker.OnUseStart : null;
+
         InteractionFilter filter = new InteractionFilter(
-            storedItem is IControlsUsabilityInMove controller ? controller.CanUseMoving : false, 
-            storedItem is not IUsableOnAnyTarget);
+        storedItem is IControlsUsabilityInMove moveController ? moveController.CanUseMoving : false, 
+        storedItem is not IUsableOnAnyTarget);
+
+        bool allowContinuation = storedItem is not IControlsInteractionContinuation continuationController || continuationController.AllowContinuation; 
         
         Interact(useTime, () => ((IUsable) itemSlot.storedItem).
-                Use(WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar).currentSelectedSlot.ReferredSlot,
-                    InteractionDataProvider.Data.Entity, 
-                    InteractionDataProvider.Data.Tile, 
-                    InteractionDataProvider.Data.Interactable), false, filter);
+            Use(_hotbarWindow.currentSelectedSlot.ReferredSlot,
+                InteractionDataProvider.Data.Entity, 
+                InteractionDataProvider.Data.Tile, 
+                InteractionDataProvider.Data.Interactable), onStart, false, allowContinuation, filter);
+
     }
 
     private void UseHand()
@@ -118,14 +124,14 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
 
         InteractionFilter filter = new InteractionFilter(true, true);
         Interact(interactableUnderCursor.Data.interactingTime, 
-            () => interactableUnderCursor.Interact(), true, filter);
+            () => interactableUnderCursor.Interact(), null, true, true, filter);
     }
 
-    private void Interact(float useTime, Action action, bool isHand, InteractionFilter filter)
+    private void Interact(float useTime, Action actionOnEnd, Action actionOnStart, bool isHand, bool allowContinuation, InteractionFilter filter)
     {
         PlayerController.Instance.LookDirectionToMouse();
         PlayerController.Instance.UpdateLookDirection();
-        interactionBar.StartInteraction(useTime, action, isHand, filter);
+        interactionBar.StartInteraction(useTime, actionOnEnd, actionOnStart, isHand, allowContinuation, filter);
     }
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)

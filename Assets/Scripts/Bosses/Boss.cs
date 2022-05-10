@@ -60,7 +60,6 @@ public class Boss : MonoBehaviour, IBulletReceiver
 
     private void Kill()
     {
-        Debug.Log($"{name} has been defeated killed");
         if(hasDeathDialog) DialogWindow.Instance.StartDialog(deathDialog);
         Bossbar.Instance.Kill();
         Destroy(gameObject);

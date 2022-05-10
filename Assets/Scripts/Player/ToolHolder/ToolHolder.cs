@@ -1,34 +1,41 @@
 ﻿using System;
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class ToolHolder : MonoBehaviour, ITemporaryDismissable
 {
     public static ToolHolder Instance { get; private set; }
-    
-    public Animator animator;
-    public SpriteRenderer itemRenderer;
+    [SerializeField] private Transform particlesTransform;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer itemRenderer;
 
-    public bool InUse => UseStarted || _useStopped;
+    public bool InUse => _useStarted || _useStopped;
     
     private static readonly string[] Animations =
     {
-        "SwordAttack",
-        "SwordAttack",
-        "SwordAttack",
+        "SwordSwipe",
+        "MagicBookRead",
+        "Shovel",
+        "Hoe",
+        "Axe",
+        "Pickaxe"
     };
 
-
-    public bool UseStarted { get; private set; }
+    private bool _useStarted;
     private bool _useStopped;
-
-    public void Attack(MeleeWeapon meleeWeapon)
+    private ParticleSystem _particleSystem;
+    private bool _emitOnUse;
+    private bool _interruptable;
+    
+    public void StartAnimation(ToolSwipeAnimationData animationData)
     {
-        if(UseStarted || _useStopped) return;
-        UseStarted = true;
+        if(_useStarted || _useStopped) return;
+        _useStarted = true;
         _useStopped = false;
-        StartCoroutine(AttackRoutine(meleeWeapon.Data));
-        StartCoroutine(KeyListenerRoutine());
+        _interruptable = animationData.interruptable;
+        StartCoroutine(AnimationRoutine(animationData));
+        StartCoroutine(StopRoutine());
     }
 
     private void Stop()
@@ -36,37 +43,67 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
         animator.speed = 1f;
         animator.Play("ToolHolderIdle");
         _useStopped = false;
+        if(_emitOnUse) _particleSystem.Stop();
     }
-
-    private IEnumerator AttackRoutine(MeleeWeaponData data)
+    
+    private IEnumerator AnimationRoutine(ToolSwipeAnimationData data)
     {
         float speed = data.speed;
         float delay = 1f / speed;
         animator.speed = speed;
-        while (UseStarted)
+        if(_emitOnUse) _particleSystem.Play();
+        while (_useStarted)
         {
             animator.StopPlayback();
             animator.Play(Animations[(int) data.type]);
             yield return new WaitForSeconds(delay);
+            if (!data.repeat) _useStarted = false;
         }
         Stop();
     }
 
-    private IEnumerator KeyListenerRoutine()
+    private IEnumerator StopRoutine()
     {
-        while (UseStarted)
+        while (_useStarted)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) || !IsActive)
             {
-                UseStarted = false;
-                _useStopped = true;
+                if (_interruptable)
+                {
+                    _useStarted = false;
+                    StopAllCoroutines();
+                    Stop();
+                }
+                else
+                {
+                    _useStarted = false;
+                    _useStopped = true;  
+                }
             }
             yield return null;
+        }
+    }
+
+    private void ClearParticles()
+    {
+        if (_particleSystem is not null)
+        {
+            if (_emitOnUse)
+                Destroy(_particleSystem.gameObject);
+            else
+            {
+                var mainModule = _particleSystem.main;
+                mainModule.stopAction = ParticleSystemStopAction.Destroy;
+                _particleSystem.Stop();
+            }
+            _particleSystem = null;
+            _emitOnUse = false;
         }
     }
     
     private void UpdateHoldedItem(ItemSlot slot)
     {
+        ClearParticles();
         if (!slot.HasItem)
         {
             SetIcon(null);
@@ -77,13 +114,23 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
             SetIcon(storedItem.Data.icon);
             transform.localScale = storedItem is IToolHolderFullSprite ? 
                 Vector3.one :
-                new Vector3(0.75f, 0.75f, 0.75f);
+                new Vector3(0.5f, 0.5f, 0.5f);
+            if (storedItem is IParticleEmitterItem {HasParticles: true} emitter)
+            {
+                _particleSystem = Instantiate(emitter.ParticleSystem, particlesTransform);
+                if (emitter.EmissionMode is ItemParticleEmissionMode.EmitOnUse)
+                {
+                    _particleSystem.Stop();
+                    _emitOnUse = true;
+                }
+            }
         }
         
     }
     
     private void Start()
     {
+        _particleSystem = null;
         Instance = this;
         SetIcon(null);
         HotbarWindow.ONSelectedSlotChanged += UpdateHoldedItem;
@@ -96,6 +143,14 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
         HotbarWindow.ONSelectedSlotChanged -= UpdateHoldedItem;
     }
 
-    public bool IsActive => isActiveAndEnabled;
-    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
+    public bool IsActive => itemRenderer.enabled;
+    public void SetActive(bool isActive)
+    {
+        if (_particleSystem is not null)
+        {
+            if(isActive && !_emitOnUse) _particleSystem.Play();
+            else _particleSystem.Stop();
+        }
+        itemRenderer.enabled = isActive;
+    }
 }

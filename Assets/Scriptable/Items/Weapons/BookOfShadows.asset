@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d652794037467abe52856e9c9864be, type: 3}
+  m_Name: BookOfShadows
+  m_EditorClassIdentifier: 
+  identifier:
+    type: 13
+    id: book_of_shadows
+  name: "\u041A\u043D\u0438\u0433\u0430 \u0442\u0435\u043D\u0435\u0439"
+  icon: {fileID: 21300000, guid: 7e612d37d7985644fbba9bf22ee40f93, type: 3}
+  maxStack: 1
+  bullet: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
+  castTime: 1
+  canCastInMove: 1
+  hasParticles: 1
+  particles: {fileID: 3036828426083843618, guid: 93ad1cb3734d9314f9d938e05526afbb, type: 3}
+  autoShoot: 1
+  cooldown: 0

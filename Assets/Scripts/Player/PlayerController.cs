@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
         UpdateMovementInput();
         if (Input.GetKeyDown(KeyCode.Space) && CanDash()) StartDash().Forget();
         Move(movementSpeed);
-        if(ToolHolder.Instance.UseStarted) LookDirectionToMouse();
+        if(ToolHolder.Instance.InUse) LookDirectionToMouse();
         else LookDirectionToVelocity();
         UpdateLookDirection();
     }
