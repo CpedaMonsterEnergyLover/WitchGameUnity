@@ -21,8 +21,9 @@ public class TileLoader : MonoBehaviour
     
     public enum TileLoadingMode
     {
-        Everything,
-        OnlyInteractables
+        Default, // Loads interactables and draws tiles around player
+        OnlyInteractables, // Draws all world tiles instantly, loads interactables around player
+        Everything, // Draws all tiles and all interactables
     }
 
 
@@ -60,12 +61,25 @@ public class TileLoader : MonoBehaviour
         if (_worldData is null)
             throw new Exception("TileLoader активен, но мир не сгенерирован");
 
-        if (mode is TileLoadingMode.OnlyInteractables) _worldManager.DrawAllTiles();
+        if (mode is TileLoadingMode.Everything)
+        {
+            LoadEverything();
+        }
+        else if (mode is TileLoadingMode.OnlyInteractables)
+        {
+            _worldManager.DrawAllTiles();
+        }
+    }
+
+    public void LoadEverything()
+    {
+        _worldManager.DrawAllTiles();
+        _worldManager.DrawAllInteractable();
+        enabled = false;
     }
 
     private void FixedUpdate()
     {
-        // TODO: 
         if(_worldData is null) return;
         // Прогрузка тайлов вокруг игрока
         var playerPosition = Vector3Int.FloorToInt(playerTransform.position);
@@ -112,7 +126,7 @@ public class TileLoader : MonoBehaviour
     private void RemoveTile(WorldTile tile)
     {
         if(tile.IsBlockedForLoading || !tile.IsLoaded) return;
-        if (mode is TileLoadingMode.Everything) 
+        if (mode is TileLoadingMode.Default) 
             _worldManager.EraseTile(new Vector3Int(tile.Position.x, tile.Position.y, 0));
 
         if (tile.HasInteractable)
@@ -125,7 +139,7 @@ public class TileLoader : MonoBehaviour
     private void LoadTile(WorldTile tile)
     {
         if(tile.IsBlockedForLoading) return;
-        if (mode is TileLoadingMode.Everything) 
+        if (mode is TileLoadingMode.Default) 
             _worldManager.DrawTile(tile.Position.x, tile.Position.y);
 
         tile.Load();
@@ -144,5 +158,5 @@ public class TileLoader : MonoBehaviour
         }
         _loadedTiles = new List<WorldTile>();
     }
-
+    
 }

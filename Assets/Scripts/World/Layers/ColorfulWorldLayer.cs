@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ColorfulWorldLayer : WorldLayer
+public class ColorfulWorldLayer : NoisePaintedWorldLayer
 {
     [Header("Color settings")] 
     public Gradient colorGradient;

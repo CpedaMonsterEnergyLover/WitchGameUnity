@@ -107,7 +107,7 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         bool allowContinuation = storedItem is not IControlsInteractionContinuation continuationController || continuationController.AllowContinuation; 
         
         Interact(useTime, () => ((IUsable) itemSlot.storedItem).
-            Use(_hotbarWindow.currentSelectedSlot.ReferredSlot,
+            Use(_hotbarWindow.SelectedSlot.ReferenceSlot,
                 InteractionDataProvider.Data.Entity, 
                 InteractionDataProvider.Data.Tile, 
                 InteractionDataProvider.Data.Interactable), onStart, false, allowContinuation, filter);
@@ -161,7 +161,7 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
     private void OnWindowClosed(WindowIdentifier window)
     {
         if(window is WindowIdentifier.Inventory or WindowIdentifier.Placeable)
-            OnSelectedHotbarSlotChanged(_hotbarWindow.currentSelectedSlot);
+            OnSelectedHotbarSlotChanged(_hotbarWindow.SelectedSlot);
     }
     private void OnWindowOpened(WindowIdentifier window)
     {

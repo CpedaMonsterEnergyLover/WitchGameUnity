@@ -42,7 +42,7 @@ public class WorldTile : ICacheable
     {
         if(InstantiatedInteractable is null) return;
         savedData = InstantiatedInteractable.SaveData.DeepClone();
-        Object.DestroyImmediate(InstantiatedInteractable.gameObject);
+        Object.Destroy(InstantiatedInteractable.gameObject);
         InstantiatedInteractable = null;
     }
 

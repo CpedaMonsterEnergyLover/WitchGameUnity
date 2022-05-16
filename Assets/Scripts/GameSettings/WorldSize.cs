@@ -3,7 +3,7 @@
     public enum WorldSize
     {
         Small,
-        Standart,
+        Default,
         Huge
     }
 }

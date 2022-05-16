@@ -11,7 +11,7 @@ public class Hoe : Instrument, IToolHolderFullSprite
     {
         if (!base.AllowUse(entity, tile, interactable) || tile is null || tile.HasInteractable) return false;
         
-        return WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer topLayer) && 
+        return WorldManager.Instance.TryGetEditableTopLayer(tile, out EditableWorldLayer topLayer) && 
                topLayer.layerEditSettings.canUseHoe;
     }
 

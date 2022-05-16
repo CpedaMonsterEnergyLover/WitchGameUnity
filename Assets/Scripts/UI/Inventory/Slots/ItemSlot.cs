@@ -19,7 +19,12 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     protected static InventoryWindow InventoryWindow;
     
     public bool HasItem => storedItem is not null && storedAmount > 0;
+    
+    public delegate void CursorEnterEvent(ItemSlot slot);
+    public delegate void CursorExitEvent();
 
+    public static event CursorEnterEvent ONCursorEnterSlot;
+    public static event CursorExitEvent ONCursorExitSlot;
 
     #region UnityMethods
 
@@ -32,14 +37,14 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         slotImage.color = new Color(0.87f, 0.87f, 0.87f);
-        InventoryKeyListener.Instance.slotUnderCursor = this;
+        ONCursorEnterSlot?.Invoke(this);
         ShowTooltip(true);
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         slotImage.color = Color.white;
-        InventoryKeyListener.Instance.slotUnderCursor = null;
+        ONCursorExitSlot?.Invoke();
         ShowTooltip(false);
     }
 
@@ -121,7 +126,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             itemIcon.enabled = false;
             itemText.gameObject.SetActive(false);
-            if(InventoryKeyListener.Instance.slotUnderCursor == this) 
+            if(InventoryKeyListener.Instance.SlotUnderCursor == this) 
                 TooltipManager.SetActive(TooltipIdentifier.Inventory, false);
         }
         // Если не последний

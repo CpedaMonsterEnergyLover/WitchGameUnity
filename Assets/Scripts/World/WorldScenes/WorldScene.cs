@@ -1,29 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace WorldScenes
-{
     [System.Serializable]
     public abstract class BaseWorldScene : ScriptableObject
     {
         [Header("Name of the scene, which this world loads")]
         public string sceneName;
-        [Header("Name of the world, which appears in the game")]
-        public string worldName;
-        [Header("Does this world has sun?")]
+        [Header("Does this world has global illumination?")]
         public bool hasGlobalIllumination;
 
         public string FileName => $"{sceneName}.json"; 
 
-        public virtual void LoadFromAnotherWorld(int subworldIndex = -1)
+        public virtual void LoadFromAnotherWorld(int worldPartIndex = -1)
         {
             GameDataManager.SaveTemporaryWorldData();
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
 
         public virtual void LoadFromMainMenu()
         {
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
-}

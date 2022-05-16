@@ -11,7 +11,7 @@ public static class WorldSettingsProvider
     {
         return _worldSettings ??= new WorldSettings(
             Difficulty.Normal,
-            WorldSize.Standart,
+            WorldSize.Default,
             seed, 7);
     }
 }

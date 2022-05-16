@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using TileLoading;
@@ -6,13 +7,10 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    public static WorldManager Instance;
+    public static WorldManager Instance { get; protected set; }
 
-    [SerializeField, Header("GameSystemPrefab")]
-    private GameObject gameSystemPrefab;
-    
     [Header("WorldScene")]
-    public WorldScenes.BaseWorldScene worldScene;
+    public BaseWorldScene worldScene;
     
     [Header("Игровые настройки")]
     public PlayerSettings playerSettings;
@@ -24,10 +22,11 @@ public class WorldManager : MonoBehaviour
     public Transform entitiesTransform;
     
     [SerializeField, Header("Генератор")]
-    protected Generator generator;
+    protected AbstractGenerator generator;
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
+    public bool hasBounds;
     public WorldBounds worldBounds;
     
     public WorldData WorldData { get; protected set; }
@@ -46,18 +45,7 @@ public class WorldManager : MonoBehaviour
         EntityCache = new Cache<Entity>(playerSettings.entitiesCacheSize);
         Instance = this;
     }
-
-    public void UnloadAllEntities()
-    {
-        foreach (Entity entity in Entities)
-        {
-            entity.SaveOnTile(out _);
-            Destroy(entity.gameObject);
-        }
-        EntityCache.Clear();
-    }
-
- 
+    
     private void Start()
     {
         ScreenFader.Instance.PlayBlack();
@@ -72,7 +60,7 @@ public class WorldManager : MonoBehaviour
         await UniTask.NextFrame();
         await LoadData();
         ONWorldLoaded?.Invoke();
-        worldBounds.Init(WorldData);
+        if(hasBounds) worldBounds.Init(WorldData);
         PlayerManager.Instance.Position = GetPlayerSpawn();
         await ScreenFader.Instance.StopFade(0.5f);
     }
@@ -81,9 +69,6 @@ public class WorldManager : MonoBehaviour
     {
         var loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
         
-        if (generator.GeneratedData is not null && loadedData is null) loadedData = generator.GeneratedData;
-        Destroy(generator.gameObject);
-
         // Если файла мира еще нет, генерирует его
         if (loadedData is null)
         {
@@ -114,6 +99,16 @@ public class WorldManager : MonoBehaviour
         }
         
     }
+    
+    public void UnloadAllEntities()
+    {
+        foreach (Entity entity in Entities)
+        {
+            entity.SaveOnTile(out _);
+            Destroy(entity.gameObject);
+        }
+        EntityCache.Clear();
+    }
 
     public async UniTask GenerateFromEditor()
     {
@@ -121,7 +116,6 @@ public class WorldManager : MonoBehaviour
         WorldData = await generator.GenerateWorldData(layers, worldScene, true);
     }
 
-    
     
     protected virtual Vector2 GetPlayerSpawn()
     {
@@ -138,9 +132,23 @@ public class WorldManager : MonoBehaviour
     
     public void DrawAllTiles()
     {
+        /*IEnumerator Routine()
+        {
+            for (int x = 0; x < WorldData.MapWidth; x++)
+            for (int y = 0; y < WorldData.MapHeight; y++)
+            {
+                DrawTile(x, y);
+                yield return new WaitForSecondsRealtime(0.1f);
+            } 
+        }
+
+        StartCoroutine(Routine());*/
+        
         for (int x = 0; x < WorldData.MapWidth; x++)
         for (int y = 0; y < WorldData.MapHeight; y++)
+        {
             DrawTile(x, y);
+        } 
     }
 
     public void DrawAllInteractable()
@@ -154,6 +162,7 @@ public class WorldManager : MonoBehaviour
     {
         layers.ForEach(layer => layer.tilemap.ClearAllTiles());
         ClearAllInteractable();
+        WorldData = null;
     }
     
     public void DrawTile(int x, int y)
@@ -164,9 +173,9 @@ public class WorldManager : MonoBehaviour
         
         for (var i = 0; i < layers.Count; i++)
         {
-            WorldLayer worldLayer = layers[i];
-            worldLayer.tilemap.SetTile(position, 
-                tile.Layers[i] ? worldLayer.tileBase : null);
+            WorldLayer layer = layers[i];
+            layer.tilemap.SetTile(position, 
+                tile.Layers[i] ? layer.tileBase : null);
         }
 
         if (WorldData.ColorLayerIndex != -1)
@@ -200,14 +209,14 @@ public class WorldManager : MonoBehaviour
         return topLayer is not null;
     }
     
-    public WorldLayer GetTopLayer(WorldTile tile)
+    public bool TryGetEditableTopLayer(WorldTile tile, out EditableWorldLayer topLayer)
     {
-        WorldLayer topLayer = null;
+        topLayer = null;
         var tileLayers = tile.Layers;
         for (var i = 0; i < tileLayers.Length; i++)
             if (tileLayers[i])
-                topLayer = layers[i];
-        return topLayer;
+                topLayer = layers[i] is EditableWorldLayer editableWorldLayer? editableWorldLayer : null;
+        return topLayer is not null;
     }
 
     public void CacheEntity([CanBeNull] Entity entity)

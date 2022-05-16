@@ -11,13 +11,15 @@ public class SerializeableQuadArray<T> : IEnumerable
     private int width;
     [SerializeField]
     private int height;
-
+    
     public IEnumerable<T> Items => items;
+
+    public bool Horizontal { get; private set; }
     
     public bool IsValid(int x, int y) => x >= 0 && x < width && y >= 0 && y < height;
     
     public T Get(int x, int y) => 
-        !IsValid(x, y) ? default : items[x + y * height];
+        !IsValid(x, y) ? default : items[GetIndex(x, y)];
     
     public void Set(int x, int y, T item)
     {
@@ -26,14 +28,8 @@ public class SerializeableQuadArray<T> : IEnumerable
             Debug.Log($"{x}, {y} is not valid");
             return;
         }
-        items[x + y * height] = item;
+        items[GetIndex(x, y)] = item;
     }
-
-    public static void Test(int abc)
-    {
-        return;
-    }
-
     public int Width => width;
     public int Height => height;
 
@@ -42,10 +38,17 @@ public class SerializeableQuadArray<T> : IEnumerable
         items = new T[width * height];
         this.width = width;
         this.height = height;
+        Horizontal = width >= height;
+    }
+
+    private int GetIndex(int x, int y)
+    {
+        return x + y * width;
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
         return ((IEnumerable) this).GetEnumerator();
     }
+
 }

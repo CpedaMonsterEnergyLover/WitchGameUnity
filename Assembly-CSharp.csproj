@@ -45,6 +45,7 @@
      <Compile Include="Assets\Scripts\Dialogs\DialogMember.cs" />
      <Compile Include="Assets\Scripts\Interactable\House.cs" />
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
+     <Compile Include="Assets\Scripts\Items\ItemParticleEmissionMode.cs" />
      <Compile Include="Assets\Scripts\GameData\WorldSettings.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\InventoryKeyListener.cs" />
      <Compile Include="Assets\Scripts\GameCollection\Interactables.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Scripts\Health\Hearts\HeartOfTheBeast.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
+     <Compile Include="Assets\Scripts\Items\Interface\IControlsInteractionContinuation.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Food.cs" />
@@ -107,7 +109,7 @@
      <Compile Include="Assets\Scripts\Interactable\Miscs\SunAffectableLight.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
-     <Compile Include="Assets\Scripts\World\Layers\WorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\NoisePaintedWorldLayer.cs" />
      <Compile Include="Assets\Scripts\GameCollection\CraftingRecipies.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\Slots\SlotDurabilityBar.cs" />
      <Compile Include="Assets\Scripts\UI\Util\DebugWindow.cs" />
@@ -197,6 +199,7 @@
      <Compile Include="Assets\Scripts\UI\MainMenu\SceneDecorations\ParallaxController.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu\CreateWorldMenu.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
+     <Compile Include="Assets\Scripts\Items\Interface\IEventOnUseStart.cs" />
      <Compile Include="Assets\Scripts\UI\LoadingBars\LoadingBar.cs" />
      <Compile Include="Assets\Scripts\Items\Data\InstrumentData.cs" />
      <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectData.cs" />
@@ -244,7 +247,7 @@
      <Compile Include="Assets\Scripts\Generator\GeneratorSettings.cs" />
      <Compile Include="Assets\Scripts\Generator\Biome.cs" />
      <Compile Include="Assets\Scripts\Interactable\Chuchelo.cs" />
-     <Compile Include="Assets\Scripts\Generator\Generator.cs" />
+     <Compile Include="Assets\Scripts\Generator\WorldGenerator.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\VeinData.cs" />
@@ -297,9 +300,14 @@
      <Compile Include="Assets\Scripts\Dialogs\DialogElement.cs" />
      <Compile Include="Assets\Scripts\Items\Data\MeleeWeaponData.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Items\Interface\IEventOnUseStart.cs" />
-     <Compile Include="Assets\Scripts\Items\ItemParticleEmissionMode.cs" />
-     <Compile Include="Assets\Scripts\Items\Interface\IControlsInteractionContinuation.cs" />
+     <Compile Include="Assets\Scripts\World\Houses\HouseGenerator.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\WorldTransitionDataProvider.cs" />
+     <Compile Include="Assets\Scripts\World\WorldScenes\IWorldTransitionData.cs" />
+     <Compile Include="Assets\Scripts\World\Houses\HouseWorldData.cs" />
+     <Compile Include="Assets\Scripts\Generator\AbstractGenerator.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\HouseWorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\WorldLayer.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\EditableWorldLayer.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

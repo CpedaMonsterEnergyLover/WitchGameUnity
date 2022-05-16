@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InventorySlot : ItemSlot
 {
-    public HotbarSlot ReferredHotbarSlot { set; get; }
+    public HotbarSlot HotbarReference { set; get; }
     
     public override void RemoveItem(int amount)
     {
@@ -16,11 +16,9 @@ public class InventorySlot : ItemSlot
         for (int i = 0; i < 8; i++)
             if (Input.GetKeyDown((i + 1).ToString()))
             {
-                HotbarSlot hotbarSlot = WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar)
-                    .slots[i];
-                hotbarSlot.SetReferredSlot(this);
-                ReferredHotbarSlot = hotbarSlot;
-                UpdateReferredHotbarSlot();
+                WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar)
+                    .GetSlot(i)
+                    .SetReference(this);
             }
         // ПКМ
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -49,16 +47,6 @@ public class InventorySlot : ItemSlot
     public override void UpdateUI()
     {
         base.UpdateUI();
-        UpdateReferredHotbarSlot();
-    }
-
-    private void UpdateReferredHotbarSlot()
-    {
-        if (ReferredHotbarSlot is not null)
-        {
-            ReferredHotbarSlot.storedItem = storedItem;
-            ReferredHotbarSlot.storedAmount = storedAmount;
-            ReferredHotbarSlot.UpdateUI();
-        }
+        if(HotbarReference is not null) HotbarReference.UpdateUI();
     }
 }

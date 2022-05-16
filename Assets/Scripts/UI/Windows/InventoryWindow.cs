@@ -17,17 +17,14 @@ public class InventoryWindow : BaseWindow
     [SerializeReference]
     public List<InventorySlot> slots = new();
 
-    public delegate void ItemAddedEvent(ItemIdentifier identifier, int amount);
-    public static event ItemAddedEvent ONItemAdded;
+    public delegate void ItemEvent(ItemIdentifier identifier, int amount);
+    public static event ItemEvent ONItemAdded;
+    public static event ItemEvent ONItemRemoved;
     
-    public delegate void ItemRemovedEvent(ItemIdentifier identifier, int amount);
-    public static event ItemRemovedEvent ONItemRemoved;
-
     
     
     private bool _needsUpdate;
-
-
+    
     public override void Init()
     {
         LoadData();
@@ -66,7 +63,6 @@ public class InventoryWindow : BaseWindow
 
         base.OnEnable();
     }
-    
 
     public void RemoveItem(ItemIdentifier identifier, int amount)
     {

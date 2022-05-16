@@ -2,44 +2,68 @@ using UnityEngine;
 
 public class HotbarSlot : ItemSlot
 {
-    public InventorySlot ReferredSlot { private set; get; }
-
+    public InventorySlot ReferenceSlot { get; private set;  }
+    public int Index { get; set; }
+    
     public override void OnKeyDown()
     {
         // ЛКМ - выбрать слот
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             HotbarWindow hotbarWindow = WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar);
-            hotbarWindow.SelectSlot(hotbarWindow.slots.IndexOf(this));
+            hotbarWindow.SelectSlot(Index);
         } 
         // ПКМ - очистить слот
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
+            if(!HasItem) return;
             ShowTooltip(false);
             Clear();
         }
     }
 
-    public void SetReferredSlot(InventorySlot refersTo)
+    public void SetReference(InventorySlot target)
     {
-        // Deletes previous hotbar reference
-        if(refersTo.ReferredHotbarSlot is not null) refersTo.ReferredHotbarSlot.Clear();
-        // Assigns new reference
-        ReferredSlot = refersTo;
+        if (target.HotbarReference is not null)
+        {
+            if (ReferenceSlot is not null)
+            {
+                target.HotbarReference.ReplaceReference(ReferenceSlot);
+                target.HotbarReference.UpdateUI();
+            }
+            else
+            {
+                target.HotbarReference.Clear();
+            }
+        }
+        ReferenceSlot = target;
+        target.HotbarReference = this;
+        UpdateUI();
+    }
+
+    private void ReplaceReference(InventorySlot target)
+    {
+        ReferenceSlot = target;
+        target.HotbarReference = this;
     }
 
     public override void UpdateUI()
     {
+        bool hasReference = ReferenceSlot is not null;
+        storedItem = hasReference ? ReferenceSlot.storedItem : null;
+        storedAmount = hasReference ? ReferenceSlot.storedAmount : 0;
         base.UpdateUI();
-        ItemPicker.Instance.SyncWithSlot(this);
+        if(Index == WindowManager.Get<HotbarWindow>(WindowIdentifier.Hotbar).SelectedSlot.Index)
+             ItemPicker.Instance.SyncWithSlot(this);
     }
 
     public override int AddItem(Item item, int amount) => 0;
 
     protected override void Clear()
     {
+        if(ReferenceSlot is not null) 
+            ReferenceSlot.HotbarReference = null;
+        ReferenceSlot = null;
         base.Clear();
-        if(ReferredSlot is not null) ReferredSlot.ReferredHotbarSlot = null;
-        ReferredSlot = null;
     }
 }

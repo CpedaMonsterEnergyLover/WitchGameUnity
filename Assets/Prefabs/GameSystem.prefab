@@ -2798,9 +2798,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.13981481
-    width: 0.33489585
-    height: 0.33489582
+    y: 0.069907404
+    width: 0.16744792
+    height: 0.16744791
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -5872,7 +5872,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5857516064475484586}
-  - {fileID: 5857516065309809868}
   m_Father: {fileID: 5857516065777271062}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5895,8 +5894,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowIdentifier: 1
   arrow: {fileID: 5857516065309809869}
-  currentSelectedSlot: {fileID: 0}
-  selectedSlotIndex: 0
   slots:
   - {fileID: 6372227521835755634}
   - {fileID: 5728087434387946366}
@@ -6104,8 +6101,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5857516065152377944}
-  m_RootOrder: 1
+  m_Father: {fileID: 2801756646130904212}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -9576,7 +9573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd2a9be7df968f46967187cf8382453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotUnderCursor: {fileID: 0}
 --- !u!114 &8947648699355913840
 MonoBehaviour:
   m_ObjectHideFlags: 0

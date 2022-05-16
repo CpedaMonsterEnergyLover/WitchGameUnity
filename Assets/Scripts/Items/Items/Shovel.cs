@@ -2,21 +2,30 @@
 
 public class Shovel : Instrument, IToolHolderFullSprite
 {
+    private EditableWorldLayer _editableLayer;
+    
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        if (tile is null) return;
+        if (tile is null || _editableLayer is null) return;
         
-        WorldManager.Instance.GetTopLayer(tile).Dig(tile.Position);
+        _editableLayer.Dig(tile.Position);
         base.Use(slot, entity, tile, interactable);
     }
 
     public override bool AllowUse(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        Debug.Log($"tile: {tile?.Position}, hasInt: {tile?.HasInteractable}");
         if (!base.AllowUse(entity, tile, interactable) || tile is null || tile.HasInteractable) return false;
-        
-        return WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer topLayer) && 
-               topLayer.layerEditSettings.canUseShovel;
+        if (WorldManager.Instance.TryGetEditableTopLayer(tile, out EditableWorldLayer layer) &&
+            layer.layerEditSettings.canUseShovel)
+        {
+            _editableLayer = layer;
+            return true;
+        }
+        else
+        {
+            _editableLayer = null;
+            return false;
+        }
     }
 
 

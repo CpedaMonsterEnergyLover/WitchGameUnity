@@ -11,7 +11,7 @@ public class CavePolisher : MonoBehaviour
     public TileBase wallTileBase;
     public TileBase polishingTileBase;
     public TileBase temporaryTileBase;
-    public WorldLayer polishingLayer;
+    public NoisePaintedWorldLayer polishingLayer;
 
     private GameObject _hollowsTileMapGO;
     private CaveEntrance _caveEntrance;

@@ -73,7 +73,7 @@ public class CreateWorldMenu : MonoBehaviour
             seasonSliderController.Value));
         
         await screenFader.StartFade(0.5f);
-        SceneManager.LoadScene(sceneToLoad.sceneName, LoadSceneMode.Single);
+        sceneToLoad.LoadFromMainMenu();
     }
 
 }

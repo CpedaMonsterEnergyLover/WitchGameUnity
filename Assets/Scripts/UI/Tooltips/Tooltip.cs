@@ -15,7 +15,7 @@ public class Tooltip : MonoBehaviour, ITemporaryDismissable
 
     protected virtual void OnEnable()
     {
-        ItemSlot slotUnderCursor = InventoryKeyListener.Instance.slotUnderCursor;
+        ItemSlot slotUnderCursor = InventoryKeyListener.Instance.SlotUnderCursor;
         if(slotUnderCursor is not null && slotUnderCursor.tooltip != tooltipIdentifier)
             gameObject.SetActive(false);
     }

@@ -33,10 +33,10 @@ public class WorldData
         }
     }
     
-    public  WorldData(
+    public WorldData(
         GeneratorSettings generatorSettings,
         bool[][,] layers,
-        InteractableData[,] biomeLayer, 
+        InteractableData[,] interactables, 
         BaseWorldScene worldScene,
         Color[,] colorLayer,
         int colorfulLayerIndex)
@@ -44,17 +44,17 @@ public class WorldData
         worldSettings = WorldSettingsProvider.GetSettings();
         this.worldScene = worldScene;
         this.colorfulLayerIndex = colorfulLayerIndex;
-        worldTiles = new SerializeableQuadArray<WorldTile>(generatorSettings.width, generatorSettings.width);
+        worldTiles = new SerializeableQuadArray<WorldTile>(generatorSettings.width, generatorSettings.height);
         bool hasColor = colorLayer is not null;
         for (int x = 0; x < generatorSettings.width; x++)
         {
-            for (int y = 0; y < generatorSettings.width; y++)
+            for (int y = 0; y < generatorSettings.height; y++)
             {
                 bool[] tiles = new bool[layers.Length];
                 for (var i = 0; i < layers.Length; i++) 
                     tiles[i] = layers[i][x, y];
                 worldTiles.Set(x, y, new WorldTile(
-                    x, y, tiles, biomeLayer[x, y], hasColor ? colorLayer[x,y] : Color.white));
+                    x, y, tiles, interactables[x, y], hasColor ? colorLayer[x,y] : Color.white));
             }
         }
 

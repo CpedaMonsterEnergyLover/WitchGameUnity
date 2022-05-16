@@ -1,78 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Tilemap))]
 public class WorldLayer : MonoBehaviour
 {
     [Range(0, 10), Header("Порядковый индекс слоя (с 0)")]
     public int index;
+    public WorldLayerType layerType;
     public Tilemap tilemap;
     public TileBase tileBase;
-    public TilemapGenerationRule tilemapGenerationRule;
-    public List<GenerationRule> rules = new ();
-    public WorldLayerType layerType;
-    public WorldLayerEditSettings layerEditSettings = new();
+    public bool canPlace;
 
-
-    public async UniTask<bool[,]> Generate(
+    public virtual UniTask<bool[,]> Generate(
         GeneratorSettings settings, 
         WorldNoiseData noiseData)
     {
-        return tilemapGenerationRule == TilemapGenerationRule.Fill ?
-           await Task.Run(() => Fill(settings)) : await FillByRule(settings, noiseData);
-    }
-    
-    private bool[,] Fill(
-        GeneratorSettings settings)
-    {
-        bool[,] layer = new bool[settings.width, settings.height];
-
-        
-        for (int x = 0; x < settings.width; x++)
-        {
-            for (int y = 0; y < settings.height; y++)
-            {
-                layer[x, y] = true;
-            }
-        }
-
-        return layer;
-    }
-
-    private async UniTask<bool[,]>  FillByRule(
-        GeneratorSettings settings, 
-        WorldNoiseData noiseData) 
-    {
-        bool[,] layer = new bool[settings.width, settings.height];
-
-        await UniTask.RunOnThreadPool(() =>
-        {
-            for (int x = 0; x < settings.width; x++)
-            {
-                for (int y = 0; y < settings.height; y++)
-                {
-                    rules.ForEach(rule =>
-                    {
-                        bool ruleVerdict = rule.ApplyRule(noiseData, x, y);
-                        if (ruleVerdict)
-                            layer[x, y] = !rule.exclude;
-                    });
-                }
-            }
-        });
-        
-        return layer;
-    }
-
-    public void Dig(Vector2Int position)
-    {
-        ItemEntity itemEntity = (ItemEntity) Entity.Create(new ItemEntitySaveData(layerEditSettings.dropItem, 1, 
-            position + new Vector2(0.5f, 0.5f)));
-        itemEntity.rigidbody.AddForce(Random.insideUnitCircle.normalized * 7.5f);
-        tilemap.SetTile((Vector3Int) position, null);
-        WorldManager.Instance.WorldData.GetTile(position.x, position.y).Layers[index] = false;
+        return new UniTask<bool[,]>();
     }
 }

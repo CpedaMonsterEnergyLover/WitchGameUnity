@@ -3,34 +3,31 @@ using UnityEngine;
 
 public class HotbarWindow : BaseWindow
 {
-    public GameObject arrow;
-    public HotbarSlot currentSelectedSlot;
-    public int selectedSlotIndex;
+    [SerializeField] private GameObject arrow;
+    [SerializeField] private List<HotbarSlot> slots = new();
     
-    public List<HotbarSlot> slots = new();
+    public HotbarSlot SelectedSlot { get; private set; }
+
+    public delegate void SelectedSlotEvent(ItemSlot slot);
+    public static event SelectedSlotEvent ONSelectedSlotChanged;
     
-    public delegate void ItemChangeEvent(ItemSlot slot);
-    public static event ItemChangeEvent ONSelectedSlotChanged;
-
-
     private void Start()
     {
-        selectedSlotIndex = -1;
-        SelectSlot(0);
+        for (var i = slots.Count - 1; i >= 0; i--) slots[i].Index = i;
+        SelectedSlot = slots[0];
+        ONSelectedSlotChanged?.Invoke(SelectedSlot);
     }
+
+    public HotbarSlot GetSlot(int index) => slots[index];
     
     public void SelectSlot(int index)
     {
-        if(selectedSlotIndex == index) return;
-        
+        if(SelectedSlot.Index == index) return;
         if (index > 7) index = 0;
         if (index < 0) index = 7;
-        selectedSlotIndex = index;
-        currentSelectedSlot = slots[index];
-
-        ONSelectedSlotChanged?.Invoke(currentSelectedSlot);
-        
-        arrow.transform.SetParent(currentSelectedSlot.transform, false);
+        SelectedSlot = slots[index];
+        ONSelectedSlotChanged?.Invoke(SelectedSlot);
+        arrow.transform.SetParent(SelectedSlot.transform, false);
     }
     
 }

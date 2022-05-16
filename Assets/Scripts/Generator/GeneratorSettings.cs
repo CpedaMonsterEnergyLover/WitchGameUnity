@@ -11,4 +11,11 @@ public struct GeneratorSettings
 
     public bool circleBounds;
 
+    public GeneratorSettings(string seed, int width, int height, bool circleBounds)
+    {
+        this.seed = seed;
+        this.width = width;
+        this.height = height;
+        this.circleBounds = circleBounds;
+    }
 }

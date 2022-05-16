@@ -13,7 +13,7 @@ namespace KeyListeners
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 if(WindowManager.IsActive(WindowIdentifier.Inventory)) return;
-                ItemSlot.OnDropItemButton(hotbarWindow.currentSelectedSlot.ReferredSlot);
+                ItemSlot.OnDropItemButton(hotbarWindow.SelectedSlot.ReferenceSlot);
             }
             else if(wheel != 0)
             {
@@ -28,20 +28,20 @@ namespace KeyListeners
 
         private void SelectFromWheel(float wheel)
         {
+            int selectedIndex = hotbarWindow.SelectedSlot.Index;
             switch (wheel)
             {
                 case < 0:
-                    hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex + 1);
+                    hotbarWindow.SelectSlot(selectedIndex + 1);
                     break;
                 case > 0:
-                    hotbarWindow.SelectSlot(hotbarWindow.selectedSlotIndex - 1);
+                    hotbarWindow.SelectSlot(selectedIndex - 1);
                     break;
             }
         }
 
         private void SelectFromKeyboard()
         {
-            // Keyboard
             for (int i = 0; i < 8; i++)
                 if (Input.GetKeyDown((i + 1).ToString()))
                     hotbarWindow.SelectSlot(i);

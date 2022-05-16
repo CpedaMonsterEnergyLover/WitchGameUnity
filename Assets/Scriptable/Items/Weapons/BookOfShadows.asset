@@ -19,7 +19,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7e612d37d7985644fbba9bf22ee40f93, type: 3}
   maxStack: 1
   bullet: {fileID: 3090018743286462098, guid: 38746eca275e78947ab1c6fc88f43297, type: 3}
-  castTime: 1
+  castTime: 0.1
   canCastInMove: 1
   hasParticles: 1
   particles: {fileID: 3036828426083843618, guid: 93ad1cb3734d9314f9d938e05526afbb, type: 3}
