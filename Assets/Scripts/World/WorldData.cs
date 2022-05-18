@@ -7,12 +7,12 @@ using WorldScenes;
 [Serializable]
 public class WorldData
 {
-    [SerializeField] private BaseWorldScene worldScene;
-    [SerializeField] private SerializeableQuadArray<WorldTile> worldTiles;
+    [SerializeField] private WorldScene worldScene;
+    [SerializeField] private Serializeable2DMatrix<WorldTile> worldTiles;
     [SerializeField] private Vector2 spawnPoint;
     [SerializeField] private int colorfulLayerIndex;
     [SerializeField] private WorldSettings worldSettings; 
-    public BaseWorldScene WorldScene => worldScene;
+    public WorldScene WorldScene => worldScene;
     public WorldTile GetTile(int x, int y) => worldTiles.Get(x, y);
     public int MapWidth => worldTiles.Width;
     public int MapHeight => worldTiles.Height;
@@ -27,24 +27,26 @@ public class WorldData
 
     public void Init()
     {
-        foreach (WorldTile tile in worldTiles.Items)
-        {
-            tile.IsLoaded = false;
-        }
+        foreach (WorldTile tile in worldTiles.Items) tile.IsLoaded = false;
+    }
+
+    public void MarkAllTilesAsLoaded()
+    {
+        foreach (WorldTile tile in worldTiles.Items) tile.IsLoaded = true;
     }
     
     public WorldData(
         GeneratorSettings generatorSettings,
         bool[][,] layers,
-        InteractableData[,] interactables, 
-        BaseWorldScene worldScene,
+        InteractableSaveData[,] interactables, 
+        WorldScene worldScene,
         Color[,] colorLayer,
         int colorfulLayerIndex)
     {
         worldSettings = WorldSettingsProvider.GetSettings();
         this.worldScene = worldScene;
         this.colorfulLayerIndex = colorfulLayerIndex;
-        worldTiles = new SerializeableQuadArray<WorldTile>(generatorSettings.width, generatorSettings.height);
+        worldTiles = new Serializeable2DMatrix<WorldTile>(generatorSettings.width, generatorSettings.height);
         bool hasColor = colorLayer is not null;
         for (int x = 0; x < generatorSettings.width; x++)
         {
@@ -88,7 +90,7 @@ public class WorldData
         maxY = Math.Clamp(maxY, 0, MapHeight);
         int mapWidth = maxX - minX;
         int mapHeight = maxY - minY;
-        SerializeableQuadArray<WorldTile> newData = new SerializeableQuadArray<WorldTile>(mapWidth, mapHeight);
+        Serializeable2DMatrix<WorldTile> newData = new Serializeable2DMatrix<WorldTile>(mapWidth, mapHeight);
 
         for(int x = 0; x < mapWidth; x++)
         for (int y = 0; y < mapHeight; y++)

@@ -7,7 +7,7 @@ using WorldScenes;
 public class MainMenu : MonoBehaviour
 {
     public Button loadGameButton;
-    public BaseWorldScene sceneToLoad;
+    public WorldScene sceneToLoad;
     
     private void OnEnable()
     {

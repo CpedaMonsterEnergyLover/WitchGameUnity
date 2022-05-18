@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07042f83914d4eb8d961a6a9287a21, type: 3}
-  m_Name: PlayerHouse
+  m_Script: {fileID: 11500000, guid: 7c90256806bdd2d4a8dcd2be74bd2f5d, type: 3}
+  m_Name: HouseDoor
   m_EditorClassIdentifier: 
-  id: player_house
-  name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0434\u043E\u043C"
+  id: house_door
+  name: "\u0412\u044B\u0445\u043E\u0434"
   interactingTime: 0
   ignoreTileRandomisation: 1
-  houseScene: {fileID: 11400000, guid: 60ca5ddd0b013ac43996b9180c717ebe, type: 2}
-  roomWidth: 9
-  roomHeight: 7
-  doorPosition: 6

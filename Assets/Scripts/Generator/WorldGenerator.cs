@@ -39,7 +39,7 @@ public class WorldGenerator : AbstractGenerator
         await UniTask.DelayFrame(30);
     }
     
-    public override async UniTask<WorldData> GenerateWorldData(List< WorldLayer> layers, BaseWorldScene worldScene, bool fromEditor = false)
+    public override async UniTask<WorldData> GenerateWorldData(List< WorldLayer> layers, WorldScene worldScene, bool fromEditor = false)
     {
         WorldSettings worldSettings = WorldSettingsProvider.GetSettings(generatorSettings.seed);
         Debug.Log($"Generating {worldScene.sceneName} with settings[{worldSettings}]");
@@ -76,7 +76,7 @@ public class WorldGenerator : AbstractGenerator
         });
         
         await NextPhase();
-        InteractableData[,] biomeLayer = new InteractableData[generatorSettings.width, generatorSettings.height];
+        InteractableSaveData[,] biomeLayer = new InteractableSaveData[generatorSettings.width, generatorSettings.height];
         if (biomes is not null)
         {
             biomes.InitSpawnEdges();
@@ -99,18 +99,19 @@ public class WorldGenerator : AbstractGenerator
         PlaceHouse(worldData);
         
         await NextPhase();
-        if(Application.isPlaying) await GameDataManager.SavePersistentWorldData(worldData);
-        
+        if (Application.isPlaying) await GameDataManager.SavePersistentWorldData(worldData);
+
         return worldData;
     }
 
     private void PlaceHouse(WorldData worldData)
     {
+        int maxTries = 1000;
         bool placeNotFound = true;
         int r = 3;
         Vector2Int mapCenter = new Vector2Int(worldData.MapWidth / 2, worldData.MapHeight / 2);
         int counter = 0;
-        while (placeNotFound && counter < 100)
+        while (placeNotFound && counter < maxTries)
         {
             counter++;
             var newPosF = Random.insideUnitCircle * r;
@@ -119,7 +120,7 @@ public class WorldGenerator : AbstractGenerator
             if (IsAreaPlaceable(worldData, x, y, 3, 4))
             {
                 placeNotFound = false;
-                worldData.GetTile(x + 1, y + 1).SetInteractable(new InteractableSaveData(house));
+                worldData.GetTile(x + 1, y + 1).SetInteractable(new InteractableSaveData("player_house"));
                 worldData.SpawnPoint = new Vector2(x + 1, y);
             }
             else
@@ -129,7 +130,7 @@ public class WorldGenerator : AbstractGenerator
             }
         }
         
-        if(counter >= 100) Debug.LogWarning("Houseplacing took 100 iterations. The process was stopped");
+        if(counter >= maxTries) Debug.LogWarning($"Houseplacing took {counter} iterations. The process was stopped");
     }
 
     private bool IsAreaPlaceable(WorldData data, int centerX, int centerY, int width, int height)
@@ -169,11 +170,10 @@ public class WorldGenerator : AbstractGenerator
         }
     }
 
-    private InteractableData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
+    private InteractableSaveData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
     {
-
-        InteractableData[,] interactables = 
-            new InteractableData[generatorSettings.width, generatorSettings.height];
+        InteractableSaveData[,] interactables = 
+            new InteractableSaveData[generatorSettings.width, generatorSettings.height];
 
         //TODO: разбить побиомно
         for (int x = 0; x < generatorSettings.width; x++)
@@ -191,8 +191,8 @@ public class WorldGenerator : AbstractGenerator
 
                 if (generatedBiome.IsPlug)
                     interactables[x, y] = null;
-                else
-                    interactables[x, y] = generatedBiome.GetRandomInteractable();
+                else if (generatedBiome.GetRandomInteractable(out InteractableData data))
+                    interactables[x, y] = new InteractableSaveData(data);
             }
         }
         

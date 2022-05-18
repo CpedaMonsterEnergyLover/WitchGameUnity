@@ -19,7 +19,7 @@ public class CreateWorldMenu : MonoBehaviour
     public Text confirmRewriteText;
 
     [Header("Loading bar")] 
-    public BaseWorldScene sceneToLoad;
+    public WorldScene sceneToLoad;
     public LoadingBar loadingBar;
     public GameObject panelToDisable;
     public List<string> loadingPhases;

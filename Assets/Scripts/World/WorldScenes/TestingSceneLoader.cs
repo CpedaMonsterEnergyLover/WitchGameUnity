@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace WorldScenes
 {
     public class TestingSceneLoader : MonoBehaviour, IPlayerReceiver
     {
-        public BaseWorldScene sceneToLoad;
+        public WorldScene sceneToLoad;
         
         public void OnReceivePlayer()
         {
-            sceneToLoad.LoadFromAnotherWorld();
+            // sceneToLoad.LoadFromAnotherWorld().Forget();
         }
 
         public void OnPlayerExitReceiver()

@@ -45,7 +45,9 @@ public class InteractablePreview : MonoBehaviour
 
     private void UpdatePreviewPosition()
     {
-        Vector2Int tilePos = InteractionDataProvider.Data.Tile.Position;
+        WorldTile tile = InteractionDataProvider.Data.Tile;
+        if(tile is null) return;
+        Vector2Int tilePos = tile.Position;
         Vector3 newPos = new Vector3(
             tilePos.x + 0.5f, tilePos.y + 0.5f, 0);
         transform.position = newPos;

@@ -17,13 +17,14 @@ public class Biome
     [Range(0, 1)] 
     public float biomeDensity;
     
-    // То что генерится в биоме
     public List<BiomeTile> tiles;
 
 
     public bool IsPlug { get; private set; }
-    public static Biome Plug() => new Biome() { IsPlug = true, priority = -1 };
-
+    // ReSharper disable once ValueRangeAttributeViolation
+    public static Biome Plug() => new() { IsPlug = true, priority = -1 };
+    public float OddsSum { private set; get; }
+    
 
     public bool IsAllowed(WorldNoiseData noiseData, int x, int y)
     {
@@ -37,15 +38,15 @@ public class Biome
         return verdict;
     }
 
-
-    public InteractableData GetRandomInteractable()
+    public bool GetRandomInteractable(out InteractableData data)
     {
-        if (Random.value > biomeDensity) return null;
-         
-        float rnd = Random.Range(0, GetOddsSum());
+        data = null;
+        if (Random.value > biomeDensity) return false;
+        float rnd = Random.Range(0, OddsSum);
         BiomeTile generatedTile = tiles.FirstOrDefault(tile => rnd >= tile.LeftEdge && rnd < tile.RightEdge);
-
-        return generatedTile?.data;
+        if (generatedTile is null) return false;
+        data = generatedTile.data;
+        return data is not null;
     }
 
     public void InitTileSpawnEdges()
@@ -57,10 +58,8 @@ public class Biome
             tile.RightEdge = tile.spawnChance + oddsSum;
             oddsSum = tile.RightEdge;
         });
+        OddsSum = tiles.Sum(tile => tile.spawnChance);
     }
-
-    private float GetOddsSum() => tiles.Sum(tile => tile.spawnChance);
-
 }
 
 [Serializable]

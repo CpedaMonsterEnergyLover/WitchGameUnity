@@ -73,13 +73,16 @@
      <Compile Include="Assets\Scripts\UI\Dialogs\DialogPortrait.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractablePreview.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\InteractableData.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\EditableWorldLayer.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltips\CraftingTooltip.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\HouseWorldLayer.cs" />
      <Compile Include="Assets\Scripts\Interactable\Interfaces\IFlammableInteractable.cs" />
      <Compile Include="Assets\Scripts\World\Layers\WorldLayerEditSettings.cs" />
      <Compile Include="Assets\Scripts\Interactable\Bonfire.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletSpawner.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\WindowKeyListener.cs" />
      <Compile Include="Assets\Scripts\Items\Interface\IDamageableItem.cs" />
+     <Compile Include="Assets\Scripts\GameData\WorldPositionProvider.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingTab.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\Fader.cs" />
      <Compile Include="Assets\Scripts\World\WorldData.cs" />
@@ -120,6 +123,7 @@
      <Compile Include="Assets\Scripts\KeyListeners\InteractionKeyListener.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSettings.cs" />
      <Compile Include="Assets\Scripts\Entities\OldEntity.cs" />
+     <Compile Include="Assets\Scripts\Interactable\DimensionDoor.cs" />
      <Compile Include="Assets\Scripts\Items\Interface\IUsable.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\TreeData.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
@@ -186,18 +190,21 @@
      <Compile Include="Assets\Scripts\Items\Items\BurnableItem.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SliderController.cs" />
+     <Compile Include="Assets\Scripts\Interactable\SaveData\DimensionDoorSaveData.cs" />
      <Compile Include="Assets\Scripts\Player\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArenaBorder.cs" />
-     <Compile Include="Assets\Scripts\GameData\SerializeableQuadArray.cs" />
+     <Compile Include="Assets\Scripts\GameData\Serializeable2DMatrix.cs" />
      <Compile Include="Assets\Scripts\World\Layers\ColorfulWorldLayer.cs" />
      <Compile Include="Assets\Scripts\World\WorldManager.cs" />
      <Compile Include="Assets\Scripts\UI\Health\HeartAnimatorHelper.cs" />
      <Compile Include="Assets\Scripts\World\WorldBounds.cs" />
      <Compile Include="Assets\Scripts\UI\Util\SimpleInitialisationInitiator.cs" />
      <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
+     <Compile Include="Assets\Scripts\Generator\HouseGenerator.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SceneDecorations\ParallaxController.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu\CreateWorldMenu.cs" />
+     <Compile Include="Assets\Scripts\Generator\AbstractGenerator.cs" />
      <Compile Include="Assets\Scripts\Util\IsVisible.cs" />
      <Compile Include="Assets\Scripts\Items\Interface\IEventOnUseStart.cs" />
      <Compile Include="Assets\Scripts\UI\LoadingBars\LoadingBar.cs" />
@@ -205,6 +212,7 @@
      <Compile Include="Assets\Scripts\Health\HeartEffects\HeartEffectData.cs" />
      <Compile Include="Assets\Scripts\Player\FOVFader.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\CropBedSaveData.cs" />
+     <Compile Include="Assets\Scripts\World\Layers\WorldLayer.cs" />
      <Compile Include="Assets\DruidBackground.cs" />
      <Compile Include="Assets\Scripts\World\WorldNoiseData.cs" />
      <Compile Include="Assets\Scripts\Entities\Data\OldEntityData.cs" />
@@ -215,6 +223,7 @@
      <Compile Include="Assets\Scripts\Bosses\BattleArena.cs" />
      <Compile Include="Assets\Scripts\Health\HeartContainerExtensions.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\HumanHeart.cs" />
+     <Compile Include="Assets\Scripts\World\HouseWorldData.cs" />
      <Compile Include="Assets\Scripts\Player\WaterCollider.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineStamp.cs" />
      <Compile Include="Assets\Scripts\Health\HeartOrigin.cs" />
@@ -292,6 +301,7 @@
      <Compile Include="Assets\Scripts\UI\Windows\TemporaryDismissData.cs" />
      <Compile Include="Assets\Scripts\Health\Hearts\ShadowHeart.cs" />
      <Compile Include="Assets\Scripts\Health\HeartTypeSprites.cs" />
+     <Compile Include="Assets\Scripts\GameData\IWorldTransitionInitiator.cs" />
      <Compile Include="Assets\Scripts\UI\Util\INeedsInitialisation.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletGroup.cs" />
      <Compile Include="Assets\Scripts\Bullets\BulletProperties.cs" />
@@ -300,14 +310,6 @@
      <Compile Include="Assets\Scripts\Dialogs\DialogElement.cs" />
      <Compile Include="Assets\Scripts\Items\Data\MeleeWeaponData.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\World\Houses\HouseGenerator.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\WorldTransitionDataProvider.cs" />
-     <Compile Include="Assets\Scripts\World\WorldScenes\IWorldTransitionData.cs" />
-     <Compile Include="Assets\Scripts\World\Houses\HouseWorldData.cs" />
-     <Compile Include="Assets\Scripts\Generator\AbstractGenerator.cs" />
-     <Compile Include="Assets\Scripts\World\Layers\HouseWorldLayer.cs" />
-     <Compile Include="Assets\Scripts\World\Layers\WorldLayer.cs" />
-     <Compile Include="Assets\Scripts\World\Layers\EditableWorldLayer.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -32,7 +32,7 @@ public class InventoryWindow : BaseWindow
 
     private void LoadData()
     {
-        PlayerData playerData = PlayerManager.Instance.PlayerData;
+        PlayerData playerData = GameDataManager.PlayerData;
         if (playerData is not null)
         {
             InventoryData inventoryData = playerData.InventoryData;
@@ -41,7 +41,6 @@ public class InventoryWindow : BaseWindow
             {
                 if(slotData.SaveData is not null) AddItem(Item.Create(slotData.SaveData), slotData.Amount, false);
             }
-            Debug.Log("Loaded inventory");
         }
         else
         {
@@ -110,7 +109,7 @@ public class InventoryWindow : BaseWindow
             if (added <= 0)
             {
                 Debug.Log($"При добавлении в инвентарь {item.Data.name}, {amount} не влезло");
-                if(!isPicked) Entity.Create(new ItemEntitySaveData(item, amount, PlayerManager.Instance.Position));
+                if(!isPicked) Entity.Create(new ItemEntitySaveData(item, amount, PlayerManager.Instance.Pos2D));
                 return startingAmount - amount;
             }
         }

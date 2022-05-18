@@ -48,12 +48,11 @@ public class WorldTile : ICacheable
 
     #endregion
 
-    public WorldTile(int x, int y, bool[] tiles, InteractableData interactableData, Color color)
+    public WorldTile(int x, int y, bool[] tiles, InteractableSaveData saveData, Color color)
     {
         position = new Vector2Int(x, y);
         layers = tiles;
-        savedData = interactableData is null ? null : 
-            new InteractableSaveData(interactableData);
+        savedData = saveData;
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
         this.color = color;
     }

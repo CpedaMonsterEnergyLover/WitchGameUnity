@@ -71,10 +71,11 @@ public class TileLoader : MonoBehaviour
         }
     }
 
-    public void LoadEverything()
+    private void LoadEverything()
     {
-        _worldManager.DrawAllTiles();
-        _worldManager.DrawAllInteractable();
+        for (var x = 0; x < _worldData.MapWidth; x++)
+        for (var y = 0; y < _worldData.MapHeight; y++)
+            LoadTile(_worldData.GetTile(x, y));
         enabled = false;
     }
 
@@ -139,7 +140,7 @@ public class TileLoader : MonoBehaviour
     private void LoadTile(WorldTile tile)
     {
         if(tile.IsBlockedForLoading) return;
-        if (mode is TileLoadingMode.Default) 
+        if (mode is TileLoadingMode.Default or TileLoadingMode.Everything) 
             _worldManager.DrawTile(tile.Position.x, tile.Position.y);
 
         tile.Load();

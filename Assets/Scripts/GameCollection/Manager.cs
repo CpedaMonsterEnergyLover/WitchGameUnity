@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace GameCollection
 {
-    
     public class Manager : MonoBehaviour
     {
         public Items items;
@@ -13,6 +12,8 @@ namespace GameCollection
         public WorldScenesCollection scenesCollection;
         public Hearts heartsCollection;
 
+        private bool _initialized;
+
         private void Awake()
         {
             Init();
@@ -20,12 +21,14 @@ namespace GameCollection
 
         public void Init()
         {
+            if(_initialized) return;
             items.Init();
             entities.Init();
             interactables.Init();
             recipies.Init();
             scenesCollection.Init();
             heartsCollection.Init();
+            _initialized = true;
         }
 
         public static void MapCollection<T>(List<GameObject> objects, Dictionary<string, GameObject> dictionary, string collectionName) where T : Interactable

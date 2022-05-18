@@ -1,4 +1,5 @@
 ﻿using GameSettings;
+using UnityEngine;
 
 public static class WorldSettingsProvider
 {
@@ -11,7 +12,8 @@ public static class WorldSettingsProvider
     {
         return _worldSettings ??= new WorldSettings(
             Difficulty.Normal,
-            WorldSize.Default,
+            WorldSize.Small,
             seed, 7);
     }
 }
+

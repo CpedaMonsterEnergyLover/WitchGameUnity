@@ -59,6 +59,7 @@ public class ScreenFader : MonoBehaviour
     public async UniTask StopFade(float speed = 1f)
     {
         await UniTask.SwitchToMainThread();
+        await UniTask.WaitForFixedUpdate();
         if (speed <= 0.1f) speed = 0.1f;
         _animator.speed = speed;
         _animator.Play("ScreenFaderStop");

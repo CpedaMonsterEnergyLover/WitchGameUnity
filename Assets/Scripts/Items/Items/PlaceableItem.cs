@@ -21,7 +21,7 @@ public class PlaceableItem : Item, IUsable
 
     public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
-        Vector2 playerPos = PlayerManager.Instance.Position;
+        Vector2 playerPos = PlayerManager.Instance.Pos2D;
         return tile is not null && Vector2.Distance(playerPos, tile.Position) <= 2; 
     }
 

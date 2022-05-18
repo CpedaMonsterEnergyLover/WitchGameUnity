@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class EscapeMenuWindow : BaseWindow
 {
-    public SceneLoadingBar loadingBar;
     public GameObject panelToDisable;
     
     public List<Component> toDisable = new();
@@ -15,7 +14,7 @@ public class EscapeMenuWindow : BaseWindow
     public void LoadMainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(0);
     }
 
     public void SaveGame()

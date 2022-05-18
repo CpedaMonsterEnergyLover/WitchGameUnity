@@ -57,8 +57,9 @@ public class CaveManager : WorldManager
     }
 
 
+    /*
     protected override Vector2 GetPlayerSpawn()
     {
         return new Vector2(_caveEntrance.x, _caveEntrance.y);
-    }
+    }*/
 }

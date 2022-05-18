@@ -20,7 +20,7 @@ public class Food : Item, IConsumable
     public bool IsInDistance(Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {
         if (entity is null) return true;
-        Vector2 playerPos = PlayerManager.Instance.Position;
+        Vector2 playerPos = PlayerManager.Instance.Pos2D;
         return Vector2.Distance(playerPos, entity.transform.position) <= 2 ; 
     }
 }

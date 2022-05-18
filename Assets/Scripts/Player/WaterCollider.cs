@@ -31,7 +31,7 @@ public class WaterCollider : MonoBehaviour
     private async UniTask DashEndedUpInWater()
     {
         waterDropsParticleSystem.Play();
-        PlayerManager.Instance.PlayerSpriteRenderer.enabled = false;
+        PlayerManager.Instance.SpriteRenderer.enabled = false;
         PlayerController.Instance.Stop();
         _dismissData = new TemporaryDismissData().Add(toDismiss).HideAll();
 
@@ -44,7 +44,7 @@ public class WaterCollider : MonoBehaviour
     
     private async UniTask TransferBack()
     {
-        PlayerManager.Instance.PlayerSpriteRenderer.enabled = true;
+        PlayerManager.Instance.SpriteRenderer.enabled = true;
         PlayerController.Instance.transform.position = _startDashPosition;
         cameraController.UpdatePosition();
         await ScreenFader.Instance.StopFade();

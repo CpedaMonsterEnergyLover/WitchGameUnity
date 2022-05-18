@@ -2742,6 +2742,7 @@ MonoBehaviour:
   - {fileID: 1392234063504567002, guid: 50796931bf000da41aadc70d50c911ac, type: 3}
   - {fileID: 1392234063504567002, guid: 7eace9936945ab549b7f59f208101514, type: 3}
   - {fileID: 1392234063504567002, guid: f3252dbbb15593a49b406dcafca9b402, type: 3}
+  - {fileID: 3726928815264908847, guid: db7b4f2cebc6a9845b60f39e8dd03823, type: 3}
 --- !u!1 &4201173695522425213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2787,8 +2788,8 @@ Camera:
   m_GameObject: {fileID: 4201173695522425213}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.3207547, g: 0.085938044, b: 0.085938044, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2798,9 +2799,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.069907404
-    width: 0.16744792
-    height: 0.16744791
+    y: 0.08240741
+    width: 0.14166668
+    height: 0.14166667
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -2945,6 +2946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4201173696147478470}
   - component: {fileID: 7670165049607327331}
+  - component: {fileID: 1995443970242923228}
   m_Layer: 0
   m_Name: GameSystem
   m_TagString: Untagged
@@ -2994,6 +2996,19 @@ MonoBehaviour:
   - {fileID: 7475466305816460848}
   - {fileID: 4201173695992166054}
   - {fileID: 5126094273147159942}
+--- !u!114 &1995443970242923228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201173696147478464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba29148d0a414adc876f78faaffa818f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameCollectionManager: {fileID: 4201173695128274898}
 --- !u!1 &4201173696535213768
 GameObject:
   m_ObjectHideFlags: 0
@@ -3155,7 +3170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowIdentifier: 4
-  loadingBar: {fileID: 0}
   panelToDisable: {fileID: 9037014318780884920}
   toDisable:
   - {fileID: 5770427222114853192}
@@ -7237,6 +7251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba29148d0a414adc876f78faaffa818f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameCollectionManager: {fileID: 0}
 --- !u!1 &6408117352593234131
 GameObject:
   m_ObjectHideFlags: 0
@@ -7974,27 +7989,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4df0640fa4cc3ac8d6070ee7d4ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHearts: 0
   inventoryWindow: {fileID: 1263883388779890704}
   playerTransform: {fileID: 3741353573745283470}
-  playerData:
-    health: 0
-    position: {x: 0, y: 0}
-    timelineStamp:
-      year: 0
-      month: 0
-      day: 0
-      hours: 0
-      minutes: 0
-    totalHours: 0
-    minutesPassed: 0
-    inventoryData:
-      slots: []
-      slotsAmount: 0
   spriteRenderer: {fileID: 8360372881726588196}
-  references:
-    version: 2
-    RefIds: []
 --- !u!50 &8777431442651170765
 Rigidbody2D:
   serializedVersion: 4
@@ -9309,6 +9306,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ebd2e277bd1d7449b487ebe748cb713, type: 2}
   - {fileID: 11400000, guid: c7af4eef0de409049987150093caf788, type: 2}
   - {fileID: 11400000, guid: 96bd2826ae390654c98753571859646d, type: 2}
+  - {fileID: 11400000, guid: 60ca5ddd0b013ac43996b9180c717ebe, type: 2}
 --- !u!1 &8522237459940104083
 GameObject:
   m_ObjectHideFlags: 0

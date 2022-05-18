@@ -10,7 +10,8 @@ public class WorldManager : MonoBehaviour
     public static WorldManager Instance { get; protected set; }
 
     [Header("WorldScene")]
-    public BaseWorldScene worldScene;
+    public WorldScene worldScene;
+    public int subWorldIndex;
     
     [Header("Игровые настройки")]
     public PlayerSettings playerSettings;
@@ -51,7 +52,6 @@ public class WorldManager : MonoBehaviour
         ScreenFader.Instance.PlayBlack();
         ClearAllTiles();
         ClearAllInteractable();
-        GameDataManager.DeleteTemporaryData(worldScene);
         PostStart().Forget();
     }
 
@@ -61,25 +61,33 @@ public class WorldManager : MonoBehaviour
         await LoadData();
         ONWorldLoaded?.Invoke();
         if(hasBounds) worldBounds.Init(WorldData);
-        PlayerManager.Instance.Position = GetPlayerSpawn();
-        await ScreenFader.Instance.StopFade(0.5f);
+        SpawnPlayer();
+        ScreenFader.Instance.StopFade(2f).Forget();
+    }
+
+    private void SpawnPlayer()
+    {
+        Vector2 playerPosition = WorldPositionProvider.PlayerPosition;
+        PlayerManager.Instance.SetPosition(
+            playerPosition.Equals(Vector2.negativeInfinity) ?
+            WorldData.SpawnPoint :
+            playerPosition);
     }
     
     private async UniTask LoadData()
     {
-        var loadedData = GameDataManager.LoadPersistentWorldData(worldScene);
+        var loadedData = GameDataManager.LoadPersistentWorldData(worldScene.GetFileName());
         
         // Если файла мира еще нет, генерирует его
         if (loadedData is null)
         {
-            GameDataManager.DeleteTemporaryData(worldScene);
             if (Application.isEditor) Instance = this;
             WorldData = await generator.GenerateWorldData(layers, worldScene);
         }
         // Если он уже есть
         else
         {
-            var tempData = GameDataManager.LoadTemporaryWorldData(worldScene);
+            var tempData = GameDataManager.LoadTemporaryWorldData(worldScene.GetFileName());
             // Если найден временный файл, мержит его
             if (tempData is not null)
             {
@@ -88,6 +96,7 @@ public class WorldManager : MonoBehaviour
                     loadedData.GetTile(tile.Position.x, tile.Position.y)
                         .MergeData(tile, true);
                 Debug.Log($"{tempData.Count} merged;");
+                GameDataManager.DeleteTemporaryData(worldScene);
             }
             else
             {
@@ -115,40 +124,12 @@ public class WorldManager : MonoBehaviour
         Instance = this;
         WorldData = await generator.GenerateWorldData(layers, worldScene, true);
     }
-
-    
-    protected virtual Vector2 GetPlayerSpawn()
-    {
-        Vector2 spawnPoint = WorldData.SpawnPoint;
-
-        PlayerData playerData = PlayerManager.Instance.PlayerData;
-        if (playerData is not null)
-        {
-            spawnPoint = playerData.Position;
-        }
-
-        return spawnPoint;
-    }
     
     public void DrawAllTiles()
     {
-        /*IEnumerator Routine()
-        {
-            for (int x = 0; x < WorldData.MapWidth; x++)
-            for (int y = 0; y < WorldData.MapHeight; y++)
-            {
-                DrawTile(x, y);
-                yield return new WaitForSecondsRealtime(0.1f);
-            } 
-        }
-
-        StartCoroutine(Routine());*/
-        
         for (int x = 0; x < WorldData.MapWidth; x++)
         for (int y = 0; y < WorldData.MapHeight; y++)
-        {
             DrawTile(x, y);
-        } 
     }
 
     public void DrawAllInteractable()
@@ -168,7 +149,6 @@ public class WorldManager : MonoBehaviour
     public void DrawTile(int x, int y)
     {
         Vector3Int position = new Vector3Int(x, y, 0);
-
         WorldTile tile = WorldData.GetTile(x, y);
         
         for (var i = 0; i < layers.Count; i++)
@@ -187,10 +167,7 @@ public class WorldManager : MonoBehaviour
 
     public void EraseTile(Vector3Int position)
     {
-        layers.ForEach(layer =>
-        {
-            layer.tilemap.SetTile(position, null); 
-        });
+        layers.ForEach(layer => layer.tilemap.SetTile(position, null));
     }
 
     public void ClearAllInteractable()
@@ -202,7 +179,8 @@ public class WorldManager : MonoBehaviour
     public bool TryGetTopLayer(WorldTile tile, out WorldLayer topLayer)
     {
         topLayer = null;
-        var tileLayers = tile.Layers;
+        if (tile is null) return false;
+        bool[] tileLayers = tile.Layers;
         for (var i = 0; i < tileLayers.Length; i++)
             if (tileLayers[i])
                 topLayer = layers[i];
@@ -212,6 +190,7 @@ public class WorldManager : MonoBehaviour
     public bool TryGetEditableTopLayer(WorldTile tile, out EditableWorldLayer topLayer)
     {
         topLayer = null;
+        if (tile is null) return false;
         var tileLayers = tile.Layers;
         for (var i = 0; i < tileLayers.Length; i++)
             if (tileLayers[i])

@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
+using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using WorldScenes;
 
 public class GameDataManager : MonoBehaviour
 {
+    [SerializeField] private GameCollection.Manager gameCollectionManager;
+
+    private static bool _firstBoot = true;
+    public static PlayerData PlayerData { get; private set; }
+    
     private void Awake()
     {
+        if (!_firstBoot) return;
         InitDirPaths();
         ClearTemp();
-    }
-
-    public static void InitDirPaths()
-    {
-        _tempDir = Application.persistentDataPath + TempDir;
-        _persDir = Application.persistentDataPath + PersDir;
-        _playerDir = Application.persistentDataPath + PlayerDir;
+        gameCollectionManager.Init();
+        PlayerData = LoadPlayerData();
+        WorldPositionProvider.PlayerPosition = PlayerData?.Position ?? Vector2.negativeInfinity;
+        _firstBoot = false;
     }
 
     private const string PersDir = "/Save/Persistent/";
@@ -27,17 +29,21 @@ public class GameDataManager : MonoBehaviour
     private static string _tempDir;
     private static string _persDir;
     private static string _playerDir;
-
-    public int CurrentSubWorldIndex { get; set; } = -1;
     
-
+    public static void InitDirPaths()
+    {
+        _tempDir = Application.persistentDataPath + TempDir;
+        _persDir = Application.persistentDataPath + PersDir;
+        _playerDir = Application.persistentDataPath + PlayerDir;
+    }
+    
     public static async UniTask SaveAll()
     {
         await MergeAllWorldData();
         WorldManager.Instance.UnloadAllEntities();
-        Debug.Log("Unloaded entities");
+        Debug.Log("Unload entities");
         TileLoader.Instance.Reload();
-        Debug.Log("Reloaded tile loader");
+        Debug.Log("Reload tile loader");
         SavePlayerData();
         await SavePersistentWorldData(WorldManager.Instance.WorldData);
     }
@@ -50,15 +56,18 @@ public class GameDataManager : MonoBehaviour
     }
     
     
-    public static async UniTask SavePersistentWorldData(WorldData data)
+    public static async UniTask SavePersistentWorldData(WorldData data, string overrideFileName = null)
     {
         string dir = _persDir;
+        
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
-        if (!Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
+        StringBuilder sb = new StringBuilder()
+            .Append(dir);
+        sb.Append(overrideFileName ?? data.WorldScene.GetFileName());
 
         string json = JsonUtility.ToJson(data, true);
-        await File.WriteAllTextAsync(dir + data.WorldScene.FileName, json);
+        await File.WriteAllTextAsync(sb.ToString(), json);
     }
 
     private static void SavePlayerData()
@@ -82,13 +91,14 @@ public class GameDataManager : MonoBehaviour
             string json = File.ReadAllText(path);
             loadedData = JsonUtility.FromJson<PlayerData>(json);
         }
+        CountWorldParts();
         
         return loadedData;
     }
     
-    public static WorldData LoadPersistentWorldData(BaseWorldScene worldScene)
+    public static WorldData LoadPersistentWorldData(string fileName)
     {
-        string path = _persDir + worldScene.FileName;
+        string path = _persDir + fileName;
         WorldData loadedData = null;
 
         if (File.Exists(path))
@@ -101,7 +111,25 @@ public class GameDataManager : MonoBehaviour
         return loadedData;
     }
 
-    public static void SaveTemporaryWorldData()
+    private static void CountWorldParts()
+    {
+        Dictionary<string, int> sceneCounts = new();
+        
+        DirectoryInfo directoryInfo = new DirectoryInfo(_persDir);
+        FileInfo[] files = directoryInfo.GetFiles("*.json");
+        foreach (FileInfo info in files)
+        {
+            string sceneName = info.Name.Split("_")[0];
+            if (!WorldScenesCollection.MultipartSceneNames.Contains(sceneName)) continue;
+            if (sceneCounts.ContainsKey(sceneName)) sceneCounts[sceneName]++;
+            else sceneCounts.Add(sceneName, 1);
+        }
+
+        foreach (var (key, value) in sceneCounts)
+            ((MultipartWorldScene) WorldScenesCollection.Get(key)).SubWorldsCount = value;
+    }
+    
+    public static async UniTask SaveTemporaryWorldData()
     {
         string dir = _tempDir;
 
@@ -109,17 +137,16 @@ public class GameDataManager : MonoBehaviour
             Directory.CreateDirectory(dir);
 
         WorldManager.Instance.UnloadAllEntities();
-        // TODO: save changed tiles in an array
-        var changedTiles = 
-            WorldManager.Instance.WorldData.Changes;
-        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);
-        File.WriteAllText(dir + WorldManager.Instance.worldScene.FileName, json);
         
+        // TODO: rework changes gathering algorithm
+        List<WorldTile> changedTiles = WorldManager.Instance.WorldData.Changes;
+        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);
+        await File.WriteAllTextAsync(dir + WorldManager.Instance.worldScene.GetFileName(), json);
     }
 
-    public static List<WorldTile> LoadTemporaryWorldData(BaseWorldScene worldScene)
+    public static List<WorldTile> LoadTemporaryWorldData(string fileName)
     {
-        string path = _tempDir + worldScene.FileName;
+        string path = _tempDir + fileName;
         if (!File.Exists(path)) return null;
         
         string json = File.ReadAllText(path);
@@ -144,7 +171,7 @@ public class GameDataManager : MonoBehaviour
         foreach (FileInfo file in dirInfo.GetFiles())
         {
             string fileName = file.Name;
-            string sceneName = fileName.Split('.')[0];
+            string sceneName = fileName.Split('.')[0].Split("_")[0];
             var scene = WorldScenesCollection.Get(sceneName);
             
             
@@ -152,15 +179,15 @@ public class GameDataManager : MonoBehaviour
                 throw new Exception(
                     $"Undefined worldscene name: \"{sceneName}\".");
             
-            if(scene == WorldManager.Instance.worldScene) return;
+            if(sceneName == WorldManager.Instance.worldScene.sceneName) return;
 
-            var temporaryData = LoadTemporaryWorldData(scene);
+            var temporaryData = LoadTemporaryWorldData(fileName);
             if (temporaryData is null)
                 throw new Exception(
                     $"Couldn't load temp data for scene\"{sceneName}\"." +
                     $" File \"{fileName}\" might be corrupted.");
             
-            WorldData persistentData = LoadPersistentWorldData(scene);
+            WorldData persistentData = LoadPersistentWorldData(fileName);
             if(persistentData is null) 
                 throw new Exception(
                     $"Couldn't merge temp data for scene \"{sceneName}\"," +
@@ -174,16 +201,16 @@ public class GameDataManager : MonoBehaviour
             
             Debug.Log($"Merging {fileName}");
          
-            await SavePersistentWorldData(persistentData);
+            await SavePersistentWorldData(persistentData, fileName);
         }
         Debug.Log("Merge complete");
 
         await UniTask.Yield();
     }
 
-    public static void DeleteTemporaryData(BaseWorldScene worldScene)
+    public static void DeleteTemporaryData(WorldScene worldScene)
     {
-        string path = _tempDir + worldScene.FileName;
+        string path = _tempDir + worldScene.GetFileName();
         if (File.Exists(path)) File.Delete(path);
     }
 
@@ -200,6 +227,7 @@ public class GameDataManager : MonoBehaviour
     
     private static void DeleteAllInDir(string directory)
     {
+        if(!Directory.Exists(directory)) return;
         DirectoryInfo dir = new DirectoryInfo(directory);
         foreach (FileInfo file in dir.GetFiles())
         {

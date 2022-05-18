@@ -85,7 +85,7 @@ public class TimelineManager : MonoBehaviour
 
     private void LoadData()
     {
-        PlayerData playerData = PlayerManager.Instance.PlayerData;
+        PlayerData playerData = GameDataManager.PlayerData;
         if (playerData is not null)
         {
             time = TimelineStamp.FromLoadedStamp(playerData.TimelineStamp);

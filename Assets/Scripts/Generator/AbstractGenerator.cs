@@ -8,6 +8,6 @@ public abstract class AbstractGenerator : MonoBehaviour
     
     public abstract UniTask<WorldData> GenerateWorldData(
         List<WorldLayer> layers,
-        BaseWorldScene worldScene,
+        WorldScene worldScene,
         bool fromEditor = false);
 }
