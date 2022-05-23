@@ -1,4 +1,5 @@
-﻿using GameSettings;
+﻿using System.Text;
+using GameSettings;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,7 +12,13 @@ public class WorldSettings
 
     public Difficulty Difficulty => difficulty;
     public WorldSize Size => size;
-    public string Seed => seed;
+    public string Seed 
+        => new StringBuilder()
+            .Append(seed)
+            .Append(WorldManager.Instance.worldScene.sceneName)
+            .Append(WorldPositionProvider.WorldIndex)
+            .ToString();
+    
     public int SeasonLength => seasonLength;
 
     public WorldSettings(

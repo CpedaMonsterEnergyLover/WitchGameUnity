@@ -16,7 +16,6 @@ public class CaveManager : WorldManager
     // TODO something with this
     public /*override*/ async UniTaskVoid GenerateWorld()
     {
-        gameCollectionManager.Init();
         WorldData = generator.GenerateWorldData(layers, worldScene).GetAwaiter().GetResult();
         Instance = this;
         
@@ -36,7 +35,7 @@ public class CaveManager : WorldManager
         WorldData.GetTile(_caveEntrance.x, _caveEntrance.y).savedData =
             new InteractableSaveData("cave_entrance");
         
-        ClampWorldData(mainHollow);
+        // ClampWorldData(mainHollow);
         
         ClearAllTiles();
  
@@ -47,14 +46,7 @@ public class CaveManager : WorldManager
 
     }
 
-    private void ClampWorldData(List<Vector3Int> mainHollow)
-    {
-        int minX = mainHollow.Min(i => i.x) - 6;
-        int minY = mainHollow.Min(i => i.y) - 6;
-        int maxX = mainHollow.Max(i => i.x) + 6;
-        int maxY = mainHollow.Max(i => i.y) + 6;
-        WorldData.ClampInto(minX, minY, maxX, maxY);
-    }
+
 
 
     /*

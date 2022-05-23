@@ -19,6 +19,7 @@ public class WorldTile : ICacheable
     [SerializeField] private Color color;
 
 
+    public Vector2 Center => Position + new Vector2(0.5f, 0.5f);
     private List<Entity> CachedEntities { get; set; } = new ();
     private Interactable InstantiatedInteractable { get; set; }
     public bool IsBlockedForLoading { get; set; }

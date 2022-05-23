@@ -45,6 +45,11 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     public void OnPlayerExitReceiver()
     { }
 
+    /*  TODO:
+        1. Предметы которые нельзя ставить в доме
+        2. GameSystemLoader
+        3. Сохранение сцены на которой вышел игрок
+    */  
     public override void OnTileLoad(WorldTile loadedTile) 
     {
         base.OnTileLoad(loadedTile);

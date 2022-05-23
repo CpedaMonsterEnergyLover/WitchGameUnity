@@ -17,8 +17,6 @@ public class TileLoader : MonoBehaviour
 
     #endregion
     
-    
-    
     public enum TileLoadingMode
     {
         Default, // Loads interactables and draws tiles around player
@@ -35,15 +33,15 @@ public class TileLoader : MonoBehaviour
     private WorldData _worldData;
     private WorldManager _worldManager;
 
-    public Cache<WorldTile> TileCache { get; private set; }
+    private Cache<WorldTile> TileCache { get; set; }
 
+    private void ResetPreviousPosition()  => PreviousPlayerPosition = new Vector3Int(int.MaxValue, int.MaxValue, 0);
+    private Vector3Int PreviousPlayerPosition { get; set; }
+    
     private void Start()
     {
-        playerTransform = PlayerController.Instance.transform;
-        _worldManager = WorldManager.Instance;
-
         enabled = false;
-
+        ResetPreviousPosition();
         WorldManager.ONWorldLoaded += ActivateAfterWorldLoad;
     }
 
@@ -54,6 +52,9 @@ public class TileLoader : MonoBehaviour
 
     private void ActivateAfterWorldLoad()
     {
+        playerTransform = PlayerManager.Instance.Transform;
+        _worldManager = WorldManager.Instance;
+        
         enabled = true;
         _worldData = _worldManager.WorldData;
         TileCache = new Cache<WorldTile>(WorldManager.Instance.playerSettings.tileCacheSize);
@@ -62,13 +63,9 @@ public class TileLoader : MonoBehaviour
             throw new Exception("TileLoader активен, но мир не сгенерирован");
 
         if (mode is TileLoadingMode.Everything)
-        {
             LoadEverything();
-        }
-        else if (mode is TileLoadingMode.OnlyInteractables)
-        {
+        else if (mode is TileLoadingMode.OnlyInteractables) 
             _worldManager.DrawAllTiles();
-        }
     }
 
     private void LoadEverything()
@@ -78,12 +75,18 @@ public class TileLoader : MonoBehaviour
             LoadTile(_worldData.GetTile(x, y));
         enabled = false;
     }
-
+    
     private void FixedUpdate()
     {
-        if(_worldData is null) return;
-        // Прогрузка тайлов вокруг игрока
+        if (_worldData is null)
+        {
+            Debug.Log("WorldData is null");
+            return;
+        }
         var playerPosition = Vector3Int.FloorToInt(playerTransform.position);
+        if(playerPosition.Equals(PreviousPlayerPosition)) return;
+        
+        PreviousPlayerPosition = playerPosition;
         for (var x = -viewRangeX; x <= viewRangeX; x++)
         for (var y = -viewRangeY; y <= viewRangeY; y++)
         {
@@ -141,7 +144,7 @@ public class TileLoader : MonoBehaviour
     {
         if(tile.IsBlockedForLoading) return;
         if (mode is TileLoadingMode.Default or TileLoadingMode.Everything) 
-            _worldManager.DrawTile(tile.Position.x, tile.Position.y);
+            _worldManager. DrawTile(tile);
 
         tile.Load();
         TileCache.Remove(tile);
@@ -158,6 +161,11 @@ public class TileLoader : MonoBehaviour
             tile.IsLoaded = false;
         }
         _loadedTiles = new List<WorldTile>();
+        ResetPreviousPosition();
+        if (mode is TileLoadingMode.Everything)
+            LoadEverything();
+        else if (mode is TileLoadingMode.OnlyInteractables) 
+            _worldManager.DrawAllTiles();
     }
     
 }

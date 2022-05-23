@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class House : Interactable, IPlayerReceiver, IWorldTransitionInitiator
+public class House : DimensionDoor
 {
     public new HouseData Data => (HouseData) data;
     public new DimensionDoorSaveData SaveData => (DimensionDoorSaveData) saveData;
@@ -9,52 +9,40 @@ public class House : Interactable, IPlayerReceiver, IWorldTransitionInitiator
 
     #region IWorldTransitionInitiator
 
-    public object[] WorldTransitionInitiatorData => new object[]
+    public override object[] TransitionData => new object[]
     {
         Data,
         new DimensionDoorSaveData
         {
             initialized = true,
             id = "house_door",
-            position = new Vector2(tile.Position.x, tile.Position.y),
+            position = new Vector2(tile.Position.x + 0.2f, tile.Position.y),
             creationHour = 0,
             sceneToLoad = WorldManager.Instance.worldScene,
             subWorldIndex = -1
         }
     };
-
-    public Vector2 SpawnPosition => new(Data.doorPosition + 0.5f, 1.5f);
-
+    
     #endregion
-
-    public void OnReceivePlayer()
+    
+    protected override async UniTask EnterDoor()
     {
-        EnterHouse().Forget();
-    }
-
-    private async UniTaskVoid EnterHouse()
-    {
-        await ScreenFader.Instance.StartFade(2f);
-        bool hasWorld = SaveData.subWorldIndex != -1;
-        if (!hasWorld)
+        bool needWorld = SaveData.subWorldIndex == -1;
+        if (needWorld)
             SaveData.subWorldIndex = ((MultipartWorldScene) SaveData.sceneToLoad).SubWorldsCount;
-        await SaveData.sceneToLoad.LoadFromAnotherWorld(this, SaveData.subWorldIndex);
+        await base.EnterDoor();
     }
-
     protected override void InitSaveData(InteractableData origin)
     {
         saveData = new DimensionDoorSaveData
         {
             id = origin.id,
             initialized = true,
-            position = new Vector2(Data.doorPosition + 1.5f, 1.5f),
+            position = new Vector2(Data.doorPosition + 0.5f, 1.5f),
             creationHour = 0,
             sceneToLoad = WorldScenesCollection.Get("HouseWorld"),
             subWorldIndex = -1
         };
     }
 
-    public void OnPlayerExitReceiver()
-    { }
-    
 }

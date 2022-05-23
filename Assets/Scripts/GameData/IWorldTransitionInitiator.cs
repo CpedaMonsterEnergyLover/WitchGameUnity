@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public interface IWorldTransitionInitiator
 {
-    public object[] WorldTransitionInitiatorData { get; }
-    public Vector2 SpawnPosition { get; }
+    public object[] TransitionData { get; }
+    public Vector2 TransitionPosition { get; }
+    public Action TransitionCallback { get; }
 }

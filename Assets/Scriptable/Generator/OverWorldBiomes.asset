@@ -113,6 +113,8 @@ MonoBehaviour:
     tiles:
     - data: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
       spawnChance: 1
+    - data: {fileID: 11400000, guid: 1ca05e4a4ceb81d4db8e868c7170548e, type: 2}
+      spawnChance: 0.01
   - name: "\u041C\u0430\u043A"
     priority: 1
     rules:

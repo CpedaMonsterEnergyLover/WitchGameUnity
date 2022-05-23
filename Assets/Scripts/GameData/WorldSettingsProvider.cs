@@ -10,7 +10,7 @@ public static class WorldSettingsProvider
 
     public static WorldSettings GetSettings(string seed = "wednesday")
     {
-        return _worldSettings ??= new WorldSettings(
+        return _worldSettings??= new WorldSettings(
             Difficulty.Normal,
             WorldSize.Small,
             seed, 7);

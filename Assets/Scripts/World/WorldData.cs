@@ -90,12 +90,14 @@ public class WorldData
         maxY = Math.Clamp(maxY, 0, MapHeight);
         int mapWidth = maxX - minX;
         int mapHeight = maxY - minY;
-        Serializeable2DMatrix<WorldTile> newData = new Serializeable2DMatrix<WorldTile>(mapWidth, mapHeight);
+        int wDiff = MapWidth - mapWidth;
+        int hDiff = MapHeight - mapHeight;
+        var newData = new Serializeable2DMatrix<WorldTile>(mapWidth, mapHeight);
 
         for(int x = 0; x < mapWidth; x++)
         for (int y = 0; y < mapHeight; y++)
         {
-            WorldTile newTile = worldTiles.Get(x, y);
+            WorldTile newTile = worldTiles.Get(x + minX, y + minY);
             newTile.Position = new Vector2Int(x, y);
             newData.Set(x,y, newTile);
         }

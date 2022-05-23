@@ -13,6 +13,7 @@ TagManager:
   - New tag
   - HostileBullet
   - FriendlyBullet
+  - GameSystem
   layers:
   - Default
   - TransparentFX

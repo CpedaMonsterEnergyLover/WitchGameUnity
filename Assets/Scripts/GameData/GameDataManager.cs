@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
 {
-    [SerializeField] private GameCollection.Manager gameCollectionManager;
-
     private static bool _firstBoot = true;
     public static PlayerData PlayerData { get; private set; }
     
@@ -17,10 +15,15 @@ public class GameDataManager : MonoBehaviour
         if (!_firstBoot) return;
         InitDirPaths();
         ClearTemp();
-        gameCollectionManager.Init();
         PlayerData = LoadPlayerData();
         WorldPositionProvider.PlayerPosition = PlayerData?.Position ?? Vector2.negativeInfinity;
         _firstBoot = false;
+    }
+
+    private void OnDestroy()
+    {
+        _firstBoot = true;
+        PlayerData = null;
     }
 
     private const string PersDir = "/Save/Persistent/";
@@ -91,7 +94,6 @@ public class GameDataManager : MonoBehaviour
             string json = File.ReadAllText(path);
             loadedData = JsonUtility.FromJson<PlayerData>(json);
         }
-        CountWorldParts();
         
         return loadedData;
     }
@@ -111,7 +113,7 @@ public class GameDataManager : MonoBehaviour
         return loadedData;
     }
 
-    private static void CountWorldParts()
+    public static void CountWorldParts()
     {
         Dictionary<string, int> sceneCounts = new();
         
@@ -128,20 +130,17 @@ public class GameDataManager : MonoBehaviour
         foreach (var (key, value) in sceneCounts)
             ((MultipartWorldScene) WorldScenesCollection.Get(key)).SubWorldsCount = value;
     }
-    
-    public static async UniTask SaveTemporaryWorldData()
+
+    public static async UniTask SaveTemporaryWorldData(WorldData worldData, string fileName)
     {
         string dir = _tempDir;
 
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
-
-        WorldManager.Instance.UnloadAllEntities();
         
         // TODO: rework changes gathering algorithm
-        List<WorldTile> changedTiles = WorldManager.Instance.WorldData.Changes;
-        string json = JsonUtility.ToJson(new TemporaryWorldData(changedTiles), true);
-        await File.WriteAllTextAsync(dir + WorldManager.Instance.worldScene.GetFileName(), json);
+        string json = JsonUtility.ToJson(new TemporaryWorldData(worldData.Changes), true);
+        await File.WriteAllTextAsync(dir + fileName, json);
     }
 
     public static List<WorldTile> LoadTemporaryWorldData(string fileName)

@@ -6,6 +6,8 @@ using UnityEngine;
 public class ToolHolder : MonoBehaviour, ITemporaryDismissable
 {
     public static ToolHolder Instance { get; private set; }
+    private void Awake() => Instance = this;
+    
     [SerializeField] private Transform particlesTransform;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer itemRenderer;
@@ -131,7 +133,6 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
     private void Start()
     {
         _particleSystem = null;
-        Instance = this;
         SetIcon(null);
         HotbarWindow.ONSelectedSlotChanged += UpdateHoldedItem;
     }

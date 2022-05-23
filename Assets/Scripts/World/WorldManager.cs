@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using TileLoading;
@@ -11,12 +10,10 @@ public class WorldManager : MonoBehaviour
 
     [Header("WorldScene")]
     public WorldScene worldScene;
-    public int subWorldIndex;
     
     [Header("Игровые настройки")]
     public PlayerSettings playerSettings;
 
-    public GameCollection.Manager gameCollectionManager;
     
     [Header("К чему крепить Interactable")]
     public Transform interactableTransform;
@@ -27,8 +24,6 @@ public class WorldManager : MonoBehaviour
     
     [Header("Слои грида")]
     public List<WorldLayer> layers;
-    public bool hasBounds;
-    public WorldBounds worldBounds;
     
     public WorldData WorldData { get; protected set; }
 
@@ -39,12 +34,14 @@ public class WorldManager : MonoBehaviour
     public delegate void WorldLoadingEvent();
     public static event WorldLoadingEvent ONWorldLoaded;
     
+    public static bool WorldLoaded { get; private set; }
     
     private void Awake()
     {
         Application.targetFrameRate = playerSettings.targetFrameRate;
         EntityCache = new Cache<Entity>(playerSettings.entitiesCacheSize);
         Instance = this;
+        WorldLoaded = false;
     }
     
     private void Start()
@@ -60,7 +57,7 @@ public class WorldManager : MonoBehaviour
         await UniTask.NextFrame();
         await LoadData();
         ONWorldLoaded?.Invoke();
-        if(hasBounds) worldBounds.Init(WorldData);
+        WorldLoaded = true;
         SpawnPlayer();
         ScreenFader.Instance.StopFade(2f).Forget();
     }
@@ -121,18 +118,31 @@ public class WorldManager : MonoBehaviour
 
     public async UniTask GenerateFromEditor()
     {
+        GameCollection.Manager gameCollection = FindObjectOfType<GameCollection.Manager>();
+        if (gameCollection is null)
+        {
+            PrettyDebug.Log("Unable to find GameCollection.Manager on the scene", this);
+            return;
+        }
+        ClearAllTiles();
+        gameCollection.Init();
         Instance = this;
         WorldData = await generator.GenerateWorldData(layers, worldScene, true);
+        DrawAllTiles();
+        DrawAllInteractable();
     }
     
-    public void DrawAllTiles()
+    public void DrawAllTiles(WorldData data = null)
     {
+        WorldData previousData = WorldData;
+        if (data is not null) WorldData = data;
         for (int x = 0; x < WorldData.MapWidth; x++)
         for (int y = 0; y < WorldData.MapHeight; y++)
-            DrawTile(x, y);
+            DrawTile(WorldData.GetTile(x, y));
+        WorldData = previousData;
     }
 
-    public void DrawAllInteractable()
+    private void DrawAllInteractable()
     {
         for (int x = 0; x < WorldData.MapWidth; x++)
         for (int y = 0; y < WorldData.MapHeight; y++)
@@ -145,12 +155,10 @@ public class WorldManager : MonoBehaviour
         ClearAllInteractable();
         WorldData = null;
     }
-    
-    public void DrawTile(int x, int y)
+
+    public void DrawTile(WorldTile tile)
     {
-        Vector3Int position = new Vector3Int(x, y, 0);
-        WorldTile tile = WorldData.GetTile(x, y);
-        
+        Vector3Int position = (Vector3Int) tile.Position;
         for (var i = 0; i < layers.Count; i++)
         {
             WorldLayer layer = layers[i];
@@ -159,12 +167,10 @@ public class WorldManager : MonoBehaviour
         }
 
         if (WorldData.ColorLayerIndex != -1)
-        {
             layers[WorldData.ColorLayerIndex].tilemap
                 .SetColor(position, tile.Color);
-        }
     }
-
+    
     public void EraseTile(Vector3Int position)
     {
         layers.ForEach(layer => layer.tilemap.SetTile(position, null));

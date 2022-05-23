@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WorldBounds : MonoBehaviour
 {
@@ -9,11 +10,22 @@ public class WorldBounds : MonoBehaviour
     public BoxCollider2D bottom;
     public float x;
     public float y;
-    
-    public void Init(WorldData world)
+
+    private void Awake()
     {
-        float w = world.MapWidth;
-        float h = world.MapHeight;
+        WorldManager.ONWorldLoaded += ActivateBounds;
+    }
+
+    private void OnDestroy()
+    {
+        WorldManager.ONWorldLoaded -= ActivateBounds;
+    }
+
+    private void ActivateBounds()
+    {
+        WorldData worldData = WorldManager.Instance.WorldData;
+        float w = worldData.MapWidth;
+        float h = worldData.MapHeight;
         left.size = new Vector2(x, h);
         top.size = new Vector2(w, y);
         right.size = new Vector2(x, h);
@@ -24,6 +36,7 @@ public class WorldBounds : MonoBehaviour
         bottom.offset = new Vector2(w / 2, y / 2);
     }
 
+    // No need to check if other collider is player because worldBorder layer is only collides with player layer
     private void OnCollisionEnter2D(Collision2D other)
     {
         DialogWindow.Instance.StartDialog(dialogTree);

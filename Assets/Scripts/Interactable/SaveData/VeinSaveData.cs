@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class VeinSaveData : InteractableSaveData
 {
-    [SerializeField] public int health = Random.Range(2,7);
+    [SerializeField] public int health;
 
     public VeinSaveData(InteractableData origin) : base(origin) { }
     private VeinSaveData() { }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
 namespace GameCollection
 {
     public class Manager : MonoBehaviour
@@ -12,23 +11,30 @@ namespace GameCollection
         public WorldScenesCollection scenesCollection;
         public Hearts heartsCollection;
 
-        private bool _initialized;
+        private static bool Initialized { get; set; }
 
         private void Awake()
         {
+            PrettyDebug.Log("Initialisation", this);
             Init();
+        }
+
+        private void OnDestroy()
+        {
+            Initialized = false;
         }
 
         public void Init()
         {
-            if(_initialized) return;
+            if(Initialized) return;
             items.Init();
             entities.Init();
             interactables.Init();
             recipies.Init();
             scenesCollection.Init();
             heartsCollection.Init();
-            _initialized = true;
+            Initialized = true;
+            if(Application.isPlaying) GameDataManager.CountWorldParts();
         }
 
         public static void MapCollection<T>(List<GameObject> objects, Dictionary<string, GameObject> dictionary, string collectionName) where T : Interactable

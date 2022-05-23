@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 public class CavePolisher : MonoBehaviour
 {
-    public Transform gridTransform;
-    public Sprite polishingSprite;
-    public TileBase wallTileBase;
-    public TileBase polishingTileBase;
-    public TileBase temporaryTileBase;
-    public NoisePaintedWorldLayer polishingLayer;
+    [SerializeField] private Transform gridTransform;
+    [SerializeField] private Sprite polishingSprite;
+    [SerializeField] private TileBase wallTileBase;
+    [SerializeField] private TileBase polishingTileBase;
+    [SerializeField] private TileBase temporaryTileBase;
+    [SerializeField] private NoisePaintedWorldLayer polishingLayer;
 
     private GameObject _hollowsTileMapGO;
     private CaveEntrance _caveEntrance;
@@ -72,16 +72,13 @@ public class CavePolisher : MonoBehaviour
             hollowZones.Add(hollowZone);
         }
         
-        
-        
         DestroyImmediate(_hollowsTileMapGO);
-
         return hollowZones;
     }
 
     private void ClearHollows(WorldData worldData)
     {
-        _removedTiles.ForEach(i => worldData.GetTile(i.x, i.y).SetInteractable(null));
+        _removedTiles.ForEach(i => worldData.GetTile(i.x, i.y)?.SetInteractable(null));
     }
     
     public List<Vector3Int> GetMainHollow(WorldData worldData)
@@ -91,7 +88,6 @@ public class CavePolisher : MonoBehaviour
 
         int layerIndex = polishingLayer.index;
         var polishingLayerTilemap = polishingLayer.tilemap;
-        
         
         while (hollowZones.Count > 1)
         {
@@ -151,10 +147,7 @@ public class CavePolisher : MonoBehaviour
     
     public void PolishWalls(WorldData worldData)
     {
-        while (PolishLayer(worldData) > 0)
-        {
-            PolishLayer(worldData);
-        } 
+        while (PolishLayer(worldData) > 0) PolishLayer(worldData);
     }
 
     private int PolishLayer(WorldData worldData)
@@ -162,7 +155,6 @@ public class CavePolisher : MonoBehaviour
         int counter = 0;
         int layerIndex = polishingLayer.index;
         var polishingLayerTilemap = polishingLayer.tilemap;
-
         
         for(int x = 0; x < worldData.MapWidth; x++)
         for (int y = 0; y < worldData.MapHeight; y++)
@@ -171,20 +163,11 @@ public class CavePolisher : MonoBehaviour
             if (polishingLayerTilemap.GetSprite(pos) == polishingSprite)
             {
                 polishingLayerTilemap.SetTile(pos, null);
-
                 worldData.GetTile(x, y).SetLayer(layerIndex, false);
-
                 counter++;
             }
         }
         return counter;
     }
 
-
-    private void OnDrawGizmos()
-    {
-        if(_caveEntrance is null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(_caveEntrance.position + new Vector3(0.5f, 0.5f, 0), 0.25f);
-    }
 }

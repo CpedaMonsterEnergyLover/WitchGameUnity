@@ -17,10 +17,7 @@ public class WorldManagerEditor : Editor {
         
         if (GUILayout.Button ("Update"))
         {
-            manager.ClearAllTiles();
             await manager.GenerateFromEditor();
-            manager.DrawAllTiles();
-            manager.DrawAllInteractable();
         }
     }
 }

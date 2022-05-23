@@ -89,6 +89,7 @@ public class TimelineManager : MonoBehaviour
         if (playerData is not null)
         {
             time = TimelineStamp.FromLoadedStamp(playerData.TimelineStamp);
+            Debug.Log($"Loaded time: {time}");
             totalHours = playerData.TotalHours;
             minutesPassed = playerData.MinutesPassed;
             Debug.Log($"Loaded time data: {time}");

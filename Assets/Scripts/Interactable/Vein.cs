@@ -16,7 +16,11 @@ public class Vein : Interactable
 
     protected override void InitSaveData(InteractableData origin)
     {
-        saveData = new VeinSaveData(origin) { initialized = true };
+        saveData = new VeinSaveData(origin)
+        {
+            initialized = true,
+            health = Random.Range(2,7)
+        };
     }
 
     public override void Interact(float value = 1)

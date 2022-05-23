@@ -16,7 +16,6 @@ MonoBehaviour:
   name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0434\u043E\u043C"
   interactingTime: 0
   ignoreTileRandomisation: 1
-  houseScene: {fileID: 11400000, guid: 60ca5ddd0b013ac43996b9180c717ebe, type: 2}
-  roomWidth: 9
-  roomHeight: 7
+  roomWidth: 16
+  roomHeight: 14
   doorPosition: 6

@@ -43,12 +43,12 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\HeartBarEditor.cs" />
      <Compile Include="Assets\Editor\ShowOnlyDrawer.cs" />
-     <Compile Include="Assets\Editor\GameSystemEditor.cs" />
      <Compile Include="Assets\Editor\BattleArenaEditor.cs" />
      <Compile Include="Assets\Editor\BossEditor.cs" />
      <Compile Include="Assets\Editor\ItemSpawner.cs" />
      <Compile Include="Assets\Editor\WorldManagerEditor.cs" />
      <Compile Include="Assets\Editor\ShadowCastersGeneratorEditor.cs" />
+     <Compile Include="Assets\Editor\GameSystemLoaderEditor.cs" />
      <Compile Include="Assets\Editor\DialogWindowEditor.cs" />
      <Compile Include="Assets\Editor\ParticleSystemIndividualSortingOrderEditor.cs" />
      <Reference Include="UnityEngine">

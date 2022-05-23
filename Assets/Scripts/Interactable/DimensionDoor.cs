@@ -1,4 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using Receivers;
 using UnityEngine;
 
 public class DimensionDoor : Interactable, IPlayerReceiver, IWorldTransitionInitiator
@@ -9,7 +11,13 @@ public class DimensionDoor : Interactable, IPlayerReceiver, IWorldTransitionInit
         EnterDoor().Forget();
     }
 
-    private async UniTaskVoid EnterDoor()
+    public override void Interact(float value = 1)
+    {
+        EnterDoor().Forget();
+        base.Interact(value);
+    }
+
+    protected virtual async UniTask EnterDoor()
     {
         await ScreenFader.Instance.StartFade(2f);
         await SaveData.sceneToLoad.LoadFromAnotherWorld(this, SaveData.subWorldIndex);
@@ -23,6 +31,7 @@ public class DimensionDoor : Interactable, IPlayerReceiver, IWorldTransitionInit
     public void OnPlayerExitReceiver()
     { }
 
-    public object[] WorldTransitionInitiatorData => null;
-    public Vector2 SpawnPosition => SaveData.position;
+    public virtual object[] TransitionData => null;
+    public virtual Action TransitionCallback => null;
+    public Vector2 TransitionPosition => SaveData.position;
 }
