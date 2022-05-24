@@ -23,7 +23,7 @@ public class Vein : Interactable
         };
     }
 
-    public override void Interact(float value = 1)
+    public void Pick()
     {
         SaveData.health--;
         ChangeSpriteOnHealth();

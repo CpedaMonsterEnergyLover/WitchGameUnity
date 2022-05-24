@@ -2650,6 +2650,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 447c1c6311b1a594ba0e65d38325795c, type: 2}
   - {fileID: 11400000, guid: 28ec084afd1e9d940925ea4ff0fcf17e, type: 2}
   - {fileID: 11400000, guid: e9122d48e7e3417429c34742e0a0dd0c, type: 2}
+  - {fileID: 11400000, guid: 505b48194ddaa814e930e76a62565f4d, type: 2}
 --- !u!1 &4201173695396718836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,9 +2801,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.1820972
-    width: 0.28333336
-    height: 0.31304348
+    y: 0.08657407
+    width: 0.12604168
+    height: 0.12604167
   near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
@@ -5111,6 +5112,9 @@ MonoBehaviour:
     amount: 1
     havingAmount: 0
   - item: {fileID: 11400000, guid: e9122d48e7e3417429c34742e0a0dd0c, type: 2}
+    amount: 1
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: 505b48194ddaa814e930e76a62565f4d, type: 2}
     amount: 1
     havingAmount: 0
   slotPrefab: {fileID: 8835642265728589268, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}

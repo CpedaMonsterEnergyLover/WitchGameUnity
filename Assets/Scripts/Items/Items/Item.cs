@@ -46,7 +46,9 @@ public class  Item
             ItemType.FireStarter => new Firestarter(identifier),
             ItemType.MagicBook => new MagicBook(identifier),
             ItemType.MeleeWeapon => new MeleeWeapon(identifier),
-            _ => throw new ArgumentOutOfRangeException("Unknown item type", new Exception())
+            ItemType.Pickaxe => new Pickaxe(identifier),
+            _ => throw new ArgumentOutOfRangeException($"Unknown item type: {identifier.type}"
+                , new Exception())
         };
         created.saveData.identifier = identifier;
         return created;

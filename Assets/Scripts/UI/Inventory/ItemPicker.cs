@@ -59,7 +59,10 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
     private void UpdateVisibility()
     {
         if (itemSlot.storedItem is not IUsable usable) return;
-        if (!usable.AllowUse(InteractionDataProvider.Data.Entity, InteractionDataProvider.Data.Tile, InteractionDataProvider.Data.Interactable))
+        if (!usable.AllowUse(
+            InteractionDataProvider.Data.Entity, 
+            InteractionDataProvider.Data.Tile, 
+            InteractionDataProvider.Data.Interactable))
         {
             itemSlotGO.SetActive(false);
             UseAllowed = false;
@@ -67,7 +70,10 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         else
         { 
             itemSlotGO.SetActive(!HideWhileInteracting);
-            bool inDistance = usable.IsInDistance(InteractionDataProvider.Data.Entity, InteractionDataProvider.Data.Tile, InteractionDataProvider.Data.Interactable);
+            bool inDistance = usable.IsInDistance(
+                InteractionDataProvider.Data.Entity, 
+                InteractionDataProvider.Data.Tile, 
+                InteractionDataProvider.Data.Interactable);
             UseAllowed = inDistance;
             FadeVisibility(!inDistance);
         }
@@ -93,24 +99,25 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
     private void UseItem()
     {
         if(!UseAllowed) return;
-
-        Item storedItem = itemSlot.storedItem;
+        if(itemSlot.storedItem is not IUsable storedItem) return;
         float useTime = storedItem  is IHasOwnInteractionTime item ? 
             item.InteractionTime : 0.0f;
 
         Action onStart = storedItem is IEventOnUseStart eventInvoker ? eventInvoker.OnUseStart : null;
 
         InteractionFilter filter = new InteractionFilter(
-        storedItem is IControlsUsabilityInMove moveController ? moveController.CanUseMoving : false, 
+        storedItem is not IControlsUsabilityInMove moveController || moveController.CanUseMoving, 
         storedItem is not IUsableOnAnyTarget);
 
-        bool allowContinuation = storedItem is not IControlsInteractionContinuation continuationController || continuationController.AllowContinuation; 
+        bool allowContinuation = storedItem is not IControlsInteractionContinuation continuationController ||
+                                 continuationController.AllowContinuation; 
         
-        Interact(useTime, () => ((IUsable) itemSlot.storedItem).
-            Use(_hotbarWindow.SelectedSlot.ReferenceSlot,
+        Interact(useTime, () => storedItem
+            .Use(_hotbarWindow.SelectedSlot.ReferenceSlot,
                 InteractionDataProvider.Data.Entity, 
                 InteractionDataProvider.Data.Tile, 
-                InteractionDataProvider.Data.Interactable), onStart, false, allowContinuation, filter);
+                InteractionDataProvider.Data.Interactable),
+            onStart, false, allowContinuation, filter);
 
     }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Security.Cryptography;
+﻿using System.Collections;
 using UnityEngine;
 
 public class ToolHolder : MonoBehaviour, ITemporaryDismissable
@@ -26,10 +24,10 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
 
     private bool _useStarted;
     private bool _useStopped;
-    private ParticleSystem _particleSystem;
     private bool _emitOnUse;
     private bool _interruptable;
-    
+    private ParticleSystem _particleSystem;
+
     public void StartAnimation(ToolSwipeAnimationData animationData)
     {
         if(_useStarted || _useStopped) return;
