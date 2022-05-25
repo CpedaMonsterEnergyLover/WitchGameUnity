@@ -16,10 +16,10 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
     {
         "SwordSwipe",
         "MagicBookRead",
-        "Shovel",
-        "Hoe",
-        "Axe",
-        "Pickaxe"
+        "ShovelSwipe",
+        "HoeSwipe",
+        "AxeSwipe",
+        "PickaxeSwipe"
     };
 
     private bool _useStarted;
@@ -35,15 +35,18 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
         _useStopped = false;
         _interruptable = animationData.interruptable;
         StartCoroutine(AnimationRoutine(animationData));
-        StartCoroutine(StopRoutine());
+        // StartCoroutine(StopRoutine());
     }
 
-    private void Stop()
+    public void Stop()
     {
+        if(!_useStarted) return;
         animator.speed = 1f;
         animator.Play("ToolHolderIdle");
         _useStopped = false;
+        _useStarted = false;
         if(_emitOnUse) _particleSystem.Stop();
+        StopAllCoroutines();
     }
     
     private IEnumerator AnimationRoutine(ToolSwipeAnimationData data)
@@ -86,19 +89,17 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
 
     private void ClearParticles()
     {
-        if (_particleSystem is not null)
+        if (_particleSystem is null) return;
+        if (_emitOnUse)
+            Destroy(_particleSystem.gameObject);
+        else
         {
-            if (_emitOnUse)
-                Destroy(_particleSystem.gameObject);
-            else
-            {
-                var mainModule = _particleSystem.main;
-                mainModule.stopAction = ParticleSystemStopAction.Destroy;
-                _particleSystem.Stop();
-            }
-            _particleSystem = null;
-            _emitOnUse = false;
+            var mainModule = _particleSystem.main;
+            mainModule.stopAction = ParticleSystemStopAction.Destroy;
+            _particleSystem.Stop();
         }
+        _particleSystem = null;
+        _emitOnUse = false;
     }
     
     private void UpdateHoldedItem(ItemSlot slot)
@@ -112,7 +113,7 @@ public class ToolHolder : MonoBehaviour, ITemporaryDismissable
         {
             Item storedItem = slot.storedItem;
             SetIcon(storedItem.Data.icon);
-            transform.localScale = storedItem is IToolHolderFullSprite ? 
+            transform.localScale = storedItem is IHoldAsTool ? 
                 Vector3.one :
                 new Vector3(0.5f, 0.5f, 0.5f);
             if (storedItem is IParticleEmitterItem {HasParticles: true} emitter)

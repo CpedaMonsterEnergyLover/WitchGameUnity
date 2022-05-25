@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class InteractionBar : MonoBehaviour
 {
-    public InteractionDataProvider interactionDataProvider;
     public Image barImage;
 
     private InteractionEventData _dataOnStart;
-
+    private bool _animationStarted;
+    
     private void OnEnable()
     {
         SubEvents();
@@ -24,6 +24,8 @@ public class InteractionBar : MonoBehaviour
     {
         gameObject.SetActive(false);
         ItemPicker.Instance.HideWhileInteracting = false;
+        _animationStarted = false;
+        ToolHolder.Instance.Stop();
     }
 
     public void StartInteraction(
@@ -32,7 +34,8 @@ public class InteractionBar : MonoBehaviour
         Action onStart,
         bool isHand,
         bool allowContinuation,
-        InteractionFilter filter)
+        InteractionFilter filter,
+        ToolSwipeAnimationData animationData)
     {
         if (duration == 0.0f)
         {
@@ -40,20 +43,29 @@ public class InteractionBar : MonoBehaviour
         }
         else
         {
+            if (animationData is not null && !_animationStarted)
+            {
+                ToolHolder.Instance.StartAnimation(animationData);
+                _animationStarted = true;
+            }
             _dataOnStart = InteractionDataProvider.Data;
             gameObject.SetActive(true);
             ItemPicker.Instance.HideWhileInteracting = true;
-            StartCoroutine(FillRoutine(duration, actionOnComplete, onStart, isHand, allowContinuation, filter));   
+            StartCoroutine(
+                FillRoutine(duration, actionOnComplete, onStart, isHand,
+                    allowContinuation, filter, animationData));   
         }
     }
 
-    private void ContinueInteraction(float duration, Action onComplete, Action onStart, bool isHand, InteractionFilter filter)
+    private void ContinueInteraction(float duration, Action onComplete, Action onStart, bool isHand,
+        InteractionFilter filter, ToolSwipeAnimationData animationData)
     {
         if (filter.stopOnTargetChange &&
             !_dataOnStart.Equals(InteractionDataProvider.ForceUpdateData()))
             StopInteraction();
         else
-            StartInteraction(duration, onComplete, onStart, isHand, true, filter);
+            StartInteraction(duration, onComplete, onStart, isHand, true, filter,
+                animationData);
     }
 
     private void OnWindowOpened(WindowIdentifier window)
@@ -72,7 +84,8 @@ public class InteractionBar : MonoBehaviour
         BaseWindow.ONWindowOpened -= OnWindowOpened;
     }
     
-    private IEnumerator FillRoutine(float duration, Action onComplete, Action onStart, bool isHand, bool allowContinuation, InteractionFilter filter)
+    private IEnumerator FillRoutine(float duration, Action onComplete, Action onStart, bool isHand,
+        bool allowContinuation, InteractionFilter filter, ToolSwipeAnimationData animationData)
     {
         float t = 0.0f;
         barImage.fillAmount = 0.0f;
@@ -97,7 +110,9 @@ public class InteractionBar : MonoBehaviour
             yield return null;
         }
         onComplete.Invoke();
-        if(allowContinuation) ContinueInteraction(duration, onComplete, onStart, isHand, filter);
+        if(allowContinuation) 
+            ContinueInteraction(
+                duration, onComplete, onStart, isHand, filter, animationData);
         else StopInteraction();
     }
 

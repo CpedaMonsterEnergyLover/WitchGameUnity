@@ -139,30 +139,20 @@ public abstract class WorldGenerator : AbstractGenerator
 
     private InteractableSaveData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
     {
-        InteractableSaveData[,] interactables = 
-            new InteractableSaveData[generatorSettings.width, generatorSettings.height];
+        var interactables = new InteractableSaveData[generatorSettings.width, generatorSettings.height];
 
-        //TODO: разбить побиомно
         for (int x = 0; x < generatorSettings.width; x++)
+        for (int y = 0; y < generatorSettings.height; y++)
         {
-            for (int y = 0; y < generatorSettings.height; y++)
-            {
-                Biome generatedBiome = Biome.Plug();
-                biomes.list.ForEach(biome =>
-                {
-                    generatedBiome = biome.priority > generatedBiome.priority
-                        ? biome.IsAllowed(noiseData, x, y) ? biome :
-                        generatedBiome
-                        : generatedBiome;
-                });
+            AbstractBiome generatedBiome = null;
+            foreach (var biome in biomes.list)
+                generatedBiome = biome.GetSpawn(noiseData, x, y, out AbstractBiome overrideBiome)
+                    ? overrideBiome
+                    : generatedBiome;
 
-                if (generatedBiome.IsPlug)
-                    interactables[x, y] = null;
-                else if (generatedBiome.GetRandomInteractable(out InteractableData data))
-                    interactables[x, y] = new InteractableSaveData(data);
-            }
+            interactables[x, y] = generatedBiome is null ? null : generatedBiome.GetInteractable();
         }
-        
+
         return interactables;
     }
 }

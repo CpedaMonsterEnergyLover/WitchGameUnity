@@ -16,7 +16,7 @@ public class InteractablePreview : MonoBehaviour
     
     private void Update()
     {
-        if(InteractionDataProvider.Data.Tile is null) return;
+        if(InteractionDataProvider.Data.tile is null) return;
         UpdatePreview();
     }
 
@@ -45,7 +45,7 @@ public class InteractablePreview : MonoBehaviour
 
     private void UpdatePreviewPosition()
     {
-        WorldTile tile = InteractionDataProvider.Data.Tile;
+        WorldTile tile = InteractionDataProvider.Data.tile;
         if(tile is null) return;
         Vector2Int tilePos = tile.Position;
         Vector3 newPos = new Vector3(
@@ -56,8 +56,8 @@ public class InteractablePreview : MonoBehaviour
     private void UpdatePreviewColor()
     {
         InteractionEventData eventData = InteractionDataProvider.Data;
-        Color finalColor = _currentItem.IsInDistance(null, eventData.Tile) ? 
-            _currentItem.AllowUse(eventData.Entity, eventData.Tile, eventData.Interactable) ? 
+        Color finalColor = _currentItem.IsInDistance(null, eventData.tile) ? 
+            _currentItem.AllowUse(eventData.entity, eventData.tile, eventData.interactable) ? 
                 CanPlaceColor : CannotPlaceColor
             : OutOfRangeColor;
         preview.color = finalColor;

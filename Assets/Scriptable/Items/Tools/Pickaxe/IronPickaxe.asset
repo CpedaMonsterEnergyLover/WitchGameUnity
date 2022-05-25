@@ -21,3 +21,4 @@ MonoBehaviour:
   maxDurability: 200
   tier: 3
   useTime: 2
+  animationType: 5

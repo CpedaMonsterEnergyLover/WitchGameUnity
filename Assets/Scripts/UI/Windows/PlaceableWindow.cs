@@ -67,9 +67,9 @@ public class PlaceableWindow : BaseWindow
     {
         
         var data = InteractionDataProvider.Data;
-        if (!_placeableItem.AllowUse(data.Entity, data.Tile, data.Interactable)) return;
+        if (!_placeableItem.AllowUse(data.entity, data.tile, data.interactable)) return;
         
-        _placeableItem.Use(_slot, null, data.Tile);
+        _placeableItem.Use(_slot, null, data.tile);
 
         if (_slot is CraftingSlot craftingSlot)
         {

@@ -1,4 +1,4 @@
-public class Axe : Instrument, IToolHolderFullSprite
+public class Axe : Instrument
 {
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

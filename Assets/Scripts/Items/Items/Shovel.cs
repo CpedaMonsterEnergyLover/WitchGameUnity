@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Shovel : Instrument, IToolHolderFullSprite
+public class Shovel : Instrument, IHoldAsTool
 {
     private EditableWorldLayer _editableLayer;
     

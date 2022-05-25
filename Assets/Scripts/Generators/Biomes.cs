@@ -8,6 +8,6 @@ public class Biomes : ScriptableObject
 
     public void InitSpawnEdges()
     {
-        list.ForEach(biome => biome.InitTileSpawnEdges());
+        list.ForEach(biome => biome.Init());
     }
 }

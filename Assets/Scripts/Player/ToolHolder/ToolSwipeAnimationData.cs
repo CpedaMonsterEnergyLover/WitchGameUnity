@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-public readonly struct ToolSwipeAnimationData
+﻿
+public class ToolSwipeAnimationData
 {
     public readonly float speed;
     public readonly float cooldown;

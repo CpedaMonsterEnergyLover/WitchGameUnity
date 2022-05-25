@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MagicBook : Item, IUsable, IHasOwnInteractionTime, IUsableOnAnyTarget, IControlsUsabilityInMove, IEventOnUseStart, IParticleEmitterItem
+public class MagicBook : Item, IHasOwnInteractionTime, IUsableOnAnyTarget, IControlsUsabilityInMove, IParticleEmitterItem, IHasToolAnimation
 {
     public new MagicBookData Data => (MagicBookData) data;
     
@@ -26,20 +26,14 @@ public class MagicBook : Item, IUsable, IHasOwnInteractionTime, IUsableOnAnyTarg
     public MagicBook(ItemIdentifier identifier) : base(identifier)
     {
     }
-
-    public void OnUseStart()
-    {
-        if(!Data.hasParticles) return;
-        ToolHolder.Instance.StartAnimation(
-            new ToolSwipeAnimationData(
-                ToolSwipeAnimationType.Swipe,
-                1f / InteractionTime, 
-                Data.cooldown,
-                Data.autoShoot, 
-                true));
-    }
-
+    
     public bool HasParticles => Data.hasParticles;
     public ParticleSystem ParticleSystem => Data.particles;
     public ItemParticleEmissionMode EmissionMode => ItemParticleEmissionMode.EmitOnUse;
+    public ToolSwipeAnimationData AnimationData => new(
+            ToolSwipeAnimationType.Swipe,
+            1f / InteractionTime,
+            Data.cooldown,
+            Data.autoShoot,
+            true);
 }

@@ -19,5 +19,6 @@ MonoBehaviour:
   icon: {fileID: -581971326, guid: bb96a23c97dbbc943a385e08795c060a, type: 3}
   maxStack: 1
   maxDurability: 295
-  damage: 3
+  tier: 3
   useTime: 0.8
+  animationType: 4

@@ -6,8 +6,6 @@ public class InteractionDataProvider : MonoBehaviour
     private static Camera _playerCamera;
     private static int _layerMask;
     
-    // Do not cache because loading another scene would not replace it
-    private static WorldManager WorldManager => WorldManager.Instance;
 
     public static InteractionEventData Data { get; private set;  }
 
@@ -41,7 +39,7 @@ public class InteractionDataProvider : MonoBehaviour
 
         // Gets tile under cursor
         Vector3Int gridPos = Vector3Int.FloorToInt(mouseWorldPos);
-        WorldTile tile = WorldManager.WorldData?.GetTile(gridPos.x, gridPos.y);
+        WorldTile tile = WorldManager.Instance.WorldData?.GetTile(gridPos.x, gridPos.y);
 
         // Debug.Log($"entity: {entity?.name}, interactable: {interactable?.name}, tile: {tile?.Position}");
         
@@ -52,24 +50,24 @@ public class InteractionDataProvider : MonoBehaviour
 [Serializable]
 public readonly struct InteractionEventData
 {
-    public readonly WorldTile Tile;
-    public readonly Interactable Interactable;
-    public readonly Entity Entity;
+    public readonly WorldTile tile;
+    public readonly Interactable interactable;
+    public readonly Entity entity;
 
     public InteractionEventData(WorldTile tile, Interactable interactable, Entity entity) : this()
     {
-        Entity = entity;
-        Tile = tile;
-        Interactable = interactable;
+        this.entity = entity;
+        this.tile = tile;
+        this.interactable = interactable;
     }
 
     public override string ToString()
     {
-        return $"Tile: {Tile?.Position}, Int: {Interactable?.name}, Entity: {Entity?.name}";
+        return $"Tile: {tile?.Position}, Interactable: {interactable?.name}, Entity: {entity?.name}";
     }
 
     public bool Equals(InteractionEventData data)
     {
-        return Entity == data.Entity && Tile == data.Tile && Interactable == data.Interactable;
+        return entity == data.entity && tile == data.tile && interactable == data.interactable;
     }
 }

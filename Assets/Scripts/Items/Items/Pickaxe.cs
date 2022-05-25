@@ -1,4 +1,4 @@
-﻿public class Pickaxe : Instrument, IToolHolderFullSprite
+﻿public class Pickaxe : Instrument
 {
     public override void Use(ItemSlot slot, Entity entity = null, WorldTile tile = null, Interactable interactable = null)
     {

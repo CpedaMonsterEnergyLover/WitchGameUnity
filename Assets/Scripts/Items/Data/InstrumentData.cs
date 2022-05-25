@@ -9,4 +9,5 @@ public class InstrumentData : ItemData
     [FormerlySerializedAs("damage")] 
     public int tier;
     public float useTime = 0f;
+    public ToolSwipeAnimationType animationType;
 }

@@ -1,4 +1,4 @@
-public class Instrument : Item, IUsable, IDamageableItem, IHasOwnInteractionTime
+public class Instrument : Item, IUsable, IDamageableItem, IHasOwnInteractionTime, IHoldAsTool, IHasToolAnimation
 {
     private float _interactionTime;
     public new InstrumentData Data => (InstrumentData) data;
@@ -35,7 +35,13 @@ public class Instrument : Item, IUsable, IDamageableItem, IHasOwnInteractionTime
         return base.GetDescription() + "\n" +
                $"Эффективность: {Data.tier}\nПрочность: {SaveData.durability} / {Data.maxDurability}";
     }
-    
+
+    public ToolSwipeAnimationData AnimationData => new(
+        Data.animationType,
+        1f,
+        0,
+        true,
+        true);
 }
 
 public class InstrumentSaveData : ItemSaveData

@@ -60,9 +60,9 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
     {
         if (itemSlot.storedItem is not IUsable usable) return;
         if (!usable.AllowUse(
-            InteractionDataProvider.Data.Entity, 
-            InteractionDataProvider.Data.Tile, 
-            InteractionDataProvider.Data.Interactable))
+            InteractionDataProvider.Data.entity, 
+            InteractionDataProvider.Data.tile, 
+            InteractionDataProvider.Data.interactable))
         {
             itemSlotGO.SetActive(false);
             UseAllowed = false;
@@ -70,19 +70,20 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         else
         { 
             itemSlotGO.SetActive(!HideWhileInteracting);
-            bool inDistance = usable.IsInDistance(
-                InteractionDataProvider.Data.Entity, 
-                InteractionDataProvider.Data.Tile, 
-                InteractionDataProvider.Data.Interactable);
-            UseAllowed = inDistance;
-            FadeVisibility(!inDistance);
+            UseAllowed = usable.IsInDistance(
+                InteractionDataProvider.Data.entity, 
+                InteractionDataProvider.Data.tile, 
+                InteractionDataProvider.Data.interactable);
+            FadeVisibility(!UseAllowed);
         }
     }
 
+
+    private static readonly Color FadedColor = new(1f, 1f, 1f, 0.5f);
     private void FadeVisibility(bool isFaded)
     {
         itemSlot.itemIcon.color = isFaded ? 
-            new Color(1f, 1f, 1f, 0.5f) : Color.white;
+            FadedColor : Color.white;
     }
 
     public void Use()
@@ -110,20 +111,23 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         storedItem is not IUsableOnAnyTarget);
 
         bool allowContinuation = storedItem is not IControlsInteractionContinuation continuationController ||
-                                 continuationController.AllowContinuation; 
+                                 continuationController.AllowContinuation;
+
+        ToolSwipeAnimationData animationData = storedItem is IHasToolAnimation animator ? 
+            animator.AnimationData : null; 
         
         Interact(useTime, () => storedItem
             .Use(_hotbarWindow.SelectedSlot.ReferenceSlot,
-                InteractionDataProvider.Data.Entity, 
-                InteractionDataProvider.Data.Tile, 
-                InteractionDataProvider.Data.Interactable),
-            onStart, false, allowContinuation, filter);
+                InteractionDataProvider.Data.entity, 
+                InteractionDataProvider.Data.tile, 
+                InteractionDataProvider.Data.interactable),
+            onStart, false, allowContinuation, filter, animationData);
 
     }
 
     private void UseHand()
     {
-        Interactable interactableUnderCursor = InteractionDataProvider.Data.Interactable;
+        Interactable interactableUnderCursor = InteractionDataProvider.Data.interactable;
         if(interactableUnderCursor is null) return;
         
         if(Vector2.Distance(PlayerController.Instance.transform.position,
@@ -131,14 +135,18 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
 
         InteractionFilter filter = new InteractionFilter(true, true);
         Interact(interactableUnderCursor.Data.interactingTime, 
-            () => interactableUnderCursor.Interact(), null, true, true, filter);
+            () => interactableUnderCursor.Interact(),
+            null, true, true, filter, null);
     }
 
-    private void Interact(float useTime, Action actionOnEnd, Action actionOnStart, bool isHand, bool allowContinuation, InteractionFilter filter)
+    private void Interact(float useTime, Action actionOnEnd, Action actionOnStart,
+        bool isHand, bool allowContinuation, InteractionFilter filter,
+        ToolSwipeAnimationData animationData)
     {
         PlayerController.Instance.LookDirectionToMouse();
         PlayerController.Instance.UpdateLookDirection();
-        interactionBar.StartInteraction(useTime, actionOnEnd, actionOnStart, isHand, allowContinuation, filter);
+        interactionBar.StartInteraction(useTime, actionOnEnd, actionOnStart, isHand,
+            allowContinuation, filter, animationData);
     }
     
     private void OnSelectedHotbarSlotChanged(ItemSlot slot)

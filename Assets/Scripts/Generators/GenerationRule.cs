@@ -15,4 +15,12 @@ public struct GenerationRule
         float point = noiseData.GetPoint(mapIndex, x, y);
         return point >= fromValue && point <= untilValue;
     }
+
+    public GenerationRule(WorldNoiseMapIndex mapIndex, float fromValue, float untilValue, bool exclude)
+    {
+        this.mapIndex = mapIndex;
+        this.fromValue = fromValue;
+        this.untilValue = untilValue;
+        this.exclude = exclude;
+    }
 }

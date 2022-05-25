@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5657623593217057142}
   - component: {fileID: 6340820866722701248}
   - component: {fileID: 5611410741225864388}
+  - component: {fileID: 1481439237696441214}
   m_Layer: 8
   m_Name: BigSpruce
   m_TagString: Untagged
@@ -96,6 +97,35 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1481439237696441214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103907452424057625}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 97365620
+  m_ShapePath:
+  - {x: -0.09756419, y: 0.10148364, z: 0}
+  - {x: 0.11427941, y: 0.090557784, z: 0}
+  - {x: 0.16445167, y: -0.11253216, z: 0}
+  - {x: 0.08680613, y: -0.19702022, z: 0}
+  - {x: -0.103499174, y: -0.19263466, z: 0}
+  - {x: -0.18091679, y: -0.03971751, z: 0}
+  m_ShapePathHash: 360964039
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 341012
 --- !u!1 &5113200453956440004
 GameObject:
   m_ObjectHideFlags: 0

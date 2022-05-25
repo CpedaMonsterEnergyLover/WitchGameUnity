@@ -2801,7 +2801,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.08657407
+    y: 0.08194444
     width: 0.12604168
     height: 0.12604167
   near clip plane: 0.01
@@ -5117,6 +5117,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 505b48194ddaa814e930e76a62565f4d, type: 2}
     amount: 1
     havingAmount: 0
+  - item: {fileID: 11400000, guid: d48d1e2d5f16a4742bc8035ed5bd2871, type: 2}
+    amount: 1
+    havingAmount: 0
   slotPrefab: {fileID: 8835642265728589268, guid: 6b854ba2e8ccf314ca2048d9baf7a58c, type: 3}
   inventoryTransform: {fileID: 5857516066355090023}
   slots: []
@@ -5670,7 +5673,7 @@ RectTransform:
   m_GameObject: {fileID: 5857516065012727858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.92, y: 0.92, z: 0.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5857516065200813299}
@@ -5678,7 +5681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 8, y: -8}
+  m_AnchoredPosition: {x: 6, y: -6}
   m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5857516065012727823
@@ -5714,7 +5717,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.874
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -6085,7 +6088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083c40f80fbf8504092c882d823b7222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDataProvider: {fileID: 0}
   barImage: {fileID: 5857516065012727820}
 --- !u!1 &5857516065309809869
 GameObject:
@@ -6364,7 +6366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 8, y: -8}
+  m_AnchoredPosition: {x: 6, y: -6}
   m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &5857516065516351622
