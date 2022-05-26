@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87760cee269942e5bf3b72ca4ad76305, type: 3}
+  m_Name: Bushes
+  m_EditorClassIdentifier: 
+  name: "\u041A\u0443\u0441\u0442\u0430\u0440\u043D\u0438\u043A\u0438"
+  density: 1
+  interactables:
+  - interactable: {fileID: 11400000, guid: 6cc5f0712a99e9546825816519e434ec, type: 2}
+    spawnChance: 0.496
+  - interactable: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
+    spawnChance: 0.693
+  - interactable: {fileID: 11400000, guid: 9f7986c0be863a84faffd65ad3b02945, type: 2}
+    spawnChance: 0.181
+  fromValue: 0.6
+  untilValue: 1

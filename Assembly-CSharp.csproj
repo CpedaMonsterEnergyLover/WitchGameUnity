@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Entities\SaveData\ResourceItemEntitySaveData.cs" />
      <Compile Include="Assets\Scripts\Dialogs\DialogMember.cs" />
      <Compile Include="Assets\Scripts\Interactable\House.cs" />
      <Compile Include="Assets\Scripts\GameData\GameDataManager.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Scripts\Health\Hearts\HeartOfTheBeast.cs" />
      <Compile Include="Assets\Scripts\World\WorldScenes\MultipartWorldScene.cs" />
      <Compile Include="Assets\Scripts\Items\Data\BagData.cs" />
+     <Compile Include="Assets\Scripts\World\TileResourceData.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IControlsInteractionContinuation.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Seed.cs" />
      <Compile Include="Assets\Scripts\Items\ItemIdentifier.cs" />
@@ -96,6 +98,7 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\BonfireSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\ITemporaryDismissable.cs" />
      <Compile Include="Assets\Scripts\Timeline\TimelineManager.cs" />
+     <Compile Include="Assets\Scripts\Entities\ResourceItemEntity.cs" />
      <Compile Include="Assets\Scripts\Timeline\SunCurve.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ReceiverCollider.cs" />
      <Compile Include="Assets\Scripts\Interactable\Herb.cs" />
@@ -113,6 +116,7 @@
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingList.cs" />
      <Compile Include="Assets\Scripts\Items\Items\MagicBook.cs" />
      <Compile Include="Assets\Scripts\Interactable\Miscs\SunAffectableLight.cs" />
+     <Compile Include="Assets\Scripts\World\WorldResourceManager.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Shovel.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\EntityReceiverCollider.cs" />
      <Compile Include="Assets\Scripts\World\Layers\NoisePaintedWorldLayer.cs" />
@@ -156,7 +160,6 @@
      <Compile Include="Assets\Scripts\GameData\PlayerData.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\HouseData.cs" />
      <Compile Include="Assets\Scripts\Items\MeleeWeaponType.cs" />
-     <Compile Include="Assets\Scripts\World\CaveManager.cs" />
      <Compile Include="Assets\Scripts\Generators\NoiseSettings.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Bosses\BossStage.cs" />
@@ -195,6 +198,7 @@
      <Compile Include="Assets\Scripts\Interactable\SaveData\HerbSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SliderController.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\DimensionDoorSaveData.cs" />
+     <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
      <Compile Include="Assets\Scripts\Player\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\ReceiverColliders\ItemEntityRecieverCollider.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArenaBorder.cs" />
@@ -204,9 +208,8 @@
      <Compile Include="Assets\Scripts\UI\Health\HeartAnimatorHelper.cs" />
      <Compile Include="Assets\Scripts\World\WorldBounds.cs" />
      <Compile Include="Assets\Scripts\UI\Util\SimpleInitialisationInitiator.cs" />
-     <Compile Include="Assets\Scripts\Entities\ItemEntity.cs" />
-     <Compile Include="Assets\Scripts\Generators\HouseGenerator.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\SceneDecorations\ParallaxController.cs" />
+     <Compile Include="Assets\Scripts\Generators\HouseGenerator.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\CreateWorldMenu\CreateWorldMenu.cs" />
      <Compile Include="Assets\Scripts\Items\Interfaces\IHasToolAnimation.cs" />
      <Compile Include="Assets\Scripts\Generators\AbstractGenerator.cs" />
@@ -224,6 +227,7 @@
      <Compile Include="Assets\Scripts\UI\Inventory\SortButton.cs" />
      <Compile Include="Assets\Scripts\Crafting\CraftingRecipe.cs" />
      <Compile Include="Assets\Scripts\Util\DontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Scripts\GameCollection\Biomes.cs" />
      <Compile Include="Assets\Scripts\GameSettings\WorldSize.cs" />
      <Compile Include="Assets\Scripts\Bosses\BattleArena.cs" />
      <Compile Include="Assets\Scripts\Health\HeartContainerExtensions.cs" />
@@ -263,12 +267,14 @@
      <Compile Include="Assets\Scripts\Generators\Biome.cs" />
      <Compile Include="Assets\Scripts\Interactable\Chuchelo.cs" />
      <Compile Include="Assets\Scripts\Generators\WorldGenerator.cs" />
+     <Compile Include="Assets\Scripts\Generators\SubBiome.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitbox.cs" />
      <Compile Include="Assets\Scripts\Items\Items\Axe.cs" />
      <Compile Include="Assets\Scripts\Interactable\Data\VeinData.cs" />
      <Compile Include="Assets\Scripts\Player\InteractionDataProvider.cs" />
      <Compile Include="Assets\Scripts\Bullets\ParticleSystemIndividualSortingOrder.cs" />
      <Compile Include="Assets\Scripts\Entities\Miscs\EntityType.cs" />
+     <Compile Include="Assets\Scripts\Generators\BiomeInteractable.cs" />
      <Compile Include="Assets\Scripts\Interactable\SaveData\VeinSaveData.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu\MainMenu.cs" />
      <Compile Include="Assets\Scripts\UI\Windows\WindowIdentifier.cs" />
@@ -282,6 +288,7 @@
      <Compile Include="Assets\Scripts\Interactable\Miscs\InteractableType.cs" />
      <Compile Include="Assets\Scripts\KeyListeners\PlacingKeyListener.cs" />
      <Compile Include="Assets\Scripts\Util\VectorUtil.cs" />
+     <Compile Include="Assets\Scripts\Generators\AbstractBiome.cs" />
      <Compile Include="Assets\Scripts\World\CavePolisher.cs" />
      <Compile Include="Assets\Scripts\Environment\Sun.cs" />
      <Compile Include="Assets\Scripts\World\CaveBorder.cs" />
@@ -318,9 +325,6 @@
      <Compile Include="Assets\Scripts\Dialogs\DialogElement.cs" />
      <Compile Include="Assets\Scripts\Items\Data\MeleeWeaponData.cs" />
      <Compile Include="Assets\Scripts\UI\Util\InteractionBar.cs" />
-     <Compile Include="Assets\Scripts\Generators\SubBiome.cs" />
-     <Compile Include="Assets\Scripts\Generators\AbstractBiome.cs" />
-     <Compile Include="Assets\Scripts\Generators\BiomeInteractable.cs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87760cee269942e5bf3b72ca4ad76305, type: 3}
+  m_Name: Birch
+  m_EditorClassIdentifier: 
+  density: 0.796
+  interactables:
+  - interactable: {fileID: 11400000, guid: 310990ce44f989d45bcefb329cc2ed5a, type: 2}
+    spawnChance: 0.138
+  - interactable: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
+    spawnChance: 0.838
+  hasItemDrops: 1
+  itemDrops:
+  - {fileID: 11400000, guid: 6dc56a52d82237e418b033213292e026, type: 2}
+  fromValue: 0.7
+  untilValue: 1

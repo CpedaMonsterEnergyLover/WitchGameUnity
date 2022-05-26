@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d08890fdd0432fb562993681e9c4cf, type: 3}
+  m_Name: Stick
+  m_EditorClassIdentifier: 
+  identifier:
+    type: 11
+    id: stick
+  name: "\u0412\u0435\u0442\u043A\u0430"
+  icon: {fileID: -256408615, guid: c6a9c0b93aa723a408d319764b49b2ec, type: 3}
+  maxStack: 64
+  burningDuration: 5

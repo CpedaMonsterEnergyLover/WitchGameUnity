@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057fb062a1db1f340aaebef4a15e69b4, type: 3}
+  m_Name: Beach
+  m_EditorClassIdentifier: 
+  density: 0.05
+  interactables:
+  - interactable: {fileID: 11400000, guid: 34262ee9d9502d1409e7a46db5d2a087, type: 2}
+    spawnChance: 0.75
+  - interactable: {fileID: 11400000, guid: 01cd555ab049f444189a97491be30572, type: 2}
+    spawnChance: 0.25
+  hasItemDrops: 1
+  itemDrops:
+  - {fileID: 11400000, guid: 79dcba041c5a2d0498027da780ab7657, type: 2}
+  generationRules:
+  - mapIndex: 1
+    fromValue: 0.415
+    untilValue: 0.43
+    exclude: 0
+  - mapIndex: 1
+    fromValue: 0.53
+    untilValue: 0.56
+    exclude: 0
+  subBiomes: []

@@ -11,7 +11,7 @@ public class ItemEntitySaveData : EntitySaveData
     {
         this.item = item;
         this.amount = amount;
-        id = "itemEntity";
+        id = "item_entity";
         preInitialised = true;
         this.position = position;
     }
@@ -20,12 +20,16 @@ public class ItemEntitySaveData : EntitySaveData
     {
         item = Item.Create(itemData.identifier);
         this.amount = amount;
-        id = "itemEntity";
+        id = "item_entity";
         preInitialised = true;
         this.position = position;
     }
 
-    private ItemEntitySaveData()
+    public ItemEntitySaveData(EntityData origin) : base(origin)
+    {
+    }
+    
+    public ItemEntitySaveData()
     {
     }
 

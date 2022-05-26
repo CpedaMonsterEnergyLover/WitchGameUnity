@@ -38,7 +38,7 @@ public class WorldData
     public WorldData(
         GeneratorSettings generatorSettings,
         bool[][,] layers,
-        InteractableSaveData[,] interactables, 
+        AbstractBiome[,] biomes, 
         WorldScene worldScene,
         Color[,] colorLayer,
         int colorfulLayerIndex)
@@ -56,7 +56,7 @@ public class WorldData
                 for (var i = 0; i < layers.Length; i++) 
                     tiles[i] = layers[i][x, y];
                 worldTiles.Set(x, y, new WorldTile(
-                    x, y, tiles, interactables[x, y], hasColor ? colorLayer[x,y] : Color.white));
+                    x, y, tiles, hasColor ? colorLayer[x,y] : Color.white, biomes[x, y]));
             }
         }
 

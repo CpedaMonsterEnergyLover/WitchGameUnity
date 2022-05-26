@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Cysharp.Threading.Tasks;
 using GameSettings;
 using UnityEngine;
@@ -23,8 +24,7 @@ public abstract class WorldGenerator : AbstractGenerator
     public Vector2Int cardinalPoints;
     public AnimationCurve cardinality;
 
-    [Header("Биомы")]
-    public Biomes biomes;
+    [Header("Биомы"), NotNull] public Biomes biomes;
     
     private int _seedHash;
     private WorldNoiseData _noiseData;
@@ -75,12 +75,7 @@ public abstract class WorldGenerator : AbstractGenerator
         });
         
         await NextPhase();
-        var biomeLayer = new InteractableSaveData[generatorSettings.width, generatorSettings.height];
-        if (biomes is not null)
-        {
-            biomes.InitSpawnEdges();
-            biomeLayer = GenerateBiomeLayer(worldNoiseData);
-        }
+        var biomeLayer = GenerateBiomeLayer(worldNoiseData);
 
         Color[,] colorData = colorLayer is null ? null :
             colorLayer.GetColors(generatorSettings, worldNoiseData);
@@ -137,9 +132,9 @@ public abstract class WorldGenerator : AbstractGenerator
         }
     }
 
-    private InteractableSaveData[,] GenerateBiomeLayer(WorldNoiseData noiseData)
+    private AbstractBiome[,] GenerateBiomeLayer(WorldNoiseData noiseData)
     {
-        var interactables = new InteractableSaveData[generatorSettings.width, generatorSettings.height];
+        var biomeLayer = new AbstractBiome[generatorSettings.width, generatorSettings.height];
 
         for (int x = 0; x < generatorSettings.width; x++)
         for (int y = 0; y < generatorSettings.height; y++)
@@ -149,10 +144,9 @@ public abstract class WorldGenerator : AbstractGenerator
                 generatedBiome = biome.GetSpawn(noiseData, x, y, out AbstractBiome overrideBiome)
                     ? overrideBiome
                     : generatedBiome;
-
-            interactables[x, y] = generatedBiome is null ? null : generatedBiome.GetInteractable();
+            biomeLayer[x, y] = generatedBiome;
         }
 
-        return interactables;
+        return biomeLayer;
     }
 }

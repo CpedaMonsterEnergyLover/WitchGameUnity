@@ -4,34 +4,41 @@ using UnityEngine;
 
 public abstract class AbstractBiome : ScriptableObject
 {
-    [SerializeField] private new string name;
     [SerializeField, Range(0, 1)] private float density;
-    [SerializeField] private List<BiomeInteractable> interactables;
-    
-    
+    [SerializeField] private List<BiomeInteractable> interactables = new();
+    [SerializeField] public bool hasItemDrops;
+    [SerializeField] public List<ItemData> itemDrops = new ();
+
+
     private float OddsSum { get; set; }
 
     public abstract bool GetSpawn(WorldNoiseData noiseData, int x, int y, out AbstractBiome biome);
 
-    public InteractableSaveData GetInteractable()
+    public bool GetInteractable(out InteractableSaveData saveData, float rnd)
     {
-        if (Random.value > density) return null;
-        float rnd = Random.Range(0, OddsSum);
+        saveData = null;
         BiomeInteractable generatedInteractable = interactables
             .FirstOrDefault(tile => rnd >= tile.LeftEdge && rnd < tile.RightEdge);
-        return generatedInteractable is null ? null : new InteractableSaveData(generatedInteractable.interactable);
+        saveData = generatedInteractable is null ? null : new InteractableSaveData(generatedInteractable.interactable);
+        return saveData is not null;
+    }
+
+    public ItemData GetDrop()
+    {
+        return itemDrops[Random.Range(0, itemDrops.Count)];
     }
 
     public virtual void Init()
     {
-        float oddsSum = 0.0f;
+        float current = 0.0f;
+        OddsSum = interactables.Sum(tile => tile.spawnChance);
+        float lerpValue = density / OddsSum;
         interactables.ForEach(tile =>
         {
-            tile.LeftEdge = oddsSum;
-            tile.RightEdge = tile.spawnChance + oddsSum;
-            oddsSum = tile.RightEdge;
+            tile.LeftEdge = current;
+            tile.RightEdge = tile.spawnChance * lerpValue + current;
+            current = tile.RightEdge;
         });
-        OddsSum = interactables.Sum(tile => tile.spawnChance);
     }
     
     

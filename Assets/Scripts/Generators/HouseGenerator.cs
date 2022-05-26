@@ -17,10 +17,9 @@ public class HouseGenerator : AbstractGenerator
         layerData[0] = GetFloorLayer(houseData);
         layerData[1] = GetWallLayer(houseData);
         layerData[2] = GetCeilingLayer(houseData);
-        InteractableSaveData[,] interactables = new InteractableSaveData[houseData.ActualWidth, houseData.ActualHeight];
-        interactables[houseData.doorPosition, 1] = doorData;
             
-        HouseWorldData houseWorldData = new HouseWorldData(houseData.ActualWidth, houseData.ActualHeight, layerData, interactables, worldScene);
+        HouseWorldData houseWorldData = new HouseWorldData(houseData.ActualWidth, houseData.ActualHeight, layerData, worldScene);
+        houseWorldData.GetTile(houseData.doorPosition, 1).SetInteractable(doorData);
         houseWorldData.SpawnPoint = new Vector2(houseData.doorPosition + 0.5f, 1.5f);
 
         MultipartWorldScene loadedScene = (MultipartWorldScene) WorldManager.Instance.worldScene;

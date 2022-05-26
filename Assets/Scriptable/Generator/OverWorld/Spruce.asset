@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057fb062a1db1f340aaebef4a15e69b4, type: 3}
+  m_Name: Spruce
+  m_EditorClassIdentifier: 
+  density: 1
+  interactables:
+  - interactable: {fileID: 11400000, guid: e1a2669c05d4eda41b07e14a691bcc62, type: 2}
+    spawnChance: 0.202
+  - interactable: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
+    spawnChance: 0.763
+  - interactable: {fileID: 11400000, guid: 51e7c40bd52c98b458e552ff1a762a9f, type: 2}
+    spawnChance: 0.117
+  hasItemDrops: 1
+  itemDrops:
+  - {fileID: 11400000, guid: 6dc56a52d82237e418b033213292e026, type: 2}
+  generationRules:
+  - mapIndex: 0
+    fromValue: 0.2
+    untilValue: 0.35
+    exclude: 0
+  subBiomes:
+  - {fileID: 11400000, guid: ad83e703c192dae47857c1c51bc3a53c, type: 2}

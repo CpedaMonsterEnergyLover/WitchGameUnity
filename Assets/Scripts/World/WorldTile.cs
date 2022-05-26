@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class WorldTile : ICacheable
 {
+    [SerializeField] private float generated;
     [SerializeField] public Vector2 interactableOffset;
     [SerializeField] private bool[] layers;
     [SerializeField] private Vector2Int position;
@@ -17,8 +18,11 @@ public class WorldTile : ICacheable
     [SerializeReference] public InteractableSaveData savedData;
     [SerializeReference] private List<EntitySaveData> savedEntities = new();
     [SerializeField] private Color color;
+    [SerializeField] private TileResourceData resourceData = new ();
+    [SerializeReference] private AbstractBiome biome;
 
 
+    public TileResourceData ResourceData => resourceData;
     public Vector2 Center => Position + new Vector2(0.5f, 0.5f);
     private List<Entity> CachedEntities { get; set; } = new ();
     private Interactable InstantiatedInteractable { get; set; }
@@ -49,13 +53,14 @@ public class WorldTile : ICacheable
 
     #endregion
 
-    public WorldTile(int x, int y, bool[] tiles, InteractableSaveData saveData, Color color)
+    public WorldTile(int x, int y, bool[] tiles, Color color, AbstractBiome biome)
     {
         position = new Vector2Int(x, y);
         layers = tiles;
-        savedData = saveData;
         interactableOffset =  new Vector2(Random.value * 0.6f + 0.2f, Random.value * 0.6f + 0.2f);
         this.color = color;
+        this.biome = biome;
+        generated = biome is null ? -1 : Random.value;
     }
 
     public void SetLayer(int layerIndex, bool value)
@@ -75,9 +80,17 @@ public class WorldTile : ICacheable
     
     public void Load()
     {
+        if (generated >= 0)
+        {
+            if (biome.GetInteractable(out InteractableSaveData saveData, generated))
+                savedData = saveData;
+            generated = -1;
+        }
+
         IsLoaded = true;
         LoadInteractable();
         WasChanged = true;
+        if(biome is not null && biome.hasItemDrops) SpawnResource();
         LoadEntities();
     }
 
@@ -129,6 +142,7 @@ public class WorldTile : ICacheable
     // Runtime only
     public void SetInteractable(InteractableSaveData interactableSaveData)
     {
+        generated = -1;
         WasChanged = true;
         DestroyInstantiated();
         savedData = interactableSaveData;
@@ -167,6 +181,23 @@ public class WorldTile : ICacheable
         if (Application.isPlaying) GameObject.Destroy(InstantiatedInteractable.gameObject);
         else GameObject.DestroyImmediate(InstantiatedInteractable.gameObject);
         InstantiatedInteractable = null;
+    }
+
+    private void SpawnResource()
+    {
+        if(!resourceData.SpawnResource || 
+           resourceData.SpawnMinute > TimelineManager.minutesPassed) return;
+        resourceData.HasResource = true;
+        resourceData.SpawnResource = false;
+        savedEntities.Add(new ResourceItemEntitySaveData
+        {
+            id = "resource_item_entity",
+            position = Center,
+            preInitialised = true,
+            spawnTile = this,
+            item = Item.Create(biome.GetDrop().identifier),
+            amount = 1,
+        });
     }
     
 }

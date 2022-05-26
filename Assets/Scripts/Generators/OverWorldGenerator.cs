@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class OverWorldGenerator : WorldGenerator
 {
+    public WorldResourceManager worldResourceManager;
+    
     public override async UniTask<WorldData> GenerateWorldData(List<WorldLayer> layers, WorldScene worldScene, bool fromEditor = false)
     {
         WorldData worldData = await base.GenerateWorldData(layers, worldScene, fromEditor);
-        
-        await NextPhase();
+        // await NextPhase();
         PlaceHouse(worldData);
+        // await NextPhase();
+        worldResourceManager.GenerateResources(worldData);
+        // await NextPhase();
         await SaveData(worldData);
         return worldData;
     }

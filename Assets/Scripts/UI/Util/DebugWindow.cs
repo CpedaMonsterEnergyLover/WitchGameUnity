@@ -16,6 +16,7 @@ public class DebugWindow : MonoBehaviour
         debugText.text = 
             $"Date: {TimelineManager.time}\n" +
             $"Total hours: {TimelineManager.totalHours}\n" +
+            $"Total minutes: {TimelineManager.minutesPassed}\n" +
             $"Sun curve: {SunCycleManager.TodaysSunCurve}\n" +
             $"Sun is down: {SunCycleManager.IsSunDownCached}\n" +
             $"Events: {activeHolidays}";

@@ -54,7 +54,7 @@ public abstract class Entity : MonoBehaviour, ICacheable
         Load();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         WorldManager.RemoveEntity(this);
         _dataHandlerTile?.RemoveEntitySaveData(saveData);
@@ -111,23 +111,19 @@ public abstract class Entity : MonoBehaviour, ICacheable
         }
     }
     
-    
-    
-    
-    // Creates a new entity
     public static Entity Create(EntitySaveData saveData)
     {
         GameObject prefab = GameCollection.Entities.Get(saveData.id);
         prefab = Instantiate(prefab, WorldManager.Instance.entitiesTransform);
-        Entity interactable = prefab.GetComponent<Entity>();
+        Entity entity = prefab.GetComponent<Entity>();
 
         if (saveData.preInitialised)
         {
-            interactable.saveData = saveData;
+            entity.saveData = saveData;
         }
-        else interactable.InitSaveData(interactable.Data);
+        else entity.InitSaveData(entity.Data);
         
-        return interactable;
+        return entity;
     }
 
     public virtual void Kill()

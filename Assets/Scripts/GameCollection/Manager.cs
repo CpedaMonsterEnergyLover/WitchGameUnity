@@ -4,13 +4,14 @@ namespace GameCollection
 {
     public class Manager : MonoBehaviour
     {
-        public Items items;
-        public Entities entities;
-        public Interactables interactables;
-        public CraftingRecipies recipies;
-        public WorldScenesCollection scenesCollection;
-        public Hearts heartsCollection;
-
+        [SerializeField] private Items items;
+        [SerializeField] private Entities entities;
+        [SerializeField] private Interactables interactables;
+        [SerializeField] private CraftingRecipies recipies;
+        [SerializeField] private WorldScenesCollection scenesCollection;
+        [SerializeField] private Hearts heartsCollection;
+        [SerializeField] private Biomes biomes;
+        
         private static bool Initialized { get; set; }
 
         private void Awake()
@@ -34,6 +35,7 @@ namespace GameCollection
             scenesCollection.Init();
             heartsCollection.Init();
             Initialized = true;
+            biomes.Init();
             if(Application.isPlaying) GameDataManager.CountWorldParts();
         }
 

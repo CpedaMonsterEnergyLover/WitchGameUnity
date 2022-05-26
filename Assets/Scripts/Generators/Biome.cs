@@ -28,6 +28,8 @@ public class Biome : AbstractBiome
         return verdict;
     }
 
+    
+    
     public override void Init()
     {
         base.Init();
