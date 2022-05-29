@@ -10,16 +10,16 @@ public class DebugWindow : MonoBehaviour
     {
         // Active holidays
         StringBuilder activeHolidays = new StringBuilder();
-        HolidaysManager.ActiveHolidays
-            .ForEach(holiday => activeHolidays.Append(holiday.name).Append(" "));
+        /*HolidaysManager.ActiveHolidays
+            .ForEach(holiday => activeHolidays.Append(holiday.name).Append(" "));*/
 
-        debugText.text = 
-            $"Date: {TimelineManager.time}\n" +
-            $"Total hours: {TimelineManager.totalHours}\n" +
-            $"Total minutes: {TimelineManager.minutesPassed}\n" +
-            $"Sun curve: {SunCycleManager.TodaysSunCurve}\n" +
-            $"Sun is down: {SunCycleManager.IsSunDownCached}\n" +
-            $"Events: {activeHolidays}";
+        debugText.text =
+            $"Date: {Timeline.Time}\n" +
+            $"Total minutes: {Timeline.TotalMinutes}\n" +
+            $"Day minutes: {Timeline.CurrentMinute}\n" +
+            $"Sun curve: {Timeline.SunCycleData.Today}\n";
+        /* +
+            $"Events: {activeHolidays}";*/
     }
 
 }

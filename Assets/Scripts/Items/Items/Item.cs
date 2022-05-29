@@ -47,6 +47,7 @@ public class  Item
             ItemType.MagicBook => new MagicBook(identifier),
             ItemType.MeleeWeapon => new MeleeWeapon(identifier),
             ItemType.Pickaxe => new Pickaxe(identifier),
+            ItemType.Gem => new Gem(identifier),
             _ => throw new ArgumentOutOfRangeException($"Unknown item type: {identifier.type}"
                 , new Exception())
         };

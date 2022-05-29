@@ -34,19 +34,19 @@ public class HolidaysManager : MonoBehaviour
         MapHolidaysData();
 
         // Определяет активный праздник на момент инициализации
-        List<Holiday> holidays = GetHolidaysByDate(TimelineManager.time.Season, TimelineManager.time.day);
+        List<Holiday> holidays = GetHolidaysByDate(Timeline.Time.Season, 0/*TimelineManager.time.day*/);
         if (holidays.Count != 0)
             ActiveHolidays.AddRange(holidays);
     }
 
     private void Awake()
     {
-        TimelineManager.ONDayPassed += OnDayPassed;
+        Timeline.ONMidnightPassed += OnDayPassed;
     }
     
     private void OnDestroy()
     {
-        TimelineManager.ONDayPassed -= OnDayPassed;
+        Timeline.ONMidnightPassed -= OnDayPassed;
     }
 
 
@@ -90,7 +90,7 @@ public class HolidaysManager : MonoBehaviour
             season = holiday.season,
             date = TimeUtil.LerpDay(
                 1200,
-                TimelineManager.time.month,
+                 0/*TimelineManager.time.month*/,
                 holiday.date)
         }))
         {
@@ -116,7 +116,7 @@ public class HolidaysManager : MonoBehaviour
         
         // Ищет праздники, которые проходят в этот день
         List<Holiday> holidays = GetHolidaysByDate
-            (TimelineManager.time.Season, (day + 1) % TimelineManager.SeasonLength);
+            (Timeline.Time.Season, (day + 1) % Timeline.SeasonLength);
         if (holidays.Count != 0)
         {
             ActiveHolidays.AddRange(holidays);

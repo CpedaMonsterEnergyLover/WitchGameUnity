@@ -6,7 +6,7 @@ public class TileResourceData
 {
     [SerializeField] private bool spawnResource;
     [SerializeField] private bool hasResource;
-    [SerializeField] private int spawnMinute;
+    [SerializeField] private long spawnMinute;
 
     public bool SpawnResource
     {
@@ -20,7 +20,7 @@ public class TileResourceData
         set => hasResource = value;
     }
 
-    public int SpawnMinute
+    public long SpawnMinute
     {
         get => spawnMinute;
         set => spawnMinute = value;

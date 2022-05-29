@@ -53,7 +53,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
     public override void OnTileLoad(WorldTile loadedTile) 
     {
         base.OnTileLoad(loadedTile);
-        RemoveBurningTime(TimelineManager.minutesPassed - loadedTile.lastLoadedMinute);
+        RemoveBurningTime(Timeline.TotalMinutes - loadedTile.lastLoadedMinute);
         sparklesParticles.Stop();
         StartFireControlCoroutines(true);
         UpdateParticlesAndLights();
@@ -126,7 +126,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         return true;
     }
     
-    private void RemoveBurningTime(int minute)
+    private void RemoveBurningTime(long minute)
     {
         SaveData.burningDuration -= minute;
         if (SaveData.burningDuration <= 0)
@@ -145,7 +145,7 @@ public class Bonfire : Interactable, IItemEntityReceiver, IPlayerReceiver
         while (gameObject.activeInHierarchy && SaveData.burningDuration > 0)
         {
             RemoveBurningTime(1);
-            yield return new WaitForSeconds(TimelineManager.MinuteDuration);
+            yield return new WaitForSeconds(Timeline.MinuteDuration);
         }
     }
 

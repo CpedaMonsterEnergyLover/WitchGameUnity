@@ -14,7 +14,7 @@ public class WorldTile : ICacheable
     [SerializeField] public Vector2 interactableOffset;
     [SerializeField] private bool[] layers;
     [SerializeField] private Vector2Int position;
-    [SerializeField] public int lastLoadedMinute;
+    [SerializeField] public long lastLoadedMinute;
     [SerializeReference] public InteractableSaveData savedData;
     [SerializeReference] private List<EntitySaveData> savedEntities = new();
     [SerializeField] private Color color;
@@ -186,7 +186,7 @@ public class WorldTile : ICacheable
     private void SpawnResource()
     {
         if(!resourceData.SpawnResource || 
-           resourceData.SpawnMinute > TimelineManager.minutesPassed) return;
+           resourceData.SpawnMinute > Timeline.TotalMinutes) return;
         resourceData.HasResource = true;
         resourceData.SpawnResource = false;
         savedEntities.Add(new ResourceItemEntitySaveData

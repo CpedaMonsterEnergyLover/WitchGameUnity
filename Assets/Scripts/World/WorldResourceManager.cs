@@ -77,7 +77,7 @@ public class WorldResourceManager : MonoBehaviour
             {
                 resourceData.SpawnResource = true;
                 // int minute = TimelineManager.minutesPassed + 60;
-                int minute = TimelineManager.minutesPassed + _respawnTimeMinutes + Random.Range(0, 1440);
+                long minute = Timeline.TotalMinutes + _respawnTimeMinutes + Random.Range(0, 1440);
                 resourceData.SpawnMinute = minute;
                 break;
             }

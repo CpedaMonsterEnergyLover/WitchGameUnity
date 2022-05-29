@@ -14,7 +14,7 @@ public class SunAffectableLight : MonoBehaviour
         else
         {
             SubToEvents();
-            ChangeIntensity(SunCycleManager.Sun.Intensity);
+            ChangeIntensity(Sun.Instance.Intensity);
         }
     }
 

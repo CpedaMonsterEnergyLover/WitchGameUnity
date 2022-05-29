@@ -1,51 +1,88 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class Sun : MonoBehaviour
 {
-    public new Light2D light;
-    [Header("The speed of sunset/sunrise in real seconds")]
-    public float transitionDuration;
+    public static Sun Instance { get; private set; }
+    private void Awake() => Instance = this;
+
+    [SerializeField] private new Light2D light;
     public Gradient colorGradient;
     public float Intensity { get; private set; }
 
 
     public delegate void IntensityEvent(float currentIntensity);
     public static event IntensityEvent ONIntensityChanged;
+
+    private static CancellationTokenSource _currentTokenSource;
+
+    private void Start()
+    {
+        SunCycleManager.ONSunrise += Sunrise;
+        SunCycleManager.ONSunset += Sunset;
+        SunCycleDay cycle = Timeline.SunCycleData.Today;
+        int time = Timeline.CurrentMinute;
+        int transition = Timeline.Instance.SunTransitionDuration;
+
+        if (time < cycle.Sunrise)
+        {
+            SetCurrent(0);
+        } else if (time < cycle.Sunrise + transition)
+        {
+            StartTransition(Intensity, 1, cycle.Sunrise - time);
+        } else if (time < cycle.Sunset)
+        {
+            SetCurrent(1);
+        } else if (time < cycle.Sunset + transition)
+        {
+            StartTransition(Intensity, 0, cycle.Sunrise - time);
+        }
+        else
+        {
+            SetCurrent(0);
+        }
+    }
     
-    public void SetCurrent(float currentIntensity)
+    private void OnDestroy()
+    {
+        SunCycleManager.ONSunrise -= Sunrise;
+        SunCycleManager.ONSunset -= Sunset;
+        _currentTokenSource?.Cancel();
+    }
+
+    private void StartTransition(float from, float to, int currentDuration)
+    {
+        _currentTokenSource?.Cancel();
+        LightTransition(from, to, currentDuration).Forget();
+    }
+
+    private void Sunset() => StartTransition(Intensity, 0, 0);
+    private void Sunrise() => StartTransition(Intensity, 1, 0);
+
+    private void SetCurrent(float currentIntensity)
     {
         Intensity = currentIntensity;
         light.intensity = Intensity;
+        light.color = colorGradient.Evaluate(1 - Intensity);
         ONIntensityChanged?.Invoke(Intensity);
     }
-
-    public void StartTransition(float to)
-    {
-        StopAllCoroutines();
-        StartCoroutine(LightRoutine(Intensity, to, transitionDuration));
-    }
     
-    private IEnumerator LightRoutine(float from, float to, float duration)
+    private async UniTaskVoid LightTransition(float from, float to, int currentDuration)
     {
-        float t = 0.0f;
-        
-        Debug.Log($"Time is: {TimelineManager.time}, starting transition from {from} to {to}");
-
-        duration *= 20;
-        
-        while (t < duration)
+        _currentTokenSource?.Cancel();
+        _currentTokenSource = new CancellationTokenSource();
+        CancellationToken token = _currentTokenSource.Token;
+        float duration = Timeline.Instance.SunTransitionDuration;
+        for (int t = currentDuration; t < duration; t++)
         {
-            Intensity = Mathf.Lerp(from, to, t / duration);
-            light.intensity = Intensity;
-            light.color = colorGradient.Evaluate(1 - Intensity);
-            t += 1;
-            ONIntensityChanged?.Invoke(Intensity);
-            yield return new WaitForSeconds(0.05f);
+            SetCurrent(Mathf.Lerp(from, to,  t / duration));
+            await UniTask.Delay(TimeSpan.FromSeconds(Timeline.MinuteDuration), cancellationToken: token);
         }
-
-        Intensity = to;
-        light.intensity = Intensity;
+        SetCurrent(to);
     }
+
 }

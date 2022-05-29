@@ -8,7 +8,7 @@ public static class TimeUtil
     // подгоняет день нужного месяца нужного года под размер игрового сезона
     public static int LerpDay(int year, int month, int day)
     {
-        return (int) Mathf.Lerp(1, TimelineManager.SeasonLength, 
+        return (int) Mathf.Lerp(1, Timeline.SeasonLength, 
             (float) day / DateTime.DaysInMonth(year, month));
     }
 

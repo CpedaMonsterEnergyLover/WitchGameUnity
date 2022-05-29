@@ -13,8 +13,6 @@ public class Herb : Interactable
     private GameObject _bed;
 
 
-    #region OverrideMethods
-
     protected override void InitSaveData(InteractableData origin)
     {
         saveData = new HerbSaveData(origin)
@@ -27,8 +25,7 @@ public class Herb : Interactable
     public override void OnTileLoad(WorldTile loadedTile)
     {
         base.OnTileLoad(loadedTile);
-
-        if (SaveData.nextStageHour == 0)
+        /*if (SaveData.nextStageHour == 0)
         {
             SaveData.nextStageHour += saveData.creationHour + Data.StageGrowthTime;
         }
@@ -45,10 +42,10 @@ public class Herb : Interactable
         {
             Grow();
             counter++;
-        }
+        }*/
 
         SetSprite(SaveData.growthStage);
-        TimelineManager.ONTotalHourPassed += GrowOnHour;
+        // TimelineManager.ONTotalHourPassed += GrowOnHour;
     }
 
     public override void Kill()
@@ -67,13 +64,13 @@ public class Herb : Interactable
 
     private void OnDisable()
     {
-        TimelineManager.ONTotalHourPassed -= GrowOnHour;
+        // TimelineManager.ONTotalHourPassed -= GrowOnHour;
     }
 
     public override void SetActive(bool isHidden)
     {
         base.SetActive(isHidden);
-        if(!isHidden) TimelineManager.ONTotalHourPassed -= GrowOnHour;
+        // if(!isHidden) TimelineManager.ONTotalHourPassed -= GrowOnHour;
     }
 
     public override void Interact(float value = 1.0f)
@@ -87,10 +84,7 @@ public class Herb : Interactable
         Kill();
     }
 
-    #endregion
-    
-    
-    
+
     #region ClassMethods
 
     private void SetSprite(GrowthStage stage)

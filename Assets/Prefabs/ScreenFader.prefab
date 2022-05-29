@@ -61,6 +61,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -546353425
   m_SortingOrder: 100
   m_TargetDisplay: 0
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10820857ba5e4c3691f783639910cce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackOnStart: 0
+  onStart: 0
   _animator: {fileID: 7664961499090879312}
 --- !u!222 &4674503289517442238
 CanvasRenderer:

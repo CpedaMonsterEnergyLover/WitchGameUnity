@@ -131,7 +131,7 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         if(interactableUnderCursor is null) return;
         
         if(Vector2.Distance(PlayerController.Instance.transform.position,
-            interactableUnderCursor.transform.position) > 1.6f) return;
+            interactableUnderCursor.transform.position) > 1.3f) return;
 
         InteractionFilter filter = new InteractionFilter(true, true);
         Interact(interactableUnderCursor.Data.interactingTime, 

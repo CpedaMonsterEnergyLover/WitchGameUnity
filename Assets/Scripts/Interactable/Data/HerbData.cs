@@ -59,7 +59,7 @@ public class HerbData : InteractableData
     public HerbLootTable GetLootTable(GrowthStage stage) => lootTable[(int) stage];
     */
 
-    public int StageGrowthTime => (int) (growthSpeed * TimelineManager.SeasonLength / 4);
+    public int StageGrowthTime => (int) (growthSpeed * Timeline.SeasonLength / 4);
 
     public Sprite SpriteOfGrowthStage(GrowthStage stage) => growthSprites[(int) stage].sprite;
 

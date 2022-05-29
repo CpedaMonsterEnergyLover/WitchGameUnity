@@ -5,48 +5,32 @@ using UnityEngine;
 [Serializable]
 public class TimelineStamp
 {
-    #region Vars
-
-    // Private
     private DateTime _time;
-
-    // Public    
-    public int year;
-    public int month;
-    public int day;
+    [SerializeField] private int year;
+    [SerializeField] private Season season;
+    [SerializeField] private int day;
     [SerializeField] private int hours;
     [SerializeField] private int minutes;
     
-    public Season Season => (Season) month;
-    public int DayOfYear => month * TimelineManager.SeasonLength + day;
-    public bool LastDayOfSeason => day == TimelineManager.SeasonLength;
+    public Season Season => season;
+    public int DayOfYear => (int) season * Timeline.SeasonLength + day;
     public int Minute => _time.Minute;
     public int Hour => _time.Hour;
+    public int Year => year;
 
-
-    #endregion
-
-
-
-    #region ClassMethods
-
-    public static TimelineStamp FromLoadedStamp(TimelineStamp stamp)
+    public TimelineStamp GetSerializeable()
     {
-        return new TimelineStamp(stamp.year, stamp.month, stamp.day, stamp.hours, stamp.minutes);
+        var abc = new TimelineStamp(year, season, day, _time.Hour, _time.Minute);
+        Debug.Log(abc);
+        return abc;
     }
+
+    public TimelineStamp GetConverted() => new(year, season, day, hours, minutes);
     
-    public TimelineStamp GetStamp()
-    {
-        var time = new TimelineStamp(year, month, day, _time.Hour, _time.Minute);
-        Debug.Log($"Saved time data: {time}");
-        return time;
-    }
-    
-    // Конструктор
-    public TimelineStamp(int year, int month, int day, int hours, int minutes)
+    public TimelineStamp(int year, Season season, int day, int hours, int minutes)
     {
         this.year = year;
-        this.month = month;
+        this.season = season;
         this.day = day;
         this.hours = hours;
         this.minutes = minutes;
@@ -54,67 +38,17 @@ public class TimelineStamp
                + TimeSpan.FromHours(hours)
                + TimeSpan.FromMinutes(minutes);
     }
-
-    // Разница в минутах между другим штампом
-    public int DifferenceInMinutes(TimelineStamp stamp)
-    {
-        const int minutesInDay = 60 * 24;
-        int seasonLength = TimelineManager.SeasonLength;
-        int minutesSummary1 = (year * TimelineManager.YearLength * minutesInDay) + 
-                              (month * seasonLength + day) * minutesInDay + 
-                              (Hour * 60) + Minute;
-        int minutesSummary2 = (stamp.year * TimelineManager.YearLength * minutesInDay) + 
-                              (stamp.month * seasonLength + stamp.day) * minutesInDay + 
-                              (stamp.Hour * 60) + stamp.Minute;
-        return Math.Abs(minutesSummary1 - minutesSummary2);
-    }
-
-    // Сколько в штампе часов
-    public int TotalHours()
-    {
-        return (year * TimelineManager.YearLength + month * TimelineManager.SeasonLength + day) * 24 + Hour;
-    }
-
-    // Увеличивает год
-    public void PassYear()
-    {
-        year++;
-    }
-
-    // Увеличивает сезон
-    public void PassSeason()
-    {
-        month++;
-        if (month == TimelineManager.SeasonAmount) month = 0;
-    }
     
-    // Увеличивает день
-    public void PassDay()
-    {
-        day++;
-        if (day > TimelineManager.SeasonLength) day = 1;
-    }
-
-    #endregion
-
-
-    public void AddSeconds(float seconds)
-    {
-        _time = _time.AddSeconds(seconds);
-    }
-    
-    public static TimeSpan GetHourStamp(int hours, int minutes)
-    {
-        return TimeSpan.Zero
-               + TimeSpan.FromHours(hours)
-               + TimeSpan.FromMinutes(minutes);
-    }
+    public void Tick() => _time = _time.AddMinutes(1);
+    public void PassYear() => year++;
+    public Season PassSeason() => season = (Season)(((int) season + 1) % Timeline.SeasonAmount);
+    public int PassDay() => day = (day + 1) % Timeline.SeasonLength;
 
     public override string ToString()
     {
         return new StringBuilder()
             .Append(day).Append("(").Append(DayOfYear).Append(")").Append(" of ")
-            .Append((Season) month).Append(", ")
+            .Append(season).Append(", ")
             .Append(year).Append("\n")
             .Append(_time.ToString("HH:mm"))
             .ToString();

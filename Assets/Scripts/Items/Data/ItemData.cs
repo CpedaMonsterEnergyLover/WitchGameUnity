@@ -27,5 +27,6 @@ public enum ItemType
     FireStarter,
     MagicBook,
     MeleeWeapon,
-    Pickaxe
+    Pickaxe,
+    Gem
 }
