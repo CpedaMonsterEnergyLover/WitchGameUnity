@@ -152,7 +152,7 @@ public class  ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     #region Utils
 
-    protected virtual void Clear()
+    public virtual void Clear()
     {
         storedAmount = 0;
         storedItem = null;

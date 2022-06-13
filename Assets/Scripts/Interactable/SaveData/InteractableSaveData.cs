@@ -6,7 +6,7 @@ public class InteractableSaveData
 {
     [Header("Interactable SaveData")] 
     [SerializeField] public string id;
-    [SerializeField] public long creationHour = Timeline.TotalMinutes;
+    [SerializeField] public long creationTime = Timeline.TotalMinutes;
     [SerializeField] public bool initialized;
 
     public InteractableSaveData(string id)
@@ -25,7 +25,7 @@ public class InteractableSaveData
         return new InteractableSaveData
         {
             id = id,
-            creationHour = creationHour,
+            creationTime = creationTime,
             initialized = initialized
         };
     }

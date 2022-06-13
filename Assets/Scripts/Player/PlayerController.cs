@@ -33,6 +33,10 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
     private bool _isDashAllowed = true;
     private bool _isMoveAllowed = true;
 
+    public delegate void DashEvent();
+
+    public static DashEvent ONDashStart;
+    public static DashEvent ONDashEnd;
 
     private bool CanDash()
     {
@@ -84,6 +88,7 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
         TemporaryDismissData dismissData = new TemporaryDismissData()
             .Add(ItemPicker.Instance)
             .Add(ToolHolder.Instance).HideAll();
+        ONDashStart?.Invoke();
         // Phase 1: collider set-up
         waterCollider.StartDash(dashDuration).Forget();
         await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour, ITemporaryDismissable
         playerAnimationManager.StopDash();
         dismissData.ShowAll();
         await UniTask.Delay(TimeSpan.FromSeconds(0.16f));
+        ONDashEnd?.Invoke();
         // Phase 5: Allow dash again in delay
         _isDashAllowed = true;
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -31,8 +32,7 @@ public class BattleArena : MonoBehaviour
         _tileLoader = TileLoader.Instance;
         _center = Vector3Int.FloorToInt(transform.position);
     }
-
-
+    
     public void ClearTiles()
     {
         StopAllCoroutines();
@@ -94,7 +94,7 @@ public class BattleArena : MonoBehaviour
                 }                
             }
             currentR++;
-            yield return new WaitForSeconds(paintIterationDelay);
+            yield return new WaitForSecondsRealtime(paintIterationDelay);
         }
     }
     
@@ -103,6 +103,7 @@ public class BattleArena : MonoBehaviour
         int currentR = arenaRadius;
         while (currentR >= 1)
         {
+            TileLoader.Instance.ResetPreviousPosition();
             int sections = currentR * 24;
             float angle = 360f / sections;
             float currentAngle = 0;
@@ -128,7 +129,7 @@ public class BattleArena : MonoBehaviour
                 }                
             }
             currentR--;
-            yield return new WaitForSeconds(paintIterationDelay);
+            yield return new WaitForSecondsRealtime(paintIterationDelay);
         }
         
         mainTilemap.ClearAllTiles();

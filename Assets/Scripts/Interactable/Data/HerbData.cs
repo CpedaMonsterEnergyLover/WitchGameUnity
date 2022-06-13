@@ -8,95 +8,63 @@ public class HerbData : InteractableData
 {
     [Header("Herb data")]
     public bool blockGrowth = true;
+    public string latinName;
+    [Range(1,3)]
+    public int tier;
+    [Header("Herb growth season interval")]
+    public SeasonInterval growthInterval;
 
-    public bool hasDrop;
-    public ItemData itemDrop;
+    [Range(1,45), Header("Amount of days to reach Mature growth stage")]
+    public int growthSpeed;
 
-    /*
-    [SerializeField] 
-    [Tooltip("Сезон, в который появляются ростки растения")]
-    public Season growthSeason;
-
-    [Range(0.5f,3)]
-    [Tooltip("Скорость увядания растения в количестве сезонов")]
-    public float witherSpeed;
-    */
+    public bool forceOneDrop;
+    public ItemData forcedDrop;
     
-    [SerializeField] [Tooltip("Сколько сезонов нужно растению чтобы полностью вырасти.")]
-    [Range(0,6)]
-    public float growthSpeed;
-    
-    /*
     [SerializeField] 
-    [Tooltip("Какой лут падает с определенной стадии роста")]
-    public HerbLootTable[] lootTable =
+    [Tooltip("Growth stage sprites")]
+    public HerbLootTable[] loot =
     {
-        new HerbLootTable(GrowthStage.Sprout),
-        new HerbLootTable(GrowthStage.Bush),
-        new HerbLootTable(GrowthStage.Blossom),
-        new HerbLootTable(GrowthStage.Grown),
-        new HerbLootTable(GrowthStage.Decay),
+        new(HerbPart.Seed),
+        new(HerbPart.Leaf),
+        new(HerbPart.Flower),
+        new(HerbPart.Fetus),
     };
-    */
-    
+
     [SerializeField] 
-    [Tooltip("Модельки")]
+    [Tooltip("Growth stage sprites")]
     public GrowthStageSprite[] growthSprites =
     {
-        new GrowthStageSprite(GrowthStage.Sprout),
-        new GrowthStageSprite(GrowthStage.Bush),
-        new GrowthStageSprite(GrowthStage.Blossom),
-        new GrowthStageSprite(GrowthStage.Grown),
-        new GrowthStageSprite(GrowthStage.Decay),
+        new(HerbGrowthStage.Seed),
+        new(HerbGrowthStage.Sprout),
+        new(HerbGrowthStage.Bush),
+        new(HerbGrowthStage.Blossom),
+        new(HerbGrowthStage.Mature),
+        new(HerbGrowthStage.Old),
     };
-
-
-
-    /*
-    public string[] GetLoot(GrowthStage stage) => 
-        (int)stage < lootTable.Length ? lootTable[(int)stage].loot : Array.Empty<string>();
-
-    public HerbLootTable GetLootTable(GrowthStage stage) => lootTable[(int) stage];
-    */
-
-    public int StageGrowthTime => (int) (growthSpeed * Timeline.SeasonLength / 4);
-
-    public Sprite SpriteOfGrowthStage(GrowthStage stage) => growthSprites[(int) stage].sprite;
-
     
+    public Sprite SpriteOfGrowthStage(HerbGrowthStage stage) => growthSprites[(int) stage].sprite;
+    public ItemData LootOfHerbPart(HerbPart herbPart) => loot[(int) herbPart].Item;
     
-    /*
-    #region Util
-
     private void OnValidate()
     {
-        if (lootTable.Length != 5)
+        if (growthSprites.Length != 6 || loot.Length != 4)
         {
-            Debug.LogWarning("Don't change the 'lootTable' field's array size!");
-            Array.Resize(ref lootTable, 5);
-        }
-        
-        if (growthSprites.Length != 5)
-        {
-            Debug.LogWarning("Don't change the 'sprites' field's array size!");
-            Array.Resize(ref growthSprites, 5);
+            Array.Resize(ref growthSprites, 6);
+            Array.Resize(ref loot, 4);
         }
     }
-
-
-    #endregion*/
 }
 
 [Serializable]
 public struct GrowthStageSprite
 {
     [ShowOnly]
-    public GrowthStage growthStage;
+    public HerbGrowthStage stage;
     public Sprite sprite;
 
-    public GrowthStageSprite(GrowthStage stage) : this()
+    public GrowthStageSprite(HerbGrowthStage stage) : this()
     {
-        growthStage = stage;
+        this.stage = stage;
     }
 }
 
@@ -104,35 +72,35 @@ public struct GrowthStageSprite
 public struct HerbLootTable
 {
     [ShowOnly]
-    public GrowthStage growthStage;
-    public string[] loot;
-    public ItemData item;
+    public HerbPart part;
 
-    public HerbLootTable(GrowthStage growthStage) : this()
+    public bool hasItem;
+    [SerializeField] private HerbDerivedItemData item;
+
+    public HerbLootTable(HerbPart part) : this()
     {
-        this.growthStage = growthStage;
+        this.part = part;
     }
 
-    public override string ToString()
-    {
-        if (loot.Length == 0) return "empty";
-        StringBuilder toPrint = new StringBuilder();
-        foreach (string s in loot)
-        {
-            toPrint.Append(s).Append(",");
-        }
-
-        toPrint.Remove(toPrint.Length - 1, 1);
-        return toPrint.ToString();
-    }
+    public HerbDerivedItemData Item => hasItem ? item : null;
 }
 
+
 [Serializable]
-public enum GrowthStage
+public enum HerbGrowthStage
 {
-    Sprout = 0,
-    Bush = 1,
-    Blossom = 2,
-    Grown = 3,
-    Decay = 4
-}   
+    Seed = 0,
+    Sprout = 1,
+    Bush = 2,
+    Blossom = 3,
+    Mature = 4,
+    Old = 5
+}
+
+public enum HerbPart
+{
+    Seed = 0,
+    Leaf = 1,
+    Flower = 2,
+    Fetus = 3
+}

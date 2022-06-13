@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5563297495391302986}
   - component: {fileID: 7775412664782959286}
   - component: {fileID: 127625184100379450}
-  m_Layer: 0
+  - component: {fileID: 2722927727741318990}
+  m_Layer: 11
   m_Name: Common
-  m_TagString: Bullet
+  m_TagString: HostileBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,3 +132,19 @@ MonoBehaviour:
   homingProperties:
     isHoming: 0
     rotatingSpeed: 2.5
+--- !u!58 &2722927727741318990
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3090018743286462098}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.25}
+  serializedVersion: 2
+  m_Radius: 0.25

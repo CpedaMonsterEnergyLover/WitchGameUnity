@@ -17,7 +17,7 @@ public class House : DimensionDoor
             initialized = true,
             id = "house_door",
             position = new Vector2(tile.Position.x + 0.2f, tile.Position.y),
-            creationHour = 0,
+            creationTime = 0,
             sceneToLoad = WorldManager.Instance.worldScene,
             subWorldIndex = -1
         }
@@ -39,7 +39,7 @@ public class House : DimensionDoor
             id = origin.id,
             initialized = true,
             position = new Vector2(Data.doorPosition + 0.5f, 1.5f),
-            creationHour = 0,
+            creationTime = 0,
             sceneToLoad = WorldScenesCollection.Get("HouseWorld"),
             subWorldIndex = -1
         };

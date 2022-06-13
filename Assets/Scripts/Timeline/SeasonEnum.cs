@@ -3,16 +3,16 @@ using System;
 [Serializable]
 public enum Season
 {
-    Winter,
+    MidWinter,
     LateWinter,
     EarlySpring,
-    Spring,
+    MidSpring,
     LateSpring,
     EarlySummer,
-    Summer,
+    MidSummer,
     LateSummer,
     EarlyAutumn,
-    Autumn,
+    MidAutumn,
     LateAutumn,
     EarlyWinter
 }

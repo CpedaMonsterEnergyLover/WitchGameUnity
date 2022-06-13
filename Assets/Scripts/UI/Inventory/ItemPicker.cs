@@ -213,5 +213,6 @@ public class ItemPicker : MonoBehaviour, ITemporaryDismissable
         CursorHoverCheck.ONCursorEnterUI -= OnCursorEnterUI;
         CursorHoverCheck.ONCursorLeaveUI -= OnCursorLeaveUI;
     }
-    
+
+    public void StopInteraction() => interactionBar.StopInteraction();
 }

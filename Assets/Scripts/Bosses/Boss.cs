@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -30,7 +31,14 @@ public class Boss : MonoBehaviour, IBulletReceiver
         StartStage(0); 
         Bossbar.Instance.SetBoss(this);
         StartCoroutine(MoveRoutine());
+        DeathManager.ONPlayerDeath += Victory;
     }
+    
+    private void OnDestroy()
+    {
+        DeathManager.ONPlayerDeath -= Victory;
+    }
+
 
     private void StartStage(int index)
     {
@@ -60,10 +68,34 @@ public class Boss : MonoBehaviour, IBulletReceiver
 
     private void Kill()
     {
+        StopAllCoroutines();
+        BulletSpawner.Instance.Stop();
         if(hasDeathDialog) DialogWindow.Instance.StartDialog(deathDialog);
         Bossbar.Instance.Kill();
         Destroy(gameObject);
+        WaitForTimeScale().Forget();
+    }
+
+    private async UniTaskVoid WaitForTimeScale()
+    {
+        await UniTask.WaitUntil(() => Time.timeScale >= 1);
         BattleArena.Instance.ClearArena();
+    }
+
+    private void Victory()
+    {
+        StopAllCoroutines();
+        BulletSpawner.Instance.Stop();
+        IEnumerator VictoryRoutine()
+        {
+            Bossbar.Instance.Kill();
+            fader.FadeOut(0f);
+            BattleArena.Instance.ClearArena();
+            yield return new WaitForSeconds(1f);
+            Destroy(gameObject);
+        }
+
+        StartCoroutine(VictoryRoutine());
     }
 
     private void Bomb(Action action)
@@ -102,7 +134,6 @@ public class Boss : MonoBehaviour, IBulletReceiver
     public void OnBulletReceive(Bullet bullet)
     {
         ApplyDamage(1);
-        Destroy(bullet.gameObject);
     }
 
     public void OnBulletExitReceiver(Bullet bullet)

@@ -100,7 +100,7 @@ public abstract class Entity : MonoBehaviour, ICacheable
     {
         if (!GetWorldTilePosition(out WorldTile tile))
         {
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
         }
         else
         {

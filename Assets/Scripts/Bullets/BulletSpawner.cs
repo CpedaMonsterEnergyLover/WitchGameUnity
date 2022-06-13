@@ -13,7 +13,8 @@ public class BulletSpawner : MonoBehaviour
     private void Awake() => Instance = this;
 
     #endregion
-    
+
+    public void Stop() => StopAllCoroutines();
     
     public void Bomb(
         GameObject prefab, 

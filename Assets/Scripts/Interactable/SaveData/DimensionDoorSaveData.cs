@@ -13,7 +13,7 @@
         return new DimensionDoorSaveData
         {
             id = id,
-            creationHour = creationHour,
+            creationTime = creationTime,
             initialized = initialized,
             sceneToLoad = sceneToLoad,
             subWorldIndex = subWorldIndex,

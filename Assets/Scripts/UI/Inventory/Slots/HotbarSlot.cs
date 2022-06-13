@@ -59,7 +59,7 @@ public class HotbarSlot : ItemSlot
 
     public override int AddItem(Item item, int amount) => 0;
 
-    protected override void Clear()
+    public override void Clear()
     {
         if(ReferenceSlot is not null) 
             ReferenceSlot.HotbarReference = null;

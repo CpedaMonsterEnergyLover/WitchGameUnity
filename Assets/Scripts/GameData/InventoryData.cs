@@ -16,6 +16,7 @@ public class InventoryData
         var inventory = PlayerManager.Instance.inventoryWindow.slots;
         var slots = new List<SlotData>();
         var slotsAmount = inventory.Count;
+        Debug.Log("Number of slots in inventory: " + slotsAmount);
         foreach (InventorySlot slot in inventory)
         {
             bool hasItem = slot.storedItem is not null;

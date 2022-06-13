@@ -16,7 +16,7 @@ public class Timeline : MonoBehaviour
     }
 
     // In real seconds
-    public const float DayDuration = 1200 / 10f;
+    public const float DayDuration = 1200;
     public const float HourDuration = DayDuration / 24;
     public const float MinuteDuration = HourDuration / 60;
 
@@ -38,6 +38,7 @@ public class Timeline : MonoBehaviour
     public static event TimeEvent ONMidnightPassed;
     public static event TimeEvent ONYearPassed;
     public static event TimeEvent ONSeasonPassed;
+    public static event TimeEvent ONSeasonStart;
     
     public static TimelineData GetTimelineData() => 
         new(TotalMinutes, Time.GetSerializeable(), SeasonLength, SunCycleData);
@@ -109,7 +110,8 @@ public class Timeline : MonoBehaviour
     {
         ONSeasonPassed?.Invoke((int) Time.Season);
         Time.PassSeason();
-        if(Time.Season == Season.Winter) PassYear();
+        ONSeasonStart?.Invoke((int) Time.Season);
+        if(Time.Season == Season.MidWinter) PassYear();
     }
     
     private static void PassYear()

@@ -5,14 +5,9 @@ using UnityEngine;
 public class HerbSaveData : InteractableSaveData
 {
     [Header("Herb data")] 
-    [SerializeField] public float fertility = 1f;
-    [SerializeField] public float growthSpeed = 1f;
-    [SerializeField] public float frostResistance = 1f;
-    [SerializeField] public GrowthStage growthStage;
-    [SerializeField] public int nextStageHour;
-    [SerializeField] public bool withering;
-    [SerializeField] public bool decaying;
-    [SerializeField] public bool hasBed;
+    [SerializeField] public HerbGrowthStage growthStage;
+    [SerializeField] public float age;
+    [SerializeField] public int stageDuration;
     
     public HerbSaveData(InteractableData origin) : base(origin) { }
     public HerbSaveData() { }
@@ -21,16 +16,11 @@ public class HerbSaveData : InteractableSaveData
         return new HerbSaveData
         {
             id = id,
-            creationHour = creationHour,
+            creationTime = creationTime,
             initialized = initialized,
-            fertility = fertility,
             growthStage = growthStage,
-            growthSpeed = growthSpeed,
-            frostResistance = frostResistance,
-            nextStageHour = nextStageHour,
-            withering = withering,
-            decaying = decaying,
-            hasBed = hasBed
+            stageDuration = stageDuration,
+            age = age,
         };
 
     }

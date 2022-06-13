@@ -68,7 +68,7 @@ public class CaveGenerator : WorldGenerator
             doorSaveData = new DimensionDoorSaveData
             {
                 id = "cave_exit",
-                creationHour = 0,
+                creationTime = 0,
                 initialized = true,
                 position = new Vector2(30, 30),
                 sceneToLoad = overWorldScene,

@@ -19,10 +19,15 @@ public partial class HeartContainer : MonoBehaviour
     public HeartType type;
     public DamageType damageToApply;
     public HeartEffectData effectToApply;
+
+    public delegate void DeathEvent();
+
+    public event DeathEvent ONDeath;
     
     protected virtual HeartUnit GetUnit(GameObject from) => from.GetComponent<HeartUnit>();
 
     public bool IsEmpty => _hearts.Count == 0;
+    public int GetCount => _hearts.Count;
     
     #region Units
 
@@ -33,10 +38,10 @@ public partial class HeartContainer : MonoBehaviour
         _units.RemoveAt(indexFrom);
     }
     
-    private void Start()
+    private void Awake()
     {
         CreatePool();
-        for (int i = 0; i < maxHearts; i++) Add(Heart.Create(HeartOrigin.Human, HeartType.Solid));
+        // for (int i = 0; i < maxHearts; i++) Add(Heart.Create(HeartOrigin.Human, HeartType.Solid));
     }
 
     private void CreatePool()
@@ -64,8 +69,6 @@ public partial class HeartContainer : MonoBehaviour
     #endregion
     
     
-    
-    
     public bool Add(Heart toAdd)
     {
         if (!GetFreeUnit(out HeartUnit unit)) return false;
@@ -88,6 +91,7 @@ public partial class HeartContainer : MonoBehaviour
         MoveUnit(heart.Index, maxHearts);
         _hearts.RemoveAt(index);
         RecalculateHeartIndexes();
+        if(_hearts.Count == 0) ONDeath?.Invoke();
     }
 
     public void ChangeOrigin(int index, HeartOrigin newOrigin)
@@ -99,8 +103,6 @@ public partial class HeartContainer : MonoBehaviour
         newHeart.Unit.PlayFlip();
         _hearts[index] = newHeart;
     }
-
-    
     
     public void ApplyDamage(DamageType damageType)
     {

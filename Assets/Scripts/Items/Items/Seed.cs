@@ -10,8 +10,7 @@ public class Seed : Item, IUsable
             {
                 initialized = true,
                 id = Data.herb.id,
-                hasBed = true,
-                creationHour = Timeline.TotalMinutes
+                creationTime = Timeline.TotalMinutes
             });
         slot.RemoveItem(1);
     }

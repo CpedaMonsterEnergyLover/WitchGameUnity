@@ -5,10 +5,11 @@ namespace Receivers
     public abstract class ReceiverCollider <T> : MonoBehaviour where T : IReceiver
     {
         [Header("Component-reciever (IReciever)")] 
-        public Component receiverComponent;
+        [SerializeField] private Component receiverComponent;
         
         protected T receiver;
-
+        protected new Collider2D collider;
+        
         private void OnDisable()
         {
             StopAllCoroutines();
@@ -24,6 +25,7 @@ namespace Receivers
             }
             else
             {
+                collider = GetComponent<Collider2D>();
                 receiver = component;
                 gameObject.layer = LayerMask.NameToLayer("Receiver");
             }

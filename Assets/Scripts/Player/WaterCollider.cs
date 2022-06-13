@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class WaterCollider : MonoBehaviour
+public class WaterCollider : MonoBehaviour, ITemporaryDismissable
 {
     public new Collider2D collider2D;
     public ParticleSystem waterDropsParticleSystem;
@@ -14,7 +14,9 @@ public class WaterCollider : MonoBehaviour
     private TemporaryDismissData _dismissData;
     private Vector3 _startDashPosition;
 
-    private void SetActive(bool isActive) => collider2D.enabled = isActive;
+    public void SetActive(bool isActive) => collider2D.enabled = isActive;
+    public bool IsActive => gameObject.activeInHierarchy;
+
 
     public async UniTaskVoid StartDash(float dashDuration)
     {
@@ -55,9 +57,9 @@ public class WaterCollider : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(dashDuration));
         SetActive(true);
         await UniTask.Delay(TimeSpan.FromSeconds(0.15f));
-        var playerTile = PlayerManager.Instance.TilePosition;
-        if (WorldManager.Instance.TryGetTopLayer(
-            WorldManager.Instance.WorldData.GetTile(playerTile.x, playerTile.y), out WorldLayer worldLayer))
+        var playerTilePosition = PlayerManager.Instance.TilePosition;
+        var tile = WorldManager.Instance.WorldData.GetTile(playerTilePosition.x, playerTilePosition.y);
+        if (!tile.IsBlockedForLoading && WorldManager.Instance.TryGetTopLayer(tile, out WorldLayer worldLayer))
         {
             if (worldLayer.layerType == WorldLayerType.Water)
             {

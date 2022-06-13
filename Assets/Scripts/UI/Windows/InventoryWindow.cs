@@ -32,18 +32,22 @@ public class InventoryWindow : BaseWindow
 
     private void LoadData()
     {
+        Debug.Log("Load inventory data");
         PlayerData playerData = GameDataManager.PlayerData;
         if (playerData is not null)
         {
+            Debug.Log("Inventory data is not null, create slots");
             InventoryData inventoryData = playerData.InventoryData;
             slots.AddRange(CreateSlots(inventoryData.SlotsAmount));
             foreach (InventoryData.SlotData slotData in inventoryData.Slots)
             {
-                if(slotData.SaveData is not null) AddItem(Item.Create(slotData.SaveData), slotData.Amount, false);
+                if(slotData.SaveData is not null) 
+                    AddItem(Item.Create(slotData.SaveData), slotData.Amount, false);
             }
         }
         else
         {
+            Debug.Log("Inventory data is null");
             slots.AddRange(CreateSlots(slotAmountOnStart));
             itemsOnStart.ForEach(i =>
             {

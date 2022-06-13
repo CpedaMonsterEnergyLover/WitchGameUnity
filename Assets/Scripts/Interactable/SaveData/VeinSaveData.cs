@@ -13,7 +13,7 @@ public class VeinSaveData : InteractableSaveData
     {
         return new VeinSaveData
         {
-            creationHour = creationHour,
+            creationTime = creationTime,
             health = health,
             id = id,
             initialized = initialized

@@ -18,7 +18,7 @@ public class TreeSaveData : InteractableSaveData
         return new TreeSaveData
         {
             id = id,
-            creationHour = creationHour,
+            creationTime = creationTime,
             initialized = initialized,
             barkLeft = barkLeft,
             health = health,

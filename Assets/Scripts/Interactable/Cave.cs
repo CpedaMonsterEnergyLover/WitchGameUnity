@@ -21,7 +21,7 @@ public class Cave : DimensionDoor
             initialized = true,
             id = "cave_exit",
             position = new Vector2(tile.Position.x + 0.2f, tile.Position.y),
-            creationHour = 0,
+            creationTime = 0,
             sceneToLoad = WorldManager.Instance.worldScene,
             subWorldIndex = -1
         }
@@ -34,7 +34,7 @@ public class Cave : DimensionDoor
             id = origin.id,
             initialized = true,
             position = Vector2.negativeInfinity,
-            creationHour = 0,
+            creationTime = 0,
             sceneToLoad = WorldScenesCollection.Get("CaveWorld"),
             subWorldIndex = -1
         };

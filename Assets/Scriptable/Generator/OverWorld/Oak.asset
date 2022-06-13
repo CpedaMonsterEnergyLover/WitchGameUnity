@@ -18,6 +18,8 @@ MonoBehaviour:
     spawnChance: 0.106
   - interactable: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
     spawnChance: 0.806
+  - interactable: {fileID: 11400000, guid: c48afbc065e494f4e9e9fada040634cc, type: 2}
+    spawnChance: 0.376
   hasItemDrops: 1
   itemDrops:
   - {fileID: 11400000, guid: 6dc56a52d82237e418b033213292e026, type: 2}

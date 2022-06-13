@@ -13,38 +13,41 @@ MonoBehaviour:
   m_Name: GrassPlains
   m_EditorClassIdentifier: 
   id: grassplains
-  type: 0
   name: "\u041F\u043E\u043B\u0435\u0432\u0430\u044F \u0442\u0440\u0430\u0432\u0430"
-  ignoreOffset: 0
   interactingTime: 1
+  ignoreTileRandomisation: 0
   blockGrowth: 1
-  growthSeason: 0
-  witherSpeed: 0
+  latinName: 
+  tier: 0
+  growthInterval:
+    startSeason: 0
+    endSeason: 0
   growthSpeed: 0
-  lootTable:
-  - growthStage: 0
-    loot: []
+  forceOneDrop: 1
+  forcedDrop: {fileID: 11400000, guid: a6b01e1ec3a6c85419245dd01ecc2153, type: 2}
+  loot:
+  - part: 0
+    hasItem: 0
     item: {fileID: 0}
-  - growthStage: 1
-    loot: []
+  - part: 1
+    hasItem: 0
     item: {fileID: 0}
-  - growthStage: 2
-    loot: []
+  - part: 2
+    hasItem: 0
     item: {fileID: 0}
-  - growthStage: 3
-    loot: []
-    item: {fileID: 0}
-  - growthStage: 4
-    loot: []
+  - part: 3
+    hasItem: 0
     item: {fileID: 0}
   growthSprites:
-  - growthStage: 0
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 1
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 2
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 3
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 4
+  - stage: 0
+    sprite: {fileID: 0}
+  - stage: 0
     sprite: {fileID: 0}

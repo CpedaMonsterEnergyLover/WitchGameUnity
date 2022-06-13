@@ -47,7 +47,7 @@ public class HouseGenerator : AbstractGenerator
             doorData = new DimensionDoorSaveData
             {
                 id = "house_door",
-                creationHour = 0,
+                creationTime = 0,
                 initialized = true,
                 position = new Vector2(30, 30),
                 sceneToLoad = overWorldScene,

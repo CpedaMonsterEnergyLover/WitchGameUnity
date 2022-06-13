@@ -15,19 +15,39 @@ MonoBehaviour:
   id: grassforest
   name: "\u043B\u0435\u0441\u043D\u0430\u044F \u0442\u0440\u0430\u0432\u0430"
   interactingTime: 1
-  ignoreRandomisation: 0
+  ignoreTileRandomisation: 0
   blockGrowth: 1
-  hasDrop: 1
-  itemDrop: {fileID: 11400000, guid: 084b1f9565d14df47a313536b1a9966a, type: 2}
+  latinName: 
+  tier: 0
+  growthInterval:
+    startSeason: 0
+    endSeason: 0
   growthSpeed: 0
+  forceOneDrop: 1
+  forcedDrop: {fileID: 11400000, guid: 084b1f9565d14df47a313536b1a9966a, type: 2}
+  loot:
+  - part: 0
+    hasItem: 0
+    item: {fileID: 0}
+  - part: 1
+    hasItem: 0
+    item: {fileID: 0}
+  - part: 2
+    hasItem: 0
+    item: {fileID: 0}
+  - part: 3
+    hasItem: 0
+    item: {fileID: 0}
   growthSprites:
-  - growthStage: 0
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 1
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 2
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 3
+  - stage: 0
     sprite: {fileID: 0}
-  - growthStage: 4
+  - stage: 0
+    sprite: {fileID: 0}
+  - stage: 0
     sprite: {fileID: 0}

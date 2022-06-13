@@ -8,7 +8,7 @@ public class CropBedSaveData : InteractableSaveData
         return new CropBedSaveData
         {
             id = id,
-            creationHour = creationHour,
+            creationTime = creationTime,
             initialized = initialized
         };
     }

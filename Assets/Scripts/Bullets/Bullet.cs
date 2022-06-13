@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour
     {
        if(_routine is not null) StopCoroutine(_routine);
     }
+
+    public void Kill() => Destroy(gameObject);
     
     // Запускает пулю, используя классы ее настроек и посчитанные параметры
     public void Shoot()

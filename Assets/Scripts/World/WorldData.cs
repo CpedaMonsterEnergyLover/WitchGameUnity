@@ -62,12 +62,6 @@ public class WorldData
 
     }
 
-    public void ClearObjects()
-    {
-        foreach (WorldTile tile in worldTiles)
-            tile.DestroyInstantiated();
-    }
-
     public void ClearZone(int minX, int minY, int maxX, int maxY)
     {
         for(int x = minX; x <= maxX; x++)
@@ -75,11 +69,6 @@ public class WorldData
         {
             worldTiles.Get(x, y)?.SetInteractable(null);
         }
-    }
-    
-    public bool CoordsBelongsToWorld(int x, int y)
-    {
-        return x >= 0 && x < MapWidth && y > 0 && y < MapHeight;
     }
     
     public void ClampInto(int minX, int minY, int maxX, int maxY)

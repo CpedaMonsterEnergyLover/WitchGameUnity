@@ -15,7 +15,7 @@ public class BonfireSaveData : InteractableSaveData
         {
             id = id,
             initialized = initialized,
-            creationHour = creationHour,
+            creationTime = creationTime,
             burningDuration = burningDuration
         };
     }

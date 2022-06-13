@@ -20,6 +20,6 @@ MonoBehaviour:
   instruments: []
   craftStations: []
   components:
-  - item: {fileID: 11400000, guid: 4e304ea024b311144b51d014eadd0ba5, type: 2}
-    amount: 3
+  - item: {fileID: 11400000, guid: 6dc56a52d82237e418b033213292e026, type: 2}
+    amount: 5
     havingAmount: 0

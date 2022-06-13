@@ -28,5 +28,7 @@ public enum ItemType
     MagicBook,
     MeleeWeapon,
     Pickaxe,
-    Gem
+    Gem,
+    Herbderived,
+    Healing
 }

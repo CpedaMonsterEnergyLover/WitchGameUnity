@@ -23,4 +23,11 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         playerAnimator.SetBool(Dsh, false);
     }
+
+    public void Die()
+    {
+        playerAnimator.Play("PlayerDead");
+    }
+
+    public void Idle() => playerAnimator.Play("player_idle");
 }

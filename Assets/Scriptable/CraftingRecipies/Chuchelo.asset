@@ -20,18 +20,18 @@ MonoBehaviour:
   instruments: []
   craftStations: []
   components:
+  - item: {fileID: 11400000, guid: 691acf45d25faec43a593dae7e90f338, type: 2}
+    amount: 1
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: df4fd8ed7352c1944b373689a4655245, type: 2}
+    amount: 5
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: 68adbbb3998543f45ae4b54b25e0846d, type: 2}
+    amount: 5
+    havingAmount: 0
+  - item: {fileID: 11400000, guid: f783552c459f35945a91220207f8f33f, type: 2}
+    amount: 3
+    havingAmount: 0
   - item: {fileID: 11400000, guid: a6b01e1ec3a6c85419245dd01ecc2153, type: 2}
     amount: 10
-    havingAmount: 0
-  - item: {fileID: 11400000, guid: 691acf45d25faec43a593dae7e90f338, type: 2}
-    amount: 2
-    havingAmount: 0
-  - item: {fileID: 11400000, guid: 337bb4e18315fa74fb984c2d49644e5e, type: 2}
-    amount: 5
-    havingAmount: 0
-  - item: {fileID: 11400000, guid: 7d903ee2f83f30842ba60cf6a6b17a58, type: 2}
-    amount: 5
-    havingAmount: 0
-  - item: {fileID: 11400000, guid: a03ba68c62111ff4bbbb6e230a91a501, type: 2}
-    amount: 5
     havingAmount: 0

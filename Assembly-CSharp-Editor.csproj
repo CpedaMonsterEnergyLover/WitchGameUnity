@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\HeartBarEditor.cs" />
+     <Compile Include="Assets\Editor\GlobalVolumeAnimatorEditor.cs" />
      <Compile Include="Assets\Editor\ShowOnlyDrawer.cs" />
      <Compile Include="Assets\Editor\BattleArenaEditor.cs" />
      <Compile Include="Assets\Editor\BossEditor.cs" />

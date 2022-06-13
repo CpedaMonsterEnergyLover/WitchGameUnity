@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Receivers
 {
@@ -7,16 +8,34 @@ namespace Receivers
     public class BulletReceiverCollider : ReceiverCollider<IBulletReceiver>
     {
         public bool receiveHostile;
-        // Make sure that other collider is on "Bullet" layer and
-        // On the same GO with "Bullet" script
+        [SerializeField] private float receiveDelay = 0.5f;
+
+        private bool delayed;
+
+        public float Delay => receiveDelay;
+        public void SetEnabled(bool isEnabled) => collider.enabled = isEnabled;
+        
         protected override void OnAnyCollisionEnter(GameObject otherGameObject)
         {
             if (otherGameObject.TryGetComponent(out Bullet bullet))
             {
-                if(receiveHostile && bullet.CompareTag("HostileBullet"))
-                    receiver.OnBulletReceive(bullet);
-                else if(!receiveHostile && bullet.CompareTag("Bullet"))
-                    receiver.OnBulletReceive(bullet);  
+                switch (receiveHostile)
+                {
+                    case true when bullet.CompareTag("HostileBullet"):
+                    {
+                        if(!delayed) receiver.OnBulletReceive(bullet);
+                        bullet.Kill();
+                        break;
+                    }
+                    case false when bullet.CompareTag("Bullet"):
+                    {
+                        if(!delayed) receiver.OnBulletReceive(bullet);
+                        bullet.Kill();
+                        break;
+                    }
+                }
+
+                if(gameObject.activeSelf) StartCoroutine(DelayRoutine());
             }
                 
         }
@@ -25,6 +44,13 @@ namespace Receivers
         {
             if (otherGameObject.TryGetComponent(out Bullet bullet)) 
                 receiver.OnBulletExitReceiver(bullet);
+        }
+
+        private IEnumerator DelayRoutine()
+        {
+            delayed = true;
+            yield return new WaitForSeconds(receiveDelay);
+            delayed = false;
         }
     }
 

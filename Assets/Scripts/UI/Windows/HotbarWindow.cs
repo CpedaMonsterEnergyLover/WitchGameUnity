@@ -5,6 +5,7 @@ public class HotbarWindow : BaseWindow
 {
     [SerializeField] private GameObject arrow;
     [SerializeField] private List<HotbarSlot> slots = new();
+    private bool _firstClick = true;
     
     public HotbarSlot SelectedSlot { get; private set; }
 
@@ -22,9 +23,10 @@ public class HotbarWindow : BaseWindow
     
     public void SelectSlot(int index)
     {
-        if(SelectedSlot.Index == index) return;
+        if(SelectedSlot.Index == index && !_firstClick) return;
         if (index > 7) index = 0;
         if (index < 0) index = 7;
+        _firstClick = false;
         SelectedSlot = slots[index];
         ONSelectedSlotChanged?.Invoke(SelectedSlot);
         arrow.transform.SetParent(SelectedSlot.transform, false);

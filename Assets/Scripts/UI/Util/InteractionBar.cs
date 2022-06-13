@@ -20,12 +20,13 @@ public class InteractionBar : MonoBehaviour
         UnsubEvents();
     }
 
-    private void StopInteraction()
+    public void StopInteraction()
     {
         gameObject.SetActive(false);
         ItemPicker.Instance.HideWhileInteracting = false;
         _animationStarted = false;
         ToolHolder.Instance.Stop();
+        StopAllCoroutines();
     }
 
     public void StartInteraction(
@@ -95,7 +96,6 @@ public class InteractionBar : MonoBehaviour
             bool stopOnMove = filter.stopOnMove && PlayerController.Instance.MovementInput != Vector2.zero;
             bool notHandAndUseNotAllowed = !isHand && !ItemPicker.Instance.UseAllowed;
             bool stopOnTargetChange = filter.stopOnTargetChange && !_dataOnStart.Equals(InteractionDataProvider.Data);
-            
             if (stopOnMove ||
                 Input.GetMouseButtonUp(0) ||
                 stopOnTargetChange || 

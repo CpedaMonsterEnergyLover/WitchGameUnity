@@ -35,7 +35,7 @@ public class TileLoader : MonoBehaviour
 
     private Cache<WorldTile> TileCache { get; set; }
 
-    private void ResetPreviousPosition()  => PreviousPlayerPosition = new Vector3Int(int.MaxValue, int.MaxValue, 0);
+    public void ResetPreviousPosition()  => PreviousPlayerPosition = new Vector3Int(int.MaxValue, int.MaxValue, 0);
     private Vector3Int PreviousPlayerPosition { get; set; }
     
     private void Start()

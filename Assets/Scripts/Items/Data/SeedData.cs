@@ -1,7 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Seed")]
-public class SeedData : ItemData
+public class SeedData : HerbDerivedItemData
 {
-    public HerbData herb;
+    [Header("SeedData")]
+    public bool test;
 }

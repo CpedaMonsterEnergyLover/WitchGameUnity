@@ -5,7 +5,8 @@ public class InteractionDataProvider : MonoBehaviour
 {
     private static Camera _playerCamera;
     private static int _layerMask;
-    
+    private static HotbarWindow _hotbarWindow;
+
 
     public static InteractionEventData Data { get; private set;  }
 
@@ -42,6 +43,7 @@ public class InteractionDataProvider : MonoBehaviour
         WorldTile tile = WorldManager.Instance.WorldData?.GetTile(gridPos.x, gridPos.y);
 
         // Debug.Log($"entity: {entity?.name}, interactable: {interactable?.name}, tile: {tile?.Position}");
+
         
         return new InteractionEventData(tile, interactable, entity);
     }

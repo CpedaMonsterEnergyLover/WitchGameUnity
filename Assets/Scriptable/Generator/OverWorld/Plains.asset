@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 057fb062a1db1f340aaebef4a15e69b4, type: 3}
   m_Name: Plains
   m_EditorClassIdentifier: 
-  name: "\u041F\u043E\u043B\u0435"
   density: 0.704
   interactables:
-  - interactable: {fileID: 11400000, guid: d8d4c486b29f53045925f7e41a801afb, type: 2}
+  - interactable: {fileID: 11400000, guid: 016a50cf0190f074b9e1977b06466e17, type: 2}
     spawnChance: 1
+  - interactable: {fileID: 11400000, guid: b5e6b65016c34a7418b64f8a994f22be, type: 2}
+    spawnChance: 1
+  hasItemDrops: 0
+  itemDrops: []
   generationRules:
   - mapIndex: 0
     fromValue: 0.6

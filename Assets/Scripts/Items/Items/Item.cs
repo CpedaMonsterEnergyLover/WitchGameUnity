@@ -48,6 +48,8 @@ public class  Item
             ItemType.MeleeWeapon => new MeleeWeapon(identifier),
             ItemType.Pickaxe => new Pickaxe(identifier),
             ItemType.Gem => new Gem(identifier),
+            ItemType.Herbderived => new HerbDerivedItem(identifier),
+            ItemType.Healing => new HealingItem(identifier),
             _ => throw new ArgumentOutOfRangeException($"Unknown item type: {identifier.type}"
                 , new Exception())
         };

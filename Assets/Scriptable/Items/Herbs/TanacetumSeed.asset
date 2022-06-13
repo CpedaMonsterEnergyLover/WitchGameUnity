@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943030d740307e44ea9836951e5b5f44, type: 3}
+  m_Name: TanacetumSeed
+  m_EditorClassIdentifier: 
+  identifier:
+    type: 10
+    id: tanacetum_seed
+  name: "\u0421\u0435\u043C\u0435\u043D\u0430 \u043F\u0438\u0436\u043C\u044B"
+  icon: {fileID: 1135751028, guid: 783e9dc0832adfb4d99e727d037a1500, type: 3}
+  maxStack: 100
+  herb: {fileID: 0}
+  test: 0
