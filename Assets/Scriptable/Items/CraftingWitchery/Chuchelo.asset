@@ -18,5 +18,5 @@ MonoBehaviour:
   name: "\u0421\u043E\u043B\u043E\u043C\u0435\u043D\u043D\u043E\u0435 \u0447\u0443\u0447\u0435\u043B\u043E"
   icon: {fileID: -1943984171, guid: c6a9c0b93aa723a408d319764b49b2ec, type: 3}
   maxStack: 1
-  preview: {fileID: 21300000, guid: 6c59c3cd2caf6b94ca5842f40f80dbdf, type: 3}
+  preview: {fileID: 2916580393482945887, guid: 4282e4e9cedf6b749bcd40aba99f8807, type: 3}
   interactable: {fileID: 11400000, guid: de489eb504459b449a90c66775ac300b, type: 2}

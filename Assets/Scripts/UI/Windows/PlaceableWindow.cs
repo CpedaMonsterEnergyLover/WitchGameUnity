@@ -7,15 +7,14 @@ public class PlaceableWindow : BaseWindow
     public List<Component> toDismiss = new();
     public Transform slotTransform;
     public Text titleText;
-    public InteractablePreview interactablePreview;
-
-    private GameObject _instantiatedPrefab;
 
     private TemporaryDismissData _dismissData;
     private Transform _slotParent;
     private ItemSlot _slot;
     private PlaceableItem _placeableItem;
 
+    private InteractablePreview _previewInstance;
+    
     public void Show(ItemSlot slot)
     {
         if(slot is CraftingSlot craftingSlot)
@@ -28,11 +27,7 @@ public class PlaceableWindow : BaseWindow
             return;
         }
         
-        // EnablePreview
-        
-
         _placeableItem = placeableItem;
-        
         _dismissData = new TemporaryDismissData()
             .Add(toDismiss).HideAll();
         _slot = slot;
@@ -45,27 +40,41 @@ public class PlaceableWindow : BaseWindow
 
         titleText.text = _slot.storedItem.Data.name;
         
-        interactablePreview.Show(_placeableItem);
-        
+        InstantiatePreview(placeableItem);
         SetActive(true);
     }
 
     protected override void OnDisable()
     {
-        // Disable preview
         _dismissData = _dismissData.ShowAll();
         _slot.transform.SetParent(_slotParent, false);
         if (_slot is CraftingSlot) _slot.storedItem = null;
         _slot = null;
         _slotParent = null;
         
-        interactablePreview.Hide();
+        RemovePreview();
         base.OnDisable();
+    }
+
+    private void InstantiatePreview(PlaceableItem placeableItem)
+    {
+        RemovePreview();
+        _previewInstance = Instantiate(placeableItem.Data.preview)
+            .AddComponent<InteractablePreview>();
+        _previewInstance.Show(placeableItem);
+    }
+
+    private void RemovePreview()
+    {
+        if (_previewInstance is not null)
+        {
+            Destroy(_previewInstance.gameObject);
+            _previewInstance = null;
+        }
     }
 
     public void Place()
     {
-        
         var data = InteractionDataProvider.Data;
         if (!_placeableItem.AllowUse(data.entity, data.tile, data.interactable)) return;
         
@@ -77,7 +86,6 @@ public class PlaceableWindow : BaseWindow
         }
         
         _slot.UpdateUI();
-        // Close window if item is over
         if(_slot.storedAmount <= 0) gameObject.SetActive(false);
     }
 

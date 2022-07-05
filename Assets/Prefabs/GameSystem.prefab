@@ -62,7 +62,6 @@ MonoBehaviour:
   - {fileID: 7509024984793208791}
   slotTransform: {fileID: 5577720638326290512}
   titleText: {fileID: 5929523288029553799}
-  interactablePreview: {fileID: 1377647276962297575}
 --- !u!222 &4286507365454774005
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2902,7 +2901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e246dac9fa4943861a8b74b8d2d900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preview: {fileID: 4663532380144896034}
 --- !u!222 &446295585263111579
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -41604,7 +41602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1072795146624988222, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -40
+      value: -40.000004
       objectReference: {fileID: 0}
     - target: {fileID: 1291079708874890347, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -41696,7 +41694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1872014144026655351, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 40
+      value: 40.000004
       objectReference: {fileID: 0}
     - target: {fileID: 4756927179426462808, guid: e955ca3ef54cede4da9645c4738ff6d6, type: 3}
       propertyPath: m_Name

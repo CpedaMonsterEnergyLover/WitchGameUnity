@@ -1,33 +1,31 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-//TODO: Make preview GO, not image
 public class InteractablePreview : MonoBehaviour
 {
-    public Image preview;
-    
     private PlaceableItem _currentItem;
-    private PlaceableData Data => _currentItem?.Data;
-
+    private GameObject _preview;
 
     private static readonly Color CanPlaceColor = new Color(0.49f, 1f, 0.46f, 0.7f);
     private static readonly Color CannotPlaceColor = new Color(1f, 0.25f, 0.27f, 0.7f);
     private static readonly Color OutOfRangeColor = new Color(1f, 1f, 1f, 0.4f);
-    
+    private List<SpriteRenderer> _spriteRenderers;
+
+    private void Awake()
+    {
+        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+    }
+
     private void Update()
     {
         if(InteractionDataProvider.Data.tile is null) return;
         UpdatePreview();
     }
 
-    public void Show(PlaceableItem item)
+    public void Show(PlaceableItem placeableItem)
     {
-        if (item.Data != Data)
-        {
-            _currentItem = item;
-            preview.sprite = Data.preview;
-        }
-        preview.SetNativeSize();
+        _currentItem = placeableItem;
         UpdatePreview();
         gameObject.SetActive(true);
     }
@@ -36,11 +34,6 @@ public class InteractablePreview : MonoBehaviour
     {
         UpdatePreviewPosition();
         UpdatePreviewColor();
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
     }
 
     private void UpdatePreviewPosition()
@@ -60,7 +53,11 @@ public class InteractablePreview : MonoBehaviour
             _currentItem.AllowUse(eventData.entity, eventData.tile, eventData.interactable) ? 
                 CanPlaceColor : CannotPlaceColor
             : OutOfRangeColor;
-        preview.color = finalColor;
+        
+        foreach (SpriteRenderer renderer in _spriteRenderers)
+        {
+            renderer.color = finalColor;
+        }
     }
 
 }

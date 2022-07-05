@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using WorldScenes;
 
 public class CreateWorldMenu : MonoBehaviour
 {

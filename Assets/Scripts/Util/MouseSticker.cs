@@ -16,7 +16,7 @@ public class MouseSticker : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector3 newPosition = playerCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 newPosition = Input.mousePosition;
         newPosition.z = 0;
         transform.position = newPosition;
     }
